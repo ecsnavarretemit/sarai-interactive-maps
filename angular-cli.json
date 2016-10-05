@@ -15,9 +15,14 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
+        "../node_modules/leaflet/dist/leaflet.css",
         "styles.sass"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/leaflet/dist/leaflet.js",
+        "../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
