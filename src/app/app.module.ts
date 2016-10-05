@@ -4,17 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
+
+import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LeafletMapComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    LeafletTileProviderService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
