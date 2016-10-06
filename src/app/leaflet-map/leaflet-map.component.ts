@@ -1,4 +1,6 @@
-import { Component, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import * as L from 'leaflet';
 
@@ -8,65 +10,108 @@ import * as L from 'leaflet';
   styleUrls: ['./leaflet-map.component.sass']
 })
 export class LeafletMapComponent implements OnInit {
-  @Input() lat:number;
-  @Output() latChange: EventEmitter<number> = new EventEmitter<number>();
-
-  @Input() lng:number;
-  @Output() lngChange: EventEmitter<number> = new EventEmitter<number>();
-
-  @Input() zoom:number;
-  @Output() zoomChange: EventEmitter<number> = new EventEmitter<number>();
-
   public map: any;
+  public tileProviderKey: string;
 
-  constructor(private element: ElementRef, private tileProvider: LeafletTileProviderService) {}
+  @Input() lat:number;
+  @Input() lng:number;
+  @Input() zoom:number;
+
+  constructor(
+    public store: Store<any>,
+    private element: ElementRef,
+    private tileProvider: LeafletTileProviderService
+  ) {
+    this.tileProviderKey = 'OpenStreetMap';
+  }
 
   ngOnInit() {
     let el = this.element.nativeElement.querySelector('.map');
 
-    // set default view parameters to show whole Philippines
-    let lat = 13;
-    let lng = 122;
-    let zoom = 6;
+    this.store
+      .select('map')
+      .subscribe((state: any) => {
+        console.log('State Modified: ', state);
 
-    // override the lat variable if lat is provided via the lat attribute
-    if (typeof this.lat !== 'undefined') {
-      lat = this.lat;
-    }
+        if (typeof this.map !== 'undefined' && this.tileProviderKey !== state.tileProvider) {
+          // remove the current tile provider from the map canvas
+          this.map.removeLayer(this.tileProvider.baseMaps[this.tileProviderKey]);
 
-    // override the lng variable if lng is provided via the lng attribute
-    if (typeof this.lng !== 'undefined') {
-      lng = this.lng;
-    }
+          // add the current tile provider from the map canvas
+          this.tileProvider.baseMaps[state.tileProvider].addTo(this.map);
 
-    // override the zoom variable if zoom is provided via the zoom attribute
-    if (typeof this.zoom !== 'undefined') {
-      zoom = this.zoom;
-    }
+          // store the new tile provider
+          this.tileProviderKey = state.tileProvider;
+        }
+      })
+      ;
+
+    // store the resolved tile provider to the state manager
+    this.store.dispatch({
+      type: 'SET_TILE_PROVIDER',
+      payload: {
+        tileProvider: this.tileProviderKey
+      }
+    });
+
+    // store the resolved zoom to the state manager
+    this.store.dispatch({
+      type: 'SET_ZOOM',
+      payload: {
+        zoom: this.zoom
+      }
+    });
+
+    // store the resolved map center to the state manager
+    this.store.dispatch({
+      type: 'SET_CENTER',
+      payload: {
+        center: [this.lat, this.lng]
+      }
+    });
 
     // create the map instance
     this.map = L.map(el, {
       zoomControl: false
     });
 
-    // position the map
-    this.map.setView([lat, lng], zoom);
+    this.map.setView([this.lat, this.lng], this.zoom);
 
-    // add the one of the basemap to the map
-    this.tileProvider.baseMaps['OpenStreetMap'].addTo(this.map);
+    // add the current tile provider from the map canvas
+    this.tileProvider.baseMaps[this.tileProviderKey].addTo(this.map);
 
     // emit changes to lat and lng coordinates
     this.map.on('moveend', (e) => {
       let center = this.map.getCenter();
 
-      this.latChange.emit(center.lat);
-
-      this.lngChange.emit(center.lng);
+      this.store.dispatch({
+        type: 'SET_CENTER',
+        payload: {
+          center: [center.lat, center.lng]
+        }
+      });
     });
 
     // emit changes to zoom
     this.map.on('zoomend', (e) => {
-      this.zoomChange.emit(this.map.getZoom());
+      let mapZoom = this.map.getZoom();
+
+      this.store.dispatch({
+        type: 'SET_ZOOM',
+        payload: {
+          zoom: mapZoom
+        }
+      });
+    });
+  }
+
+  tileProviderChange(tileProvider: string) {
+    // store the resolved tile provider to the state manager
+    this.store.dispatch({
+      type: 'SET_TILE_PROVIDER',
+      payload: {
+        tileProvider: tileProvider
+      }
     });
   }
 
