@@ -16,6 +16,7 @@
       "mobile": false,
       "styles": [
         "../node_modules/leaflet/dist/leaflet.css",
+        "../node_modules/leaflet-control-geocoder2/dist/Control.Geocoder.css",
         "styles.sass"
       ],
       "scripts": [

@@ -12,12 +12,14 @@ import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 import { LeafletTileSelectorComponent } from './leaflet-tile-selector/leaflet-tile-selector.component';
 
 import { mapReducer } from './map.state';
+import { LeafletGeocoderComponent } from './leaflet-geocoder/leaflet-geocoder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeafletMapComponent,
-    LeafletTileSelectorComponent
+    LeafletTileSelectorComponent,
+    LeafletGeocoderComponent
   ],
   imports: [
     BrowserModule,
