@@ -21,7 +21,7 @@ export class LeafletMapComponent implements OnInit {
     private element: ElementRef,
     private tileProvider: LeafletTileProviderService
   ) {
-    this.tileProviderKey = 'OpenStreetMap';
+    this.tileProviderKey = 'Google Satellite';
   }
 
   ngOnInit() {
