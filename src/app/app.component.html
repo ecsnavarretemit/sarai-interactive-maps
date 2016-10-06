@@ -1,4 +1,5 @@
 <app-leaflet-map lat="13" lng="122" zoom="6" #leaflet>
     <app-leaflet-tile-selector [map]="leaflet.map" (tileChange)="leaflet.tileProviderChange($event)"></app-leaflet-tile-selector>
     <app-leaflet-geocoder [map]="leaflet.map"></app-leaflet-geocoder>
+    <app-leaflet-zoom [map]="leaflet.map"></app-leaflet-zoom>
 </app-leaflet-map>
