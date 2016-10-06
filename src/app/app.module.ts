@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Store, StoreModule } from '@ngrx/store';
+import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { AppComponent } from './app.component';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
@@ -22,6 +23,7 @@ import { mapReducer } from './map.state';
     BrowserModule,
     FormsModule,
     HttpModule,
+    TooltipModule,
     StoreModule.provideStore({
       map: mapReducer
     }, {
