@@ -1,1 +1,3 @@
-<app-leaflet-map lat="13" lng="122" zoom="6"></app-leaflet-map>
+<app-leaflet-map lat="13" lng="122" zoom="6" #leaflet>
+    <app-leaflet-tile-selector [map]="leaflet.map"></app-leaflet-tile-selector>
+</app-leaflet-map>

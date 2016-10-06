@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
 
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
+import { LeafletTileSelectorComponent } from './leaflet-tile-selector/leaflet-tile-selector.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LeafletMapComponent
+    LeafletMapComponent,
+    LeafletTileSelectorComponent
   ],
   imports: [
     BrowserModule,
