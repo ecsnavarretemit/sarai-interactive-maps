@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import * as L from 'leaflet';
