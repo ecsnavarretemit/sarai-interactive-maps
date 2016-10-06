@@ -14,6 +14,7 @@ import { LeafletTileSelectorComponent } from './leaflet-tile-selector/leaflet-ti
 import { mapReducer } from './map.state';
 import { LeafletGeocoderComponent } from './leaflet-geocoder/leaflet-geocoder.component';
 import { LeafletZoomComponent } from './leaflet-zoom/leaflet-zoom.component';
+import { LeafletMeasureComponent } from './leaflet-measure/leaflet-measure.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LeafletZoomComponent } from './leaflet-zoom/leaflet-zoom.component';
     LeafletMapComponent,
     LeafletTileSelectorComponent,
     LeafletGeocoderComponent,
-    LeafletZoomComponent
+    LeafletZoomComponent,
+    LeafletMeasureComponent
   ],
   imports: [
     BrowserModule,
