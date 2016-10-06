@@ -10,7 +10,6 @@ import * as L from 'leaflet';
 })
 export class LeafletMapComponent implements OnInit {
   public map: any;
-  public tileProviderKey: string;
 
   @Input() lat:number;
   @Input() lng:number;
@@ -20,38 +19,10 @@ export class LeafletMapComponent implements OnInit {
     public store: Store<any>,
     private element: ElementRef,
     private tileProvider: LeafletTileProviderService
-  ) {
-    this.tileProviderKey = 'Google Satellite';
-  }
+  ) {}
 
   ngOnInit() {
     let el = this.element.nativeElement.querySelector('.map');
-
-    this.store
-      .select('map')
-      .subscribe((state: any) => {
-        console.log('State Modified: ', state);
-
-        if (typeof this.map !== 'undefined' && this.tileProviderKey !== state.tileProvider) {
-          // remove the current tile provider from the map canvas
-          this.map.removeLayer(this.tileProvider.baseMaps[this.tileProviderKey]);
-
-          // add the current tile provider from the map canvas
-          this.tileProvider.baseMaps[state.tileProvider].addTo(this.map);
-
-          // store the new tile provider
-          this.tileProviderKey = state.tileProvider;
-        }
-      })
-      ;
-
-    // store the resolved tile provider to the state manager
-    this.store.dispatch({
-      type: 'SET_TILE_PROVIDER',
-      payload: {
-        tileProvider: this.tileProviderKey
-      }
-    });
 
     // store the resolved zoom to the state manager
     this.store.dispatch({
@@ -76,9 +47,6 @@ export class LeafletMapComponent implements OnInit {
 
     this.map.setView([this.lat, this.lng], this.zoom);
 
-    // add the current tile provider from the map canvas
-    this.tileProvider.baseMaps[this.tileProviderKey].addTo(this.map);
-
     // emit changes to lat and lng coordinates
     this.map.on('moveend', (e) => {
       let center = this.map.getCenter();
@@ -101,16 +69,6 @@ export class LeafletMapComponent implements OnInit {
           zoom: mapZoom
         }
       });
-    });
-  }
-
-  tileProviderChange(tileProvider: string) {
-    // store the resolved tile provider to the state manager
-    this.store.dispatch({
-      type: 'SET_TILE_PROVIDER',
-      payload: {
-        tileProvider: tileProvider
-      }
     });
   }
 
