@@ -9,3 +9,5 @@ describe('Component: LeafletMap', () => {
     expect(component).toBeTruthy();
   });
 });
+
+

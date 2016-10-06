@@ -31,3 +31,5 @@ describe('App: SaraiNg2', () => {
     expect(compiled.querySelector('h1').textContent).toContain('app works!');
   }));
 });
+
+
