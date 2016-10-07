@@ -10,7 +10,7 @@ import 'leaflet-measure/dist/leaflet-measure';
 export class LeafletMeasureComponent implements OnInit {
   public control: any;
 
-  @Input() map:any;
+  @Input() map: any;
 
   constructor(private element: ElementRef) { }
 
