@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 
@@ -7,7 +7,7 @@ import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
   templateUrl: './leaflet-tile-selector.component.html',
   styleUrls: ['./leaflet-tile-selector.component.sass']
 })
-export class LeafletTileSelectorComponent implements OnInit {
+export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   public tileKeys: any;
   public tileProviderKey: string;
 
@@ -27,7 +27,9 @@ export class LeafletTileSelectorComponent implements OnInit {
 
     // add default tile
     this.tileProvider.baseMaps[this.tileProviderKey].addTo(this.map);
+  }
 
+  ngAfterViewInit() {
     // set default select value
     this.tileSelector.nativeElement.value = this.tileProviderKey;
   }
