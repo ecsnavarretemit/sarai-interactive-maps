@@ -14,7 +14,7 @@ export class LeafletZoomComponent implements OnInit {
   constructor(private element: ElementRef) { }
 
   ngOnInit() {
-    let wrapper = this.element.nativeElement.querySelector('.zoom-wrapper');
+    let wrapper = this.element.nativeElement.querySelector('.map__control');
 
     // prevent 'Control' is not a propery of L
     let controlObj = (L as any).Control;

@@ -1,0 +1,36 @@
+// *************************************#
+// [_map-controls.sass]
+// *************************************#
+
+.map__control
+  position: absolute
+  top: 0
+  z-index: 3
+
+  .map__control__title
+    margin: 0
+    padding: 10px 0
+    font-size: 16px
+    color: #FFFFFF
+
+  .map__control__body
+    padding: 15px 0
+
+// [Control Types] ::start
+.map__control--tile-selector
+  right: 0
+  z-index: 4
+
+.map__control--geocoder,
+.map__control--zoom
+  right: 260px
+
+.map__control--zoom
+  top: 50px
+
+.map__control--measure
+  top: 110px
+  right: 10px
+// [Control Types] ::end
+
+
