@@ -1,24 +1,22 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-leaflet-button',
   templateUrl: './leaflet-button.component.html',
   styleUrls: ['./leaflet-button.component.sass'],
 })
-export class LeafletButtonComponent implements OnInit, AfterViewInit {
+export class LeafletButtonComponent implements OnInit {
   @Input('control-class') controlClass: string;
-  @ViewChild('control') control;
+  @ViewChild('controlwrapper') controlWrapper;
 
   constructor() { }
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
+  ngOnInit() {
     if (typeof this.controlClass !== 'undefined') {
       let split = this.controlClass.split(' ');
 
       // add the class to the content
-      this.control.nativeElement.classList.add(...split);
+      this.controlWrapper.nativeElement.classList.add(...split);
     }
   }
 

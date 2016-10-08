@@ -8,7 +8,7 @@
         </h2>
 
         <div class="map__control__body">
-            <select name="map-tile-selector" id="map-tile-selector" class="map__control__element form-control" (change)="onTileChange($event)">
+            <select name="map-tile-selector" id="map-tile-selector" class="map__control__element form-control" (change)="onTileChange($event)" #tileselector>
                 <option *ngFor="let tileKey of tileKeys" value="{{ tileKey }}">{{ tileKey }}</option>
             </select>
         </div>

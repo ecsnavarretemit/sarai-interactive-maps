@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -9,13 +9,12 @@ import * as L from 'leaflet';
 export class LeafletZoomComponent implements OnInit {
   public control: any;
 
-  @Input() map:any;
+  @Input() map: any;
+  @ViewChild('controlwrapper') controlWrapper;
 
-  constructor(private element: ElementRef) { }
+  constructor() { }
 
   ngOnInit() {
-    let wrapper = this.element.nativeElement.querySelector('.map__control');
-
     // prevent 'Control' is not a propery of L
     let controlObj = (L as any).Control;
 
@@ -28,7 +27,7 @@ export class LeafletZoomComponent implements OnInit {
     this.control._container.remove();
 
     // add to the wrapper
-    wrapper.appendChild(this.control.onAdd(this.map));
+    this.controlWrapper.nativeElement.appendChild(this.control.onAdd(this.map));
   }
 
 }

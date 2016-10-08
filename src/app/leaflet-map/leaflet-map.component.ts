@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import * as L from 'leaflet';
@@ -14,16 +14,14 @@ export class LeafletMapComponent implements OnInit {
   @Input() lat: number;
   @Input() lng: number;
   @Input() zoom: number;
+  @ViewChild('mapEl') mapEl;
 
   constructor(
     public store: Store<any>,
-    private element: ElementRef,
     private tileProvider: LeafletTileProviderService
   ) {}
 
   ngOnInit() {
-    let el = this.element.nativeElement.querySelector('.map');
-
     // store the resolved zoom to the state manager
     this.store.dispatch({
       type: 'SET_ZOOM',
@@ -41,7 +39,7 @@ export class LeafletMapComponent implements OnInit {
     });
 
     // create the map instance
-    this.map = L.map(el, {
+    this.map = L.map(this.mapEl.nativeElement, {
       zoomControl: false
     });
 

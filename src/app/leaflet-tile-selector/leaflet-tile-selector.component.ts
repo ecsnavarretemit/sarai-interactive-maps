@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 
@@ -7,32 +7,29 @@ import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
   templateUrl: './leaflet-tile-selector.component.html',
   styleUrls: ['./leaflet-tile-selector.component.sass']
 })
-export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
-  @Input() map:any;
-
+export class LeafletTileSelectorComponent implements OnInit {
   public tileKeys: any;
   public tileProviderKey: string;
 
+  @Input() map: any;
+  @ViewChild('tileselector') tileSelector;
+
   constructor(
     public store: Store<any>,
-    private element: ElementRef,
     private tileProvider: LeafletTileProviderService
   ) {
     this.tileProviderKey = 'Google Satellite';
   }
 
   ngOnInit() {
+    // extract the keys and tore to the property
     this.tileKeys = Object.keys(this.tileProvider.baseMaps);
 
     // add default tile
     this.tileProvider.baseMaps[this.tileProviderKey].addTo(this.map);
-  }
-
-  ngAfterViewInit() {
-    let selectEl = this.element.nativeElement.querySelector('#map-tile-selector');
 
     // set default select value
-    selectEl.value = this.tileProviderKey;
+    this.tileSelector.nativeElement.value = this.tileProviderKey;
   }
 
   onTileChange(event) {
