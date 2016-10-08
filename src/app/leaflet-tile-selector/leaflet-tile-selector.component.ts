@@ -8,6 +8,7 @@
 import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
+import { Map } from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-tile-selector',
@@ -18,7 +19,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   public tileKeys: any;
   public tileProviderKey: string;
 
-  @Input() map: any;
+  @Input() map: Map;
   @ViewChild('tileselector') tileSelector;
 
   constructor(

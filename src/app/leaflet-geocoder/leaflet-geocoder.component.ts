@@ -6,7 +6,7 @@
  */
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import * as L from 'leaflet';
+import { Map, Control } from 'leaflet';
 import 'leaflet-control-geocoder2';
 
 @Component({
@@ -15,9 +15,9 @@ import 'leaflet-control-geocoder2';
   styleUrls: ['./leaflet-geocoder.component.sass']
 })
 export class LeafletGeocoderComponent implements OnInit {
-  public control: any;
+  public control: Control;
 
-  @Input() map: any;
+  @Input() map: Map;
   @ViewChild('controlwrapper') controlWrapper;
 
   constructor() { }

@@ -6,7 +6,7 @@
  */
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import * as L from 'leaflet';
+import { Map, Control } from 'leaflet';
 import 'leaflet-measure/dist/leaflet-measure';
 
 @Component({
@@ -15,18 +15,15 @@ import 'leaflet-measure/dist/leaflet-measure';
   styleUrls: ['./leaflet-measure.component.sass']
 })
 export class LeafletMeasureComponent implements OnInit {
-  public control: any;
+  public control: Control;
 
-  @Input() map: any;
+  @Input() map: Map;
   @ViewChild('controlwrapper') controlWrapper;
 
   constructor() { }
 
   ngOnInit() {
-    // prevent 'Control' is not a propery of L
-    let controlObj = (L as any).Control;
-
-    this.control = new controlObj.Measure({
+    this.control = new (L as any).Control.Measure({
         primaryLengthUnit: 'kilometers',
         secondaryLengthUnit: 'meters',
         primaryAreaUnit: 'hectares',

@@ -7,8 +7,8 @@
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Map } from 'leaflet';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
-import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -16,7 +16,7 @@ import * as L from 'leaflet';
   styleUrls: ['./leaflet-map.component.sass']
 })
 export class LeafletMapComponent implements OnInit {
-  public map: any;
+  public map: Map;
 
   @Input() lat: number;
   @Input() lng: number;
