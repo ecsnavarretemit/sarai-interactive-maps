@@ -11,9 +11,9 @@ import * as L from 'leaflet';
 export class LeafletMapComponent implements OnInit {
   public map: any;
 
-  @Input() lat:number;
-  @Input() lng:number;
-  @Input() zoom:number;
+  @Input() lat: number;
+  @Input() lng: number;
+  @Input() zoom: number;
 
   constructor(
     public store: Store<any>,
