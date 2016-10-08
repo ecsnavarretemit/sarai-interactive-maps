@@ -1,3 +1,10 @@
+/*!
+ * Map State
+ *
+ * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
+ * Licensed under MIT
+ */
+
 import { ActionReducer, Action } from '@ngrx/store';
 
 export const mapReducer: ActionReducer<any> = (state: any = {}, action: Action) => {

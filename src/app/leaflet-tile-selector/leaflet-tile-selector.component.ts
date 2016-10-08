@@ -1,3 +1,10 @@
+/*!
+ * Leaflet Tile Selector Component
+ *
+ * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
+ * Licensed under MIT
+ */
+
 import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';

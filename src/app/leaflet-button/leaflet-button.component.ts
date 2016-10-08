@@ -1,3 +1,10 @@
+/*!
+ * Leaflet Button Component
+ *
+ * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
+ * Licensed under MIT
+ */
+
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 @Component({

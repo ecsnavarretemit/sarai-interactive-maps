@@ -1,3 +1,10 @@
+/*!
+ * Leaflet Tile Provider Service
+ *
+ * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
+ * Licensed under MIT
+ */
+
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 
