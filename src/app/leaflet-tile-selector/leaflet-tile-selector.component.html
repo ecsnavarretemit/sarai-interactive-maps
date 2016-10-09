@@ -1,0 +1,18 @@
+<div class="map__control map__control--tile-selector">
+    <section>
+        <h2 class="map__control__title title">
+            <span class="title__text">Map Source</span>
+            <span class="pull-right title__icon title__icon--actionable">
+                <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
+            </span>
+        </h2>
+
+        <div class="map__control__body">
+            <select name="map-tile-selector" id="map-tile-selector" class="map__control__element form-control" (change)="onTileChange($event)" #tileselector>
+                <option *ngFor="let tileKey of tileKeys" value="{{ tileKey }}">{{ tileKey }}</option>
+            </select>
+        </div>
+    </section>
+</div>
+
+
