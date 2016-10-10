@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-leaflet-button',
@@ -14,6 +14,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 })
 export class LeafletButtonComponent implements OnInit {
   @Input('control-class') controlClass: string;
+  @Output() buttonClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper;
 
   constructor() { }
@@ -25,6 +26,10 @@ export class LeafletButtonComponent implements OnInit {
       // add the class to the content
       this.controlWrapper.nativeElement.classList.add(...split);
     }
+  }
+
+  onClick(event) {
+    this.buttonClick.emit(event);
   }
 
 }
