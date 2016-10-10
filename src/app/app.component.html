@@ -2,19 +2,35 @@
     <app-leaflet-wms-layer></app-leaflet-wms-layer>
 
     <div class="control-wrapper control-wrapper--left pull-left">
-        <app-leaflet-button control-class="map__control--map-data-type map__control--suitability-map">
+        <app-leaflet-button
+            control-class="map__control--map-data-type map__control--suitability-map"
+            btn-tooltip="Suitability Maps"
+            btn-tooltip-position="right">
+
             <i class="glyphicon glyphicon-grain" button-content></i>
         </app-leaflet-button>
 
-        <app-leaflet-button control-class="map__control--map-data-type map__control--crop-production-area">
+        <app-leaflet-button
+            control-class="map__control--map-data-type map__control--crop-production-area"
+            btn-tooltip="Crop Production Area"
+            btn-tooltip-position="right">
+
             <i class="glyphicon glyphicon-leaf" button-content></i>
         </app-leaflet-button>
 
-        <app-leaflet-button control-class="map__control--map-data-type map__control--ndvi">
+        <app-leaflet-button
+            control-class="map__control--map-data-type map__control--ndvi"
+            btn-tooltip="Normalized Difference Vegetation Index (NDVI)"
+            btn-tooltip-position="right">
+
             <i class="glyphicon glyphicon-cloud" button-content></i>
         </app-leaflet-button>
 
-        <app-leaflet-button control-class="map__control--map-data-type map__control--rainfall-map">
+        <app-leaflet-button
+            control-class="map__control--map-data-type map__control--rainfall-map"
+            btn-tooltip="Rainfall Map"
+            btn-tooltip-position="right">
+
             <i class="glyphicon glyphicon-tint" button-content></i>
         </app-leaflet-button>
     </div>

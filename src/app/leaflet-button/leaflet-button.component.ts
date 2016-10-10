@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-leaflet-button',
@@ -13,9 +13,14 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angu
   styleUrls: ['./leaflet-button.component.sass'],
 })
 export class LeafletButtonComponent implements OnInit {
+  private tooltipEnabled = false;
+
   @Input('control-class') controlClass: string;
+  @Input('btn-tooltip') btnTooltip: string = 'Default Text';
+  @Input('btn-tooltip-position') btnTooltipPosition: string = 'left';
   @Output() buttonClick: EventEmitter<Event> = new EventEmitter();
-  @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('controlwrapper') controlWrapper: ElementRef;
+  @ViewChild('button') button: ElementRef;
 
   constructor() { }
 
@@ -25,6 +30,10 @@ export class LeafletButtonComponent implements OnInit {
 
       // add the class to the content
       this.controlWrapper.nativeElement.classList.add(...split);
+    }
+
+    if (this.btnTooltip !== 'Default Text' && this.btnTooltip !== '') {
+      this.tooltipEnabled = true;
     }
   }
 
