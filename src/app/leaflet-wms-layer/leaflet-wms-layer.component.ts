@@ -32,6 +32,7 @@ export class LeafletWmsLayerComponent implements OnInit, AfterViewInit {
       transparent: true,
       maxZoom: 10,
       crs: leafletApi.CRS.EPSG900913,
+      zIndex: 1000,
       attribution: `Crop data &copy; 2016
         <a href="http://www.pcaarrd.dost.gov.ph/" target="_blank">PCAARRD</a> and
         <a href="http://uplb.edu.ph/" target="_blank">University of the Philippines Los Banos</a>`
