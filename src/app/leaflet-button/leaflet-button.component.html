@@ -1,5 +1,5 @@
 <div class="map__control" #controlwrapper>
-    <button type="button" class="btn btn--leaflet">
+    <button type="button" class="btn btn--leaflet" (click)="onClick($event)">
         <ng-content select="[button-content]"></ng-content>
     </button>
 

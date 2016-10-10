@@ -9,6 +9,7 @@ import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/cor
 import { Store } from '@ngrx/store';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { Map } from 'leaflet';
+import 'jquery';
 
 @Component({
   selector: 'app-leaflet-tile-selector',
@@ -18,8 +19,12 @@ import { Map } from 'leaflet';
 export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   public tileKeys: any;
   public tileProviderKey: string;
+  private $mapControl: JQuery;
+  private $mapControlSettings: JQuery;
 
   @Input() map: Map;
+  @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('controlsettings') controlSettings;
   @ViewChild('tileselector') tileSelector;
 
   constructor(
@@ -40,6 +45,66 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // set default select value
     this.tileSelector.nativeElement.value = this.tileProviderKey;
+
+    // cache the selection
+    this.$mapControl = $( this.controlWrapper.nativeElement );
+    this.$mapControlSettings = $( this.controlSettings.controlWrapper.nativeElement );
+  }
+
+  onHideControl(event): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (typeof this.$mapControl === 'undefined') {
+        reject();
+      } else {
+        // show the button
+        this.$mapControlSettings.fadeIn();
+
+        // hide the map control
+        this.$mapControl
+          .fadeOut()
+          .promise()
+          .then(() => {
+            // remove class on the control wrapper
+            this.$mapControl
+              .closest('.control-wrapper')
+              .addClass('control-wrapper--tile-selector-hidden')
+              ;
+
+            resolve();
+          }, () => {
+            reject();
+          })
+          ;
+      }
+    });
+  }
+
+  onShowControl(event): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (typeof this.$mapControl === 'undefined') {
+        reject();
+      } else {
+        // add class the to the control wrapper
+        this.$mapControl
+          .closest('.control-wrapper')
+          .removeClass('control-wrapper--tile-selector-hidden')
+          ;
+
+        // hide the button
+        this.$mapControlSettings.fadeOut();
+
+        // show the map control
+        this.$mapControl
+          .fadeIn()
+          .promise()
+          .then(() => {
+            resolve();
+          }, () => {
+            reject();
+          })
+          ;
+      }
+    });
   }
 
   onTileChange(event) {
