@@ -23,6 +23,7 @@ import { LeafletZoomComponent } from './leaflet-zoom/leaflet-zoom.component';
 import { LeafletMeasureComponent } from './leaflet-measure/leaflet-measure.component';
 import { LeafletButtonComponent } from './leaflet-button/leaflet-button.component';
 import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.component';
+import { LeafletControlPanelComponent } from './leaflet-control-panel/leaflet-control-panel.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.
     LeafletZoomComponent,
     LeafletMeasureComponent,
     LeafletButtonComponent,
-    LeafletWmsLayerComponent
+    LeafletWmsLayerComponent,
+    LeafletControlPanelComponent
   ],
   imports: [
     BrowserModule,
