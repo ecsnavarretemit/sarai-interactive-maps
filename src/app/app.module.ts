@@ -21,6 +21,7 @@ import { LeafletGeocoderComponent } from './leaflet-geocoder/leaflet-geocoder.co
 import { LeafletZoomComponent } from './leaflet-zoom/leaflet-zoom.component';
 import { LeafletMeasureComponent } from './leaflet-measure/leaflet-measure.component';
 import { LeafletButtonComponent } from './leaflet-button/leaflet-button.component';
+import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LeafletButtonComponent } from './leaflet-button/leaflet-button.componen
     LeafletGeocoderComponent,
     LeafletZoomComponent,
     LeafletMeasureComponent,
-    LeafletButtonComponent
+    LeafletButtonComponent,
+    LeafletWmsLayerComponent
   ],
   imports: [
     BrowserModule,
