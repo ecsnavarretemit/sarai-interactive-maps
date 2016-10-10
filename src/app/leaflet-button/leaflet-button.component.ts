@@ -20,7 +20,7 @@ export class LeafletButtonComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (typeof this.controlClass !== 'undefined') {
+    if (typeof this.controlClass !== 'undefined' && this.controlClass !== '') {
       let split = this.controlClass.split(' ');
 
       // add the class to the content
