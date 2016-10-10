@@ -5,8 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Map, Control } from 'leaflet';
+import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-measure/dist/leaflet-measure';
 
 @Component({
@@ -17,16 +18,11 @@ import 'leaflet-measure/dist/leaflet-measure';
 export class LeafletMeasureComponent implements OnInit {
   public control: Control;
 
-  @Input() map: Map;
   @ViewChild('controlwrapper') controlWrapper;
 
-  constructor() { }
+  constructor(private mapService: LeafletMapService) { }
 
   ngOnInit() {
-    if (typeof this.map === 'undefined') {
-      throw new Error('Please provide the map first via the map attribute.');
-    }
-
     this.control = new (L as any).Control.Measure({
         primaryLengthUnit: 'kilometers',
         secondaryLengthUnit: 'meters',
@@ -35,8 +31,13 @@ export class LeafletMeasureComponent implements OnInit {
         completedColor: '#ffffff'
     });
 
-    // add to the wrapper
-    this.controlWrapper.nativeElement.appendChild(this.control.onAdd(this.map));
+    this.mapService
+      .getMap()
+      .then((map: Map) => {
+        // add to the wrapper
+        this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
+      })
+      ;
   }
 
 }

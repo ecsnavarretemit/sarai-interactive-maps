@@ -5,7 +5,8 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { LeafletMapService } from '../leaflet-map.service';
 import { Map, WMS } from 'leaflet';
 
 @Component({
@@ -16,15 +17,9 @@ import { Map, WMS } from 'leaflet';
 export class LeafletWmsLayerComponent implements OnInit, AfterViewInit {
   public layer: WMS;
 
-  @Input() map: Map;
-
-  constructor() { }
+  constructor(private mapService: LeafletMapService) { }
 
   ngOnInit() {
-    if (typeof this.map === 'undefined') {
-      throw new Error('Please provide the map first via the map attribute.');
-    }
-
     let workspace = 'sarai-latest';
     let url = `http://202.92.144.40:8080/geoserver/${workspace}/wms?tiled=true`;
 
@@ -44,8 +39,13 @@ export class LeafletWmsLayerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // add to the map when the view is finally initialized
-    this.layer.addTo( this.map );
+    this.mapService
+      .getMap()
+      .then((map: Map) => {
+        // add to the map when the view is finally initialized
+        this.layer.addTo( map );
+      })
+      ;
   }
 
 }

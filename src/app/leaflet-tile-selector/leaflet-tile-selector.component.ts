@@ -5,8 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { Map } from 'leaflet';
 import 'jquery';
@@ -22,28 +23,28 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   private $mapControl: JQuery;
   private $mapControlSettings: JQuery;
 
-  @Input() map: Map;
   @ViewChild('controlwrapper') controlWrapper;
   @ViewChild('controlsettings') controlSettings;
   @ViewChild('tileselector') tileSelector;
 
   constructor(
     public store: Store<any>,
+    private mapService: LeafletMapService,
     private tileProvider: LeafletTileProviderService
   ) {
     this.tileProviderKey = 'Google Satellite';
   }
 
   ngOnInit() {
-    if (typeof this.map === 'undefined') {
-      throw new Error('Please provide the map first via the map attribute.');
-    }
-
     // extract the keys and tore to the property
     this.tileKeys = Object.keys(this.tileProvider.baseMaps);
 
-    // add default tile
-    this.tileProvider.baseMaps[this.tileProviderKey].addTo(this.map);
+    this.mapService
+      .getMap()
+      .then((map: Map) => {
+        // add default tile
+        this.tileProvider.baseMaps[this.tileProviderKey].addTo(map);
+      });
   }
 
   ngAfterViewInit() {
@@ -115,24 +116,29 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
     let value = event.target.value;
     let resolvedTile = this.tileProvider.baseMaps[event.target.value];
 
-    if (typeof resolvedTile !== 'undefined') {
-      // remove the current layer
-      this.map.removeLayer(this.tileProvider.baseMaps[this.tileProviderKey]);
+    this.mapService
+      .getMap()
+      .then((map: Map) => {
+        if (typeof resolvedTile !== 'undefined') {
+          // remove the current layer
+          map.removeLayer(this.tileProvider.baseMaps[this.tileProviderKey]);
 
-      // add the new layer
-      resolvedTile.addTo(this.map);
+          // add the new layer
+          resolvedTile.addTo(map);
 
-      // store the currently used tile
-      this.tileProviderKey = value;
+          // store the currently used tile
+          this.tileProviderKey = value;
 
-      // store the resolved tile provider to the state manager
-      this.store.dispatch({
-        type: 'SET_TILE_PROVIDER',
-        payload: {
-          tileProvider: value
+          // store the resolved tile provider to the state manager
+          this.store.dispatch({
+            type: 'SET_TILE_PROVIDER',
+            payload: {
+              tileProvider: value
+            }
+          });
         }
-      });
-    }
+      })
+      ;
   }
 
 }

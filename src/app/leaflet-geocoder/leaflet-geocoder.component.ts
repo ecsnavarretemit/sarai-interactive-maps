@@ -5,8 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Map, Control } from 'leaflet';
+import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-control-geocoder2';
 
 @Component({
@@ -17,16 +18,11 @@ import 'leaflet-control-geocoder2';
 export class LeafletGeocoderComponent implements OnInit {
   public control: Control;
 
-  @Input() map: Map;
   @ViewChild('controlwrapper') controlWrapper;
 
-  constructor() { }
+  constructor(private mapService: LeafletMapService) { }
 
   ngOnInit() {
-    if (typeof this.map === 'undefined') {
-      throw new Error('Please provide the map first via the map attribute.');
-    }
-
     // prevent 'Control' is not a propery of L
     let controlObj = (L as any).Control;
 
@@ -42,8 +38,13 @@ export class LeafletGeocoderComponent implements OnInit {
       })
       ;
 
-    // add to the wrapper
-    this.controlWrapper.nativeElement.appendChild(this.control.onAdd(this.map));
+    this.mapService
+      .getMap()
+      .then((map: Map) => {
+        // add to the wrapper
+        this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
+      })
+      ;
   }
 
 }

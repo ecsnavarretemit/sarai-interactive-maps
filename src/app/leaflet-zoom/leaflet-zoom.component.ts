@@ -5,8 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Map, Control } from 'leaflet';
+import { LeafletMapService } from '../leaflet-map.service';
 
 @Component({
   selector: 'app-leaflet-zoom',
@@ -16,26 +17,26 @@ import { Map, Control } from 'leaflet';
 export class LeafletZoomComponent implements OnInit {
   public control: Control;
 
-  @Input() map: Map;
   @ViewChild('controlwrapper') controlWrapper;
 
-  constructor() { }
+  constructor(private mapService: LeafletMapService) { }
 
   ngOnInit() {
-    if (typeof this.map === 'undefined') {
-      throw new Error('Please provide the map first via the map attribute.');
-    }
-
     this.control = new (L as any).Control.Zoom();
 
-    // add to the map
-    this.control.addTo(this.map);
+    this.mapService
+      .getMap()
+      .then((map: Map) => {
+        // add to the map
+        this.control.addTo(map);
 
-    // remove the default container
-    this.control.getContainer().remove();
+        // remove the default container
+        this.control.getContainer().remove();
 
-    // add to the wrapper
-    this.controlWrapper.nativeElement.appendChild(this.control.onAdd(this.map));
+        // add to the wrapper
+        this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
+      })
+      ;
   }
 
 }
