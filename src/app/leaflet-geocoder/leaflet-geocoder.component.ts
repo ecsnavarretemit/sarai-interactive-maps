@@ -23,6 +23,10 @@ export class LeafletGeocoderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (typeof this.map === 'undefined') {
+      throw new Error('Please provide the map first via the map attribute.');
+    }
+
     // prevent 'Control' is not a propery of L
     let controlObj = (L as any).Control;
 

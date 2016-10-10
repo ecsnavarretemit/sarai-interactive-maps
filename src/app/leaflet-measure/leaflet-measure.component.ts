@@ -23,6 +23,10 @@ export class LeafletMeasureComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (typeof this.map === 'undefined') {
+      throw new Error('Please provide the map first via the map attribute.');
+    }
+
     this.control = new (L as any).Control.Measure({
         primaryLengthUnit: 'kilometers',
         secondaryLengthUnit: 'meters',

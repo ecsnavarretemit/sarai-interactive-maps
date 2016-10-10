@@ -35,6 +35,10 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (typeof this.map === 'undefined') {
+      throw new Error('Please provide the map first via the map attribute.');
+    }
+
     // extract the keys and tore to the property
     this.tileKeys = Object.keys(this.tileProvider.baseMaps);
 
