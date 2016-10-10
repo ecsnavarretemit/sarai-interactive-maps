@@ -64,6 +64,12 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
           .fadeOut()
           .promise()
           .then(() => {
+            // remove class on the control wrapper
+            this.$mapControl
+              .closest('.control-wrapper')
+              .addClass('control-wrapper--tile-selector-hidden')
+              ;
+
             resolve();
           }, () => {
             reject();
@@ -78,6 +84,12 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
       if (typeof this.$mapControl === 'undefined') {
         reject();
       } else {
+        // add class the to the control wrapper
+        this.$mapControl
+          .closest('.control-wrapper')
+          .removeClass('control-wrapper--tile-selector-hidden')
+          ;
+
         // hide the button
         this.$mapControlSettings.fadeOut();
 
