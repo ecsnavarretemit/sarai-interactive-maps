@@ -6,7 +6,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Map, MapOptions, WMS } from 'leaflet';
+import { Map, MapOptions, WMS, WMSOptions } from 'leaflet';
 
 @Injectable()
 export class LeafletMapService {
@@ -30,16 +30,10 @@ export class LeafletMapService {
 
   getMap(): Promise<Map> { return this._map; }
 
-  addSingleWMSLayer(layer: WMS): Promise<WMS> {
+  addWMSLayer(url: string, options: WMSOptions): Promise<WMS> {
     return this.getMap()
       .then((map: Map) => {
-        // remove any existing layers
-        this._wmsLayers.forEach((value: WMS) => {
-          map.removeLayer(value);
-        });
-
-        // set the layers to empty array
-        this._wmsLayers = [];
+        let layer = (L as any).tileLayer.wms(url, options);
 
         // add the layer to the map
         map.addLayer(layer);
@@ -49,7 +43,43 @@ export class LeafletMapService {
 
         // return the layer
         return layer;
-      });
+      })
+      ;
+  }
+
+  addWMSLayers(items: Array<any>): Promise<WMS> {
+    return this.getMap()
+      .then((map: Map) => {
+        let layers = items.map((item: any) => {
+          let layer = (L as any).tileLayer.wms(item.url, item.options);
+
+          // the created layer to the map
+          map.addLayer(layer);
+
+          // return the layer
+          return layer;
+        });
+
+        // append to the existing layers
+        this._wmsLayers.concat(layers);
+
+        return layers;
+      })
+      ;
+  }
+
+  clearWMSLayers(): Promise<void> {
+    return this.getMap()
+      .then((map: Map) => {
+        // remove any existing layers
+        this._wmsLayers.forEach((value: WMS) => {
+          map.removeLayer(value);
+        });
+
+        // set the layers to empty array
+        this._wmsLayers = [];
+      })
+      ;
   }
 
   getWMSLayers(): Promise<Array<WMS>> {
