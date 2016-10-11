@@ -2,37 +2,121 @@
     <app-leaflet-wms-layer></app-leaflet-wms-layer>
 
     <div class="control-wrapper control-wrapper--left pull-left">
-        <app-leaflet-button
-            control-class="map__control--map-data-type map__control--suitability-map"
-            btn-tooltip="Suitability Maps"
-            btn-tooltip-position="right">
+        <app-map-type #suitabilityMap>
+            <app-leaflet-button
+                control-class="map__control--map-data-type map__control--suitability-map"
+                btn-tooltip="Suitability Maps"
+                btn-tooltip-position="right"
+                (buttonClick)="suitabilityMap.togglePanel($event)"
+                map-type-button>
 
-            <i class="glyphicon glyphicon-grain" button-content></i>
-        </app-leaflet-button>
+                <i class="glyphicon glyphicon-grain" button-content></i>
+            </app-leaflet-button>
 
-        <app-leaflet-button
-            control-class="map__control--map-data-type map__control--crop-production-area"
-            btn-tooltip="Crop Production Area"
-            btn-tooltip-position="right">
+            <app-leaflet-control-panel map-type-panel>
+                <section class="map__control__section">
+                    <h2 class="map__control__title title">
+                        <span class="title__text">Suitability Map</span>
+                        <span class="pull-right title__icon title__icon--actionable" (click)="suitabilityMap.togglePanel($event)">
+                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
+                        </span>
+                    </h2>
 
-            <i class="glyphicon glyphicon-leaf" button-content></i>
-        </app-leaflet-button>
+                    <div class="map__control__body">
+                        <p>
+                            Shows what crops are best to plant in a specific area to attain maximum yield.
+                        </p>
+                    </div>
+                </section>
+            </app-leaflet-control-panel>
+        </app-map-type>
 
-        <app-leaflet-button
-            control-class="map__control--map-data-type map__control--ndvi"
-            btn-tooltip="Normalized Difference Vegetation Index (NDVI)"
-            btn-tooltip-position="right">
+        <app-map-type #cropProductionArea>
+            <app-leaflet-button
+                control-class="map__control--map-data-type map__control--crop-production-area"
+                btn-tooltip="Crop Production Area"
+                btn-tooltip-position="right"
+                (buttonClick)="cropProductionArea.togglePanel($event)"
+                map-type-button>
 
-            <i class="glyphicon glyphicon-cloud" button-content></i>
-        </app-leaflet-button>
+                <i class="glyphicon glyphicon-leaf" button-content></i>
+            </app-leaflet-button>
 
-        <app-leaflet-button
-            control-class="map__control--map-data-type map__control--rainfall-map"
-            btn-tooltip="Rainfall Map"
-            btn-tooltip-position="right">
+            <app-leaflet-control-panel map-type-panel>
+                <section class="map__control__section">
+                    <h2 class="map__control__title title">
+                        <span class="title__text">Crop Production</span>
+                        <span class="pull-right title__icon title__icon--actionable" (click)="cropProductionArea.togglePanel($event)">
+                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
+                        </span>
+                    </h2>
 
-            <i class="glyphicon glyphicon-tint" button-content></i>
-        </app-leaflet-button>
+                    <div class="map__control__body">
+                        <p>
+                            Some text here.....
+                        </p>
+                    </div>
+                </section>
+            </app-leaflet-control-panel>
+        </app-map-type>
+
+        <app-map-type #ndvi>
+            <app-leaflet-button
+                control-class="map__control--map-data-type map__control--ndvi"
+                btn-tooltip="Normalized Difference Vegetation Index (NDVI)"
+                btn-tooltip-position="right"
+                (buttonClick)="ndvi.togglePanel($event)"
+                map-type-button>
+
+                <i class="glyphicon glyphicon-cloud" button-content></i>
+            </app-leaflet-button>
+
+            <app-leaflet-control-panel map-type-panel>
+                <section class="map__control__section">
+                    <h2 class="map__control__title title">
+                        <span class="title__text">Normalized Difference Vegetation Index (NDVI)</span>
+                        <span class="pull-right title__icon title__icon--actionable" (click)="ndvi.togglePanel($event)">
+                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
+                        </span>
+                    </h2>
+
+                    <div class="map__control__body">
+                        <p>
+                            Some text here.....
+                        </p>
+                    </div>
+                </section>
+            </app-leaflet-control-panel>
+        </app-map-type>
+
+        <app-map-type #rainfallMap>
+            <app-leaflet-button
+                control-class="map__control--map-data-type map__control--rainfall-map"
+                btn-tooltip="Rainfall Map"
+                btn-tooltip-position="right"
+                (buttonClick)="rainfallMap.togglePanel($event)"
+                map-type-button>
+
+                <i class="glyphicon glyphicon-tint" button-content></i>
+            </app-leaflet-button>
+
+            <app-leaflet-control-panel map-type-panel>
+                <section class="map__control__section">
+                    <h2 class="map__control__title title">
+                        <span class="title__text">Rainfall Map</span>
+                        <span class="pull-right title__icon title__icon--actionable" (click)="rainfallMap.togglePanel($event)">
+                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
+                        </span>
+                    </h2>
+
+                    <div class="map__control__body">
+                        <p>
+                            Some text here.....
+                        </p>
+                    </div>
+                </section>
+            </app-leaflet-control-panel>
+        </app-map-type>
     </div>
 
     <div class="control-wrapper control-wrapper--right pull-right">
