@@ -24,6 +24,7 @@ import { LeafletMeasureComponent } from './leaflet-measure/leaflet-measure.compo
 import { LeafletButtonComponent } from './leaflet-button/leaflet-button.component';
 import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.component';
 import { LeafletControlPanelComponent } from './leaflet-control-panel/leaflet-control-panel.component';
+import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-opacity-slider.component';
 import { MapTypeComponent } from './map-type/map-type.component';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MapTypeComponent } from './map-type/map-type.component';
     LeafletButtonComponent,
     LeafletWmsLayerComponent,
     LeafletControlPanelComponent,
+    LeafletOpacitySliderComponent,
     MapTypeComponent
   ],
   imports: [
