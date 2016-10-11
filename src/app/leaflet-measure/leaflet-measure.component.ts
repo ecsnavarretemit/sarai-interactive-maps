@@ -20,7 +20,7 @@ export class LeafletMeasureComponent implements OnInit {
 
   @ViewChild('controlwrapper') controlWrapper;
 
-  constructor(private mapService: LeafletMapService) { }
+  constructor(private _mapService: LeafletMapService) { }
 
   ngOnInit() {
     this.control = new (L as any).Control.Measure({
@@ -31,7 +31,7 @@ export class LeafletMeasureComponent implements OnInit {
         completedColor: '#ffffff'
     });
 
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         // add to the wrapper

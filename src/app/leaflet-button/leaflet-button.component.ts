@@ -13,7 +13,7 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef }
   styleUrls: ['./leaflet-button.component.sass'],
 })
 export class LeafletButtonComponent implements OnInit {
-  private tooltipEnabled = false;
+  private _tooltipEnabled = false;
 
   @Input('control-class') controlClass: string;
   @Input('btn-tooltip') btnTooltip: string = 'Default Text';
@@ -33,7 +33,7 @@ export class LeafletButtonComponent implements OnInit {
     }
 
     if (this.btnTooltip !== 'Default Text' && this.btnTooltip !== '') {
-      this.tooltipEnabled = true;
+      this._tooltipEnabled = true;
     }
   }
 

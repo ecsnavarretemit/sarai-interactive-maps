@@ -6,10 +6,8 @@
  */
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Map } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
-import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -23,18 +21,16 @@ export class LeafletMapComponent implements OnInit {
   @ViewChild('mapEl') mapEl;
 
   constructor(
-    public store: Store<any>,
-    private mapService: LeafletMapService,
-    private tileProvider: LeafletTileProviderService
+    private _mapService: LeafletMapService
   ) {}
 
   ngOnInit() {
     // create the map instance
-    this.mapService.createMap(this.mapEl.nativeElement, {
+    this._mapService.createMap(this.mapEl.nativeElement, {
       zoomControl: false
     });
 
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         map.setView([this.lat, this.lng], this.zoom);

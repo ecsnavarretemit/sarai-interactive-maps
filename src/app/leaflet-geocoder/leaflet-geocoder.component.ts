@@ -20,7 +20,7 @@ export class LeafletGeocoderComponent implements OnInit {
 
   @ViewChild('controlwrapper') controlWrapper;
 
-  constructor(private mapService: LeafletMapService) { }
+  constructor(private _mapService: LeafletMapService) { }
 
   ngOnInit() {
     // prevent 'Control' is not a propery of L
@@ -38,7 +38,7 @@ export class LeafletGeocoderComponent implements OnInit {
       })
       ;
 
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         // add to the wrapper

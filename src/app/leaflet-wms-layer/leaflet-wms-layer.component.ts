@@ -17,7 +17,7 @@ import { Map, WMS } from 'leaflet';
 export class LeafletWmsLayerComponent implements OnInit, AfterViewInit {
   public layer: WMS;
 
-  constructor(private mapService: LeafletMapService) { }
+  constructor(private _mapService: LeafletMapService) { }
 
   ngOnInit() {
     let workspace = 'sarai-latest';
@@ -40,7 +40,7 @@ export class LeafletWmsLayerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         // add to the map when the view is finally initialized

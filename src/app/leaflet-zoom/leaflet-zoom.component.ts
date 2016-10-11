@@ -19,12 +19,12 @@ export class LeafletZoomComponent implements OnInit {
 
   @ViewChild('controlwrapper') controlWrapper;
 
-  constructor(private mapService: LeafletMapService) { }
+  constructor(private _mapService: LeafletMapService) { }
 
   ngOnInit() {
     this.control = new (L as any).Control.Zoom();
 
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         // add to the map

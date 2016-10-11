@@ -20,30 +20,30 @@ import 'jquery';
 export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   public tileKeys: any;
   public tileProviderKey: string;
-  private $mapControl: JQuery;
-  private $mapControlSettings: JQuery;
+  private _$mapControl: JQuery;
+  private _$mapControlSettings: JQuery;
 
   @ViewChild('controlwrapper') controlWrapper;
   @ViewChild('controlsettings') controlSettings;
   @ViewChild('tileselector') tileSelector;
 
   constructor(
-    public store: Store<any>,
-    private mapService: LeafletMapService,
-    private tileProvider: LeafletTileProviderService
+    private _store: Store<any>,
+    private _mapService: LeafletMapService,
+    private _tileProvider: LeafletTileProviderService
   ) {
     this.tileProviderKey = 'Google Satellite';
   }
 
   ngOnInit() {
     // extract the keys and tore to the property
-    this.tileKeys = Object.keys(this.tileProvider.baseMaps);
+    this.tileKeys = Object.keys(this._tileProvider.baseMaps);
 
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         // add default tile
-        this.tileProvider.baseMaps[this.tileProviderKey].addTo(map);
+        this._tileProvider.baseMaps[this.tileProviderKey].addTo(map);
       });
   }
 
@@ -52,25 +52,25 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
     this.tileSelector.nativeElement.value = this.tileProviderKey;
 
     // cache the selection
-    this.$mapControl = $( this.controlWrapper.nativeElement );
-    this.$mapControlSettings = $( this.controlSettings.controlWrapper.nativeElement );
+    this._$mapControl = $( this.controlWrapper.nativeElement );
+    this._$mapControlSettings = $( this.controlSettings.controlWrapper.nativeElement );
   }
 
   onHideControl(event): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (typeof this.$mapControl === 'undefined') {
+      if (typeof this._$mapControl === 'undefined') {
         reject();
       } else {
         // show the button
-        this.$mapControlSettings.fadeIn();
+        this._$mapControlSettings.fadeIn();
 
         // hide the map control
-        this.$mapControl
+        this._$mapControl
           .fadeOut()
           .promise()
           .then(() => {
             // remove class on the control wrapper
-            this.$mapControl
+            this._$mapControl
               .closest('.control-wrapper')
               .addClass('control-wrapper--tile-selector-hidden')
               ;
@@ -86,20 +86,20 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
   onShowControl(event): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (typeof this.$mapControl === 'undefined') {
+      if (typeof this._$mapControl === 'undefined') {
         reject();
       } else {
         // add class the to the control wrapper
-        this.$mapControl
+        this._$mapControl
           .closest('.control-wrapper')
           .removeClass('control-wrapper--tile-selector-hidden')
           ;
 
         // hide the button
-        this.$mapControlSettings.fadeOut();
+        this._$mapControlSettings.fadeOut();
 
         // show the map control
-        this.$mapControl
+        this._$mapControl
           .fadeIn()
           .promise()
           .then(() => {
@@ -114,14 +114,14 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
   onTileChange(event) {
     let value = event.target.value;
-    let resolvedTile = this.tileProvider.baseMaps[event.target.value];
+    let resolvedTile = this._tileProvider.baseMaps[event.target.value];
 
-    this.mapService
+    this._mapService
       .getMap()
       .then((map: Map) => {
         if (typeof resolvedTile !== 'undefined') {
           // remove the current layer
-          map.removeLayer(this.tileProvider.baseMaps[this.tileProviderKey]);
+          map.removeLayer(this._tileProvider.baseMaps[this.tileProviderKey]);
 
           // add the new layer
           resolvedTile.addTo(map);
@@ -130,7 +130,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
           this.tileProviderKey = value;
 
           // store the resolved tile provider to the state manager
-          this.store.dispatch({
+          this._store.dispatch({
             type: 'SET_TILE_PROVIDER',
             payload: {
               tileProvider: value
