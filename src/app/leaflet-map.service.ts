@@ -6,12 +6,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Map, MapOptions } from 'leaflet';
+import { Map, MapOptions, WMS } from 'leaflet';
 
 @Injectable()
 export class LeafletMapService {
   private _map: Promise<Map>;
   private _mapResolver: (value?: Map) => void;
+  private _wmsLayers: Array<WMS> = [];
 
   constructor() {
     this._map = new Promise<Map>((resolve: () => void) => {
@@ -28,6 +29,35 @@ export class LeafletMapService {
   }
 
   getMap(): Promise<Map> { return this._map; }
+
+  addSingleWMSLayer(layer: WMS): Promise<WMS> {
+    return this.getMap()
+      .then((map: Map) => {
+        // remove any existing layers
+        this._wmsLayers.forEach((value: WMS) => {
+          map.removeLayer(value);
+        });
+
+        // set the layers to empty array
+        this._wmsLayers = [];
+
+        // add the layer to the map
+        map.addLayer(layer);
+
+        // save the reference of the layer to the layers propery
+        this._wmsLayers.push(layer);
+
+        // return the layer
+        return layer;
+      });
+  }
+
+  getWMSLayers(): Promise<Array<WMS>> {
+    return this.getMap()
+      .then((map: Map) => {
+        return this._wmsLayers;
+      });
+  }
 
 }
 

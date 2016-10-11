@@ -7,7 +7,7 @@
 
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
-import { Map, WMS } from 'leaflet';
+import { WMS } from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-wms-layer',
@@ -40,13 +40,7 @@ export class LeafletWmsLayerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this._mapService
-      .getMap()
-      .then((map: Map) => {
-        // add to the map when the view is finally initialized
-        this.layer.addTo( map );
-      })
-      ;
+    this._mapService.addSingleWMSLayer(this.layer);
   }
 
 }
