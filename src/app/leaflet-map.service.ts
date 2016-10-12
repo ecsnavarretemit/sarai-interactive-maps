@@ -31,7 +31,19 @@ export class LeafletMapService {
 
   getMap(): Promise<Map> { return this._map; }
 
-  addWMSLayer(id: string, url: string, options: WMSOptions): Promise<WMS> {
+  addWMSLayer(id: string, layer: WMS): Promise<void> {
+    return this.getMap()
+      .then((map: Map) => {
+        // add the layer to the map
+        map.addLayer(layer);
+
+        // save the reference of the layer to the layers propery
+        this._wmsLayers[id] = layer;
+      })
+      ;
+  }
+
+  addNewWMSLayer(id: string, url: string, options: WMSOptions): Promise<WMS> {
     return this.getMap()
       .then((map: Map) => {
         if (_.has(this._wmsLayers, id)) {
@@ -52,7 +64,7 @@ export class LeafletMapService {
       ;
   }
 
-  addWMSLayers(url: string, items: Array<{id: string, options: WMSOptions}>): Promise<Array<WMS>> {
+  addNewWMSLayers(url: string, items: Array<{id: string, options: WMSOptions}>): Promise<Array<WMS>> {
     return this.getMap()
       .then((map: Map) => {
         let layers = _.chain(items)
@@ -100,9 +112,13 @@ export class LeafletMapService {
       ;
   }
 
-  removeWMSLAyer(id: string): Promise<void> {
+  removeWMSLayer(id: string): Promise<void> {
     return this.getMap()
       .then((map: Map) => {
+        if (!_.has(this._wmsLayers, id)) {
+          throw new Error('ID does not exist. Cannot remove WMS layer.');
+        }
+
         map.removeLayer(this._wmsLayers[id]);
 
         // remove the property from the object store.
