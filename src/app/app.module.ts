@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { mapReducer } from './map.state';
+import { WmsLayerService } from './wms-layer.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
@@ -57,7 +58,8 @@ import { MapTypeComponent } from './map-type/map-type.component';
   ],
   providers: [
     LeafletMapService,
-    LeafletTileProviderService
+    LeafletTileProviderService,
+    WmsLayerService
   ],
   bootstrap: [AppComponent]
 })
