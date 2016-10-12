@@ -17,7 +17,7 @@ import { WMSOptions } from 'leaflet';
 })
 export class AppComponent {
   public WMSTileUrl = this._wmsLayerService.getUrl();
-  public layersOptionsCollection: Array<WMSOptions>;
+  public layersOptionsCollection: Array<WMSOptions> = [];
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
