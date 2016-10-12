@@ -15,9 +15,9 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef }
 export class LeafletButtonComponent implements OnInit {
   private _tooltipEnabled = false;
 
-  @Input('control-class') controlClass: string;
-  @Input('btn-tooltip') btnTooltip: string = 'Default Text';
-  @Input('btn-tooltip-position') btnTooltipPosition: string = 'left';
+  @Input() controlClass: string;
+  @Input() btnTooltip: string = 'Default Text';
+  @Input() btnTooltipPosition: string = 'left';
   @Output() buttonClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('button') button: ElementRef;

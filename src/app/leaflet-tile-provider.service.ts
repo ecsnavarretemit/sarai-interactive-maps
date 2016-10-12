@@ -26,12 +26,12 @@ export class LeafletTileProviderService {
     };
 
     // Google Maps Tiles
-    this.baseMaps['Google Satellite'] = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    this.baseMaps['Google Satellite'] = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         attribution: 'Map data &copy; <a href="https://www.google.com/" target="_blank">Google</a>'
     });
 
-    this.baseMaps['Google Street'] = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    this.baseMaps['Google Street'] = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
         attribution: 'Map data &copy; <a href="https://www.google.com/" target="_blank">Google</a>'
     });

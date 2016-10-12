@@ -7,14 +7,23 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { LeafletMeasureComponent } from './leaflet-measure.component';
+import { LeafletMapService } from '../leaflet-map.service';
 
 describe('Component: LeafletMeasure', () => {
-  it('should create an instance', () => {
-    let component = new LeafletMeasureComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      LeafletMapService,
+      LeafletMeasureComponent
+    ]
+  }));
+
+  it('should create an instance', inject([LeafletMeasureComponent], (component: LeafletMeasureComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 

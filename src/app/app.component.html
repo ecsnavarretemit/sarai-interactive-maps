@@ -4,9 +4,9 @@
     <div class="control-wrapper control-wrapper--left pull-left">
         <app-map-type #suitabilityMap>
             <app-leaflet-button
-                control-class="map__control--map-data-type map__control--suitability-map"
-                btn-tooltip="Suitability Maps"
-                btn-tooltip-position="right"
+                controlClass="map__control--map-data-type map__control--suitability-map"
+                btnTooltip="Suitability Maps"
+                btnTooltipPosition="right"
                 (buttonClick)="suitabilityMap.togglePanel($event)"
                 map-type-button>
 
@@ -33,9 +33,9 @@
 
         <app-map-type #cropProductionArea>
             <app-leaflet-button
-                control-class="map__control--map-data-type map__control--crop-production-area"
-                btn-tooltip="Crop Production Area"
-                btn-tooltip-position="right"
+                controlClass="map__control--map-data-type map__control--crop-production-area"
+                btnTooltip="Crop Production Area"
+                btnTooltipPosition="right"
                 (buttonClick)="cropProductionArea.togglePanel($event)"
                 map-type-button>
 
@@ -62,9 +62,9 @@
 
         <app-map-type #ndvi>
             <app-leaflet-button
-                control-class="map__control--map-data-type map__control--ndvi"
-                btn-tooltip="Normalized Difference Vegetation Index (NDVI)"
-                btn-tooltip-position="right"
+                controlClass="map__control--map-data-type map__control--ndvi"
+                btnTooltip="Normalized Difference Vegetation Index (NDVI)"
+                btnTooltipPosition="right"
                 (buttonClick)="ndvi.togglePanel($event)"
                 map-type-button>
 
@@ -91,9 +91,9 @@
 
         <app-map-type #rainfallMap>
             <app-leaflet-button
-                control-class="map__control--map-data-type map__control--rainfall-map"
-                btn-tooltip="Rainfall Map"
-                btn-tooltip-position="right"
+                controlClass="map__control--map-data-type map__control--rainfall-map"
+                btnTooltip="Rainfall Map"
+                btnTooltipPosition="right"
                 (buttonClick)="rainfallMap.togglePanel($event)"
                 map-type-button>
 
