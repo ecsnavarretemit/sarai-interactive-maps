@@ -19,7 +19,13 @@ const routes: Routes = [
   {
     path: 'suitability-maps',
     component: SuitabilityMapsComponent
-  }
+  },
+
+  // duplicated for require url parameter `crop`
+  {
+    path: 'suitability-maps/:crop',
+    component: SuitabilityMapsComponent
+  },
 ];
 
 @NgModule({

@@ -6,6 +6,7 @@
  */
 
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { LeafletWmsLayerComponent } from '../leaflet-wms-layer/leaflet-wms-layer.component';
 import { WmsLayerService } from '../wms-layer.service';
 import { WMSOptions } from 'leaflet';
@@ -18,14 +19,26 @@ import { WMSOptions } from 'leaflet';
 export class SuitabilityMapsComponent implements OnInit {
   public WMSTileUrl = this._wmsLayerService.getUrl();
   public layersOptionsCollection: Array<WMSOptions> = [];
+  public crop = 'rice';
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
-  constructor(private _wmsLayerService: WmsLayerService) {
-    this.layersOptionsCollection = this._wmsLayerService.getSuitabilityMapCountryLevelLayers('rice');
-  }
+  constructor(
+    private _wmsLayerService: WmsLayerService,
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._route.params.forEach((params: Params) => {
+      if (typeof params['crop'] !== 'undefined') {
+        this.crop = params['crop'];
+      }
+
+      this.layersOptionsCollection = this._wmsLayerService
+        .getSuitabilityMapCountryLevelLayers(this.crop);
+    });
+  }
 
 }
 
