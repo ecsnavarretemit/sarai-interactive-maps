@@ -5,25 +5,30 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
-import { Map, WMS, WMSOptions } from 'leaflet';
+import { WMS, WMSOptions } from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-wms-layer',
   templateUrl: './leaflet-wms-layer.component.html',
   styleUrls: ['./leaflet-wms-layer.component.sass']
 })
-export class LeafletWmsLayerComponent implements OnInit {
+export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
   public layer: WMS;
   private _layerAdded: boolean = false;
 
+  @Input() id: string;
   @Input() url: string;
   @Input() layerOptions: WMSOptions;
 
   constructor(private _mapService: LeafletMapService) {}
 
   ngOnInit() {
+    if (typeof this.id === 'undefined') {
+      throw new Error('ID should be provided for this layer.');
+    }
+
     if (typeof this.url === 'undefined') {
       throw new Error('WMS Tile URL should be provided.');
     }
@@ -33,7 +38,7 @@ export class LeafletWmsLayerComponent implements OnInit {
     }
 
     this._mapService
-      .addWMSLayer(this.url, this.layerOptions)
+      .addNewWMSLayer(this.id, this.url, this.layerOptions)
       .then((layer: WMS) => {
         // store the generated layer
         this.layer = layer;
@@ -44,24 +49,42 @@ export class LeafletWmsLayerComponent implements OnInit {
       ;
   }
 
-  toggleLayer() {
+  toggleLayer(): Promise<void> {
+    if (this._layerAdded) {
+      return this._mapService
+        .removeWMSLayer(this.id)
+        .then(() => {
+          this._layerAdded = false;
+        });
+    } else {
+      console.log(this.layer);
+      return this._mapService
+        .addWMSLayer(this.id, this.layer)
+        .then(() => {
+          this._layerAdded = true;
+        })
+        ;
+    }
+  }
+
+  ngOnDestroy() {
     this._mapService
-      .getMap()
-      .then((map: Map) => {
+      .removeWMSLayer(this.id)
+      .then(() => {
         if (typeof this.layer === 'undefined') {
           throw new Error('Layer has not been processed and added yet!.');
         }
 
-        // remove the layer if it is already added,
-        // else add it back to the map.
-        if (this._layerAdded) {
-          map.removeLayer(this.layer);
-        } else {
-          map.addLayer(this.layer);
+        // return immediately if the layer is already removed
+        if (!this._layerAdded) {
+          return;
         }
 
-        // toggle the value of the flag between true and false
-        this._layerAdded = !this._layerAdded;
+        // mark the flag as false
+        this._layerAdded = false;
+
+        // remove the reference to the object
+        this.layer = undefined;
       })
       ;
   }
