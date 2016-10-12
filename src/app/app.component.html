@@ -1,10 +1,5 @@
 <app-leaflet-map lat="13" lng="122" zoom="6" #leaflet>
-    <app-leaflet-wms-layer
-        *ngFor="let layerOptions of layersOptionsCollection"
-        [url]="WMSTileUrl"
-        [layerOptions]="layerOptions"
-        [id]="layerOptions.layers">
-        </app-leaflet-wms-layer>
+    <router-outlet></router-outlet>
 
     <div class="control-wrapper control-wrapper--left pull-left">
         <app-map-type #suitabilityMap>

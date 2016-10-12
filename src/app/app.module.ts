@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { mapReducer } from './map.state';
 import { WmsLayerService } from './wms-layer.service';
@@ -27,6 +28,8 @@ import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.
 import { LeafletControlPanelComponent } from './leaflet-control-panel/leaflet-control-panel.component';
 import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-opacity-slider.component';
 import { MapTypeComponent } from './map-type/map-type.component';
+import { HomeComponent } from './home/home.component';
+import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 
 @NgModule({
   declarations: [
@@ -40,10 +43,13 @@ import { MapTypeComponent } from './map-type/map-type.component';
     LeafletWmsLayerComponent,
     LeafletControlPanelComponent,
     LeafletOpacitySliderComponent,
-    MapTypeComponent
+    MapTypeComponent,
+    HomeComponent,
+    SuitabilityMapsComponent
   ],
   imports: [
     BrowserModule,
+    SaraiNg2RoutingModule,
     HttpModule,
     TooltipModule,
     StoreModule.provideStore({
