@@ -7,14 +7,27 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 import { LeafletTileSelectorComponent } from './leaflet-tile-selector.component';
+import { LeafletMapService } from '../leaflet-map.service';
+import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 
 describe('Component: LeafletTileSelector', () => {
-  it('should create an instance', () => {
-    let component = new LeafletTileSelectorComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      Store,
+      LeafletMapService,
+      LeafletTileProviderService,
+      LeafletTileSelectorComponent
+    ]
+  }));
+
+  it('should create an instance', inject([LeafletTileSelectorComponent], (component: LeafletTileSelectorComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 
