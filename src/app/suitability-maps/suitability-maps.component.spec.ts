@@ -7,14 +7,26 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Router, ActivatedRoute, } from '@angular/router';
 import { SuitabilityMapsComponent } from './suitability-maps.component';
+import { WmsLayerService } from '../wms-layer.service';
 
 describe('Component: SuitabilityMaps', () => {
-  it('should create an instance', () => {
-    let component = new SuitabilityMapsComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      Router,
+      ActivatedRoute,
+      WmsLayerService,
+      SuitabilityMapsComponent
+    ]
+  }));
+
+  it('should create an instance', inject([SuitabilityMapsComponent], (component: SuitabilityMapsComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 

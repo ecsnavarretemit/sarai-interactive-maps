@@ -7,14 +7,23 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { LeafletZoomComponent } from './leaflet-zoom.component';
+import { LeafletMapService } from '../leaflet-map.service';
 
 describe('Component: LeafletZoom', () => {
-  it('should create an instance', () => {
-    let component = new LeafletZoomComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      LeafletMapService,
+      LeafletZoomComponent
+    ]
+  }));
+
+  it('should create an instance', inject([LeafletZoomComponent], (component: LeafletZoomComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 

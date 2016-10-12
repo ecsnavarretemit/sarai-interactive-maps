@@ -7,14 +7,23 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider.component';
+import { LeafletMapService } from '../leaflet-map.service';
 
 describe('Component: LeafletOpacitySlider', () => {
-  it('should create an instance', () => {
-    let component = new LeafletOpacitySliderComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      LeafletMapService,
+      LeafletOpacitySliderComponent
+    ]
+  }));
+
+  it('should create an instance', inject([LeafletOpacitySliderComponent], (component: LeafletOpacitySliderComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 
