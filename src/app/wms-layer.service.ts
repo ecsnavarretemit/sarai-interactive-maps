@@ -47,10 +47,11 @@ export class WmsLayerService {
 
     switch (crop.toLocaleLowerCase()) {
       case 'banana':
+      case 'rice':
         layers = [
-          `${this._workspace}:banana_simplified_gridcode1`,
-          `${this._workspace}:banana_simplified_gridcode2`,
-          `${this._workspace}:banana_simplified_gridcode3`
+          `${this._workspace}:${crop}_simplified_gridcode1`,
+          `${this._workspace}:${crop}_simplified_gridcode2`,
+          `${this._workspace}:${crop}_simplified_gridcode3`
         ];
 
         break;

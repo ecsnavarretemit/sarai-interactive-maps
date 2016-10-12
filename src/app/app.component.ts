@@ -23,7 +23,7 @@ export class AppComponent {
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
   constructor(private _wmsLayerService: WmsLayerService) {
-    this.layersOptionsCollection = this._wmsLayerService.getSuitabilityMapCountryLevelLayers('banana');
+    this.layersOptionsCollection = this._wmsLayerService.getSuitabilityMapCountryLevelLayers('rice');
   }
 
 }
