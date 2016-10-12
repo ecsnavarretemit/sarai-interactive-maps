@@ -7,7 +7,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
-import { WMS, WMSOptions } from 'leaflet';
+import { Map, WMS, WMSOptions } from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-wms-layer',
@@ -16,6 +16,7 @@ import { WMS, WMSOptions } from 'leaflet';
 })
 export class LeafletWmsLayerComponent implements OnInit {
   public layer: WMS;
+  private _layerAdded: boolean = false;
 
   @Input() url: string;
   @Input() layerOptions: WMSOptions;
@@ -34,9 +35,33 @@ export class LeafletWmsLayerComponent implements OnInit {
     this._mapService
       .addWMSLayer(this.url, this.layerOptions)
       .then((layer: WMS) => {
+        // store the generated layer
         this.layer = layer;
 
-        console.log(layer);
+        // set the flag to true
+        this._layerAdded = true;
+      })
+      ;
+  }
+
+  toggleLayer() {
+    this._mapService
+      .getMap()
+      .then((map: Map) => {
+        if (typeof this.layer === 'undefined') {
+          throw new Error('Layer has not been processed and added yet!.');
+        }
+
+        // remove the layer if it is already added,
+        // else add it back to the map.
+        if (this._layerAdded) {
+          map.removeLayer(this.layer);
+        } else {
+          map.addLayer(this.layer);
+        }
+
+        // toggle the value of the flag between true and false
+        this._layerAdded = !this._layerAdded;
       })
       ;
   }
