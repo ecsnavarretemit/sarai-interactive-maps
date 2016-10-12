@@ -5,8 +5,8 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Map } from 'leaflet';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { WMS } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 
 @Component({
@@ -16,17 +16,33 @@ import { LeafletMapService } from '../leaflet-map.service';
 })
 export class LeafletOpacitySliderComponent implements OnInit {
   @Input() title: string = 'Layer Overlay Opacity';
+  @Input() opacity: number = 1;
   @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('range') range: ElementRef;
 
   constructor(private _mapService: LeafletMapService) {}
 
   ngOnInit() {
-    this._mapService
-      .getMap()
-      .then((map: Map) => {
+    // reflect the default value
+    this.range.nativeElement.value = this.opacity;
 
+    // set the default opacity
+    this.setOpacity(this.opacity);
+  }
+
+  setOpacity(opacity: number) {
+    this._mapService
+      .getWMSLayers()
+      .then((layers: any) => {
+        _.each(layers, (layer: WMS) => {
+          layer.setOpacity(opacity);
+        });
       })
       ;
+  }
+
+  adjustOpacity(event) {
+    this.setOpacity(this.range.nativeElement.value);
   }
 
 }

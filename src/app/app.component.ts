@@ -18,6 +18,7 @@ import { WMSOptions } from 'leaflet';
 export class AppComponent {
   public WMSTileUrl = this._wmsLayerService.getUrl();
   public layersOptionsCollection: Array<WMSOptions> = [];
+  public layersOpacity = 0.6;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
