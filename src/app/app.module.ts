@@ -9,7 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
-import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { mapReducer } from './map.state';
@@ -52,6 +52,7 @@ import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.co
     SaraiNg2RoutingModule,
     HttpModule,
     TooltipModule,
+    AccordionModule,
     StoreModule.provideStore({
       map: mapReducer
     }, {
