@@ -57,7 +57,6 @@ export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
           this._layerAdded = false;
         });
     } else {
-      console.log(this.layer);
       return this._mapService
         .addWMSLayer(this.id, this.layer)
         .then(() => {
