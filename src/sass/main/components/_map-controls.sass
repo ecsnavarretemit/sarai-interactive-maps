@@ -52,6 +52,53 @@
   .map__control__title
     border-bottom: 1px solid #FFFFFF
 
+// [Suitability Map Controls] ::start
+
+.suitability-level-filter
+  margin-top: 10px
+
+.map__control--panel
+  .panel
+    +border-top-radius(0)
+    +border-right-radius(0)
+    +border-bottom-radius(0)
+    +border-left-radius(0)
+
+  .panel-heading
+    position: relative
+    padding: 5px 10px 5px 45px
+    text-transform: uppercase
+
+    .heading__icon
+      position: absolute
+      left: 10px
+
+    .heading__text
+      line-height: 1.9
+
+  .panel-body
+    padding: 0
+
+  .subcrop
+    padding: 15px
+    border-bottom: 1px solid #DDDDDD
+
+    &:last-child
+      border-bottom: none
+
+  .accordion-toggle
+    font-weight: normal
+    outline: none
+
+    &:focus
+      outline: none
+
+    &:hover
+      color: #006400
+      text-decoration: none
+
+// [Suitability Map Controls] ::start
+
 // --------------------------------------
 // [Control Panel] ::end
 // --------------------------------------
