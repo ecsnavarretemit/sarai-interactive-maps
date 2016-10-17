@@ -17,7 +17,7 @@ export class AppComponent {
   public layersOpacity = 0.6;
   public cropData: Array<any> = [];
 
-  constructor(private _router: Router) {
+  constructor(public router: Router) {
     this.cropData = [
       {
         name: 'Rice',
@@ -49,13 +49,13 @@ export class AppComponent {
     ];
   }
 
-  suitabilityRedirect(crop: string, containsChild = true) {
+  suitabilityRedirect(event, crop: string, containsChild = true) {
     if (containsChild) {
       return;
     }
 
     // redirect to the URL
-    this._router.navigateByUrl(`/suitability-maps/${crop}`);
+    this.router.navigateByUrl(`/suitability-maps/${crop}`);
   }
 
 }

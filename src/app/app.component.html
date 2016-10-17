@@ -27,11 +27,10 @@
                             Shows what crops are best to plant in a specific area to attain maximum yield.
                         </p>
 
-                        <accordion closeOthers="true">
-                            <accordion-group *ngFor="let data of cropData" [isDisabled]="!data.subcrops">
+                        <accordion closeOthers="true" *ngIf="cropData.length > 0">
+                            <accordion-group *ngFor="let data of cropData" [isDisabled]="!data.subcrops" [class.active]="router.isActive('/suitability-maps/' + data.slug)">
                                 <div accordion-heading
-                                    [attr.data-crop-name]="data.slug"
-                                    (click)="suitabilityRedirect(data.slug, !!data.subcrops)">
+                                    (click)="suitabilityRedirect($event, data.slug, !!data.subcrops)">
                                     <span class="heading__icon">
                                         <i class="crop-icon crop-icon--{{ data.slug }}"></i>
                                     </span>
@@ -40,8 +39,8 @@
 
                                 <div class="subcrop"
                                     *ngFor="let subcrop of data.subcrops"
-                                    [attr.data-crop-name]="subcrop.slug"
-                                    (click)="suitabilityRedirect(subcrop.slug, false)">
+                                    [class.active]="router.isActive('/suitability-maps/' + subcrop.slug)"
+                                    (click)="suitabilityRedirect($event, subcrop.slug, false)">
                                     {{ subcrop.name }}
                                 </div>
                             </accordion-group>
