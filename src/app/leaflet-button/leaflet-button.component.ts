@@ -38,7 +38,11 @@ export class LeafletButtonComponent implements OnInit {
   }
 
   onClick(event) {
+    // emit the button click event
     this.buttonClick.emit(event);
+
+    // toggle the inverted class
+    this.button.nativeElement.classList.toggle('btn--inverted');
   }
 
 }
