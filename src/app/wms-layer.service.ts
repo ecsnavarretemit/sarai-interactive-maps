@@ -7,12 +7,12 @@
 
 import { Injectable } from '@angular/core';
 import { WMSOptions, CRS } from 'leaflet';
-import { assign } from 'lodash';
+import { assign, snakeCase } from 'lodash';
 
 @Injectable()
 export class WmsLayerService {
   private _leafletApi: any = L;
-  private _workspace: string = 'sarai-20160530';
+  private _workspace: string = 'sarai-20161014';
 
   public imageFormat: string = 'image/png';
   public transparent: boolean = true;
@@ -20,11 +20,7 @@ export class WmsLayerService {
   public crs: CRS = this._leafletApi.CRS.EPSG900913;
   public wmsTileLayerUrl = `http://202.92.144.40:8080/geoserver/${this._workspace}/wms?tiled=true`;
 
-  constructor() {
-    // country-simplified: 1, 2, 3 (Country - Regional)
-    // provincial-simplified: 1, 2, 3 (Regional - Provincial)
-    // municipal-detailed: 10, 21-27, 31-37 (Municipal)
-  }
+  constructor() {}
 
   getUrl(): string {
     return this.wmsTileLayerUrl;
@@ -48,10 +44,14 @@ export class WmsLayerService {
     switch (crop.toLocaleLowerCase()) {
       case 'banana':
       case 'rice':
+      case 'cacao':
+      case 'coffee-arabica':
+      case 'coffee-robusta':
+      case 'corn-dry':
+      case 'corn-wet':
+      case 'coconut':
         layers = [
-          `${this._workspace}:${crop}_simplified_gridcode1`,
-          `${this._workspace}:${crop}_simplified_gridcode2`,
-          `${this._workspace}:${crop}_simplified_gridcode3`
+          `${this._workspace}:${snakeCase(crop)}_15_layers_gridcode_all`
         ];
 
         break;
