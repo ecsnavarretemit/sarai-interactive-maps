@@ -6,6 +6,7 @@
  */
 
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent {
   public layersOpacity = 0.6;
   public cropData: Array<any> = [];
 
-  constructor() {
+  constructor(private _router: Router) {
     this.cropData = [
       {
         name: 'Rice',
@@ -46,6 +47,15 @@ export class AppComponent {
         slug: 'cacao'
       }
     ];
+  }
+
+  suitabilityRedirect(crop: string, containsChild = true) {
+    if (containsChild) {
+      return;
+    }
+
+    // redirect to the URL
+    this._router.navigateByUrl(`/suitability-maps/${crop}`);
   }
 
 }

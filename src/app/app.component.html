@@ -29,14 +29,19 @@
 
                         <accordion closeOthers="true">
                             <accordion-group *ngFor="let data of cropData" [isDisabled]="!data.subcrops">
-                                <div accordion-heading>
+                                <div accordion-heading
+                                    [attr.data-crop-name]="data.slug"
+                                    (click)="suitabilityRedirect(data.slug, !!data.subcrops)">
                                     <span class="heading__icon">
                                         <i class="crop-icon crop-icon--{{ data.slug }}"></i>
                                     </span>
                                     <span class="heading__text">{{ data.name }}</span>
                                 </div>
 
-                                <div class="subcrop" *ngFor="let subcrop of data.subcrops">
+                                <div class="subcrop"
+                                    *ngFor="let subcrop of data.subcrops"
+                                    [attr.data-crop-name]="subcrop.slug"
+                                    (click)="suitabilityRedirect(subcrop.slug, false)">
                                     {{ subcrop.name }}
                                 </div>
                             </accordion-group>
