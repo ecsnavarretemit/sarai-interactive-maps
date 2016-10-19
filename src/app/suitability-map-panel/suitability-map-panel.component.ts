@@ -7,6 +7,7 @@
 
 import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { SuitabilityMapService, Crop, SuitabilityLevels } from '../suitability-map.service';
 import * as _ from 'lodash';
 
@@ -25,7 +26,8 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private _suitabilityMapService: SuitabilityMapService
+    private _suitabilityMapService: SuitabilityMapService,
+    private _store: Store<Array<any>>
   ) { }
 
   ngOnInit() {
@@ -75,16 +77,20 @@ export class SuitabilityMapPanelComponent implements OnInit {
       .value()
       ;
 
-    // group gridcodes by tens
-    let grouped = _.groupBy(gridcodes, (gridcode: number) => {
-      return (Math.floor(gridcode / 10) * 10);
-    });
+    let data: any = {};
 
-    // for the mean time we log the matching grid codes
-    console.group('Fetch Gridcodes');
-    console.log(gridcodes);
-    console.log(grouped);
-    console.groupEnd();
+    if (this.levels.length !== gridcodes.length) {
+      data.gridcodes = gridcodes;
+    }
+
+    // dispatch the updated data
+    this._store.dispatch({
+      type: 'UPDATE_LAYERS_BY_ZOOM',
+      payload: {
+        zoom: 6,
+        data
+      }
+    });
   }
 
 }
