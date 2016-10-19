@@ -6,7 +6,6 @@
  */
 
 import { Component, OnInit, AfterViewInit, ContentChild } from '@angular/core';
-import { LeafletControlPanelComponent } from '../leaflet-control-panel/leaflet-control-panel.component';
 import 'jquery';
 
 @Component({
@@ -18,7 +17,7 @@ export class MapTypeComponent implements OnInit, AfterViewInit {
   public panelVisible: boolean = false;
   private _$panel: JQuery;
 
-  @ContentChild(LeafletControlPanelComponent) panel: LeafletControlPanelComponent;
+  @ContentChild('panel') panel: any;
 
   constructor() { }
 
