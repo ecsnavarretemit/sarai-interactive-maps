@@ -66,12 +66,6 @@ import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-pan
     AccordionModule,
     StoreModule.provideStore({
       map: mapReducer
-    }, {
-      map: {
-        center: null,
-        zoom: null,
-        tileProvider: null
-      }
     })
   ],
   providers: [
