@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 /*!
- * Suitability Map Controls Component Test
+ * Suitability Map Panel Component Test
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT

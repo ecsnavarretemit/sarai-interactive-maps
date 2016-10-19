@@ -1,5 +1,5 @@
 /*!
- * Suitability Map Controls Component
+ * Suitability Map Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
