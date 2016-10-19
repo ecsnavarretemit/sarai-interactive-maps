@@ -7,14 +7,21 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel.component';
+import { Router } from '@angular/router';
 
 describe('Component: SuitabilityMapControls', () => {
-  it('should create an instance', () => {
-    let component = new SuitabilityMapPanelComponent();
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      Router,
+      SuitabilityMapPanelComponent
+    ]
+  }));
+
+  it('should create an instance', inject([SuitabilityMapPanelComponent], (component: SuitabilityMapPanelComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
 });
 
 
