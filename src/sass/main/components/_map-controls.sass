@@ -56,10 +56,7 @@
 
 // [Suitability Map Controls] ::start
 
-.suitability-level-filter
-  margin-top: 10px
-
-.map__control--panel
+.map__control--suitability-map-panel
   .panel
     +border-top-radius(0)
     +border-right-radius(0)
@@ -109,6 +106,27 @@
     &:hover
       color: #006400
       text-decoration: none
+
+.suitability-level-filter
+  margin-top: 10px
+
+  .list--suitability-level
+    height: 130px
+    margin: 0
+    padding: 10px
+    overflow-x: hidden
+    overflow-y: scroll
+    background: #FFF
+    color: #000
+
+    label
+      position: relative
+      padding-left: 20px
+
+    .label__field
+      position: absolute
+      top: 0
+      left: 0
 
 // [Suitability Map Controls] ::start
 
@@ -192,6 +210,18 @@
 
 // --------------------------------------
 // [Button] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Browser Height: 900px up] ::start
+// --------------------------------------
+
++min-screen-height(900px)
+  .suitability-level-filter .list--suitability-level
+    height: 300px
+
+// --------------------------------------
+// [Browser Height: 900px up] ::end
 // --------------------------------------
 
 

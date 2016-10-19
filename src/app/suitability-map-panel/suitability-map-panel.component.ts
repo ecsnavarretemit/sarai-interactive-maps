@@ -7,6 +7,8 @@
 
 import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { SuitabilityMapService, Crop, SuitabilityLevels } from '../suitability-map.service';
+import { map } from 'lodash';
 
 @Component({
   selector: 'app-suitability-map-panel',
@@ -14,44 +16,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./suitability-map-panel.component.sass']
 })
 export class SuitabilityMapPanelComponent implements OnInit {
-  public cropData: Array<any> = [];
+  public cropData: Array<Crop> = [];
+  public levels: Array<SuitabilityLevels> = [];
 
   @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
-  constructor(public router: Router) {
-    this.cropData = [
-      {
-        name: 'Rice',
-        slug: 'rice'
-      }, {
-        name: 'Corn',
-        slug: 'corn',
-        subcrops: [
-          {name: 'Corn Dry', slug: 'corn-dry'},
-          {name: 'Corn Wet', slug: 'corn-wet'}
-        ]
-      }, {
-        name: 'Banana',
-        slug: 'banana'
-      }, {
-        name: 'Coconut',
-        slug: 'coconut'
-      }, {
-        name: 'Coffee',
-        slug: 'coffee',
-        subcrops: [
-          {name: 'Coffee Arabica', slug: 'coffee-arabica'},
-          {name: 'Coffee Robusta', slug: 'coffee-robusta'}
-        ]
-      }, {
-        name: 'Cacao',
-        slug: 'cacao'
-      }
-    ];
-  }
+  constructor(
+    public router: Router,
+    private _suitabilityMapService: SuitabilityMapService
+  ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._suitabilityMapService
+      .getCrops()
+      .then((crops: Array<Crop>) => {
+        this.cropData = crops;
+      })
+      ;
+
+    this._suitabilityMapService
+      .getSuitabilityLevels()
+      .then((levels: Array<SuitabilityLevels>) => {
+        // add checked attribute
+        this.levels = map(levels, (level: any) => {
+          level.checked = true;
+
+          return level;
+        });
+      })
+      ;
+  }
 
   suitabilityRedirect(event, crop: string, containsChild = true) {
     if (containsChild) {
