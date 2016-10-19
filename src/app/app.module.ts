@@ -30,7 +30,7 @@ import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-
 import { MapTypeComponent } from './map-type/map-type.component';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
-import { SuitabilityMapControlsComponent } from './suitability-map-controls/suitability-map-controls.component';
+import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitability-map-panel.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { SuitabilityMapControlsComponent } from './suitability-map-controls/suit
     MapTypeComponent,
     HomeComponent,
     SuitabilityMapsComponent,
-    SuitabilityMapControlsComponent
+    SuitabilityMapPanelComponent
   ],
   imports: [
     BrowserModule,

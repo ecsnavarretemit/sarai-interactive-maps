@@ -9,11 +9,11 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-suitability-map-controls',
-  templateUrl: './suitability-map-controls.component.html',
-  styleUrls: ['./suitability-map-controls.component.sass']
+  selector: 'app-suitability-map-panel',
+  templateUrl: './suitability-map-panel.component.html',
+  styleUrls: ['./suitability-map-panel.component.sass']
 })
-export class SuitabilityMapControlsComponent implements OnInit {
+export class SuitabilityMapPanelComponent implements OnInit {
   public cropData: Array<any> = [];
 
   @ViewChild('controlwrapper') controlWrapper: ElementRef;

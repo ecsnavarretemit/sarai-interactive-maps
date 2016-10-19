@@ -8,11 +8,11 @@
  */
 
 import { TestBed, async } from '@angular/core/testing';
-import { SuitabilityMapControlsComponent } from './suitability-map-controls.component';
+import { SuitabilityMapPanelComponent } from './suitability-map-panel.component';
 
 describe('Component: SuitabilityMapControls', () => {
   it('should create an instance', () => {
-    let component = new SuitabilityMapControlsComponent();
+    let component = new SuitabilityMapPanelComponent();
     expect(component).toBeTruthy();
   });
 });
