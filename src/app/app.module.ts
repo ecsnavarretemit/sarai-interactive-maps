@@ -30,7 +30,10 @@ import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-
 import { MapTypeComponent } from './map-type/map-type.component';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
-import { SuitabilityMapControlsComponent } from './suitability-map-controls/suitability-map-controls.component';
+import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitability-map-panel.component';
+import { CropProductionAreaPanelComponent } from './crop-production-area-panel/crop-production-area-panel.component';
+import { NdviPanelComponent } from './ndvi-panel/ndvi-panel.component';
+import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-panel.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { SuitabilityMapControlsComponent } from './suitability-map-controls/suit
     MapTypeComponent,
     HomeComponent,
     SuitabilityMapsComponent,
-    SuitabilityMapControlsComponent
+    SuitabilityMapPanelComponent,
+    CropProductionAreaPanelComponent,
+    NdviPanelComponent,
+    RainfallMapPanelComponent
   ],
   imports: [
     BrowserModule,

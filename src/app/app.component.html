@@ -13,7 +13,8 @@
                 <i class="glyphicon glyphicon-grain"></i>
             </app-leaflet-button>
 
-            <app-suitability-map-controls #panel map-type-panel></app-suitability-map-controls>
+            <app-suitability-map-panel (panelIconClick)="suitabilityMap.togglePanel($event)" map-type-panel #panel>
+            </app-suitability-map-panel>
         </app-map-type>
 
         <app-map-type #cropProductionArea>
@@ -27,22 +28,8 @@
                 <i class="glyphicon glyphicon-leaf"></i>
             </app-leaflet-button>
 
-            <app-leaflet-control-panel map-type-panel>
-                <section class="map__control__section">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Crop Production</span>
-                        <span class="pull-right title__icon title__icon--actionable" (click)="cropProductionArea.togglePanel($event)">
-                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
-                        </span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Under Construction.....
-                        </p>
-                    </div>
-                </section>
-            </app-leaflet-control-panel>
+            <app-crop-production-area-panel (panelIconClick)="cropProductionArea.togglePanel($event)" map-type-panel #panel>
+            </app-crop-production-area-panel>
         </app-map-type>
 
         <app-map-type #ndvi>
@@ -56,22 +43,8 @@
                 <i class="glyphicon glyphicon-cloud"></i>
             </app-leaflet-button>
 
-            <app-leaflet-control-panel map-type-panel>
-                <section class="map__control__section">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Normalized Difference Vegetation Index (NDVI)</span>
-                        <span class="pull-right title__icon title__icon--actionable" (click)="ndvi.togglePanel($event)">
-                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
-                        </span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Under Construction.....
-                        </p>
-                    </div>
-                </section>
-            </app-leaflet-control-panel>
+            <app-ndvi-panel (panelIconClick)="ndvi.togglePanel($event)" map-type-panel #panel>
+            </app-ndvi-panel>
         </app-map-type>
 
         <app-map-type #rainfallMap>
@@ -85,22 +58,8 @@
                 <i class="glyphicon glyphicon-tint"></i>
             </app-leaflet-button>
 
-            <app-leaflet-control-panel map-type-panel>
-                <section class="map__control__section">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Rainfall Map</span>
-                        <span class="pull-right title__icon title__icon--actionable" (click)="rainfallMap.togglePanel($event)">
-                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
-                        </span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Under Construction.....
-                        </p>
-                    </div>
-                </section>
-            </app-leaflet-control-panel>
+            <app-rainfall-map-panel (panelIconClick)="rainfallMap.togglePanel($event)" map-type-panel #panel>
+            </app-rainfall-map-panel>
         </app-map-type>
     </div>
 

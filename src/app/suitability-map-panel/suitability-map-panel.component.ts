@@ -1,21 +1,22 @@
 /*!
- * Suitability Map Controls Component
+ * Suitability Map Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-suitability-map-controls',
-  templateUrl: './suitability-map-controls.component.html',
-  styleUrls: ['./suitability-map-controls.component.sass']
+  selector: 'app-suitability-map-panel',
+  templateUrl: './suitability-map-panel.component.html',
+  styleUrls: ['./suitability-map-panel.component.sass']
 })
-export class SuitabilityMapControlsComponent implements OnInit {
+export class SuitabilityMapPanelComponent implements OnInit {
   public cropData: Array<any> = [];
 
+  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(public router: Router) {
@@ -59,6 +60,10 @@ export class SuitabilityMapControlsComponent implements OnInit {
 
     // redirect to the URL
     this.router.navigateByUrl(`/suitability-maps/${crop}`);
+  }
+
+  onPanelIconClick(event) {
+    this.panelIconClick.emit(event);
   }
 
 }
