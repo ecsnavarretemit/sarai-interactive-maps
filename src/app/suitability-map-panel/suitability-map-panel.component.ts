@@ -5,10 +5,10 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { SuitabilityMapService, Crop, SuitabilityLevels } from '../suitability-map.service';
-import { map } from 'lodash';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-suitability-map-panel',
@@ -17,10 +17,11 @@ import { map } from 'lodash';
 })
 export class SuitabilityMapPanelComponent implements OnInit {
   public cropData: Array<Crop> = [];
-  public levels: Array<SuitabilityLevels> = [];
+  public levels: Array<any> = [];
 
   @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
+  @ViewChildren('suitabilityLevel') suitabilityLevelsCheckBoxes: QueryList<ElementRef>;
 
   constructor(
     public router: Router,
@@ -39,7 +40,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
       .getSuitabilityLevels()
       .then((levels: Array<SuitabilityLevels>) => {
         // add checked attribute
-        this.levels = map(levels, (level: any) => {
+        this.levels = _.map(levels, (level: any) => {
           level.checked = true;
 
           return level;
@@ -59,6 +60,25 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
   onPanelIconClick(event) {
     this.panelIconClick.emit(event);
+  }
+
+  onToggleCheckbox(isChecked: boolean, level: any) {
+    // set the value to the corresponding object
+    level.checked = isChecked;
+
+    // get the gridcodes whose `level.checked` property is set to true
+    let gridcodes = _.chain(this.levels)
+      .filter({
+        checked: true
+      })
+      .map('gridcode')
+      .value()
+      ;
+
+    // for the mean time we log the matching grid codes
+    console.group('Fetch Gridcodes');
+    console.log(gridcodes);
+    console.groupEnd();
   }
 
 }
