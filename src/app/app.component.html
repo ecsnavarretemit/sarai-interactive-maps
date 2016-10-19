@@ -28,22 +28,8 @@
                 <i class="glyphicon glyphicon-leaf"></i>
             </app-leaflet-button>
 
-            <app-leaflet-control-panel map-type-panel>
-                <section class="map__control__section">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Crop Production</span>
-                        <span class="pull-right title__icon title__icon--actionable" (click)="cropProductionArea.togglePanel($event)">
-                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
-                        </span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Under Construction.....
-                        </p>
-                    </div>
-                </section>
-            </app-leaflet-control-panel>
+            <app-crop-production-area-panel (panelIconClick)="cropProductionArea.togglePanel($event)" map-type-panel #panel>
+            </app-crop-production-area-panel>
         </app-map-type>
 
         <app-map-type #ndvi>
