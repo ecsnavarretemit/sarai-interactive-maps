@@ -43,22 +43,8 @@
                 <i class="glyphicon glyphicon-cloud"></i>
             </app-leaflet-button>
 
-            <app-leaflet-control-panel map-type-panel>
-                <section class="map__control__section">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Normalized Difference Vegetation Index (NDVI)</span>
-                        <span class="pull-right title__icon title__icon--actionable" (click)="ndvi.togglePanel($event)">
-                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
-                        </span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Under Construction.....
-                        </p>
-                    </div>
-                </section>
-            </app-leaflet-control-panel>
+            <app-ndvi-panel (panelIconClick)="ndvi.togglePanel($event)" map-type-panel #panel>
+            </app-ndvi-panel>
         </app-map-type>
 
         <app-map-type #rainfallMap>

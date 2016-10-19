@@ -32,6 +32,7 @@ import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitability-map-panel.component';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel/crop-production-area-panel.component';
+import { NdviPanelComponent } from './ndvi-panel/ndvi-panel.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { CropProductionAreaPanelComponent } from './crop-production-area-panel/c
     HomeComponent,
     SuitabilityMapsComponent,
     SuitabilityMapPanelComponent,
-    CropProductionAreaPanelComponent
+    CropProductionAreaPanelComponent,
+    NdviPanelComponent
   ],
   imports: [
     BrowserModule,
