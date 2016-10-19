@@ -14,6 +14,7 @@ import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { mapReducer } from './map.state';
 import { WmsLayerService } from './wms-layer.service';
+import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
@@ -74,7 +75,8 @@ import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-pan
   providers: [
     LeafletMapService,
     LeafletTileProviderService,
-    WmsLayerService
+    WmsLayerService,
+    SuitabilityMapService
   ],
   bootstrap: [AppComponent]
 })
