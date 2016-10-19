@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { Map } from 'leaflet';
+import { keys } from 'lodash';
 import 'jquery';
 
 @Component({
@@ -37,7 +38,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // extract the keys and tore to the property
-    this.tileKeys = Object.keys(this._tileProvider.baseMaps);
+    this.tileKeys = keys(this._tileProvider.baseMaps);
 
     this._mapService
       .getMap()
