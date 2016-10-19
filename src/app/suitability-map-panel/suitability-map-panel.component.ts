@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class SuitabilityMapPanelComponent implements OnInit {
   public cropData: Array<any> = [];
 
+  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(public router: Router) {
@@ -59,6 +60,10 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
     // redirect to the URL
     this.router.navigateByUrl(`/suitability-maps/${crop}`);
+  }
+
+  onPanelIconClick(event) {
+    this.panelIconClick.emit(event);
   }
 
 }

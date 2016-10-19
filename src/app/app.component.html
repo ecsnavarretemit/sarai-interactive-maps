@@ -13,7 +13,8 @@
                 <i class="glyphicon glyphicon-grain"></i>
             </app-leaflet-button>
 
-            <app-suitability-map-panel #panel map-type-panel></app-suitability-map-panel>
+            <app-suitability-map-panel (panelIconClick)="suitabilityMap.togglePanel($event)" map-type-panel #panel>
+            </app-suitability-map-panel>
         </app-map-type>
 
         <app-map-type #cropProductionArea>
