@@ -13,53 +13,7 @@
                 <i class="glyphicon glyphicon-grain"></i>
             </app-leaflet-button>
 
-            <app-leaflet-control-panel map-type-panel>
-                <section class="map__control__section">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Suitability Map</span>
-                        <span class="pull-right title__icon title__icon--actionable" (click)="suitabilityMap.togglePanel($event)">
-                            <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
-                        </span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Shows what crops are best to plant in a specific area to attain maximum yield.
-                        </p>
-
-                        <accordion closeOthers="true" *ngIf="cropData.length > 0">
-                            <accordion-group *ngFor="let data of cropData" [isDisabled]="!data.subcrops" [class.active]="router.isActive('/suitability-maps/' + data.slug)">
-                                <div accordion-heading
-                                    (click)="suitabilityRedirect($event, data.slug, !!data.subcrops)">
-                                    <span class="heading__icon">
-                                        <i class="crop-icon crop-icon--{{ data.slug }}"></i>
-                                    </span>
-                                    <span class="heading__text">{{ data.name }}</span>
-                                </div>
-
-                                <div class="subcrop"
-                                    *ngFor="let subcrop of data.subcrops"
-                                    [class.active]="router.isActive('/suitability-maps/' + subcrop.slug)"
-                                    (click)="suitabilityRedirect($event, subcrop.slug, false)">
-                                    {{ subcrop.name }}
-                                </div>
-                            </accordion-group>
-                        </accordion>
-                    </div>
-                </section>
-
-                <!--<section class="map__control__section suitability-level-filter">
-                    <h2 class="map__control__title title">
-                        <span class="title__text">Suitability Level</span>
-                    </h2>
-
-                    <div class="map__control__body">
-                        <p>
-                            Checkboxes here.
-                        </p>
-                    </div>
-                </section>-->
-            </app-leaflet-control-panel>
+            <app-suitability-map-controls #panel map-type-panel></app-suitability-map-controls>
         </app-map-type>
 
         <app-map-type #cropProductionArea>
