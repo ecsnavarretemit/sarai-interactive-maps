@@ -75,9 +75,15 @@ export class SuitabilityMapPanelComponent implements OnInit {
       .value()
       ;
 
+    // group gridcodes by tens
+    let grouped = _.groupBy(gridcodes, (gridcode: number) => {
+      return (Math.floor(gridcode / 10) * 10);
+    });
+
     // for the mean time we log the matching grid codes
     console.group('Fetch Gridcodes');
     console.log(gridcodes);
+    console.log(grouped);
     console.groupEnd();
   }
 
