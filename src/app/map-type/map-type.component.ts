@@ -25,7 +25,7 @@ export class MapTypeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (typeof this.panel === 'undefined') {
-      throw new Error('MapTypeComponent expects a child with a type of LeafletControlPanelComponent.');
+      throw new Error('MapTypeComponent expects a child that can be queried with #panel.');
     }
 
     this._$panel = $( this.panel.controlWrapper.nativeElement );
