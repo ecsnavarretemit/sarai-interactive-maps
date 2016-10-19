@@ -7,12 +7,25 @@
 
 import { Injectable } from '@angular/core';
 
+export interface Crop {
+  name: string;
+  slug: string;
+  subcrops?: Array<Crop>;
+}
+
+export interface SuitabilityLevels {
+  gridcode: number;
+  category: string;
+  name: string;
+  slug: string;
+}
+
 @Injectable()
 export class SuitabilityMapService {
 
   constructor() { }
 
-  getCrops(): Promise<Array<any>> {
+  getCrops(): Promise<Array<Crop>> {
     return Promise.resolve().then(() => {
       return [
         {
@@ -46,7 +59,7 @@ export class SuitabilityMapService {
     });
   }
 
-  getSuitabilityLevels(): Promise<Array<any>> {
+  getSuitabilityLevels(): Promise<Array<SuitabilityLevels>> {
     return Promise.resolve().then(() => {
       return [
         {
