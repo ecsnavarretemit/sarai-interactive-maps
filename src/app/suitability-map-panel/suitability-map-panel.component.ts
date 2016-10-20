@@ -8,6 +8,7 @@
 import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { WmsLayerService } from '../wms-layer.service';
 import { SuitabilityMapService, Crop, SuitabilityLevels } from '../suitability-map.service';
 import * as _ from 'lodash';
 
@@ -26,6 +27,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
   constructor(
     public router: Router,
+    private _wmsLayerService: WmsLayerService,
     private _suitabilityMapService: SuitabilityMapService,
     private _store: Store<Array<any>>
   ) { }
@@ -69,7 +71,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
     level.checked = isChecked;
 
     // get the gridcodes whose `level.checked` property is set to true
-    let gridcodes = _.chain(this.levels)
+    let gridcodes: any = _.chain(this.levels)
       .filter({
         checked: true
       })
@@ -77,16 +79,22 @@ export class SuitabilityMapPanelComponent implements OnInit {
       .value()
       ;
 
-    let data: any = {};
+    let url = this._wmsLayerService.getUrl();
+    let data: any = {
+      gridcodes: []
+    };
 
     if (this.levels.length !== gridcodes.length) {
       data.gridcodes = gridcodes;
+
+      url = this._wmsLayerService.getFilteredUrlByGridcode(gridcodes);
     }
 
     // dispatch the updated data
     this._store.dispatch({
       type: 'UPDATE_LAYERS_BY_ZOOM',
       payload: {
+        url: url,
         zoom: 6,
         data
       }
