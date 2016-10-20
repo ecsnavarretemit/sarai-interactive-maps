@@ -7,6 +7,7 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -14,6 +15,7 @@ import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { mapReducer } from './map.state';
 import { WmsLayerService } from './wms-layer.service';
+import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
@@ -58,23 +60,19 @@ import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-pan
   imports: [
     BrowserModule,
     SaraiNg2RoutingModule,
+    FormsModule,
     HttpModule,
     TooltipModule,
     AccordionModule,
     StoreModule.provideStore({
       map: mapReducer
-    }, {
-      map: {
-        center: null,
-        zoom: null,
-        tileProvider: null
-      }
     })
   ],
   providers: [
     LeafletMapService,
     LeafletTileProviderService,
-    WmsLayerService
+    WmsLayerService,
+    SuitabilityMapService
   ],
   bootstrap: [AppComponent]
 })

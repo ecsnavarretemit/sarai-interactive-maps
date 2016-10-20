@@ -7,12 +7,15 @@
 
 import { Injectable } from '@angular/core';
 import { WMSOptions, CRS } from 'leaflet';
-import { assign, snakeCase } from 'lodash';
+import { assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
+
 
 @Injectable()
 export class WmsLayerService {
   private _leafletApi: any = L;
   private _workspace: string = 'sarai-20161014';
+  private _equalToFilterTmpl: TemplateExecutor;
+  private _betweenFilterTmpl: TemplateExecutor;
 
   public imageFormat: string = 'image/png';
   public transparent: boolean = true;
@@ -20,10 +23,56 @@ export class WmsLayerService {
   public crs: CRS = this._leafletApi.CRS.EPSG900913;
   public wmsTileLayerUrl = `http://202.92.144.40:8080/geoserver/${this._workspace}/wms?tiled=true`;
 
-  constructor() {}
+  constructor() {
+    // EqualTo filter for GeoServer
+    this._equalToFilterTmpl = template(`
+      <PropertyIsEqualTo>
+        <PropertyName>
+          <%= data.property %>
+        </PropertyName>
+        <Literal>
+          <%= data.value %>
+        </Literal>
+      </PropertyIsEqualTo>
+    `, {
+      'variable': 'data'
+    });
+
+    // IsBetween filter for GeoServer
+    this._betweenFilterTmpl = template(`
+      <PropertyIsBetween>
+        <PropertyName>
+            <%= data.property %>
+        </PropertyName>
+        <LowerBoundary>
+            <Literal>
+                <%= data.lowerBoundary %>
+            </Literal>
+        </LowerBoundary>
+        <UpperBoundary>
+            <Literal>
+                <%= data.upperBoundary %>
+            </Literal>
+        </UpperBoundary>
+      </PropertyIsBetween>
+    `, {
+      'variable': 'data'
+    });
+  }
 
   getUrl(): string {
     return this.wmsTileLayerUrl;
+  }
+
+  getFilteredUrlByGridcode(gridcodes: Array<number> = []): string {
+    let defaultUrl = this.wmsTileLayerUrl;
+    let resolvedUrl = defaultUrl;
+
+    if (gridcodes.length > 0) {
+      resolvedUrl += ((defaultUrl.indexOf('?') >= 0) ? '&' : '?') + `filter=${this.createLayerFilter(gridcodes)}`;
+    }
+
+    return resolvedUrl;
   }
 
   getDefaultOptions(): any {
@@ -68,6 +117,38 @@ export class WmsLayerService {
         attribution
       }, options);
     });
+  }
+
+  createLayerFilter(gridcodes: Array<number>): string {
+    let groups = groupBy(gridcodes, (gridcode: number) => {
+      return (Math.floor(gridcode / 10) * 10);
+    });
+
+    let queryFilter = reduce(groups, (resolvedFilter: string, value: Array<number>) => {
+      let filter;
+
+      if (value.length > 1) {
+        filter = this._betweenFilterTmpl({
+          property: 'GRIDCODE',
+          lowerBoundary: min(value),
+          upperBoundary: max(value)
+        });
+      } else {
+        filter = this._equalToFilterTmpl({
+          property: 'GRIDCODE',
+          value: value[0]
+        });
+      }
+
+      // concat the filter to the resolvedFilter
+      return resolvedFilter + filter.replace(/^[\s\\n]+/gm, '');
+    }, '');
+
+    if (size(groups) > 1) {
+      queryFilter = `<Or>${queryFilter}</Or>`;
+    }
+
+    return queryFilter;
   }
 
 }

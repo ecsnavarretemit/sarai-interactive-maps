@@ -1,4 +1,4 @@
-<div class="map__control map__control--panel" #controlwrapper>
+<div class="map__control map__control--panel map__control--suitability-map-panel" #controlwrapper>
     <section class="map__control__section">
         <h2 class="map__control__title title">
             <span class="title__text">Suitability Map</span>
@@ -33,19 +33,31 @@
         </div>
     </section>
 
-    <!--
-    <section class="map__control__section suitability-level-filter">
+    <section class="map__control__section suitability-level-filter" *ngIf="levels.length > 0 && router.isActive('/suitability-maps')">
         <h2 class="map__control__title title">
             <span class="title__text">Suitability Level</span>
         </h2>
 
         <div class="map__control__body">
-            <p>
-                Checkboxes here.
-            </p>
+            <ul class="list list-unstyled list--suitability-level">
+                <li class="list__item" *ngFor="let level of levels; let i = index">
+                    <label attr.for="suitability_levels-{{ level.slug }}">
+                        <input type="checkbox"
+                            name="suitability_levels[]"
+                            class="label__field field checkbox"
+                            attr.id="suitability_levels-{{ level.slug }}"
+                            [attr.checked]="level.checked"
+                            [attr.value]="level.gridcode"
+                            [ngModel]="level.checked"
+                            (ngModelChange)="onToggleCheckbox($event, level)"
+                            #suitabilityLevel />
+
+                        <span class="label__text">{{ level.name }}</span>
+                    </label>
+                </li>
+            </ul>
         </div>
     </section>
-    -->
 </div>
 
 

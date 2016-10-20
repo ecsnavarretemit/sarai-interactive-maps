@@ -1,8 +1,8 @@
 <app-leaflet-wms-layer
-        *ngFor="let layerOptions of layersOptionsCollection"
-        [url]="WMSTileUrl"
-        [layerOptions]="layerOptions"
-        [id]="layerOptions.layers">
+        *ngFor="let layer of layersCollection"
+        [url]="layer.url"
+        [layerOptions]="layer.data.wmsOptions"
+        [id]="layer.id">
         </app-leaflet-wms-layer>
 
 
