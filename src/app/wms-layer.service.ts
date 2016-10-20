@@ -114,7 +114,8 @@ export class WmsLayerService {
         layers: item,
         maxZoom: 10,
         zIndex: 1000,
-        attribution
+        opacity: 0.6,
+        attribution,
       }, options);
     });
   }
