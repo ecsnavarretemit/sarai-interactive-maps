@@ -82,7 +82,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // add the new layer to the store
+    // remove all layers published on the store
     this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
