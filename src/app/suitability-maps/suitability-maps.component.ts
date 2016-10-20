@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent } from '../leaflet-wms-layer/leaflet-wms-layer.component';
 import { WmsLayerService } from '../wms-layer.service';
 import { WMSOptions } from 'leaflet';
-import { groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
+import { map } from 'lodash';
 
 @Component({
   selector: 'app-suitability-maps',
@@ -22,10 +22,8 @@ import { groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lod
 export class SuitabilityMapsComponent implements OnInit {
   public WMSTileUrl: string;
   public crop: string;
-  public layersOptionsCollection: Array<WMSOptions> = [];
+  public layersCollection: Array<any> = [];
   private _mapState: Observable<Array<any>>;
-  private _equalToFilterTmpl: TemplateExecutor;
-  private _betweenFilterTmpl: TemplateExecutor;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
@@ -43,41 +41,6 @@ export class SuitabilityMapsComponent implements OnInit {
 
     // get the map state store from the store
     this._mapState = this._store.select('map');
-
-    // EqualTo filter for GeoServer
-    this._equalToFilterTmpl = template(`
-      <PropertyIsEqualTo>
-        <PropertyName>
-          <%= data.property %>
-        </PropertyName>
-        <Literal>
-          <%= data.value %>
-        </Literal>
-      </PropertyIsEqualTo>
-    `, {
-      'variable': 'data'
-    });
-
-    // IsBetween filter for GeoServer
-    this._betweenFilterTmpl = template(`
-      <PropertyIsBetween>
-        <PropertyName>
-            <%= data.property %>
-        </PropertyName>
-        <LowerBoundary>
-            <Literal>
-                <%= data.lowerBoundary %>
-            </Literal>
-        </LowerBoundary>
-        <UpperBoundary>
-            <Literal>
-                <%= data.upperBoundary %>
-            </Literal>
-        </UpperBoundary>
-      </PropertyIsBetween>
-    `, {
-      'variable': 'data'
-    });
   }
 
   ngOnInit() {
@@ -92,66 +55,28 @@ export class SuitabilityMapsComponent implements OnInit {
     this._mapState
       .debounceTime(300)
       .subscribe((layers) => {
-        let data: any = {};
-        let defaultUrl = this._wmsLayerService.getUrl();
-
-        if (layers.length > 0) {
-          data = layers[0].data;
-        }
-
-        // reset the WMS tile URL and append the new filter
-        if (typeof data.gridcodes !== 'undefined') {
-          this.WMSTileUrl = defaultUrl + ((defaultUrl.indexOf('?') >= 0) ? '&' : '?') + `filter=${this.createLayerFilter(data.gridcodes)}`;
-        }
-
-        if (layers.length > 0) {
-          this.layersOptionsCollection = this._wmsLayerService
-            .getSuitabilityMapCountryLevelLayers(this.crop);
-        }
+        this.layersCollection = layers;
       });
 
-    // add the new layer
+    // assemble the layers payload for saving to the application store.
+    let layers = map(this._wmsLayerService.getSuitabilityMapCountryLevelLayers(this.crop), (layer: WMSOptions) => {
+      let payload: any = {};
+
+      payload.id = layer.layers;
+      payload.zoom = 6;
+      payload.url = this._wmsLayerService.getUrl();
+      payload.data = {
+        wmsOptions: layer
+      };
+
+      return payload;
+    });
+
+    // add the new layer to the store
     this._store.dispatch({
-      type: 'ADD_LAYER',
-      payload: {
-        id: 1,
-        zoom: 6,
-        url: this.WMSTileUrl,
-        data: {}
-      }
+      type: 'ADD_LAYERS',
+      payload: layers
     });
-  }
-
-  createLayerFilter(gridcodes: Array<number>): string {
-    let groups = groupBy(gridcodes, (gridcode: number) => {
-      return (Math.floor(gridcode / 10) * 10);
-    });
-
-    let queryFilter = reduce(groups, (resolvedFilter: string, value: Array<number>) => {
-      let filter;
-
-      if (value.length > 1) {
-        filter = this._betweenFilterTmpl({
-          property: 'GRIDCODE',
-          lowerBoundary: min(value),
-          upperBoundary: max(value)
-        });
-      } else {
-        filter = this._equalToFilterTmpl({
-          property: 'GRIDCODE',
-          value: value[0]
-        });
-      }
-
-      // concat the filter to the resolvedFilter
-      return resolvedFilter + filter.replace(/^[\s\\n]+/gm, '');
-    }, '');
-
-    if (size(groups) > 1) {
-      queryFilter = `<Or>${queryFilter}</Or>`;
-    }
-
-    return queryFilter;
   }
 
 }
