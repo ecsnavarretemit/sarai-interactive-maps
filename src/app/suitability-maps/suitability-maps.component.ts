@@ -46,38 +46,47 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // specify the crop
-    this._route.params.forEach((params: Params) => {
-      if (typeof params['crop'] !== 'undefined') {
-        this.crop = params['crop'];
-      }
-    });
-
     // listen to the changes in map state and fire subscribe every 300ms
     this._mapStateSubscription = this._mapState
       .debounceTime(300)
-      .subscribe((layers) => {
+      .subscribe((layers: any) => {
+        // reflect the layers to the object property
         this.layersCollection = layers;
       });
 
-    // assemble the layers payload for saving to the application store.
-    let layers = map(this._wmsLayerService.getSuitabilityMapCountryLevelLayers(this.crop), (layer: WMSOptions) => {
-      let payload: any = {};
+    // listen for changes in crop url parameter since `route.params` is an instance of Observable!
+    this._route.params.forEach((params: Params) => {
+      if (typeof params['crop'] !== 'undefined') {
+        this.crop = params['crop'];
 
-      payload.id = layer.layers;
-      payload.zoom = 6;
-      payload.url = this._wmsLayerService.getUrl();
-      payload.data = {
-        wmsOptions: layer
-      };
+        // assemble the layers payload for saving to the application store.
+        let layers = map(this._wmsLayerService.getSuitabilityMapCountryLevelLayers(this.crop), (layer: WMSOptions) => {
+          let payload: any = {};
 
-      return payload;
-    });
+          payload.id = layer.layers;
+          payload.zoom = 6;
+          payload.url = this._wmsLayerService.getUrl();
+          payload.data = {
+            wmsOptions: layer
+          };
 
-    // add the new layer to the store
-    this._store.dispatch({
-      type: 'ADD_LAYERS',
-      payload: layers
+          return payload;
+        });
+
+        // remove all layers published on the store
+        this._store.dispatch({
+          type: 'REMOVE_ALL_LAYERS'
+        });
+
+        // reset the layers collection to empty.
+        this.layersCollection = [];
+
+        // add the new layer to the store
+        this._store.dispatch({
+          type: 'ADD_LAYERS',
+          payload: layers
+        });
+      }
     });
   }
 
