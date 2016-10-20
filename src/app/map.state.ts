@@ -102,6 +102,9 @@ export const mapReducer: ActionReducer<any> = (state: any = [], action: Action) 
         return layer.zoom !== action.payload;
       });
 
+    case 'REMOVE_ALL_LAYERS':
+      return [];
+
     default:
       return state;
   }
