@@ -1,7 +1,7 @@
 <app-leaflet-map lat="13" lng="122" zoom="6" #leaflet>
     <router-outlet></router-outlet>
 
-    <div class="control-wrapper control-wrapper--left pull-left">
+    <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type #suitabilityMap>
             <app-leaflet-button
                 controlClass="map__control--map-data-type map__control--suitability-map"
@@ -63,14 +63,14 @@
         </app-map-type>
     </div>
 
-    <div class="control-wrapper control-wrapper--right pull-right">
+    <div class="control-wrapper control-wrapper--right pull-right" map-control>
         <app-leaflet-tile-selector></app-leaflet-tile-selector>
         <app-leaflet-geocoder></app-leaflet-geocoder>
         <app-leaflet-zoom></app-leaflet-zoom>
         <app-leaflet-measure></app-leaflet-measure>
     </div>
 
-    <div class="control-wrapper control-wrapper--social">
+    <div class="control-wrapper control-wrapper--social" map-control>
         <ul class="list list-unstyled">
             <li class="list__item">
                 <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://sarai.ph/"
@@ -94,7 +94,7 @@
         </ul>
     </div>
 
-    <div class="control-wrapper control-wrapper--interface-controls">
+    <div class="control-wrapper control-wrapper--interface-controls" map-control>
         <ul class="list list-unstyled">
             <li class="list__item">
                 <a href="#"
@@ -125,7 +125,7 @@
         </ul>
     </div>
 
-    <app-leaflet-opacity-slider [opacity]="layersOpacity"></app-leaflet-opacity-slider>
+    <app-leaflet-opacity-slider [opacity]="layersOpacity" map-control></app-leaflet-opacity-slider>
 </app-leaflet-map>
 
 
