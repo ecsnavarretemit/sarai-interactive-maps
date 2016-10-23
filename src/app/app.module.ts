@@ -14,6 +14,7 @@ import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { mapReducer } from './map.state';
+import { WindowService } from './window.service';
 import { WmsLayerService } from './wms-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
@@ -72,7 +73,12 @@ import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-pan
     LeafletMapService,
     LeafletTileProviderService,
     WmsLayerService,
-    SuitabilityMapService
+    SuitabilityMapService,
+
+    // using window object in Angular 2 is discouraged since
+    // it isn’t only designed to run within your browser, but also on mobiles,
+    // the server or web workers where objects like window may not be available.
+    { provide: WindowService, useValue: window }
   ],
   bootstrap: [AppComponent]
 })
