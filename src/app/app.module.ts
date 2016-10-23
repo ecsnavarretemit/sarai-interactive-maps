@@ -30,6 +30,7 @@ import { LeafletButtonComponent } from './leaflet-button/leaflet-button.componen
 import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.component';
 import { LeafletControlPanelComponent } from './leaflet-control-panel/leaflet-control-panel.component';
 import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-opacity-slider.component';
+import { LeafletSidebarComponent } from './leaflet-sidebar/leaflet-sidebar.component';
 import { MapTypeComponent } from './map-type/map-type.component';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
@@ -50,6 +51,7 @@ import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-pan
     LeafletWmsLayerComponent,
     LeafletControlPanelComponent,
     LeafletOpacitySliderComponent,
+    LeafletSidebarComponent,
     MapTypeComponent,
     HomeComponent,
     SuitabilityMapsComponent,
