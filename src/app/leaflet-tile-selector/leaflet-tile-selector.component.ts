@@ -6,7 +6,6 @@
  */
 
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { Map } from 'leaflet';
@@ -29,7 +28,6 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   @ViewChild('tileselector') tileSelector;
 
   constructor(
-    private _store: Store<any>,
     private _mapService: LeafletMapService,
     private _tileProvider: LeafletTileProviderService
   ) {
@@ -129,14 +127,6 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
           // store the currently used tile
           this.tileProviderKey = value;
-
-          // store the resolved tile provider to the state manager
-          this._store.dispatch({
-            type: 'SET_TILE_PROVIDER',
-            payload: {
-              tileProvider: value
-            }
-          });
         }
       })
       ;
