@@ -70,6 +70,61 @@
         <app-leaflet-measure></app-leaflet-measure>
     </div>
 
+    <div class="control-wrapper control-wrapper--social">
+        <ul class="list list-unstyled">
+            <li class="list__item">
+                <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://sarai.ph/"
+                    class="btn btn--dome btn--facebook"
+                    tooltip="Share on Facebook"
+                    tooltipPlacement="left"
+                    (click)="openNewWindow($event, 'shareOnFacebook', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')">
+                    <i class="social-icon social-icon--facebook"></i>
+                </a>
+            </li>
+
+            <li class="list__item">
+                <a href="https://twitter.com/intent/tweet/?text=Check this out! http://sarai.ph/ %23ProjectSARAI"
+                    class="btn btn--dome btn--twitter"
+                    tooltip="Share on Twitter"
+                    tooltipPlacement="left"
+                    (click)="openNewWindow($event, 'shareOnTwitter', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')">
+                    <i class="social-icon social-icon--twitter"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="control-wrapper control-wrapper--interface-controls">
+        <ul class="list list-unstyled">
+            <li class="list__item">
+                <a href="#"
+                    class="btn btn--dome btn--translate"
+                    tooltip="Translate to Filipino"
+                    tooltipPlacement="left">
+                    <i class="interface-control-icon interface-control-icon--translate"></i>
+                </a>
+            </li>
+
+            <li class="list__item">
+                <a href="#"
+                    class="btn btn--dome btn--download-map-image"
+                    tooltip="Download Map Images"
+                    tooltipPlacement="left">
+                    <i class="interface-control-icon interface-control-icon--pdf"></i>
+                </a>
+            </li>
+
+            <li class="list__item">
+                <a href="#"
+                    class="btn btn--dome btn--watch-videos"
+                    tooltip="Watch Introductory Videos"
+                    tooltipPlacement="left">
+                    <i class="interface-control-icon interface-control-icon--video"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <app-leaflet-opacity-slider [opacity]="layersOpacity"></app-leaflet-opacity-slider>
 </app-leaflet-map>
 
