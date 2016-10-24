@@ -13,7 +13,7 @@ import { assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateE
 @Injectable()
 export class WmsLayerService {
   private _leafletApi: any = L;
-  private _workspace: string = 'sarai-20161014';
+  private _workspace: string = 'sarai-20161024';
   private _equalToFilterTmpl: TemplateExecutor;
   private _betweenFilterTmpl: TemplateExecutor;
 
