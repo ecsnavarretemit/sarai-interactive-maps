@@ -4,6 +4,9 @@
 /dist
 /tmp
 
+# videos
+/src/assets/videos
+
 # dependencies
 /node_modules
 /bower_components
