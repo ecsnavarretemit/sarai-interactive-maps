@@ -16,15 +16,14 @@ import { TranslateService } from 'ng2-translate';
 })
 export class AppComponent {
   public layersOpacity = 0.6;
+  private _currentLang = 'en';
 
   constructor(@Inject(WindowService) private _window: Window, private _translate: TranslateService) {
-    let defaultLang = 'en';
-
     // this language will be used as a fallback when a translation isn't found in the current language
-    this._translate.setDefaultLang(defaultLang);
+    this._translate.setDefaultLang(this._currentLang);
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this._translate.use(defaultLang);
+    this._translate.use(this._currentLang);
   }
 
   openNewWindow(event: Event, windowName: string, windowFeatures = '') {
@@ -40,6 +39,20 @@ export class AppComponent {
 
     // open new window
     this._window.open(href, windowName, windowFeatures);
+  }
+
+  changeLang(event: Event) {
+    // prevent the default behavior
+    event.preventDefault();
+
+    if (this._currentLang === 'en') {
+      this._currentLang = 'fil';
+    } else {
+      this._currentLang = 'en';
+    }
+
+    // change the current language
+    this._translate.use(this._currentLang);
   }
 
 }
