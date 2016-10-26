@@ -109,7 +109,9 @@
                 <a href="#"
                     class="btn btn--dome btn--download-map-image"
                     tooltip="Download Map Images"
-                    tooltipPlacement="left">
+                    tooltipPlacement="left"
+                    (click)="$event.preventDefault(); imageDownloadSidebar.toggle()">
+
                     <i class="interface-control-icon interface-control-icon--pdf"></i>
                 </a>
             </li>
@@ -172,6 +174,18 @@
             </li>
         </ul>
     </div>
+
+    <app-leaflet-sidebar containerClass="leaflet-sidebar--sarai-1 download-image-form-wrapper" #imageDownloadSidebar>
+        <header class="sidebar__title-wrapper" sidebar-title>
+            <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
+
+            <h2 class="title">Download Image</h2>
+        </header>
+
+        <div class="sidebar__content" sidebar-content>
+            <app-download-image-form></app-download-image-form>
+        </div>
+    </app-leaflet-sidebar>
 
     <app-leaflet-opacity-slider [opacity]="layersOpacity" map-control></app-leaflet-opacity-slider>
 </app-leaflet-map>
