@@ -7,14 +7,22 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { LeafletSidebarComponent } from './leaflet-sidebar.component';
+import { LeafletMapService } from '../leaflet-map.service';
 
 describe('Component: LeafletSidebar', () => {
-  it('should create an instance', () => {
-    let component = new LeafletSidebarComponent();
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      LeafletMapService,
+      LeafletSidebarComponent
+    ]
+  }));
+
+  it('should create an instance', inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 
