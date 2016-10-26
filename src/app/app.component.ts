@@ -7,6 +7,7 @@
 
 import { Component, Inject } from '@angular/core';
 import { WindowService } from './window.service';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,15 @@ import { WindowService } from './window.service';
 export class AppComponent {
   public layersOpacity = 0.6;
 
-  constructor(@Inject(WindowService) private _window: Window) { }
+  constructor(@Inject(WindowService) private _window: Window, private _translate: TranslateService) {
+    let defaultLang = 'en';
+
+    // this language will be used as a fallback when a translation isn't found in the current language
+    this._translate.setDefaultLang(defaultLang);
+
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    this._translate.use(defaultLang);
+  }
 
   openNewWindow(event: Event, windowName: string, windowFeatures = '') {
     // prevent default behavior
