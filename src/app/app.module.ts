@@ -38,6 +38,7 @@ import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitabilit
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel/crop-production-area-panel.component';
 import { NdviPanelComponent } from './ndvi-panel/ndvi-panel.component';
 import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-panel.component';
+import { DownloadImageFormComponent } from './download-image-form/download-image-form.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-pan
     SuitabilityMapPanelComponent,
     CropProductionAreaPanelComponent,
     NdviPanelComponent,
-    RainfallMapPanelComponent
+    RainfallMapPanelComponent,
+    DownloadImageFormComponent
   ],
   imports: [
     BrowserModule,

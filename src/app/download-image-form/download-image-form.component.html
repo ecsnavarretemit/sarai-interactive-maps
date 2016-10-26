@@ -1,0 +1,29 @@
+<form #downloadImageForm="ngForm" (ngSubmit)="processRequest(downloadImageForm)">
+    <div class="form-group">
+        <label for="ec_crop_sel">Select crop (pick one):</label>
+        <select name="ec_crop_sel" id="ec_crop_sel" class="form-control">
+            <option value="">Select Crop</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="rc_region_sel">Select region (pick one):</label>
+        <select name="rc_region_sel" id="rc_region_sel" class="form-control">
+            <option value="">Select Region</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="rc_province_sel">Select province (pick one):</label>
+        <select name="rc_province_sel" id="rc_province_sel" class="form-control">
+            <option value="">Select Province</option>
+        </select>
+    </div>
+
+    <div class="form-group form-group--btn-group">
+        <button type="submit" class="btn btn-success btn-block" (click)="requestType = 'preview'">Preview</button>
+        <button type="submit" class="btn btn-success btn-block" (click)="requestType = 'download'">Download</button>
+    </div>
+</form>
+
+
