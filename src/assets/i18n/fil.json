@@ -1,0 +1,14 @@
+{
+  "HIDE": "Itago",
+  "TILE_SELECTOR-TITLE": "Pinagmulan ng mapa",
+  "GEOCODER-PLACEHOLDER": "Humanap ng lugar...",
+  "TRANSLATE-TOOLTIP": "Isalin sa Ingles",
+  "SHARE-FACEBOOK-TOOLTIP": "Ibahagi sa Facebook",
+  "SHARE-TWITTER-TOOLTIP": "Ibahagi sa Twitter",
+  "DOWNLOAD-MAP-IMAGE-TOOLTIP": "I-download ang mga imahe ng mapa",
+  "DOWNLOAD-MAP-IMAGE-TITLE": "I-download ang imahe ng mapa",
+  "WATCH-VIDEO-TOOLTIP": "Panoorin ang mga panimulang video",
+  "WATCH-VIDEO-TITLE": "Panoorin ang mga panimulang video",
+  "WATCH-VIDEO-VERSION-EN": "Bersyon sa Ingles",
+  "WATCH-VIDEO-VERSION-FIL": "Bersyon sa Filipino"
+}

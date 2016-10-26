@@ -64,8 +64,8 @@
     </div>
 
     <div class="control-wrapper control-wrapper--right pull-right" map-control>
-        <app-leaflet-tile-selector></app-leaflet-tile-selector>
-        <app-leaflet-geocoder></app-leaflet-geocoder>
+        <app-leaflet-tile-selector [controlTitle]="'TILE_SELECTOR-TITLE' | translate" [hideTooltipTxt]="'HIDE' | translate"></app-leaflet-tile-selector>
+        <app-leaflet-geocoder [placeholder]="'GEOCODER-PLACEHOLDER' | translate"></app-leaflet-geocoder>
         <app-leaflet-zoom></app-leaflet-zoom>
         <app-leaflet-measure></app-leaflet-measure>
     </div>
@@ -75,7 +75,7 @@
             <li class="list__item">
                 <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://sarai.ph/"
                     class="btn btn--dome btn--facebook"
-                    tooltip="Share on Facebook"
+                    [tooltip]="'SHARE-FACEBOOK-TOOLTIP' | translate"
                     tooltipPlacement="left"
                     (click)="openNewWindow($event, 'shareOnFacebook', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')">
                     <i class="social-icon social-icon--facebook"></i>
@@ -85,7 +85,7 @@
             <li class="list__item">
                 <a href="https://twitter.com/intent/tweet/?text=Check this out! http://sarai.ph/ %23ProjectSARAI"
                     class="btn btn--dome btn--twitter"
-                    tooltip="Share on Twitter"
+                    [tooltip]="'SHARE-TWITTER-TOOLTIP' | translate"
                     tooltipPlacement="left"
                     (click)="openNewWindow($event, 'shareOnTwitter', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')">
                     <i class="social-icon social-icon--twitter"></i>
@@ -99,8 +99,9 @@
             <li class="list__item">
                 <a href="#"
                     class="btn btn--dome btn--translate"
-                    tooltip="Translate to Filipino"
-                    tooltipPlacement="left">
+                    [tooltip]="'TRANSLATE-TOOLTIP' | translate"
+                    tooltipPlacement="left"
+                    (click)="changeLang($event)">
                     <i class="interface-control-icon interface-control-icon--translate"></i>
                 </a>
             </li>
@@ -108,7 +109,7 @@
             <li class="list__item">
                 <a href="#"
                     class="btn btn--dome btn--download-map-image"
-                    tooltip="Download Map Images"
+                    [tooltip]="'DOWNLOAD-MAP-IMAGE-TOOLTIP' | translate"
                     tooltipPlacement="left"
                     (click)="$event.preventDefault(); imageDownloadSidebar.toggle()">
 
@@ -119,7 +120,7 @@
             <li class="list__item">
                 <a href="#"
                     class="btn btn--dome btn--watch-videos"
-                    tooltip="Watch Introductory Videos"
+                    [tooltip]="'WATCH-VIDEO-TOOLTIP' | translate"
                     tooltipPlacement="left"
                     (click)="$event.preventDefault(); videoSidebar.toggle()">
 
@@ -133,12 +134,12 @@
         <header class="sidebar__title-wrapper" sidebar-title>
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
 
-            <h2 class="title">Watch Introductory Videos</h2>
+            <h2 class="title">{{ 'WATCH-VIDEO-TITLE' | translate }}</h2>
         </header>
 
         <div sidebar-content>
             <section class="group">
-                <h3 class="group__title title">English Version</h3>
+                <h3 class="group__title title">{{ 'WATCH-VIDEO-VERSION-EN' | translate }}</h3>
 
                 <div class="aspect aspect-ratio-16x9">
                     <div class="aspect__inner">
@@ -156,7 +157,7 @@
             </section>
 
             <section class="group">
-                <h3 class="group__title title">Filipino Version</h3>
+                <h3 class="group__title title">{{ 'WATCH-VIDEO-VERSION-FIL' | translate }}</h3>
 
                 <div class="aspect aspect-ratio-16x9">
                     <div class="aspect__inner">
@@ -179,7 +180,7 @@
         <header class="sidebar__title-wrapper" sidebar-title>
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
 
-            <h2 class="title">Download Image</h2>
+            <h2 class="title">{{ 'DOWNLOAD-MAP-IMAGE-TITLE' | translate }}</h2>
         </header>
 
         <div class="sidebar__content" sidebar-content>
