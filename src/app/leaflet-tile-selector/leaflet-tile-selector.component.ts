@@ -24,6 +24,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   private _$mapControlSettings: JQuery;
 
   @Input() controlTitle: string = 'Map Source';
+  @Input() hideTooltipTxt: string = 'Hide';
   @ViewChild('controlwrapper') controlWrapper;
   @ViewChild('controlsettings') controlSettings;
   @ViewChild('tileselector') tileSelector;

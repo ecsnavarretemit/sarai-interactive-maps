@@ -3,7 +3,7 @@
         <h2 class="map__control__title title">
             <span class="title__text">{{ controlTitle }}</span>
             <span class="pull-right title__icon title__icon--actionable" (click)="onHideControl($event)">
-                <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" tooltip="Hide"></i>
+                <i class="glyphicon glyphicon-chevron-right" tooltipPlacement="bottom" [tooltip]="hideTooltipTxt"></i>
             </span>
         </h2>
 
