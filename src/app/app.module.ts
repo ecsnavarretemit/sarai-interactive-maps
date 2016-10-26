@@ -14,6 +14,7 @@ import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { mapReducer } from './map.state';
 import { WindowService } from './window.service';
 import { WmsLayerService } from './wms-layer.service';
@@ -80,6 +81,7 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
     })
   ],
   providers: [
+    CookieService,
     LeafletMapService,
     LeafletTileProviderService,
     WmsLayerService,
