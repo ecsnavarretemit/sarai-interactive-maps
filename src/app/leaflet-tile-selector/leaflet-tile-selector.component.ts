@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { Map } from 'leaflet';
@@ -23,6 +23,8 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   private _$mapControl: JQuery;
   private _$mapControlSettings: JQuery;
 
+  @Input() controlTitle: string = 'Map Source';
+  @Input() hideTooltipTxt: string = 'Hide';
   @ViewChild('controlwrapper') controlWrapper;
   @ViewChild('controlsettings') controlSettings;
   @ViewChild('tileselector') tileSelector;

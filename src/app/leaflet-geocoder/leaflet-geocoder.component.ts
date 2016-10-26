@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, Input } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-control-geocoder2';
@@ -15,9 +15,10 @@ import 'leaflet-control-geocoder2';
   templateUrl: './leaflet-geocoder.component.html',
   styleUrls: ['./leaflet-geocoder.component.sass']
 })
-export class LeafletGeocoderComponent implements OnInit {
+export class LeafletGeocoderComponent implements OnInit, OnChanges {
   public control: Control;
 
+  @Input() placeholder: string = 'Find a place...';
   @ViewChild('controlwrapper') controlWrapper;
 
   constructor(private _mapService: LeafletMapService) { }
@@ -29,7 +30,7 @@ export class LeafletGeocoderComponent implements OnInit {
     this.control = controlObj
       .geocoder({
         collapsed: false,
-        placeholder: 'Find a place...',
+        placeholder: this.placeholder,
         geocoder: new controlObj.Geocoder.Nominatim({
           geocodingQueryParams: {
             countrycodes: 'ph'
@@ -45,6 +46,13 @@ export class LeafletGeocoderComponent implements OnInit {
         this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
       })
       ;
+  }
+
+  ngOnChanges(changes) {
+    // detect the change on the placeholder input
+    if (typeof this.control !== 'undefined') {
+      (this.control as any)._input.placeholder = changes.placeholder.currentValue;
+    }
   }
 
 }

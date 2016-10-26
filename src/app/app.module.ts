@@ -8,11 +8,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { mapReducer } from './map.state';
 import { WindowService } from './window.service';
 import { WmsLayerService } from './wms-layer.service';
@@ -69,11 +71,17 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
     HttpModule,
     TooltipModule,
     AccordionModule,
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+      deps: [Http]
+    }),
     StoreModule.provideStore({
       map: mapReducer
     })
   ],
   providers: [
+    CookieService,
     LeafletMapService,
     LeafletTileProviderService,
     WmsLayerService,
