@@ -14,6 +14,7 @@ import { LeafletWmsLayerComponent } from '../leaflet-wms-layer/leaflet-wms-layer
 import { WmsLayerService } from '../wms-layer.service';
 import { WMSOptions } from 'leaflet';
 import { map } from 'lodash';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-suitability-maps',
