@@ -17,7 +17,7 @@ import { LeafletMapService } from '../leaflet-map.service';
 export class LeafletOpacitySliderComponent implements OnInit {
   @Input() title: string = 'Layer Overlay Opacity';
   @Input() opacity: number = 1;
-  @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('range') range: ElementRef;
 
   constructor(private _mapService: LeafletMapService) {}

@@ -5,9 +5,10 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
+import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
 import { Map } from 'leaflet';
 import { keys } from 'lodash';
 import 'jquery';
@@ -25,9 +26,9 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
   @Input() controlTitle: string = 'Map Source';
   @Input() hideTooltipTxt: string = 'Hide';
-  @ViewChild('controlwrapper') controlWrapper;
-  @ViewChild('controlsettings') controlSettings;
-  @ViewChild('tileselector') tileSelector;
+  @ViewChild('controlwrapper') controlWrapper: ElementRef;
+  @ViewChild('tileselector') tileSelector: ElementRef;
+  @ViewChild(LeafletButtonComponent) controlSettings: LeafletButtonComponent;
 
   constructor(
     private _mapService: LeafletMapService,

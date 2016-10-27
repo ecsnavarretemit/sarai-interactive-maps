@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 
@@ -17,7 +17,7 @@ import { LeafletMapService } from '../leaflet-map.service';
 export class LeafletZoomComponent implements OnInit {
   public control: Control;
 
-  @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(private _mapService: LeafletMapService) { }
 

@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-measure/dist/leaflet-measure';
@@ -18,9 +18,9 @@ import 'leaflet-measure/dist/leaflet-measure';
 export class LeafletMeasureComponent implements OnInit {
   public control: Control;
 
-  @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
-  constructor(private _mapService: LeafletMapService) { }
+  constructor(private _mapService: LeafletMapService) {}
 
   ngOnInit() {
     this.control = new (L as any).Control.Measure({

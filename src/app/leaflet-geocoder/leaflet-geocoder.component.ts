@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnChanges, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, Input, ElementRef } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-control-geocoder2';
@@ -19,7 +19,7 @@ export class LeafletGeocoderComponent implements OnInit, OnChanges {
   public control: Control;
 
   @Input() placeholder: string = 'Find a place...';
-  @ViewChild('controlwrapper') controlWrapper;
+  @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(private _mapService: LeafletMapService) { }
 

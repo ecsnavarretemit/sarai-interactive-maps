@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Map } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 
@@ -18,7 +18,7 @@ export class LeafletMapComponent implements OnInit {
   @Input() lat: number;
   @Input() lng: number;
   @Input() zoom: number;
-  @ViewChild('mapEl') mapEl;
+  @ViewChild('mapEl') mapEl: ElementRef;
 
   constructor(
     private _mapService: LeafletMapService
