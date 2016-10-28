@@ -81,6 +81,8 @@ export class WmsLayerService {
       transparent: this.transparent,
       maxZoom: this.maxZoom,
       crs: this.crs,
+      zIndex: 1000,
+      opacity: 0.6
     };
   }
 
@@ -116,9 +118,8 @@ export class WmsLayerService {
     return map(layers, (item) => {
       return assign({}, this.getDefaultOptions(), {
         layers: item,
-        maxZoom: 10,
-        zIndex: 1000,
-        opacity: 0.6,
+        minZoom: 6,
+        maxZoom: 11,
         attribution,
       }, options);
     });
