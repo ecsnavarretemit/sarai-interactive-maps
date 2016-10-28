@@ -7,7 +7,7 @@
 
 import { Injectable } from '@angular/core';
 import { WMSOptions, CRS } from 'leaflet';
-import { assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
+import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
 
 
 @Injectable()
@@ -113,7 +113,7 @@ export class WmsLayerService {
         throw new Error('Not yet implemented!');
     }
 
-    return layers.map((item) => {
+    return map(layers, (item) => {
       return assign({}, this.getDefaultOptions(), {
         layers: item,
         maxZoom: 10,
