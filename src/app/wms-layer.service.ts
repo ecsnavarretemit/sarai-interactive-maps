@@ -100,7 +100,7 @@ export class WmsLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._workspace}:${snakeCase(crop)}_15_layers_gridcode_all`
+          `${this._workspace}:${snakeCase(crop)}_simplified_gridcode_all`
         ];
 
         break;
