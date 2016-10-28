@@ -84,11 +84,15 @@ export class WmsLayerService {
     };
   }
 
-  getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<WMSOptions> {
-    let layers = [];
-    let attribution = `Crop data &copy; 2016
+  getSuitabilityMapAttribution() {
+    return `Crop data &copy; 2016
         <a href="http://www.pcaarrd.dost.gov.ph/" target="_blank">PCAARRD</a> and
         <a href="http://uplb.edu.ph/" target="_blank">University of the Philippines Los Banos</a>`;
+  }
+
+  getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<WMSOptions> {
+    let layers = [];
+    let attribution = this.getSuitabilityMapAttribution();
 
     switch (crop.toLocaleLowerCase()) {
       case 'banana':
