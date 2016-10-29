@@ -9,7 +9,8 @@ import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementR
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { WmsLayerService } from '../wms-layer.service';
-import { SuitabilityMapService, Crop, SuitabilityLevels } from '../suitability-map.service';
+import { SuitabilityMapService, Crop } from '../suitability-map.service';
+import { SuitabilityLevel } from '../suitability-level.interface';
 import * as _ from 'lodash';
 
 @Component({
@@ -42,7 +43,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
     this._suitabilityMapService
       .getSuitabilityLevels()
-      .then((levels: Array<SuitabilityLevels>) => {
+      .then((levels: Array<SuitabilityLevel>) => {
         // add checked attribute
         this.levels = _.map(levels, (level: any) => {
           level.checked = true;

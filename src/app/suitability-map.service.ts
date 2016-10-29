@@ -6,18 +6,12 @@
  */
 
 import { Injectable } from '@angular/core';
+import { SuitabilityLevel } from './suitability-level.interface';
 
 export interface Crop {
   name: string;
   slug: string;
   subcrops?: Array<Crop>;
-}
-
-export interface SuitabilityLevels {
-  gridcode: number;
-  category: string;
-  name: string;
-  slug: string;
 }
 
 @Injectable()
@@ -59,7 +53,7 @@ export class SuitabilityMapService {
     });
   }
 
-  getSuitabilityLevels(): Promise<Array<SuitabilityLevels>> {
+  getSuitabilityLevels(): Promise<Array<SuitabilityLevel>> {
     return Promise.resolve().then(() => {
       return [
         {
