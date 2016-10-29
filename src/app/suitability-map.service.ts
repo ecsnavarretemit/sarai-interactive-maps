@@ -7,12 +7,7 @@
 
 import { Injectable } from '@angular/core';
 import { SuitabilityLevel } from './suitability-level.interface';
-
-export interface Crop {
-  name: string;
-  slug: string;
-  subcrops?: Array<Crop>;
-}
+import { Crop } from './crop.interface';
 
 @Injectable()
 export class SuitabilityMapService {

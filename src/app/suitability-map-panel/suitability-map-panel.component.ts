@@ -9,8 +9,9 @@ import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementR
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { WmsLayerService } from '../wms-layer.service';
-import { SuitabilityMapService, Crop } from '../suitability-map.service';
+import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
+import { Crop } from '../crop.interface';
 import * as _ from 'lodash';
 
 @Component({
