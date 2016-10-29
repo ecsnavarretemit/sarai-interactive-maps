@@ -73,6 +73,8 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
         let layers = states[0];
         let levelsState = states[1];
 
+        // TODO: determine if state is mutated here.
+        // if yes, then refactor this part to prevent state mutation.
         this.layersCollection = map(layers, (layer: Layer) => {
           if (levelsState.gridcodes.length < 15) {
             (layer.data.wmsOptions as any).cql_filter = this._wmsLayerService.getCQLFilterByGridcode(levelsState.gridcodes);
