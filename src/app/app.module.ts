@@ -21,7 +21,7 @@ import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
-import { MapLayersReducer } from './store/map-layers/map-layers.reducer';
+import { MapLayersReducer, SuitabilityLevelsReducer } from './store';
 
 import { AppComponent } from './app.component';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
@@ -78,7 +78,8 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
       deps: [Http]
     }),
     StoreModule.provideStore({
-      mapLayers: MapLayersReducer
+      mapLayers: MapLayersReducer,
+      suitabilityLevels: SuitabilityLevelsReducer
     })
   ],
   providers: [

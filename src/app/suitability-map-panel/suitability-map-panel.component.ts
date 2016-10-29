@@ -31,7 +31,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
     public router: Router,
     private _wmsLayerService: WmsLayerService,
     private _suitabilityMapService: SuitabilityMapService,
-    private _store: Store<Array<any>>
+    private _store: Store<any>
   ) { }
 
   ngOnInit() {
@@ -45,6 +45,12 @@ export class SuitabilityMapPanelComponent implements OnInit {
     this._suitabilityMapService
       .getSuitabilityLevels()
       .then((levels: Array<SuitabilityLevel>) => {
+        // add the suitability levels to the store
+        this._store.dispatch({
+          type: 'ADD_SUITABILITY_LEVELS',
+          payload: levels
+        });
+
         // add checked attribute
         this.levels = _.map(levels, (level: any) => {
           level.checked = true;
@@ -72,32 +78,17 @@ export class SuitabilityMapPanelComponent implements OnInit {
     // set the value to the corresponding object
     level.checked = isChecked;
 
-    // get the gridcodes whose `level.checked` property is set to true
-    let gridcodes: any = _.chain(this.levels)
-      .filter({
-        checked: true
-      })
-      .map('gridcode')
-      .value()
-      ;
-
-    // add cql_filter when gridcodes does not match to the stored levels length
-    // remove the the cql_filter when they are equal.
-    if (this.levels.length !== gridcodes.length) {
+    if (isChecked) {
+      // add the gridcode to the store
       this._store.dispatch({
-        type: 'ADD_CQL_FILTER_BY_ZOOM',
-        payload: {
-          zoom: 6,
-          gridcodes,
-          cql_filter: this._wmsLayerService.getCQLFilterByGridcode(gridcodes)
-        }
+        type: 'ADD_SUITABILITY_LEVEL',
+        payload: _.omit(level, 'checked')
       });
     } else {
+      // remove the gridcode from the store
       this._store.dispatch({
-        type: 'REMOVE_CQL_FILTER_BY_ZOOM',
-        payload: {
-          zoom: 6
-        }
+        type: 'REMOVE_SUITABILITY_LEVEL',
+        payload: level.gridcode
       });
     }
   }
