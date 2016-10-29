@@ -75,6 +75,12 @@ export class WmsLayerService {
     return resolvedUrl;
   }
 
+  getCQLFilterByGridcode(gridcodes: Array<number> = []): string {
+    return map(gridcodes, (value: number) => {
+      return `GRIDCODE=${value}`;
+    }).join(' OR ');
+  }
+
   getDefaultOptions(): any {
     return {
       format: this.imageFormat,
