@@ -76,7 +76,7 @@ export const SuitabilityLevelsReducer: ActionReducer<SuitabilityLevelsState> =
         });
 
         // extract the gridcodes from the suitability levels
-        const newLevelGridcodes: any = map(newLevels, 'gridcodes');
+        const newLevelGridcodes: any = map(newLevels, 'gridcode');
 
         // assemble the new object to match the data structure of the levels attribute of the state
         const newSuitabilityLevels: any = reduce(newLevels, (levels: { [id: string]: SuitabilityLevel }, level: SuitabilityLevel) => {
