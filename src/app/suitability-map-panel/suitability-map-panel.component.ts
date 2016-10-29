@@ -9,7 +9,9 @@ import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementR
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { WmsLayerService } from '../wms-layer.service';
-import { SuitabilityMapService, Crop, SuitabilityLevels } from '../suitability-map.service';
+import { SuitabilityMapService } from '../suitability-map.service';
+import { SuitabilityLevel } from '../suitability-level.interface';
+import { Crop } from '../crop.interface';
 import * as _ from 'lodash';
 
 @Component({
@@ -42,7 +44,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
     this._suitabilityMapService
       .getSuitabilityLevels()
-      .then((levels: Array<SuitabilityLevels>) => {
+      .then((levels: Array<SuitabilityLevel>) => {
         // add checked attribute
         this.levels = _.map(levels, (level: any) => {
           level.checked = true;
@@ -79,26 +81,25 @@ export class SuitabilityMapPanelComponent implements OnInit {
       .value()
       ;
 
-    let url = this._wmsLayerService.getUrl();
-    let data: any = {
-      gridcodes: []
-    };
-
+    // add cql_filter when gridcodes does not match to the stored levels length
+    // remove the the cql_filter when they are equal.
     if (this.levels.length !== gridcodes.length) {
-      data.gridcodes = gridcodes;
-
-      url = this._wmsLayerService.getFilteredUrlByGridcode(gridcodes);
+      this._store.dispatch({
+        type: 'ADD_CQL_FILTER_BY_ZOOM',
+        payload: {
+          zoom: 6,
+          gridcodes,
+          cql_filter: this._wmsLayerService.getCQLFilterByGridcode(gridcodes)
+        }
+      });
+    } else {
+      this._store.dispatch({
+        type: 'REMOVE_CQL_FILTER_BY_ZOOM',
+        payload: {
+          zoom: 6
+        }
+      });
     }
-
-    // dispatch the updated data
-    this._store.dispatch({
-      type: 'UPDATE_LAYERS_BY_ZOOM',
-      payload: {
-        url: url,
-        zoom: 6,
-        data
-      }
-    });
   }
 
 }

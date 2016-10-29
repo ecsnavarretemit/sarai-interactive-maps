@@ -15,12 +15,13 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
-import { mapReducer } from './map.state';
 import { WindowService } from './window.service';
 import { WmsLayerService } from './wms-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
+
+import { MapLayersReducer } from './store/map-layers/map-layers.reducer';
 
 import { AppComponent } from './app.component';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
@@ -77,7 +78,7 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
       deps: [Http]
     }),
     StoreModule.provideStore({
-      map: mapReducer
+      mapLayers: MapLayersReducer
     })
   ],
   providers: [

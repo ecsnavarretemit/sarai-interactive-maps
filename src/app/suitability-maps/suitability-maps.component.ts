@@ -25,8 +25,8 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public WMSTileUrl: string;
   public crop: string;
   public layersCollection: Array<any> = [];
-  private _mapState: Observable<Array<any>>;
-  private _mapStateSubscription: Subscription;
+  private _mapLayers: Observable<Array<any>>;
+  private _mapLayersSubscription: Subscription;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
@@ -43,12 +43,12 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     this.crop = 'rice';
 
     // get the map state store from the store
-    this._mapState = this._store.select('map');
+    this._mapLayers = this._store.select('mapLayers');
   }
 
   ngOnInit() {
     // listen to the changes in map state and fire subscribe every 300ms
-    this._mapStateSubscription = this._mapState
+    this._mapLayersSubscription = this._mapLayers
       .debounceTime(300)
       .subscribe((layers: any) => {
         // reflect the layers to the object property
@@ -101,7 +101,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     this.layersCollection = [];
 
     // cleanup subscription
-    this._mapStateSubscription.unsubscribe();
+    this._mapLayersSubscription.unsubscribe();
   }
 
 }
