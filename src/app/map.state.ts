@@ -6,7 +6,7 @@
  */
 
 import { ActionReducer, Action } from '@ngrx/store';
-import { assign, map, filter, isArray } from 'lodash';
+import { assign, map, filter, isArray, has } from 'lodash';
 
 export const mapReducer: ActionReducer<any> = (state: any = [], action: Action) => {
   switch (action.type) {
@@ -92,6 +92,51 @@ export const mapReducer: ActionReducer<any> = (state: any = [], action: Action) 
           obj.data = assign({}, layer.data, action.payload.data);
 
           return assign({}, layer, obj);
+        }
+
+        return layer;
+      });
+
+    // TODO: add cql_filter based on the layer id
+    case 'ADD_CQL_FILTER_BY_ZOOM':
+      return map(state, (layer: any) => {
+        if (layer.zoom === action.payload.zoom) {
+          let obj: any = {};
+
+          // prevent ovewriting data
+          obj.data = assign({}, layer.data);
+
+          // add cql_filter option when wmsOptions property exists
+          if (has(obj, 'data.wmsOptions')) {
+            obj.data.wmsOptions = assign({}, obj.data.wmsOptions, {
+              cql_filter: action.payload.cql_filter
+            });
+          }
+
+          // store the gridcodes on the data
+          if (has(action.payload, 'gridcodes')) {
+            obj.data.gridcodes = action.payload.gridcodes;
+          }
+
+          return assign({}, layer, obj);
+        }
+
+        return layer;
+      });
+
+    // TODO: remove cql_filter based on the layer id
+    case 'REMOVE_CQL_FILTER_BY_ZOOM':
+      return map(state, (layer: any) => {
+        if (layer.zoom === action.payload.zoom) {
+          // remove the cql_filter option
+          if (has(layer, 'data.wmsOptions.cql_filter')) {
+            delete layer.data.wmsOptions.cql_filter;
+          }
+
+          // remove the gridcodes
+          if (has(layer, 'data.gridcodes')) {
+            delete layer.data.gridcodes;
+          }
         }
 
         return layer;
