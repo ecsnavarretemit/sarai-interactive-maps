@@ -124,8 +124,41 @@ export class WmsLayerService {
     return map(layers, (item) => {
       return assign({}, this.getDefaultOptions(), {
         layers: item,
-        minZoom: 6,
-        maxZoom: 11,
+        minZoom: 5,
+        maxZoom: 12,
+        attribution,
+      }, options);
+    });
+  }
+
+  getSuitabilityMapMunicipalLevelLayers(crop: string, options: any = {}): Array<WMSOptions> {
+    let layers = [];
+    let attribution = this.getSuitabilityMapAttribution();
+
+    switch (crop.toLocaleLowerCase()) {
+      case 'banana':
+      case 'rice':
+      case 'cacao':
+      case 'coffee-arabica':
+      case 'coffee-robusta':
+      case 'corn-dry':
+      case 'corn-wet':
+      case 'coconut':
+        layers = [
+          `${this._workspace}:${snakeCase(crop)}_detailed_gridcode_all`
+        ];
+
+        break;
+
+      default:
+        throw new Error('Not yet implemented!');
+    }
+
+    return map(layers, (item) => {
+      return assign({}, this.getDefaultOptions(), {
+        layers: item,
+        minZoom: 11,
+        maxZoom: 20,
         attribution,
       }, options);
     });

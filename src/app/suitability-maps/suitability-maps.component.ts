@@ -12,8 +12,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent } from '../leaflet-wms-layer/leaflet-wms-layer.component';
 import { LayerState, SuitabilityLevelsState, Layer } from '../store';
+import { LeafletMapService } from '../leaflet-map.service';
 import { WmsLayerService } from '../wms-layer.service';
-import { WMSOptions } from 'leaflet';
+import { Map, WMSOptions } from 'leaflet';
 import { map, omit } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
@@ -27,6 +28,8 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public WMSTileUrl: string;
   public crop: string;
   public layersCollection: Array<Layer> = [];
+  private _map: Map;
+  private _layerState: string = 'resampled';
   private _mapLayers: Observable<LayerState>;
   private _suitabilityLevels: Observable<SuitabilityLevelsState>;
   private _combinedSubscription: Subscription;
@@ -34,6 +37,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
   constructor(
+    private _mapService: LeafletMapService,
     private _wmsLayerService: WmsLayerService,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -96,11 +100,33 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       // process wms layers
       this.processLayers();
     });
+
+    // retrieve the map instance
+    this._mapService
+      .getMap()
+      .then((mapInstance: Map) => {
+        // save the reference to the map
+        this._map = mapInstance;
+
+        // bind the zoomend callback to the zoomend event
+        mapInstance.on('zoomend', this.onMapZoom.bind(this));
+      })
+      ;
   }
 
   processLayers() {
+    let zoomLevel = 6;
     let method = 'getSuitabilityMapCountryLevelLayers';
     let layerType = 'suitability-map-simplified';
+
+    if (typeof this._map !== 'undefined' && this._map.getZoom() >= 12) {
+      zoomLevel = 12;
+    }
+
+    // get all municipal level layers when zoom level is greater than 12
+    if (zoomLevel === 12) {
+      method = 'getSuitabilityMapMunicipalLevelLayers';
+    }
 
     // get the layers
     let layers = this._wmsLayerService[method](this.crop);
@@ -127,6 +153,26 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       type: 'ADD_LAYERS',
       payload: processedLayers
     });
+  }
+
+  onMapZoom() {
+    let zoomLevel = this._map.getZoom();
+
+    if (zoomLevel < 12 && this._layerState !== 'resampled') {
+      // processing layer
+      this.processLayers();
+
+      // switch layer state
+      this._layerState = 'resampled';
+    }
+
+    if (zoomLevel >= 12 && this._layerState !== 'detailed') {
+      // processing layer
+      this.processLayers();
+
+      // switch layer state
+      this._layerState = 'detailed';
+    }
   }
 
   removeLayers() {
