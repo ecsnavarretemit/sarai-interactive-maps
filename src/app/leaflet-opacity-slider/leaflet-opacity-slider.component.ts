@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { WMS } from 'leaflet';
 import { LayerState } from '../store';
 import { LeafletMapService } from '../leaflet-map.service';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-leaflet-opacity-slider',
