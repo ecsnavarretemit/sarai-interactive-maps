@@ -1,5 +1,5 @@
 /*!
- * Map State
+ * Map Layers Reducer
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -8,7 +8,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { assign, map, filter, isArray, has } from 'lodash';
 
-export const mapReducer: ActionReducer<any> = (state: any = [], action: Action) => {
+export const MapLayersReducer: ActionReducer<any> = (state: any = [], action: Action) => {
   switch (action.type) {
     case 'ADD_LAYER':
       return [
