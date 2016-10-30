@@ -7,14 +7,14 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 import { assign, map, filter, isArray, has, omit, size, reduce, forEach } from 'lodash';
-import { WMSOptions } from 'leaflet';
+import { TileLayerOptions, WMSOptions } from 'leaflet';
 
 export interface Layer {
   id: string;
   url: string;
   type: string; // suitability-map-detailed, suitability-map-simplified, or other category
   data: {
-    wmsOptions: WMSOptions
+    wmsOptions: TileLayerOptions | WMSOptions
   };
 }
 
