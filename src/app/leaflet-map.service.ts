@@ -203,6 +203,13 @@ export class LeafletMapService {
       });
   }
 
+  getTileLayers(): Promise<any> {
+    return this.getMap()
+      .then((map: Map) => {
+        return this._tileLayers;
+      });
+  }
+
 }
 
 
