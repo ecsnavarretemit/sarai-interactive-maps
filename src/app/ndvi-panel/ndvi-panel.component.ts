@@ -7,6 +7,7 @@
 
 import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 
 @Component({
@@ -22,7 +23,10 @@ export class NdviPanelComponent implements OnInit {
   @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _router: Router
+  ) {
     this.startDate = new FormControl('', [
       Validators.required,
       CustomValidators.dateISO
@@ -42,7 +46,10 @@ export class NdviPanelComponent implements OnInit {
   ngOnInit() { }
 
   processRequest() {
-    console.log(this.filterForm.value);
+    let value = this.filterForm.value;
+
+    // redirect to the URL
+    this._router.navigateByUrl(`/ndvi/${value.startDate}/${value.scanRange}`);
   }
 
   onPanelIconClick(event) {
