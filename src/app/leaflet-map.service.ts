@@ -36,11 +36,11 @@ export class LeafletMapService {
 
   getMap(): Promise<Map> { return this._map; }
 
-  addTileLayer(id: string, layer: TileLayer): Promise<void> {
+  addTileLayer(id: string, layer: TileLayer): Promise<void | Error> {
     return this.getMap()
       .then((map: Map) => {
         if (_.has(this._tileLayers, id)) {
-          throw new Error('ID already exists. Provide another ID for this layer');
+          return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
         // add the layer to the map
@@ -52,11 +52,11 @@ export class LeafletMapService {
       ;
   }
 
-  addNewTileLayer(id: string, url: string, options: TileLayerOptions): Promise<TileLayer> {
+  addNewTileLayer(id: string, url: string, options: TileLayerOptions): Promise<TileLayer | Error> {
     return this.getMap()
       .then((map: Map) => {
         if (_.has(this._tileLayers, id)) {
-          throw new Error('ID already exists. Provide another ID for this layer');
+          return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
         let layer = (L as any).tileLayer(url, options);
@@ -73,11 +73,11 @@ export class LeafletMapService {
       ;
   }
 
-  removeTileLayer(id: string): Promise<void> {
+  removeTileLayer(id: string): Promise<void | Error> {
     return this.getMap()
       .then((map: Map) => {
         if (!_.has(this._tileLayers, id)) {
-          throw new Error('ID does not exist. Cannot remove WMS layer.');
+          return Promise.reject(new Error(`ID ${id} does not exist. Cannot remove tile layer.`));
         }
 
         map.removeLayer(this._tileLayers[id]);
@@ -102,11 +102,11 @@ export class LeafletMapService {
       ;
   }
 
-  addWMSLayer(id: string, layer: WMS): Promise<void> {
+  addWMSLayer(id: string, layer: WMS): Promise<void | Error> {
     return this.getMap()
       .then((map: Map) => {
         if (_.has(this._wmsLayers, id)) {
-          throw new Error('ID already exists. Provide another ID for this layer');
+          return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
         // add the layer to the map
@@ -118,11 +118,11 @@ export class LeafletMapService {
       ;
   }
 
-  addNewWMSLayer(id: string, url: string, options: WMSOptions): Promise<WMS> {
+  addNewWMSLayer(id: string, url: string, options: WMSOptions): Promise<WMS | Error> {
     return this.getMap()
       .then((map: Map) => {
         if (_.has(this._wmsLayers, id)) {
-          throw new Error('ID already exists. Provide another ID for this layer');
+          return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
         let layer = (L as any).tileLayer.wms(url, options);
@@ -145,10 +145,6 @@ export class LeafletMapService {
         let layers = _.chain(items)
           .filter((item) => {
             let result = _.has(this._wmsLayers, item.id);
-
-            if (result) {
-              throw new Error(`ID ${item.id} exists. please provide a new ID for this layer.`);
-            }
 
             return !result;
           })
@@ -185,11 +181,11 @@ export class LeafletMapService {
       ;
   }
 
-  removeWMSLayer(id: string): Promise<void> {
+  removeWMSLayer(id: string): Promise<void | Error> {
     return this.getMap()
       .then((map: Map) => {
         if (!_.has(this._wmsLayers, id)) {
-          throw new Error('ID does not exist. Cannot remove WMS layer.');
+          return Promise.reject(new Error(`ID ${id} does not exist. Cannot remove WMS layer.`));
         }
 
         map.removeLayer(this._wmsLayers[id]);
