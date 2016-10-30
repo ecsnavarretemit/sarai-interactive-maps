@@ -81,7 +81,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         let tileUrl = `https://earthengine.googleapis.com/map/${response.mapId}/{z}/{x}/{y}?token=${response.mapToken}`;
 
-        this._layerId = 'ndvi-layer-1';
+        this._layerId = response.mapId;
 
         let payload: Layer = {
           id: this._layerId,
@@ -90,8 +90,17 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           layerOptions: this._tileLayerService.getNdviLayerOptions()
         };
 
-        // add the tile layer to the map
-        this._mapService.addNewTileLayer(payload.id, payload.url, payload.layerOptions);
+        // clear tile layers before adding it
+        this._mapService
+          .clearTileLayers()
+          .then(() => {
+            // add the tile layer to the map
+            return this._mapService.addNewTileLayer(payload.id, payload.url, payload.layerOptions);
+          })
+          .catch((error: Error) => {
+            console.error(error);
+          })
+          ;
 
         // add the new layer to the store
         this._mapLayersStore.dispatch({
@@ -109,7 +118,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     });
 
     if (typeof this._layerId !== 'undefined') {
-      this._mapService.removeTileLayer(this._layerId);
+      this._mapService.removeTileLayer(this._layerId).catch((error: Error) => {
+        console.error(error);
+      });
     }
   }
 
