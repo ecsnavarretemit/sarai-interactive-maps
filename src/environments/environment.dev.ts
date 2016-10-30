@@ -1,7 +1,7 @@
 const geoserverWorkspace = 'sarai-20161024';
 
 export const environment = {
-  production: true,
+  production: false,
   sarai_map_config: {
     geoserver: {
       workspace: geoserverWorkspace,
@@ -14,7 +14,7 @@ export const environment = {
       propertyFilterName: 'GRIDCODE'
     },
     ndvi_maps: {
-      eeApiEndpoint: '',
+      eeApiEndpoint: 'http://localhost:5000/ndvi',
       eeApiEndpointMethod: 'GET'
     }
   }
