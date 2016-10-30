@@ -69,17 +69,15 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           id: this._layerId,
           url: tileUrl,
           type: 'ndvi',
-          data: {
-            wmsOptions: {
-              attribution: 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>',
-              zIndex: 1000,
-              opacity: 0.6
-            }
+          layerOptions: {
+            attribution: 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>',
+            zIndex: 1000,
+            opacity: 0.6
           }
         };
 
         // add the tile layer to the map
-        this._mapService.addNewTileLayer(payload.id, payload.url, payload.data.wmsOptions);
+        this._mapService.addNewTileLayer(payload.id, payload.url, payload.layerOptions);
 
         // add the new layer to the store
         this._mapLayersStore.dispatch({

@@ -81,9 +81,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
         // if yes, then refactor this part to prevent state mutation.
         this.layersCollection = map(layers, (layer: Layer) => {
           if (levelsState.gridcodes.length < 15) {
-            (layer.data.wmsOptions as any).cql_filter = this._tileLayerService.getCQLFilterByGridcode(levelsState.gridcodes);
+            (layer.layerOptions as any).cql_filter = this._tileLayerService.getCQLFilterByGridcode(levelsState.gridcodes);
           } else {
-            layer.data.wmsOptions = (omit(layer.data.wmsOptions, 'cql_filter') as any);
+            layer.layerOptions = (omit(layer.layerOptions, 'cql_filter') as any);
           }
 
           return layer;
@@ -133,13 +133,11 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
 
     // assemble the layers payload for saving to the application store.
     let processedLayers = map(layers, (layer: WMSOptions) => {
-      let payload: any = {};
-
-      payload.id   = layer.layers;
-      payload.type = layerType;
-      payload.url  = this._tileLayerService.getUrl();
-      payload.data = {
-        wmsOptions: layer
+      let payload: Layer = {
+        id: layer.layers,
+        type: layerType,
+        url: this._tileLayerService.getUrl(),
+        layerOptions: layer
       };
 
       return payload;
@@ -188,8 +186,8 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   layerTracker(index, item) {
     // check if cql_filter is present. if it is then the layer has been modified.
     // return the cql_filter the the new identifier
-    if (typeof item.data.wmsOptions.cql_filter !== 'undefined') {
-      return item.data.wmsOptions.cql_filter;
+    if (typeof item.layerOptions.cql_filter !== 'undefined') {
+      return item.layerOptions.cql_filter;
     }
 
     // return the item id if cql_filter is not present

@@ -13,9 +13,7 @@ export interface Layer {
   id: string;
   url: string;
   type: string; // suitability-map-detailed, suitability-map-simplified, or other category
-  data: {
-    wmsOptions: TileLayerOptions | WMSOptions
-  };
+  layerOptions: TileLayerOptions | WMSOptions;
 }
 
 export interface LayerState {
