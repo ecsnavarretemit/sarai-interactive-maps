@@ -10,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
+import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,18 @@ const routes: Routes = [
   {
     path: 'ndvi/:startDate/:scanRange',
     component: NdviMapsComponent
+  },
+
+  {
+    path: 'rainfall-maps',
+    component: RainfallMapsComponent,
+  },
+
+  // TODO: add date validation. for now we do nothing if invalid date is provided
+  // duplicated for required url parameter `date`
+  {
+    path: 'rainfall-maps/:date',
+    component: RainfallMapsComponent
   },
 ];
 
