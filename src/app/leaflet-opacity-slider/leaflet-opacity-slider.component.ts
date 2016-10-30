@@ -9,7 +9,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@ang
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { WMS } from 'leaflet';
+import { TileLayer } from 'leaflet';
 import { LayerState } from '../store';
 import { LeafletMapService } from '../leaflet-map.service';
 import 'rxjs/add/operator/debounceTime';
@@ -58,10 +58,15 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
   }
 
   setOpacity(opacity: number) {
-    this._mapService
-      .getWMSLayers()
-      .then((layers: any) => {
-        _.each(layers, (layer: WMS) => {
+    Promise
+      .all([
+        this._mapService.getWMSLayers(),
+        this._mapService.getTileLayers()
+      ])
+      .then((values) => {
+        let flattened = _.assign({}, ...values);
+
+        _.each(flattened, (layer: TileLayer) => {
           layer.setOpacity(opacity);
         });
       })
