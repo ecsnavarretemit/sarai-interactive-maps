@@ -17,7 +17,7 @@ import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { WindowService } from './window.service';
-import { WmsLayerService } from './wms-layer.service';
+import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
@@ -91,7 +91,7 @@ import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
     CookieService,
     LeafletMapService,
     LeafletTileProviderService,
-    WmsLayerService,
+    TileLayerService,
     SuitabilityMapService,
 
     // using window object in Angular 2 is discouraged since

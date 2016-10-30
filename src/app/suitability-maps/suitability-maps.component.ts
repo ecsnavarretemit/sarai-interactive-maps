@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent } from '../leaflet-wms-layer/leaflet-wms-layer.component';
 import { LayerState, SuitabilityLevelsState, Layer } from '../store';
 import { LeafletMapService } from '../leaflet-map.service';
-import { WmsLayerService } from '../wms-layer.service';
+import { TileLayerService } from '../tile-layer.service';
 import { Map, WMSOptions } from 'leaflet';
 import { map, omit } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
@@ -38,14 +38,14 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _mapService: LeafletMapService,
-    private _wmsLayerService: WmsLayerService,
+    private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _mapLayersStore: Store<any>,
     private _suitabilityLevelsStore: Store<any>
   ) {
     // set the WMS tile URL
-    this.WMSTileUrl = this._wmsLayerService.getUrl();
+    this.WMSTileUrl = this._tileLayerService.getUrl();
 
     // set default crop
     this.crop = 'rice';
@@ -81,7 +81,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
         // if yes, then refactor this part to prevent state mutation.
         this.layersCollection = map(layers, (layer: Layer) => {
           if (levelsState.gridcodes.length < 15) {
-            (layer.data.wmsOptions as any).cql_filter = this._wmsLayerService.getCQLFilterByGridcode(levelsState.gridcodes);
+            (layer.data.wmsOptions as any).cql_filter = this._tileLayerService.getCQLFilterByGridcode(levelsState.gridcodes);
           } else {
             layer.data.wmsOptions = (omit(layer.data.wmsOptions, 'cql_filter') as any);
           }
@@ -129,7 +129,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     }
 
     // get the layers
-    let layers = this._wmsLayerService[method](this.crop);
+    let layers = this._tileLayerService[method](this.crop);
 
     // assemble the layers payload for saving to the application store.
     let processedLayers = map(layers, (layer: WMSOptions) => {
@@ -137,7 +137,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
 
       payload.id   = layer.layers;
       payload.type = layerType;
-      payload.url  = this._wmsLayerService.getUrl();
+      payload.url  = this._tileLayerService.getUrl();
       payload.data = {
         wmsOptions: layer
       };

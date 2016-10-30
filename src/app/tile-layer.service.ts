@@ -11,7 +11,7 @@ import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, Temp
 
 
 @Injectable()
-export class WmsLayerService {
+export class TileLayerService {
   private _leafletApi: any = L;
   private _workspace: string = 'sarai-20161024';
   private _equalToFilterTmpl: TemplateExecutor;
