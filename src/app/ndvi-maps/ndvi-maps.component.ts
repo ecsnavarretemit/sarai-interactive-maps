@@ -24,8 +24,8 @@ import 'rxjs/add/observable/combineLatest';
   styleUrls: ['./ndvi-maps.component.sass']
 })
 export class NdviMapsComponent implements OnInit, OnDestroy {
+  private _layerId: string;
   private _ndviLayer: TileLayer;
-  private _mapLayers: Observable<LayerState>;
 
   constructor(
     private _mapService: LeafletMapService,
@@ -52,28 +52,21 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
   }
 
   processData(startDate: string, scanRange: number) {
-    let getMapToken =  this._http
-      .get(`http://127.0.0.1:5000/ndvi/?date=${startDate}&range=${scanRange}`)
-      .map((res: Response) => res.json())
-      ;
-
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
-    // combine the observable and the promise into one
-    // and process the data when token is available.
-    Observable.combineLatest(getMapToken, this._mapService.getMap())
-      .debounceTime(300)
-      .subscribe((params: [any, Map]) => {
-        let response = params[0];
-        let map = params[1];
-
+    this._http
+      .get(`http://127.0.0.1:5000/ndvi/?date=${startDate}&range=${scanRange}`)
+      .map((res: Response) => res.json())
+      .subscribe((response: any) => {
         let tileUrl = `https://earthengine.googleapis.com/map/${response.mapId}/{z}/{x}/{y}?token=${response.mapToken}`;
 
+        this._layerId = 'ndvi-layer-1';
+
         let payload: Layer = {
-          id: 'ndvi-layer-1',
+          id: this._layerId,
           url: tileUrl,
           type: 'ndvi',
           data: {
@@ -85,17 +78,14 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           }
         };
 
-        // assemble the tile layer
-        this._ndviLayer = L.tileLayer(payload.url, payload.data.wmsOptions);
+        // add the tile layer to the map
+        this._mapService.addNewTileLayer(payload.id, payload.url, payload.data.wmsOptions);
 
         // add the new layer to the store
         this._mapLayersStore.dispatch({
           type: 'ADD_LAYER',
           payload: payload
         });
-
-        // add the layer to the map
-        this._ndviLayer.addTo(map);
       })
       ;
   }
@@ -106,10 +96,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
       type: 'REMOVE_ALL_LAYERS'
     });
 
-    this._mapService.getMap().then((map: Map) => {
-      // remove the layer from the map
-      this._ndviLayer.removeFrom(map);
-    });
+    if (typeof this._layerId !== 'undefined') {
+      this._mapService.removeTileLayer(this._layerId);
+    }
   }
 
 }
