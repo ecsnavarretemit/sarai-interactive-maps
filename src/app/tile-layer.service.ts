@@ -6,9 +6,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { WMSOptions, CRS } from 'leaflet';
+import { TileLayerOptions, WMSOptions, CRS } from 'leaflet';
 import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
-
 
 @Injectable()
 export class TileLayerService {
@@ -81,15 +80,24 @@ export class TileLayerService {
     }).join(' OR ');
   }
 
-  getDefaultOptions(): any {
+  getDefaultOptions(): TileLayerOptions {
     return {
-      format: this.imageFormat,
-      transparent: this.transparent,
       maxZoom: this.maxZoom,
-      crs: this.crs,
       zIndex: 1000,
       opacity: 0.6
     };
+  }
+
+  getDefaultWMSOptions(): any {
+    return {
+      format: this.imageFormat,
+      transparent: this.transparent,
+      crs: this.crs
+    };
+  }
+
+  getEarthEngineAttribution() {
+    return 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>';
   }
 
   getSuitabilityMapAttribution() {
@@ -122,7 +130,7 @@ export class TileLayerService {
     }
 
     return map(layers, (item) => {
-      return assign({}, this.getDefaultOptions(), {
+      return assign({}, this.getDefaultOptions(), this.getDefaultWMSOptions(), {
         layers: item,
         minZoom: 5,
         maxZoom: 12,
@@ -155,13 +163,21 @@ export class TileLayerService {
     }
 
     return map(layers, (item) => {
-      return assign({}, this.getDefaultOptions(), {
+      return assign({}, this.getDefaultOptions(), this.getDefaultWMSOptions(), {
         layers: item,
         minZoom: 11,
         maxZoom: 20,
         attribution,
       }, options);
     });
+  }
+
+  getNdviLayerOptions(options: TileLayerOptions = {}): TileLayerOptions {
+    let attribution = this.getEarthEngineAttribution();
+
+    return assign({}, this.getDefaultOptions(), {
+      attribution
+    }, options);
   }
 
   createLayerFilter(gridcodes: Array<number>): string {

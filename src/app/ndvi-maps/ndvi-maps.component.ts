@@ -10,6 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
+import { TileLayerService } from '../tile-layer.service';
 import { Layer } from '../store';
 import { isNaN } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
@@ -25,6 +26,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _mapService: LeafletMapService,
+    private _tileLayerService: TileLayerService,
     private _http: Http,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -65,11 +67,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           id: this._layerId,
           url: tileUrl,
           type: 'ndvi',
-          layerOptions: {
-            attribution: 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>',
-            zIndex: 1000,
-            opacity: 0.6
-          }
+          layerOptions: this._tileLayerService.getNdviLayerOptions()
         };
 
         // add the tile layer to the map
