@@ -46,6 +46,9 @@ export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
         // set the flag to true
         this._layerAdded = true;
       })
+      .catch((error: Error) => {
+        console.error(error);
+      })
       ;
   }
 
@@ -55,12 +58,19 @@ export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
         .removeWMSLayer(this.id)
         .then(() => {
           this._layerAdded = false;
-        });
+        })
+        .catch((error: Error) => {
+          console.error(error);
+        })
+        ;
     } else {
       return this._mapService
         .addWMSLayer(this.id, this.layer)
         .then(() => {
           this._layerAdded = true;
+        })
+        .catch((error: Error) => {
+          console.error(error);
         })
         ;
     }
@@ -84,6 +94,9 @@ export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
 
         // remove the reference to the object
         this.layer = undefined;
+      })
+      .catch((error: Error) => {
+        console.error(error);
       })
       ;
   }

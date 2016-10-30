@@ -8,7 +8,6 @@
 import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { WmsLayerService } from '../wms-layer.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
 import { Crop } from '../crop.interface';
@@ -29,7 +28,6 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private _wmsLayerService: WmsLayerService,
     private _suitabilityMapService: SuitabilityMapService,
     private _store: Store<any>
   ) { }

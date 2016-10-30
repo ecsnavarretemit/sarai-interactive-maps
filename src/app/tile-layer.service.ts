@@ -5,15 +5,14 @@
  * Licensed under MIT
  */
 
-import { Injectable } from '@angular/core';
-import { WMSOptions, CRS } from 'leaflet';
+import { Injectable, Inject } from '@angular/core';
+import { APP_CONFIG } from './app.config';
+import { TileLayerOptions, WMSOptions, CRS } from 'leaflet';
 import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
 
-
 @Injectable()
-export class WmsLayerService {
+export class TileLayerService {
   private _leafletApi: any = L;
-  private _workspace: string = 'sarai-20161024';
   private _equalToFilterTmpl: TemplateExecutor;
   private _betweenFilterTmpl: TemplateExecutor;
 
@@ -21,9 +20,9 @@ export class WmsLayerService {
   public transparent: boolean = true;
   public maxZoom: number = 18;
   public crs: CRS = this._leafletApi.CRS.EPSG900913;
-  public wmsTileLayerUrl = `http://202.92.144.40:8080/geoserver/${this._workspace}/wms?tiled=true`;
+  public wmsTileLayerUrl: string;
 
-  constructor() {
+  constructor(@Inject(APP_CONFIG) private _config: any) {
     // EqualTo filter for GeoServer
     this._equalToFilterTmpl = template(`
       <PropertyIsEqualTo>
@@ -58,6 +57,9 @@ export class WmsLayerService {
     `, {
       'variable': 'data'
     });
+
+    // set the properties based from what the config will return
+    this.wmsTileLayerUrl = this._config.geoserver.wmsTileLayerUrl;
   }
 
   getUrl(): string {
@@ -77,19 +79,28 @@ export class WmsLayerService {
 
   getCQLFilterByGridcode(gridcodes: Array<number> = []): string {
     return map(gridcodes, (value: number) => {
-      return `GRIDCODE=${value}`;
+      return `${this._config.suitability_maps.propertyFilterName}=${value}`;
     }).join(' OR ');
   }
 
-  getDefaultOptions(): any {
+  getDefaultOptions(): TileLayerOptions {
     return {
-      format: this.imageFormat,
-      transparent: this.transparent,
       maxZoom: this.maxZoom,
-      crs: this.crs,
       zIndex: 1000,
       opacity: 0.6
     };
+  }
+
+  getDefaultWMSOptions(): any {
+    return {
+      format: this.imageFormat,
+      transparent: this.transparent,
+      crs: this.crs
+    };
+  }
+
+  getEarthEngineAttribution() {
+    return 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>';
   }
 
   getSuitabilityMapAttribution() {
@@ -112,7 +123,7 @@ export class WmsLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._workspace}:${snakeCase(crop)}_simplified_gridcode_all`
+          `${this._config.geoserver.workspace}:${snakeCase(crop)}${this._config.suitability_maps.countrLevelLayerSuffix}`
         ];
 
         break;
@@ -122,7 +133,7 @@ export class WmsLayerService {
     }
 
     return map(layers, (item) => {
-      return assign({}, this.getDefaultOptions(), {
+      return assign({}, this.getDefaultOptions(), this.getDefaultWMSOptions(), {
         layers: item,
         minZoom: 5,
         maxZoom: 12,
@@ -145,7 +156,7 @@ export class WmsLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._workspace}:${snakeCase(crop)}_detailed_gridcode_all`
+          `${this._config.geoserver.workspace}:${snakeCase(crop)}${this._config.suitability_maps.municipalLevelLayerSuffix}`
         ];
 
         break;
@@ -155,13 +166,21 @@ export class WmsLayerService {
     }
 
     return map(layers, (item) => {
-      return assign({}, this.getDefaultOptions(), {
+      return assign({}, this.getDefaultOptions(), this.getDefaultWMSOptions(), {
         layers: item,
         minZoom: 11,
         maxZoom: 20,
         attribution,
       }, options);
     });
+  }
+
+  getNdviLayerOptions(options: TileLayerOptions = {}): TileLayerOptions {
+    let attribution = this.getEarthEngineAttribution();
+
+    return assign({}, this.getDefaultOptions(), {
+      attribution
+    }, options);
   }
 
   createLayerFilter(gridcodes: Array<number>): string {
@@ -174,13 +193,13 @@ export class WmsLayerService {
 
       if (value.length > 1) {
         filter = this._betweenFilterTmpl({
-          property: 'GRIDCODE',
+          property: this._config.suitability_maps.propertyFilterName,
           lowerBoundary: min(value),
           upperBoundary: max(value)
         });
       } else {
         filter = this._equalToFilterTmpl({
-          property: 'GRIDCODE',
+          property: this._config.suitability_maps.propertyFilterName,
           value: value[0]
         });
       }

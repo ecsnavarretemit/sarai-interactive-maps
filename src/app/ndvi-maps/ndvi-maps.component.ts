@@ -5,15 +5,14 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { APP_CONFIG } from '../app.config';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
-import { LayerState, Layer } from '../store';
-import { Map, TileLayer } from 'leaflet';
+import { TileLayerService } from '../tile-layer.service';
+import { Layer } from '../store';
 import { isNaN } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
@@ -25,10 +24,11 @@ import 'rxjs/add/observable/combineLatest';
 })
 export class NdviMapsComponent implements OnInit, OnDestroy {
   private _layerId: string;
-  private _ndviLayer: TileLayer;
 
   constructor(
+    @Inject(APP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
+    private _tileLayerService: TileLayerService,
     private _http: Http,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -57,29 +57,50 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
       type: 'REMOVE_ALL_LAYERS'
     });
 
+    // throw error if endpoint does not exist
+    if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
+      throw new Error('API Endpoint for NDVI Layers not specified');
+    }
+
+    let endpoint = this._config.ndvi_maps.eeApiEndpoint;
+    let method = 'post';
+    let args = [endpoint, {
+      date: startDate,
+      range: scanRange
+    }];
+
+    if (this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase() === 'get') {
+      method = 'get';
+      endpoint += `/?date=${startDate}&range=${scanRange}`;
+      args = [endpoint];
+    }
+
     this._http
-      .get(`http://127.0.0.1:5000/ndvi/?date=${startDate}&range=${scanRange}`)
+      [method].apply(this._http, args)
       .map((res: Response) => res.json())
       .subscribe((response: any) => {
         let tileUrl = `https://earthengine.googleapis.com/map/${response.mapId}/{z}/{x}/{y}?token=${response.mapToken}`;
 
-        this._layerId = 'ndvi-layer-1';
+        this._layerId = response.mapId;
 
         let payload: Layer = {
           id: this._layerId,
           url: tileUrl,
           type: 'ndvi',
-          data: {
-            wmsOptions: {
-              attribution: 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>',
-              zIndex: 1000,
-              opacity: 0.6
-            }
-          }
+          layerOptions: this._tileLayerService.getNdviLayerOptions()
         };
 
-        // add the tile layer to the map
-        this._mapService.addNewTileLayer(payload.id, payload.url, payload.data.wmsOptions);
+        // clear tile layers before adding it
+        this._mapService
+          .clearTileLayers()
+          .then(() => {
+            // add the tile layer to the map
+            return this._mapService.addNewTileLayer(payload.id, payload.url, payload.layerOptions);
+          })
+          .catch((error: Error) => {
+            console.error(error);
+          })
+          ;
 
         // add the new layer to the store
         this._mapLayersStore.dispatch({
@@ -97,7 +118,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     });
 
     if (typeof this._layerId !== 'undefined') {
-      this._mapService.removeTileLayer(this._layerId);
+      this._mapService.removeTileLayer(this._layerId).catch((error: Error) => {
+        console.error(error);
+      });
     }
   }
 

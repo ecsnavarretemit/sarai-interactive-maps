@@ -1,17 +1,17 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { WmsLayerService } from './wms-layer.service';
+import { TileLayerService } from './tile-layer.service';
 
-describe('Service: WmsLayerService', () => {
+describe('Service: TileLayerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WmsLayerService]
+      providers: [TileLayerService]
     });
   });
 
-  it('should ...', inject([WmsLayerService], (service: WmsLayerService) => {
+  it('should ...', inject([TileLayerService], (service: TileLayerService) => {
     expect(service).toBeTruthy();
   }));
 
