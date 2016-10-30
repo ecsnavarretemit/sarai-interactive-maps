@@ -49,5 +49,6 @@ typings
 
 # Env
 .dir-env
+src/environments/*.ts
 
 
