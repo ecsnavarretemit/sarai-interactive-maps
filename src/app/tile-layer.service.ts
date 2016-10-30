@@ -99,6 +99,10 @@ export class TileLayerService {
     };
   }
 
+  getEarthEngineMapUrl(mapId: string, mapToken: string): string {
+    return `https://earthengine.googleapis.com/map/${mapId}/{z}/{x}/{y}?token=${mapToken}`;
+  }
+
   getEarthEngineAttribution() {
     return 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>';
   }
@@ -176,6 +180,14 @@ export class TileLayerService {
   }
 
   getNdviLayerOptions(options: TileLayerOptions = {}): TileLayerOptions {
+    let attribution = this.getEarthEngineAttribution();
+
+    return assign({}, this.getDefaultOptions(), {
+      attribution
+    }, options);
+  }
+
+  getRainFallLayerOptions(options: TileLayerOptions = {}): TileLayerOptions {
     let attribution = this.getEarthEngineAttribution();
 
     return assign({}, this.getDefaultOptions(), {
