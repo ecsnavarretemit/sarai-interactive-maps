@@ -17,6 +17,7 @@ import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { WindowService } from './window.service';
+import { AppConfig, APP_CONFIG } from './app.config';
 import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
@@ -97,7 +98,8 @@ import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
     // using window object in Angular 2 is discouraged since
     // it isn’t only designed to run within your browser, but also on mobiles,
     // the server or web workers where objects like window may not be available.
-    { provide: WindowService, useValue: window }
+    { provide: WindowService, useValue: window },
+    { provide: APP_CONFIG, useValue: AppConfig }
   ],
   bootstrap: [AppComponent]
 })
