@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
+import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
 
 const routes: Routes = [
   {
@@ -21,10 +22,22 @@ const routes: Routes = [
     component: SuitabilityMapsComponent
   },
 
-  // duplicated for require url parameter `crop`
+  // duplicated for required url parameter `crop`
   {
     path: 'suitability-maps/:crop',
     component: SuitabilityMapsComponent
+  },
+
+  {
+    path: 'ndvi',
+    component: NdviMapsComponent,
+  },
+
+  // TODO: add date validation. for now we do nothing if invalid date is provided
+  // duplicated for required url parameters `startDate` and `scanRange`
+  {
+    path: 'ndvi/:startDate/:scanRange',
+    component: NdviMapsComponent
   },
 ];
 
