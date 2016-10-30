@@ -6,7 +6,7 @@
  */
 
 import { ActionReducer, Action } from '@ngrx/store';
-import { assign, map, filter, isArray, has, omit, size, reduce, forEach } from 'lodash';
+import { assign, map, filter, isArray, has, omit, size, reduce } from 'lodash';
 import { TileLayerOptions, WMSOptions } from 'leaflet';
 
 export interface Layer {

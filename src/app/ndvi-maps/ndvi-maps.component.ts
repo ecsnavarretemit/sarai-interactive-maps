@@ -8,12 +8,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
-import { LayerState, Layer } from '../store';
-import { Map, TileLayer } from 'leaflet';
+import { Layer } from '../store';
 import { isNaN } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
@@ -25,7 +22,6 @@ import 'rxjs/add/observable/combineLatest';
 })
 export class NdviMapsComponent implements OnInit, OnDestroy {
   private _layerId: string;
-  private _ndviLayer: TileLayer;
 
   constructor(
     private _mapService: LeafletMapService,
