@@ -5,14 +5,14 @@
  * Licensed under MIT
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { APP_CONFIG } from './app.config';
 import { TileLayerOptions, WMSOptions, CRS } from 'leaflet';
 import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
 
 @Injectable()
 export class TileLayerService {
   private _leafletApi: any = L;
-  private _workspace: string = 'sarai-20161024';
   private _equalToFilterTmpl: TemplateExecutor;
   private _betweenFilterTmpl: TemplateExecutor;
 
@@ -20,9 +20,9 @@ export class TileLayerService {
   public transparent: boolean = true;
   public maxZoom: number = 18;
   public crs: CRS = this._leafletApi.CRS.EPSG900913;
-  public wmsTileLayerUrl = `http://202.92.144.40:8080/geoserver/${this._workspace}/wms?tiled=true`;
+  public wmsTileLayerUrl: string;
 
-  constructor() {
+  constructor(@Inject(APP_CONFIG) private _config: any) {
     // EqualTo filter for GeoServer
     this._equalToFilterTmpl = template(`
       <PropertyIsEqualTo>
@@ -57,6 +57,9 @@ export class TileLayerService {
     `, {
       'variable': 'data'
     });
+
+    // set the properties based from what the config will return
+    this.wmsTileLayerUrl = this._config.geoserver.wmsTileLayerUrl;
   }
 
   getUrl(): string {
@@ -76,7 +79,7 @@ export class TileLayerService {
 
   getCQLFilterByGridcode(gridcodes: Array<number> = []): string {
     return map(gridcodes, (value: number) => {
-      return `GRIDCODE=${value}`;
+      return `${this._config.suitability_maps.propertyFilterName}=${value}`;
     }).join(' OR ');
   }
 
@@ -120,7 +123,7 @@ export class TileLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._workspace}:${snakeCase(crop)}_simplified_gridcode_all`
+          `${this._config.geoserver.workspace}:${snakeCase(crop)}${this._config.suitability_maps.countrLevelLayerSuffix}`
         ];
 
         break;
@@ -153,7 +156,7 @@ export class TileLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._workspace}:${snakeCase(crop)}_detailed_gridcode_all`
+          `${this._config.geoserver.workspace}:${snakeCase(crop)}${this._config.suitability_maps.municipalLevelLayerSuffix}`
         ];
 
         break;
@@ -190,13 +193,13 @@ export class TileLayerService {
 
       if (value.length > 1) {
         filter = this._betweenFilterTmpl({
-          property: 'GRIDCODE',
+          property: this._config.suitability_maps.propertyFilterName,
           lowerBoundary: min(value),
           upperBoundary: max(value)
         });
       } else {
         filter = this._equalToFilterTmpl({
-          property: 'GRIDCODE',
+          property: this._config.suitability_maps.propertyFilterName,
           value: value[0]
         });
       }
