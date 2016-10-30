@@ -7,7 +7,8 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
 import { HttpModule, Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -42,6 +43,7 @@ import { CropProductionAreaPanelComponent } from './crop-production-area-panel/c
 import { NdviPanelComponent } from './ndvi-panel/ndvi-panel.component';
 import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-panel.component';
 import { DownloadImageFormComponent } from './download-image-form/download-image-form.component';
+import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
 
 @NgModule({
   declarations: [
@@ -63,12 +65,15 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
     CropProductionAreaPanelComponent,
     NdviPanelComponent,
     RainfallMapPanelComponent,
-    DownloadImageFormComponent
+    DownloadImageFormComponent,
+    NdviMapsComponent
   ],
   imports: [
     BrowserModule,
     SaraiNg2RoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    CustomFormsModule,
     HttpModule,
     TooltipModule,
     AccordionModule,
