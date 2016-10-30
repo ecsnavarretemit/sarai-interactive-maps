@@ -9,7 +9,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
+import { LayerState, Layer } from '../store';
 import { Map, TileLayer } from 'leaflet';
 import { isNaN } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
@@ -22,12 +25,14 @@ import 'rxjs/add/observable/combineLatest';
 })
 export class NdviMapsComponent implements OnInit, OnDestroy {
   private _ndviLayer: TileLayer;
+  private _mapLayers: Observable<LayerState>;
 
   constructor(
     private _mapService: LeafletMapService,
     private _http: Http,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _mapLayersStore: Store<any>
   ) { }
 
   ngOnInit() {
@@ -52,6 +57,11 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
       .map((res: Response) => res.json())
       ;
 
+    // remove all layers published on the store
+    this._mapLayersStore.dispatch({
+      type: 'REMOVE_ALL_LAYERS'
+    });
+
     // combine the observable and the promise into one
     // and process the data when token is available.
     Observable.combineLatest(getMapToken, this._mapService.getMap())
@@ -62,11 +72,26 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
         let tileUrl = `https://earthengine.googleapis.com/map/${response.mapId}/{z}/{x}/{y}?token=${response.mapToken}`;
 
+        let payload: Layer = {
+          id: 'ndvi-layer-1',
+          url: tileUrl,
+          type: 'ndvi',
+          data: {
+            wmsOptions: {
+              attribution: 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>',
+              zIndex: 1000,
+              opacity: 0.6
+            }
+          }
+        };
+
         // assemble the tile layer
-        this._ndviLayer = L.tileLayer(tileUrl, {
-          attribution: 'Layer data &copy; <a href="https://earthengine.google.com/" target="_blank">Google Earth Engine</a>',
-          zIndex: 1000,
-          opacity: 0.6
+        this._ndviLayer = L.tileLayer(payload.url, payload.data.wmsOptions);
+
+        // add the new layer to the store
+        this._mapLayersStore.dispatch({
+          type: 'ADD_LAYER',
+          payload: payload
         });
 
         // add the layer to the map
@@ -76,6 +101,11 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // remove all layers published on the store
+    this._mapLayersStore.dispatch({
+      type: 'REMOVE_ALL_LAYERS'
+    });
+
     this._mapService.getMap().then((map: Map) => {
       // remove the layer from the map
       this._ndviLayer.removeFrom(map);
