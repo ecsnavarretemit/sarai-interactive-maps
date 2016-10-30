@@ -7,7 +7,8 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
 import { HttpModule, Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -69,6 +70,8 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
     BrowserModule,
     SaraiNg2RoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    CustomFormsModule,
     HttpModule,
     TooltipModule,
     AccordionModule,
