@@ -1,0 +1,23 @@
+const geoserverWorkspace = '';
+
+export const environment = {
+  production: false,
+  sarai_map_config: {
+    geoserver: {
+      workspace: geoserverWorkspace,
+      wmsTileLayerUrl: '',
+      restApiEndpoint: ''
+    },
+    suitability_maps: {
+      countrLevelLayerSuffix: '',
+      municipalLevelLayerSuffix: '',
+      propertyFilterName: ''
+    },
+    ndvi_maps: {
+      eeApiEndpoint: '',
+      eeApiEndpointMethod: 'GET'
+    }
+  }
+};
+
+
