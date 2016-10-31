@@ -20,7 +20,7 @@ export class LeafletButtonComponent implements OnInit {
   @Input() controlClass: string;
   @Input() btnTooltip: string = 'Default Text';
   @Input() btnTooltipPosition: string = 'left';
-  @Output() buttonClick: EventEmitter<Event> = new EventEmitter();
+  @Output() buttonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('button') button: ElementRef;
 

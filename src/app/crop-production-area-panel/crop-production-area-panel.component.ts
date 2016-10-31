@@ -13,7 +13,7 @@ import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '
   styleUrls: ['./crop-production-area-panel.component.sass']
 })
 export class CropProductionAreaPanelComponent implements OnInit {
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
+  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor() { }

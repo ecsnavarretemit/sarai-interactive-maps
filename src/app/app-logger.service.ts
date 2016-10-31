@@ -20,7 +20,7 @@ export class AppLoggerService {
   private _stream: Subject<StreamData>;
 
   constructor() {
-    this._stream = new Subject();
+    this._stream = new Subject<StreamData>();
   }
 
   write(title: string, type: string, message: string, emit: boolean) {

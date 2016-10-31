@@ -20,7 +20,7 @@ export class NdviPanelComponent implements OnInit {
   public startDate: FormControl;
   public scanRange: FormControl;
 
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
+  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(

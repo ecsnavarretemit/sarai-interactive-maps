@@ -21,7 +21,7 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
   public hasLayers: boolean;
-  private _mapLayers: Observable<LayerState>;
+  private _mapLayers: Observable<any>;
   private _mapLayersSubscription: Subscription;
 
   @Input() title: string = 'Layer Overlay Opacity';
@@ -39,7 +39,9 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
 
     // get the map state store from the store
     this._mapLayers = this._mapLayersStore.select('mapLayers');
+  }
 
+  ngOnInit() {
     // check if our store has layers and fire subscribe every 300ms
     this._mapLayersSubscription = this._mapLayers
       .debounceTime(300)
@@ -48,9 +50,7 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
         this.hasLayers = (layerState.ids.length > 0);
       })
       ;
-  }
 
-  ngOnInit() {
     // reflect the default value
     this._renderer.setElementProperty(this.range.nativeElement, 'value', this.opacity);
 
@@ -80,7 +80,9 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // unsubscribe to the store observable
-    this._mapLayersSubscription.unsubscribe();
+    if (typeof this._mapLayersSubscription !== 'undefined') {
+      this._mapLayersSubscription.unsubscribe();
+    }
   }
 
 }

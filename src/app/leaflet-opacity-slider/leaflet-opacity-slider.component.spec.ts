@@ -9,8 +9,11 @@
 
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
+import { provideStore } from '@ngrx/store';
 import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider.component';
 import { LeafletMapService } from '../leaflet-map.service';
+import { MapLayersReducer, SuitabilityLevelsReducer } from '../store';
+
 
 describe('Component: LeafletOpacitySlider', () => {
 
@@ -18,7 +21,11 @@ describe('Component: LeafletOpacitySlider', () => {
     providers: [
       LeafletMapService,
       Renderer,
-      LeafletOpacitySliderComponent
+      LeafletOpacitySliderComponent,
+      provideStore({
+        mapLayers: MapLayersReducer,
+        suitabilityLevels: SuitabilityLevelsReducer
+      }),
     ]
   }));
 

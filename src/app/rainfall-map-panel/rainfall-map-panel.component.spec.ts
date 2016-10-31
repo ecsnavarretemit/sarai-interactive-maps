@@ -10,17 +10,23 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { MockRouter } from '../mocks/router';
 import { RainfallMapPanelComponent } from './rainfall-map-panel.component';
 
 describe('Component: RainfallMapPanel', () => {
+  let mockRouter: MockRouter;
 
-  beforeEach(() => TestBed.configureTestingModule({
-    providers: [
-      FormBuilder,
-      Router,
-      RainfallMapPanelComponent
-    ]
-  }));
+  beforeEach(() => {
+    mockRouter = new MockRouter();
+
+    TestBed.configureTestingModule({
+      providers: [
+        FormBuilder,
+        RainfallMapPanelComponent,
+        { provide: Router, useValue: mockRouter }
+      ]
+    });
+  });
 
   it('should create an instance', inject([RainfallMapPanelComponent], (component: RainfallMapPanelComponent) => {
     expect(component).toBeTruthy();

@@ -22,7 +22,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
   public cropData: Array<Crop> = [];
   public levels: Array<any> = [];
 
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
+  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChildren('suitabilityLevel') suitabilityLevelsCheckBoxes: QueryList<ElementRef>;
 

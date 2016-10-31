@@ -12,7 +12,7 @@ import { SuitabilityLevelsReducer } from './suitability-levels.reducer';
 
 describe('MapState', () => {
 
-  it('should create an instance', () => {
+  it('NgRx Store Reducer: Suitability Levels', () => {
     expect(SuitabilityLevelsReducer).toBeTruthy();
   });
 
