@@ -8,7 +8,7 @@ cache:
 dist: trusty
 
 node_js:
-  - '6.9.0'
+  - '6.1.0'
 
 branches:
   only:
@@ -25,6 +25,7 @@ before_install:
  - sudo dpkg -i google-chrome*.deb
 
 script:
+ - cp src/environments/environment.ci.ts src/environments/enviroment.ts
  - ng test --watch false # http://mseemann.de/frontend/2016/05/31/setup-angular-2-app-part-1.html
  # - ng serve &
  #- ng e2e
