@@ -24,6 +24,10 @@ describe('Service: Window', () => {
     expect(service).toBeTruthy();
   }));
 
+  it('should be an instance of window object', inject([WindowService], (service: Window) => {
+    expect(service).toBe(window);
+  }));
+
 });
 
 
