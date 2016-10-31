@@ -20,8 +20,17 @@ describe('Service: TileLayerService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('WMS Tile URL should equate to the configuration', inject([TileLayerService], (service: TileLayerService) => {
+  it('should equate to the WMS Tile URL configuration', inject([TileLayerService], (service: TileLayerService) => {
     expect(service.getUrl()).toEqual(environment.sarai_map_config.geoserver.wmsTileLayerUrl);
+  }));
+
+  it('should equate to the CQL Filter', inject([TileLayerService], (service: TileLayerService) => {
+    let gridcodes = [10, 21, 22, 23, 35];
+    let property = environment.sarai_map_config.suitability_maps.propertyFilterName;
+
+    expect(service.getCQLFilterByGridcode(gridcodes)).toEqual(
+      `${property}=10 OR ${property}=21 OR ${property}=22 OR ${property}=23 OR ${property}=35`
+    );
   }));
 
 });
