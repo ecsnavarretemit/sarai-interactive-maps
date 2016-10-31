@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnChanges, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-control-geocoder2';
@@ -21,7 +21,10 @@ export class LeafletGeocoderComponent implements OnInit, OnChanges {
   @Input() placeholder: string = 'Find a place...';
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
-  constructor(private _mapService: LeafletMapService) { }
+  constructor(
+    private _mapService: LeafletMapService,
+    private _renderer: Renderer
+  ) { }
 
   ngOnInit() {
     // prevent 'Control' is not a propery of L
@@ -42,8 +45,12 @@ export class LeafletGeocoderComponent implements OnInit, OnChanges {
     this._mapService
       .getMap()
       .then((map: Map) => {
-        // add to the wrapper
-        this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
+        let container = this.control.onAdd(map);
+
+        // append the element container to the controlWrapper
+        this._renderer.invokeElementMethod(this.controlWrapper.nativeElement, 'appendChild', [
+          container
+        ]);
       })
       ;
   }

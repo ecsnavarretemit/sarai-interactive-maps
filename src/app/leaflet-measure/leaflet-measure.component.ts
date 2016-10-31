@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 import 'leaflet-measure/dist/leaflet-measure';
@@ -20,7 +20,10 @@ export class LeafletMeasureComponent implements OnInit {
 
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
-  constructor(private _mapService: LeafletMapService) {}
+  constructor(
+    private _mapService: LeafletMapService,
+    private _renderer: Renderer
+  ) {}
 
   ngOnInit() {
     this.control = new (L as any).Control.Measure({
@@ -34,8 +37,12 @@ export class LeafletMeasureComponent implements OnInit {
     this._mapService
       .getMap()
       .then((map: Map) => {
-        // add to the wrapper
-        this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
+        let container = this.control.onAdd(map);
+
+        // append the element container to the controlWrapper
+        this._renderer.invokeElementMethod(this.controlWrapper.nativeElement, 'appendChild', [
+          container
+        ]);
       })
       ;
   }

@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
@@ -32,7 +32,8 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _mapService: LeafletMapService,
-    private _tileProvider: LeafletTileProviderService
+    private _tileProvider: LeafletTileProviderService,
+    private _renderer: Renderer
   ) {
     this.tileProviderKey = 'Google Satellite';
   }
@@ -51,7 +52,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     // set default select value
-    this.tileSelector.nativeElement.value = this.tileProviderKey;
+    this._renderer.setElementProperty(this.tileSelector.nativeElement, 'value', this.tileProviderKey);
 
     // cache the selection
     this._$mapControl = $( this.controlWrapper.nativeElement );

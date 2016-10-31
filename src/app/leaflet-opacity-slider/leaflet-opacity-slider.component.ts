@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input, Renderer } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
@@ -31,7 +31,8 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
 
   constructor(
     private _mapLayersStore: Store<any>,
-    private _mapService: LeafletMapService
+    private _mapService: LeafletMapService,
+    private _renderer: Renderer
   ) {
     // add a flag to show or hide the control
     this.hasLayers = false;
@@ -51,7 +52,7 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // reflect the default value
-    this.range.nativeElement.value = this.opacity;
+    this._renderer.setElementProperty(this.range.nativeElement, 'value', this.opacity);
 
     // set the default opacity
     this.setOpacity(this.opacity);

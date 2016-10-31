@@ -5,7 +5,8 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { each } from 'lodash';
 
 @Component({
   selector: 'app-leaflet-button',
@@ -14,6 +15,7 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef }
 })
 export class LeafletButtonComponent implements OnInit {
   private _tooltipEnabled = false;
+  private _clicked = false;
 
   @Input() controlClass: string;
   @Input() btnTooltip: string = 'Default Text';
@@ -22,14 +24,16 @@ export class LeafletButtonComponent implements OnInit {
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('button') button: ElementRef;
 
-  constructor() { }
+  constructor(private _renderer: Renderer) { }
 
   ngOnInit() {
     if (typeof this.controlClass !== 'undefined' && this.controlClass !== '') {
       let split = this.controlClass.split(' ');
 
       // add the class to the content
-      this.controlWrapper.nativeElement.classList.add(...split);
+      each(split, (className: string) => {
+        this._renderer.setElementClass(this.controlWrapper.nativeElement, className, true);
+      });
     }
 
     if (this.btnTooltip !== 'Default Text' && this.btnTooltip !== '') {
@@ -38,11 +42,13 @@ export class LeafletButtonComponent implements OnInit {
   }
 
   onClick(event) {
+    // invert the value
+    this._clicked = !this._clicked;
+
     // emit the button click event
     this.buttonClick.emit(event);
 
-    // toggle the inverted class
-    this.button.nativeElement.classList.toggle('btn--inverted');
+    this._renderer.setElementClass(this.button.nativeElement, 'btn--inverted', this._clicked);
   }
 
 }

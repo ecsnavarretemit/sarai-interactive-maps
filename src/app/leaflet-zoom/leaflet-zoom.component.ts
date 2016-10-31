@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
 
@@ -19,7 +19,10 @@ export class LeafletZoomComponent implements OnInit {
 
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
-  constructor(private _mapService: LeafletMapService) { }
+  constructor(
+    private _mapService: LeafletMapService,
+    private _renderer: Renderer
+  ) { }
 
   ngOnInit() {
     this.control = new (L as any).Control.Zoom();
@@ -33,8 +36,12 @@ export class LeafletZoomComponent implements OnInit {
         // remove the default container
         this.control.getContainer().remove();
 
-        // add to the wrapper
-        this.controlWrapper.nativeElement.appendChild(this.control.onAdd(map));
+        let container = this.control.onAdd(map);
+
+        // append the element container to the controlWrapper
+        this._renderer.invokeElementMethod(this.controlWrapper.nativeElement, 'appendChild', [
+          container
+        ]);
       })
       ;
   }
