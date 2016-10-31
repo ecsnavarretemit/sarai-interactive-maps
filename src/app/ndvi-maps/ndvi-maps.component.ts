@@ -79,7 +79,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
       [method].apply(this._http, args)
       .map((res: Response) => res.json())
       .subscribe((response: any) => {
-        let tileUrl = `https://earthengine.googleapis.com/map/${response.mapId}/{z}/{x}/{y}?token=${response.mapToken}`;
+        let tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
         this._layerId = response.mapId;
 
