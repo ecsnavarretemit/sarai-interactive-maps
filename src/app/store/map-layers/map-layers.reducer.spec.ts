@@ -10,7 +10,7 @@
 import { async, inject } from '@angular/core/testing';
 import { MapLayersReducer } from './map-layers.reducer';
 
-describe('MapState', () => {
+describe('NgRx Store Reducer: Map Layers', () => {
 
   it('should create an instance', () => {
     expect(MapLayersReducer).toBeTruthy();

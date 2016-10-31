@@ -19,7 +19,7 @@ export class RainfallMapPanelComponent implements OnInit {
   public filterForm: FormGroup;
   public scanDate: FormControl;
 
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter();
+  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(

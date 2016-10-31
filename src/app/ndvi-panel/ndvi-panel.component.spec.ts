@@ -10,17 +10,23 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { MockRouter } from '../mocks/router';
 import { NdviPanelComponent } from './ndvi-panel.component';
 
 describe('Component: NdviPanel', () => {
+  let mockRouter: MockRouter;
 
-  beforeEach(() => TestBed.configureTestingModule({
-    providers: [
-      FormBuilder,
-      Router,
-      NdviPanelComponent
-    ]
-  }));
+  beforeEach(() => {
+    mockRouter = new MockRouter();
+
+    TestBed.configureTestingModule({
+      providers: [
+        FormBuilder,
+        NdviPanelComponent,
+        { provide: Router, useValue: mockRouter }
+      ]
+    });
+  });
 
   it('should create an instance', inject([NdviPanelComponent], (component: NdviPanelComponent) => {
     expect(component).toBeTruthy();

@@ -6,7 +6,7 @@
  */
 
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { APP_CONFIG } from '../app.config';
 import { Store } from '@ngrx/store';
@@ -33,7 +33,6 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     private _logger: AppLoggerService,
     private _http: Http,
     private _route: ActivatedRoute,
-    private _router: Router,
     private _mapLayersStore: Store<any>
   ) { }
 

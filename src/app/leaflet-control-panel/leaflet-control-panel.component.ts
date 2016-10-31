@@ -1,5 +1,5 @@
 /*!
- * Leaflet Control Panel
+ * Leaflet Control Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -17,8 +17,7 @@ export class LeafletControlPanelComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }
 

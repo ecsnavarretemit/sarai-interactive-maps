@@ -30,8 +30,8 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public layersCollection: Array<Layer> = [];
   private _map: Map;
   private _layerState: string = 'resampled';
-  private _mapLayers: Observable<LayerState>;
-  private _suitabilityLevels: Observable<SuitabilityLevelsState>;
+  private _mapLayers: Observable<any>;
+  private _suitabilityLevels: Observable<any>;
   private _combinedSubscription: Subscription;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;

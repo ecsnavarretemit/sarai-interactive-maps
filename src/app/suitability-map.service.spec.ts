@@ -11,15 +11,17 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { SuitabilityMapService } from './suitability-map.service';
 
 describe('Service: SuitabilityMap', () => {
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SuitabilityMapService]
     });
   });
 
-  it('should ...', inject([SuitabilityMapService], (service: SuitabilityMapService) => {
+  it('should instantiate the service', inject([SuitabilityMapService], (service: SuitabilityMapService) => {
     expect(service).toBeTruthy();
   }));
+
 });
 
 

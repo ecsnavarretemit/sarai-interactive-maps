@@ -11,6 +11,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { WindowService } from './window.service';
 
 describe('Service: Window', () => {
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -19,9 +20,10 @@ describe('Service: Window', () => {
     });
   });
 
-  it('should ...', inject([WindowService], (service: Window) => {
+  it('should instantiate the service', inject([WindowService], (service: Window) => {
     expect(service).toBeTruthy();
   }));
+
 });
 
 
