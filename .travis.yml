@@ -15,6 +15,7 @@ branches:
   - develop
 
 before_install:
+ - cp src/environments/environment.ci.ts src/environments/environment.dev.ts
  - npm install -g angular-cli
  - export CHROME_BIN=/usr/bin/google-chrome
  - export DISPLAY=:99.0
@@ -25,10 +26,9 @@ before_install:
  - sudo dpkg -i google-chrome*.deb
 
 script:
- - cp src/environments/environment.ci.ts src/environments/environment.ts
  - ng test --watch false # http://mseemann.de/frontend/2016/05/31/setup-angular-2-app-part-1.html
  # - ng serve &
- #- ng e2e
+ # - ng e2e
 
 notifications:
   webhooks:
