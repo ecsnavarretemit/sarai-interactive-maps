@@ -7,6 +7,7 @@
  * Licensed under MIT
  */
 
+import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { LeafletTileSelectorComponent } from './leaflet-tile-selector.component';
@@ -20,6 +21,7 @@ describe('Component: LeafletTileSelector', () => {
       Store,
       LeafletMapService,
       LeafletTileProviderService,
+      Renderer,
       LeafletTileSelectorComponent
     ]
   }));

@@ -7,6 +7,7 @@
  * Licensed under MIT
  */
 
+import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider.component';
 import { LeafletMapService } from '../leaflet-map.service';
@@ -16,6 +17,7 @@ describe('Component: LeafletOpacitySlider', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
       LeafletMapService,
+      Renderer,
       LeafletOpacitySliderComponent
     ]
   }));

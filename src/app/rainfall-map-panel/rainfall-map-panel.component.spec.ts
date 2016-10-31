@@ -7,14 +7,25 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { RainfallMapPanelComponent } from './rainfall-map-panel.component';
 
 describe('Component: RainfallMapPanel', () => {
-  it('should create an instance', () => {
-    let component = new RainfallMapPanelComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      FormBuilder,
+      Router,
+      RainfallMapPanelComponent
+    ]
+  }));
+
+  it('should create an instance', inject([RainfallMapPanelComponent], (component: RainfallMapPanelComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 

@@ -7,14 +7,25 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { NdviPanelComponent } from './ndvi-panel.component';
 
 describe('Component: NdviPanel', () => {
-  it('should create an instance', () => {
-    let component = new NdviPanelComponent();
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      FormBuilder,
+      Router,
+      NdviPanelComponent
+    ]
+  }));
+
+  it('should create an instance', inject([NdviPanelComponent], (component: NdviPanelComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
+
 });
 
 
