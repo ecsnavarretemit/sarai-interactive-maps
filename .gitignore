@@ -50,5 +50,6 @@ typings
 # Env
 .dir-env
 src/environments/*.ts
+!src/environments/environment.ci.ts
 
 
