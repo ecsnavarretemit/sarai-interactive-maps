@@ -77,7 +77,16 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
     this._http
       [method].apply(this._http, args)
-      .map((res: Response) => res.json())
+      .map((res: Response) => {
+        let jsonResult = res.json();
+
+        // throw error here so that we can handle it properly later
+        if (jsonResult.success === false) {
+          throw new Error('Map Data not found.');
+        }
+
+        return jsonResult;
+      })
       .subscribe((response: any) => {
         let tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
@@ -107,6 +116,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           type: 'ADD_LAYER',
           payload: payload
         });
+      }, (error) => {
+        // TODO: show modal here that data was not found
+        console.error(error);
       })
       ;
   }

@@ -76,7 +76,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
         // throw error here so that we can handle it properly later
         if (jsonResult.success === false) {
-          throw new Error('Map Data not found');
+          throw new Error('Map Data not found.');
         }
 
         return jsonResult;
