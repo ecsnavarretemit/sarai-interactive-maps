@@ -12,6 +12,7 @@ import { APP_CONFIG } from '../app.config';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../leaflet-map.service';
 import { TileLayerService } from '../tile-layer.service';
+import { AppLoggerService } from '../app-logger.service';
 import { Layer } from '../store';
 import { isNaN } from 'lodash';
 import 'rxjs/add/operator/debounceTime';
@@ -29,6 +30,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     @Inject(APP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
+    private _logger: AppLoggerService,
     private _http: Http,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -117,8 +119,8 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           payload: payload
         });
       }, (error) => {
-        // TODO: show modal here that data was not found
-        console.error(error);
+        // send the error to the stream
+        this._logger.log('Rainfall Map Data Unavailable', error.message, true);
       })
       ;
   }
