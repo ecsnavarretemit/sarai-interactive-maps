@@ -45,6 +45,7 @@ import { NdviPanelComponent } from './ndvi-panel/ndvi-panel.component';
 import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-panel.component';
 import { DownloadImageFormComponent } from './download-image-form/download-image-form.component';
 import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
+import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
     NdviPanelComponent,
     RainfallMapPanelComponent,
     DownloadImageFormComponent,
-    NdviMapsComponent
+    NdviMapsComponent,
+    RainfallMapsComponent
   ],
   imports: [
     BrowserModule,
