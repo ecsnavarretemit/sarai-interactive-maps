@@ -1,0 +1,139 @@
+// *************************************#
+// [_site.sass]
+// *************************************#
+
+html,
+body
+  position: relative
+  width: 100%
+  height: 100%
+  margin: 0
+  padding: 0
+
+#logo
+  margin: 0
+  padding: 0
+
+  .img
+    width: 90px
+    height: 45px
+
+// --------------------------------------
+// [Aspect Ratio] ::start
+// --------------------------------------
+
+.aspect
+  position: relative
+  width: 100%
+  height: 0
+  padding-bottom: 100%
+  overflow: hidden
+
+  .aspect__inner
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    display: block
+    width: 100%
+    height: 100%
+
+  .aspect__media-content
+    display: block
+    height: 100%
+
+  video.aspect__media-content
+    width: 100%
+
+.aspect-ratio-16x9
+  padding-bottom: 56.25%;
+
+// --------------------------------------
+// [Aspect Ratio] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Titles] ::start
+// --------------------------------------
+
+.title
+  .title__icon.title__icon--actionable:hover
+    cursor: pointer
+
+// --------------------------------------
+// [Titles] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Map] ::start
+// --------------------------------------
+
+.control-wrapper
+  position: relative
+  top: 60px
+  z-index: 1000
+  width: 50%
+
+.control-wrapper--tile-selector-hidden
+  .map__control--zoom
+    right: 10px
+
+  .map__control--geocoder
+    right: 60px
+
+.control-wrapper--social,
+.control-wrapper--interface-controls
+  position: fixed
+  top: auto
+  right: 0
+  width: 45px
+
+  .list
+    margin: 0
+
+    .list__item
+      margin-bottom: 5px
+
+      &:last-child
+        margin-bottom: 0
+
+.control-wrapper--social
+  bottom: 300px
+
+.control-wrapper--interface-controls
+  bottom: 100px
+
+// --------------------------------------
+// [Map] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Download Image] ::start
+// --------------------------------------
+
+.download-image-form-wrapper .sidebar__content
+  padding: 10px 20px
+  background-color: #FFFFFF
+
+  +border-top-radius(4px)
+  +border-right-radius(4px)
+  +border-bottom-radius(4px)
+  +border-left-radius(4px)
+
+  .form-group
+    &:last-child
+      margin-bottom: 0
+
+    &.form-group--btn-group
+      padding-top: 15px
+      border-top: 1px solid #BEBEBE
+
+      .btn:first-child
+        margin-bottom: 20px
+
+// --------------------------------------
+// [Download Image] ::end
+// --------------------------------------
+
+

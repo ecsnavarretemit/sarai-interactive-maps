@@ -1,0 +1,42 @@
+{
+  "HIDE": "Hide",
+  "TILE_SELECTOR": {
+    "TITLE": "Map Source"
+  },
+
+  "GEOCODER": {
+    "PLACEHOLDER": "Find a place..."
+  },
+
+  "TRANSLATE": {
+    "TOOLTIP": "Translate to Filipino"
+  },
+
+  "SHARE": {
+    "FACEBOOK": {
+      "TOOLTIP": "Share on Facebook"
+    },
+
+    "TWITTER": {
+      "TOOLTIP": "Share on Twitter"
+    }
+  },
+
+  "DOWNLOAD_MAP_IMAGE": {
+    "TITLE": "Download Image",
+    "TOOLTIP": {
+      "MAIN": "Download Map Images"
+    }
+  },
+
+  "WATCH_VIDEO": {
+    "TITLE": "Watch Introductory Videos",
+    "VERSION": {
+      "EN": "English Version",
+      "FIL": "Filipino Version"
+    },
+    "TOOLTIP": {
+      "MAIN": "Watch Introductory Videos"
+    }
+  }
+}

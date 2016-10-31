@@ -1,0 +1,42 @@
+{
+  "HIDE": "Itago",
+  "TILE_SELECTOR": {
+    "TITLE": "Pinagmulan ng map"
+  },
+
+  "GEOCODER": {
+    "PLACEHOLDER": "Humanap ng lugar..."
+  },
+
+  "TRANSLATE": {
+    "TOOLTIP": "Isalin sa Ingles"
+  },
+
+  "SHARE": {
+    "FACEBOOK": {
+      "TOOLTIP": "Ibahagi sa Facebook"
+    },
+
+    "TWITTER": {
+      "TOOLTIP": "Ibahagi sa Twitter"
+    }
+  },
+
+  "DOWNLOAD_MAP_IMAGE": {
+    "TITLE": "I-download ang imahe ng mapa",
+    "TOOLTIP": {
+      "MAIN": "I-download ang mga imahe ng mapa"
+    }
+  },
+
+  "WATCH_VIDEO": {
+    "TITLE": "Panoorin ang mga panimulang video",
+    "VERSION": {
+      "EN": "Bersyon sa Ingles",
+      "FIL": "Bersyon sa Filipino"
+    },
+    "TOOLTIP": {
+      "MAIN": "Panoorin ang mga panimulang video"
+    }
+  }
+}

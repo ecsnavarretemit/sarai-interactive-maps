@@ -1,0 +1,63 @@
+<div class="map__control map__control--panel map__control--suitability-map-panel" #controlwrapper>
+    <section class="map__control__section">
+        <h2 class="map__control__title title">
+            <span class="title__text">Suitability Map</span>
+            <span class="pull-right title__icon title__icon--actionable" (click)="onPanelIconClick($event)">
+                <i class="glyphicon glyphicon-chevron-left" tooltipPlacement="bottom" tooltip="Hide"></i>
+            </span>
+        </h2>
+
+        <div class="map__control__body">
+            <p>
+                Shows what crops are best to plant in a specific area to attain maximum yield.
+            </p>
+
+            <accordion closeOthers="true" *ngIf="cropData.length > 0">
+                <accordion-group *ngFor="let data of cropData" [isDisabled]="!data.subcrops" [class.active]="router.isActive('/suitability-maps/' + data.slug)">
+                    <div accordion-heading
+                        (click)="suitabilityRedirect($event, data.slug, !!data.subcrops)">
+                        <span class="heading__icon">
+                            <i class="crop-icon crop-icon--{{ data.slug }}"></i>
+                        </span>
+                        <span class="heading__text">{{ data.name }}</span>
+                    </div>
+
+                    <div class="subcrop"
+                        *ngFor="let subcrop of data.subcrops"
+                        [class.active]="router.isActive('/suitability-maps/' + subcrop.slug)"
+                        (click)="suitabilityRedirect($event, subcrop.slug, false)">
+                        {{ subcrop.name }}
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+    </section>
+
+    <section class="map__control__section suitability-level-filter" *ngIf="levels.length > 0 && router.isActive('/suitability-maps')">
+        <h2 class="map__control__title title">
+            <span class="title__text">Suitability Level</span>
+        </h2>
+
+        <div class="map__control__body">
+            <ul class="list list-unstyled list--suitability-level">
+                <li class="list__item" *ngFor="let level of levels; let i = index">
+                    <label attr.for="suitability_levels-{{ level.slug }}">
+                        <input type="checkbox"
+                            name="suitability_levels[]"
+                            class="label__field field checkbox"
+                            attr.id="suitability_levels-{{ level.slug }}"
+                            [attr.checked]="level.checked"
+                            [attr.value]="level.gridcode"
+                            [ngModel]="level.checked"
+                            (ngModelChange)="onToggleCheckbox($event, level)"
+                            #suitabilityLevel />
+
+                        <span class="label__text">{{ level.name }}</span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+

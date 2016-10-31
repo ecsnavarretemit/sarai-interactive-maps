@@ -4,6 +4,9 @@
 /dist
 /tmp
 
+# videos
+/src/assets/videos
+
 # dependencies
 /node_modules
 /bower_components
@@ -43,5 +46,10 @@ UPGRADE.md
 
 # Typescript Types
 typings
+
+# Env
+.dir-env
+src/environments/*.ts
+!src/environments/environment.ci.ts
 
 

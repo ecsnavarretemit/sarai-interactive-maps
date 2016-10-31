@@ -1,0 +1,12 @@
+<div class="map__control"
+    [tooltip]="btnTooltip"
+    [tooltipPlacement]="btnTooltipPosition"
+    [tooltipEnable]="_tooltipEnabled"
+    #controlwrapper>
+
+    <button type="button" class="btn btn--leaflet" (click)="onClick($event)" #button>
+        <ng-content></ng-content>
+    </button>
+</div>
+
+

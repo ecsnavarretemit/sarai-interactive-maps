@@ -1,0 +1,30 @@
+// *************************************#
+// [_buttons.sass]
+// *************************************#
+
+.btn--leaflet
+  width: 42px
+  padding: 9px
+  background-color: #FFFFFF
+  color: rgba(27, 83, 52, 0.9)
+
+  &.btn--inverted
+    background-color: rgba(27, 83, 52, 0.9)
+    color: #FFFFFF
+
+.btn--dome
+  width: 60px
+  padding: 10px
+  background-color: rgba(27, 83, 52, 0.9)
+  +transition(transform 0.5s, background-color 0.5s);
+
+  +border-top-radius(30px)
+  +border-right-radius(0px)
+  +border-bottom-radius(0px)
+  +border-left-radius(30px)
+
+  &:hover
+    background-color: #FFFFFF
+    +transform(translateX(-5px))
+
+
