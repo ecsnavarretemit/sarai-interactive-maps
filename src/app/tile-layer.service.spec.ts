@@ -1,5 +1,12 @@
 /* tslint:disable:no-unused-variable */
 
+/*!
+ * Tile Layer Service Test
+ *
+ * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
+ * Licensed under MIT
+ */
+
 import { TestBed, async, inject } from '@angular/core/testing';
 import { AppConfig, APP_CONFIG } from './app.config';
 import { environment } from '../environments/environment';

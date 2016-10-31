@@ -1,7 +1,8 @@
 {
   "name": "sarai-ng2",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha1",
   "license": "MIT",
+  "author": "Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>",
   "angular-cli": {},
   "scripts": {
     "start": "ng serve",

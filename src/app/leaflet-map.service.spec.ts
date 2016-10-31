@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 /*!
- * Leaflet Map Service
+ * Leaflet Map Service Test
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
