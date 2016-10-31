@@ -11,13 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { HttpModule, Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
-import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { WindowService } from './window.service';
 import { AppConfig, APP_CONFIG } from './app.config';
+import { AppLoggerService } from './app-logger.service';
 import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
@@ -80,6 +81,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     HttpModule,
     TooltipModule,
     AccordionModule,
+    ModalModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
@@ -91,6 +93,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     })
   ],
   providers: [
+    AppLoggerService,
     CookieService,
     LeafletMapService,
     LeafletTileProviderService,
