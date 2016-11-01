@@ -5,27 +5,51 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, ElementRef, Renderer, trigger, state, style, transition, animate, AnimationTransitionEvent } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
 import { Map } from 'leaflet';
 import { keys } from 'lodash';
-import 'jquery';
 
 @Component({
   selector: 'app-leaflet-tile-selector',
   templateUrl: './leaflet-tile-selector.component.html',
-  styleUrls: ['./leaflet-tile-selector.component.sass']
+  styleUrls: ['./leaflet-tile-selector.component.sass'],
+  animations: [
+    trigger('controlWrapper', [
+      state('visible', style({
+        'opacity': 1,
+        'display': 'block'
+      })),
+      state('hidden', style({
+        'opacity': 0,
+        'display': 'none'
+      })),
+      transition('* => *', animate(500))
+    ]),
+    trigger('button', [
+      state('visible', style({
+        'display': 'block'
+      })),
+      state('hidden', style({
+        'display': 'none'
+      }))
+    ])
+  ]
 })
 export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   public tileKeys: any;
   public tileProviderKey: string;
-  private _$mapControl: JQuery;
-  private _$mapControlSettings: JQuery;
+  public controlWrapperAnimationState: string = 'visible';
+  public buttonState: string = 'hidden';
 
   @Input() controlTitle: string = 'Map Source';
   @Input() hideTooltipTxt: string = 'Hide';
+  @Output() onBeforeHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() onAfterHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() onBeforeShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() onAfterShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('tileselector') tileSelector: ElementRef;
   @ViewChild(LeafletButtonComponent) controlSettings: LeafletButtonComponent;
@@ -33,7 +57,8 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   constructor(
     private _mapService: LeafletMapService,
     private _tileProvider: LeafletTileProviderService,
-    private _renderer: Renderer
+    private _renderer: Renderer,
+    private _el: ElementRef
   ) {
     this.tileProviderKey = 'Google Satellite';
   }
@@ -53,66 +78,38 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // set default select value
     this._renderer.setElementProperty(this.tileSelector.nativeElement, 'value', this.tileProviderKey);
-
-    // cache the selection
-    this._$mapControl = $( this.controlWrapper.nativeElement );
-    this._$mapControlSettings = $( this.controlSettings.controlWrapper.nativeElement );
   }
 
-  onHideControl(event): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (typeof this._$mapControl === 'undefined') {
-        reject();
-      } else {
-        // show the button
-        this._$mapControlSettings.fadeIn();
+  onControlWrapperAnimationStart(event: AnimationTransitionEvent) {
+    if (event.fromState === 'hidden' && event.toState === 'visible') {
+      this.onBeforeShowControl.emit(event);
+    }
 
-        // hide the map control
-        this._$mapControl
-          .fadeOut()
-          .promise()
-          .then(() => {
-            // remove class on the control wrapper
-            this._$mapControl
-              .closest('.control-wrapper')
-              .addClass('control-wrapper--tile-selector-hidden')
-              ;
-
-            resolve();
-          }, () => {
-            reject();
-          })
-          ;
-      }
-    });
+    if (event.fromState === 'visible' && event.toState === 'hidden') {
+      this.onBeforeHideControl.emit(event);
+    }
   }
 
-  onShowControl(event): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (typeof this._$mapControl === 'undefined') {
-        reject();
-      } else {
-        // add class the to the control wrapper
-        this._$mapControl
-          .closest('.control-wrapper')
-          .removeClass('control-wrapper--tile-selector-hidden')
-          ;
+  onControlWrapperAnimationEnd(event: AnimationTransitionEvent) {
+    if (event.fromState === 'visible' && event.toState === 'hidden') {
+      this.onAfterHideControl.emit(event);
+    }
 
-        // hide the button
-        this._$mapControlSettings.fadeOut();
+    if (event.fromState === 'hidden' && event.toState === 'visible') {
+      this.onAfterShowControl.emit(event);
+    }
+  }
 
-        // show the map control
-        this._$mapControl
-          .fadeIn()
-          .promise()
-          .then(() => {
-            resolve();
-          }, () => {
-            reject();
-          })
-          ;
-      }
-    });
+  onHideControl(event) {
+    // toggle animation states
+    this.controlWrapperAnimationState = 'hidden';
+    this.buttonState = 'visible';
+  }
+
+  onShowControl(event) {
+    // toggle animation states
+    this.controlWrapperAnimationState = 'visible';
+    this.buttonState = 'hidden';
   }
 
   onTileChange(event) {

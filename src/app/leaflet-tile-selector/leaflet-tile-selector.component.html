@@ -1,4 +1,9 @@
-<div class="map__control map__control--tile-selector" #controlwrapper>
+<div class="map__control map__control--tile-selector"
+    [@controlWrapper]="controlWrapperAnimationState"
+    (@controlWrapper.start)="onControlWrapperAnimationStart($event)"
+    (@controlWrapper.done)="onControlWrapperAnimationEnd($event)"
+    #controlwrapper>
+
     <section>
         <h2 class="map__control__title title">
             <span class="title__text">{{ controlTitle }}</span>
@@ -17,6 +22,7 @@
 
 <app-leaflet-button
     controlClass="map__control--tile-selector-settings map__control--settings"
+    [@button]="buttonState"
     (buttonClick)="onShowControl($event)">
     <i class="glyphicon glyphicon-cog"></i>
 </app-leaflet-button>
