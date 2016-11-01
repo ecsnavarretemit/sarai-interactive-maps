@@ -5,23 +5,45 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, trigger, state, style, transition, animate } from '@angular/core';
 
 @Component({
   selector: 'app-crop-production-area-panel',
   templateUrl: './crop-production-area-panel.component.html',
-  styleUrls: ['./crop-production-area-panel.component.sass']
+  styleUrls: ['./crop-production-area-panel.component.sass'],
+  animations: [
+    trigger('controlWrapper', [
+      state('void', style({
+        height: 0
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: 'auto'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        height: 0
+      })),
+      transition('* => *', animate(500))
+    ])
+  ]
 })
 export class CropProductionAreaPanelComponent implements OnInit {
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
+  public controlWrapperAnimationState: string = 'hidden';
+
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onPanelIconClick(event) {
-    this.panelIconClick.emit(event);
+  togglePanelVisibility(event) {
+    if (this.controlWrapperAnimationState === 'hidden') {
+      this.controlWrapperAnimationState = 'visible';
+      return;
+    }
+
+    this.controlWrapperAnimationState = 'hidden';
   }
 
 }

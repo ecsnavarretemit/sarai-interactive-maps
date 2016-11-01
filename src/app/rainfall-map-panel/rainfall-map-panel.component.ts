@@ -5,21 +5,47 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/core';
 
 @Component({
   selector: 'app-rainfall-map-panel',
   templateUrl: './rainfall-map-panel.component.html',
-  styleUrls: ['./rainfall-map-panel.component.sass']
+  styleUrls: ['./rainfall-map-panel.component.sass'],
+  animations: [
+    trigger('controlWrapper', [
+      state('void', style({
+        height: 0
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: 'auto'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        height: 0
+      })),
+      transition('* => *', animate(500))
+    ])
+  ]
 })
 export class RainfallMapPanelComponent implements OnInit {
   public filterForm: FormGroup;
   public scanDate: FormControl;
+  public controlWrapperAnimationState: string = 'hidden';
 
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
@@ -45,8 +71,13 @@ export class RainfallMapPanelComponent implements OnInit {
     this._router.navigateByUrl(`/rainfall-maps/${value.scanDate}`);
   }
 
-  onPanelIconClick(event) {
-    this.panelIconClick.emit(event);
+  togglePanelVisibility(event) {
+    if (this.controlWrapperAnimationState === 'hidden') {
+      this.controlWrapperAnimationState = 'visible';
+      return;
+    }
+
+    this.controlWrapperAnimationState = 'hidden';
   }
 
 }
