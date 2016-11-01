@@ -118,8 +118,14 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           payload: payload
         });
       }, (error) => {
+        let message = error.message;
+
+        if (typeof error.message === 'undefined') {
+          message = 'Data Source not available. Please try again later.';
+        }
+
         // send the error to the stream
-        this._logger.log('Rainfall Map Data Unavailable', error.message, true);
+        this._logger.log('NDVI Map Data Unavailable', message, true);
       })
       ;
   }
