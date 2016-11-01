@@ -80,7 +80,8 @@
                     class="btn btn--dome btn--facebook"
                     [tooltip]="'SHARE.FACEBOOK.TOOLTIP' | translate"
                     tooltipPlacement="left"
-                    (click)="openNewWindow($event, 'shareOnFacebook', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')">
+                    (click)="openNewWindow($event, facebookShareAnchor.href, 'shareOnFacebook', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')"
+                    #facebookShareAnchor>
                     <i class="social-icon social-icon--facebook"></i>
                 </a>
             </li>
@@ -90,7 +91,8 @@
                     class="btn btn--dome btn--twitter"
                     [tooltip]="'SHARE.TWITTER.TOOLTIP' | translate"
                     tooltipPlacement="left"
-                    (click)="openNewWindow($event, 'shareOnTwitter', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')">
+                    (click)="openNewWindow($event, twitterShareAnchor.href, 'shareOnTwitter', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')"
+                    #twitterShareAnchor>
                     <i class="social-icon social-icon--twitter"></i>
                 </a>
             </li>

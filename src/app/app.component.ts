@@ -93,19 +93,16 @@ export class AppComponent implements AfterViewInit {
     );
   }
 
-  openNewWindow(event: Event, windowName: string, windowFeatures = '') {
+  openNewWindow(event: Event, windowUrl: string, windowName: string, windowFeatures = '') {
     // prevent default behavior
     event.preventDefault();
 
-    // mark as any to prevent errors
-    let href = (event.target as any).href;
-
-    if (typeof href === 'undefined') {
+    if (typeof windowUrl === 'undefined') {
       return;
     }
 
     // open new window
-    this._window.open(href, windowName, windowFeatures);
+    this._window.open(windowUrl, windowName, windowFeatures);
   }
 
   changeLang(event: Event) {
