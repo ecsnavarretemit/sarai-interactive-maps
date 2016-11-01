@@ -5,12 +5,28 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, ElementRef, Renderer, trigger, state, style, transition, animate, AnimationTransitionEvent } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
 import { Map } from 'leaflet';
 import { keys } from 'lodash';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  Renderer,
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+  AnimationTransitionEvent
+} from '@angular/core';
 
 @Component({
   selector: 'app-leaflet-tile-selector',
@@ -57,8 +73,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   constructor(
     private _mapService: LeafletMapService,
     private _tileProvider: LeafletTileProviderService,
-    private _renderer: Renderer,
-    private _el: ElementRef
+    private _renderer: Renderer
   ) {
     this.tileProviderKey = 'Google Satellite';
   }
