@@ -2,65 +2,62 @@
     <router-outlet></router-outlet>
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
-        <app-map-type #suitabilityMap>
+        <div class="map-type">
             <app-leaflet-button
                 controlClass="map__control--map-data-type map__control--suitability-map"
                 btnTooltip="Suitability Maps"
                 btnTooltipPosition="right"
-                (buttonClick)="suitabilityMap.togglePanel($event)"
-                map-type-button>
+                (buttonClick)="suitabilityMapPanel.togglePanelVisibility($event)">
 
                 <i class="glyphicon glyphicon-grain"></i>
             </app-leaflet-button>
 
-            <app-suitability-map-panel (panelIconClick)="suitabilityMap.togglePanel($event)" map-type-panel #panel>
+            <app-suitability-map-panel #suitabilityMapPanel>
             </app-suitability-map-panel>
-        </app-map-type>
+        </div>
 
-        <app-map-type #cropProductionArea>
+        <div class="map-type">
             <app-leaflet-button
                 controlClass="map__control--map-data-type map__control--crop-production-area"
                 btnTooltip="Crop Production Area"
                 btnTooltipPosition="right"
-                (buttonClick)="cropProductionArea.togglePanel($event)"
-                map-type-button>
+                (buttonClick)="cropProductionAreaPanel.togglePanelVisibility($event)">
 
                 <i class="glyphicon glyphicon-leaf"></i>
             </app-leaflet-button>
 
-            <app-crop-production-area-panel (panelIconClick)="cropProductionArea.togglePanel($event)" map-type-panel #panel>
+            <app-crop-production-area-panel #cropProductionAreaPanel>
             </app-crop-production-area-panel>
-        </app-map-type>
+        </div>
 
-        <app-map-type #ndvi>
+        <div class="map-type">
             <app-leaflet-button
                 controlClass="map__control--map-data-type map__control--ndvi"
                 btnTooltip="Normalized Difference Vegetation Index (NDVI)"
                 btnTooltipPosition="right"
-                (buttonClick)="ndvi.togglePanel($event)"
-                map-type-button>
+                (buttonClick)="ndviPanel.togglePanelVisibility($event)">
 
                 <i class="glyphicon glyphicon-cloud"></i>
             </app-leaflet-button>
 
-            <app-ndvi-panel (panelIconClick)="ndvi.togglePanel($event)" map-type-panel #panel>
+            <app-ndvi-panel #ndviPanel>
             </app-ndvi-panel>
-        </app-map-type>
+        </div>
 
-        <app-map-type #rainfallMap>
+        <div class="map-type">
             <app-leaflet-button
                 controlClass="map__control--map-data-type map__control--rainfall-map"
                 btnTooltip="Rainfall Map"
                 btnTooltipPosition="right"
-                (buttonClick)="rainfallMap.togglePanel($event)"
+                (buttonClick)="rainfallMapPanel.togglePanelVisibility($event)"
                 map-type-button>
 
                 <i class="glyphicon glyphicon-tint"></i>
             </app-leaflet-button>
 
-            <app-rainfall-map-panel (panelIconClick)="rainfallMap.togglePanel($event)" map-type-panel #panel>
+            <app-rainfall-map-panel #rainfallMapPanel>
             </app-rainfall-map-panel>
-        </app-map-type>
+        </div>
     </div>
 
     <div class="control-wrapper control-wrapper--right pull-right" map-control #controlWrapperUpperRight>
