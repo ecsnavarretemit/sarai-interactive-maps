@@ -26,7 +26,6 @@
     "angular2-cookie": "^1.2.5",
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
-    "jquery": "^3.1.1",
     "leaflet": "^1.0.1",
     "leaflet-control-geocoder2": "^1.6.3",
     "leaflet-measure": "^2.0.5",
