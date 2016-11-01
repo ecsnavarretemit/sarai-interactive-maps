@@ -38,7 +38,6 @@ import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.
 import { LeafletControlPanelComponent } from './leaflet-control-panel/leaflet-control-panel.component';
 import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-opacity-slider.component';
 import { LeafletSidebarComponent } from './leaflet-sidebar/leaflet-sidebar.component';
-import { MapTypeComponent } from './map-type/map-type.component';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitability-map-panel.component';
@@ -86,7 +85,6 @@ describe('App: SaraiNg2', () => {
         LeafletControlPanelComponent,
         LeafletOpacitySliderComponent,
         LeafletSidebarComponent,
-        MapTypeComponent,
         HomeComponent,
         SuitabilityMapsComponent,
         SuitabilityMapPanelComponent,

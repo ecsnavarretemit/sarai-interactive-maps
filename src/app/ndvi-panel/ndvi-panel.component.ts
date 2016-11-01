@@ -5,22 +5,48 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/core';
 
 @Component({
   selector: 'app-ndvi-panel',
   templateUrl: './ndvi-panel.component.html',
-  styleUrls: ['./ndvi-panel.component.sass']
+  styleUrls: ['./ndvi-panel.component.sass'],
+  animations: [
+    trigger('controlWrapper', [
+      state('void', style({
+        height: 0
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: 'auto'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        height: 0
+      })),
+      transition('* => *', animate(500))
+    ])
+  ]
 })
 export class NdviPanelComponent implements OnInit {
   public filterForm: FormGroup;
   public startDate: FormControl;
   public scanRange: FormControl;
+  public controlWrapperAnimationState: string = 'hidden';
 
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
@@ -52,8 +78,13 @@ export class NdviPanelComponent implements OnInit {
     this._router.navigateByUrl(`/ndvi/${value.startDate}/${value.scanRange}`);
   }
 
-  onPanelIconClick(event) {
-    this.panelIconClick.emit(event);
+  togglePanelVisibility(event) {
+    if (this.controlWrapperAnimationState === 'hidden') {
+      this.controlWrapperAnimationState = 'visible';
+      return;
+    }
+
+    this.controlWrapperAnimationState = 'hidden';
   }
 
 }

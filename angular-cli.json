@@ -21,10 +21,7 @@
         "../node_modules/leaflet-sidebar/src/L.Control.Sidebar.css",
         "styles.sass"
       ],
-      "scripts": [
-        "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js"
-      ],
+      "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.dev.ts",

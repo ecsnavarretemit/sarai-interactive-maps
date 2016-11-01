@@ -5,24 +5,53 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Output, ViewChild, ViewChildren, QueryList, ElementRef, EventEmitter } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
 import { Crop } from '../crop.interface';
 import * as _ from 'lodash';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/core';
 
 @Component({
   selector: 'app-suitability-map-panel',
   templateUrl: './suitability-map-panel.component.html',
-  styleUrls: ['./suitability-map-panel.component.sass']
+  styleUrls: ['./suitability-map-panel.component.sass'],
+  animations: [
+    trigger('controlWrapper', [
+      state('void', style({
+        height: 0
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: 'auto'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        height: 0
+      })),
+      transition('* => *', animate(500))
+    ])
+  ]
 })
 export class SuitabilityMapPanelComponent implements OnInit {
   public cropData: Array<Crop> = [];
   public levels: Array<any> = [];
+  public controlWrapperAnimationState: string = 'hidden';
 
-  @Output() panelIconClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChildren('suitabilityLevel') suitabilityLevelsCheckBoxes: QueryList<ElementRef>;
 
@@ -68,8 +97,13 @@ export class SuitabilityMapPanelComponent implements OnInit {
     this.router.navigateByUrl(`/suitability-maps/${crop}`);
   }
 
-  onPanelIconClick(event) {
-    this.panelIconClick.emit(event);
+  togglePanelVisibility(event) {
+    if (this.controlWrapperAnimationState === 'hidden') {
+      this.controlWrapperAnimationState = 'visible';
+      return;
+    }
+
+    this.controlWrapperAnimationState = 'hidden';
   }
 
   onToggleCheckbox(isChecked: boolean, level: any) {
