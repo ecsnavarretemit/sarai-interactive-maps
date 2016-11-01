@@ -63,8 +63,14 @@
         </app-map-type>
     </div>
 
-    <div class="control-wrapper control-wrapper--right pull-right" map-control>
-        <app-leaflet-tile-selector [controlTitle]="'TILE_SELECTOR.TITLE' | translate" [hideTooltipTxt]="'HIDE' | translate"></app-leaflet-tile-selector>
+    <div class="control-wrapper control-wrapper--right pull-right" map-control #controlWrapperUpperRight>
+        <app-leaflet-tile-selector
+            [controlTitle]="'TILE_SELECTOR.TITLE' | translate"
+            [hideTooltipTxt]="'HIDE' | translate"
+            (onBeforeShowControl)="onTileSelectorShow($event)"
+            (onAfterHideControl)="onTileSelectorHide($event)">
+        </app-leaflet-tile-selector>
+
         <app-leaflet-geocoder [placeholder]="'GEOCODER.PLACEHOLDER' | translate"></app-leaflet-geocoder>
         <app-leaflet-zoom></app-leaflet-zoom>
         <app-leaflet-measure></app-leaflet-measure>

@@ -23,6 +23,7 @@ export class AppComponent implements AfterViewInit {
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
 
+  @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
   @ViewChild('logModal') logModal: ModalDirective;
   @ViewChild('logModalTitle') logModalTitle: ElementRef;
   @ViewChild('logModalBody') logModalBody: ElementRef;
@@ -72,6 +73,24 @@ export class AppComponent implements AfterViewInit {
         this.logModal.show();
       })
       ;
+  }
+
+  onTileSelectorHide(event) {
+    // add class to the element when the tile selector control is hidden
+    this._renderer.setElementClass(
+      this.controlWrapperUpperRight.nativeElement,
+      'control-wrapper--tile-selector-hidden',
+      true
+    );
+  }
+
+  onTileSelectorShow(event) {
+    // remove class to the element when the tile selector control is visible
+    this._renderer.setElementClass(
+      this.controlWrapperUpperRight.nativeElement,
+      'control-wrapper--tile-selector-hidden',
+      false
+    );
   }
 
   openNewWindow(event: Event, windowName: string, windowFeatures = '') {
