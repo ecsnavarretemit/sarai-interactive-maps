@@ -15,43 +15,60 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    children: [
+      {
+        path: ''
+      },
+
+      {
+        path: 'suitability-maps',
+        component: SuitabilityMapsComponent
+      },
+
+      // duplicated for required url parameter `crop`
+      {
+        path: 'suitability-maps/:crop',
+        component: SuitabilityMapsComponent
+      },
+
+      {
+        path: 'ndvi',
+        component: NdviMapsComponent
+      },
+
+      // TODO: add date validation. for now we do nothing if invalid date is provided
+      // duplicated for required url parameters `startDate` and `scanRange`
+      {
+        path: 'ndvi/:startDate/:scanRange',
+        component: NdviMapsComponent
+      },
+
+      {
+        path: 'rainfall-maps',
+        component: RainfallMapsComponent
+      },
+
+      // TODO: add date validation. for now we do nothing if invalid date is provided
+      // duplicated for required url parameter `date`
+      {
+        path: 'rainfall-maps/:date',
+        component: RainfallMapsComponent
+      },
+    ]
   },
 
   {
-    path: 'suitability-maps',
-    component: SuitabilityMapsComponent
-  },
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
 
-  // duplicated for required url parameter `crop`
-  {
-    path: 'suitability-maps/:crop',
-    component: SuitabilityMapsComponent
-  },
-
-  {
-    path: 'ndvi',
-    component: NdviMapsComponent,
-  },
-
-  // TODO: add date validation. for now we do nothing if invalid date is provided
-  // duplicated for required url parameters `startDate` and `scanRange`
-  {
-    path: 'ndvi/:startDate/:scanRange',
-    component: NdviMapsComponent
-  },
-
-  {
-    path: 'rainfall-maps',
-    component: RainfallMapsComponent,
-  },
-
-  // TODO: add date validation. for now we do nothing if invalid date is provided
-  // duplicated for required url parameter `date`
-  {
-    path: 'rainfall-maps/:date',
-    component: RainfallMapsComponent
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'home',
+  //   pathMatch: 'full'
+  //  }
 ];
 
 @NgModule({
