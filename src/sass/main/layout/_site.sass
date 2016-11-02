@@ -104,6 +104,12 @@ body
 .control-wrapper--interface-controls
   bottom: 100px
 
+// temporarily fix for broken leaflet image assets path
+// until unresolved, keep this code here.
+// Issue URL: <https://github.com/Leaflet/Leaflet/issues/4968>
+.leaflet-default-icon-path
+	background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/images/marker-icon.png')
+
 // --------------------------------------
 // [Map] ::end
 // --------------------------------------
