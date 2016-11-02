@@ -7,8 +7,8 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { APP_CONFIG } from './app.config';
-import { TileLayerOptions, WMSOptions, CRS } from 'leaflet';
 import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
+import * as L from 'leaflet';
 
 @Injectable()
 export class TileLayerService {
@@ -19,7 +19,7 @@ export class TileLayerService {
   public imageFormat: string = 'image/png';
   public transparent: boolean = true;
   public maxZoom: number = 18;
-  public crs: CRS = this._leafletApi.CRS.EPSG900913;
+  public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
   public wmsTileLayerUrl: string;
 
   constructor(@Inject(APP_CONFIG) private _config: any) {
@@ -83,7 +83,7 @@ export class TileLayerService {
     }).join(' OR ');
   }
 
-  getDefaultOptions(): TileLayerOptions {
+  getDefaultOptions(): L.TileLayerOptions {
     return {
       maxZoom: this.maxZoom,
       zIndex: 1000,
@@ -113,7 +113,7 @@ export class TileLayerService {
         <a href="http://uplb.edu.ph/" target="_blank">University of the Philippines Los Banos</a>`;
   }
 
-  getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<WMSOptions> {
+  getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
     let layers = [];
     let attribution = this.getSuitabilityMapAttribution();
 
@@ -146,7 +146,7 @@ export class TileLayerService {
     });
   }
 
-  getSuitabilityMapMunicipalLevelLayers(crop: string, options: any = {}): Array<WMSOptions> {
+  getSuitabilityMapMunicipalLevelLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
     let layers = [];
     let attribution = this.getSuitabilityMapAttribution();
 
@@ -179,7 +179,7 @@ export class TileLayerService {
     });
   }
 
-  getNdviLayerOptions(options: TileLayerOptions = {}): TileLayerOptions {
+  getNdviLayerOptions(options: L.TileLayerOptions = {}): L.TileLayerOptions {
     let attribution = this.getEarthEngineAttribution();
 
     return assign({}, this.getDefaultOptions(), {
@@ -187,7 +187,7 @@ export class TileLayerService {
     }, options);
   }
 
-  getRainFallLayerOptions(options: TileLayerOptions = {}): TileLayerOptions {
+  getRainFallLayerOptions(options: L.TileLayerOptions = {}): L.TileLayerOptions {
     let attribution = this.getEarthEngineAttribution();
 
     return assign({}, this.getDefaultOptions(), {

@@ -6,8 +6,8 @@
  */
 
 import { Component, OnInit, OnChanges, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
-import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
+import * as L from 'leaflet';
 import 'leaflet-control-geocoder2';
 
 @Component({
@@ -16,7 +16,7 @@ import 'leaflet-control-geocoder2';
   styleUrls: ['./leaflet-geocoder.component.sass']
 })
 export class LeafletGeocoderComponent implements OnInit, OnChanges {
-  public control: Control;
+  public control: L.Control;
 
   @Input() placeholder: string = 'Find a place...';
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
@@ -44,7 +44,7 @@ export class LeafletGeocoderComponent implements OnInit, OnChanges {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         let container = this.control.onAdd(map);
 
         // append the element container to the controlWrapper

@@ -6,39 +6,40 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Map, MapOptions, TileLayer, TileLayerOptions, WMS, WMSOptions } from 'leaflet';
 import * as _ from 'lodash';
+import * as L from 'leaflet';
 
 interface LayerCollection {
-  [id: string]: TileLayer | WMS;
+  [id: string]: L.TileLayer | L.WMS;
 }
 
 @Injectable()
 export class LeafletMapService {
-  private _map: Promise<Map>;
-  private _mapResolver: (value?: Map) => void;
+  private _leafletApi: any = L;
+  private _map: Promise<L.Map>;
+  private _mapResolver: (value?: L.Map) => void;
   private _wmsLayers: LayerCollection = {};
   private _tileLayers: LayerCollection = {};
 
   constructor() {
-    this._map = new Promise<Map>((resolve: () => void) => {
+    this._map = new Promise<L.Map>((resolve: () => void) => {
       this._mapResolver = resolve;
     });
   }
 
-  createMap(el: HTMLElement, mapOptions: MapOptions): Promise<void> {
+  createMap(el: HTMLElement, mapOptions: L.MapOptions): Promise<void> {
     return Promise.resolve().then(() => {
       const map = L.map(el, mapOptions);
-      this._mapResolver(<Map>map);
+      this._mapResolver(<L.Map>map);
       return;
     });
   }
 
-  getMap(): Promise<Map> { return this._map; }
+  getMap(): Promise<L.Map> { return this._map; }
 
-  addTileLayer(id: string, layer: TileLayer): Promise<void | Error> {
+  addTileLayer(id: string, layer: L.TileLayer): Promise<void | Error> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (_.has(this._tileLayers, id)) {
           return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
@@ -52,14 +53,14 @@ export class LeafletMapService {
       ;
   }
 
-  addNewTileLayer(id: string, url: string, options: TileLayerOptions): Promise<TileLayer | Error> {
+  addNewTileLayer(id: string, url: string, options: L.TileLayerOptions): Promise<L.TileLayer | Error> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (_.has(this._tileLayers, id)) {
           return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
-        let layer = (L as any).tileLayer(url, options);
+        let layer = this._leafletApi.tileLayer(url, options);
 
         // add the layer to the map
         map.addLayer(layer);
@@ -75,7 +76,7 @@ export class LeafletMapService {
 
   removeTileLayer(id: string): Promise<void | Error> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (!_.has(this._tileLayers, id)) {
           return Promise.reject(new Error(`ID ${id} does not exist. Cannot remove tile layer.`));
         }
@@ -90,9 +91,9 @@ export class LeafletMapService {
 
   clearTileLayers(): Promise<void> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         // remove any existing layers
-        _.each(this._tileLayers, (value: TileLayer, id: string) => {
+        _.each(this._tileLayers, (value: L.TileLayer, id: string) => {
           map.removeLayer(value);
         });
 
@@ -102,9 +103,9 @@ export class LeafletMapService {
       ;
   }
 
-  addWMSLayer(id: string, layer: WMS): Promise<void | Error> {
+  addWMSLayer(id: string, layer: L.WMS): Promise<void | Error> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (_.has(this._wmsLayers, id)) {
           return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
@@ -118,14 +119,14 @@ export class LeafletMapService {
       ;
   }
 
-  addNewWMSLayer(id: string, url: string, options: WMSOptions): Promise<WMS | Error> {
+  addNewWMSLayer(id: string, url: string, options: L.WMSOptions): Promise<L.WMS | Error> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (_.has(this._wmsLayers, id)) {
           return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
-        let layer = (L as any).tileLayer.wms(url, options);
+        let layer = this._leafletApi.tileLayer.wms(url, options);
 
         // add the layer to the map
         map.addLayer(layer);
@@ -139,9 +140,9 @@ export class LeafletMapService {
       ;
   }
 
-  addNewWMSLayers(url: string, items: Array<{id: string, options: WMSOptions}>): Promise<Array<WMS>> {
+  addNewWMSLayers(url: string, items: Array<{id: string, options: L.WMSOptions}>): Promise<Array<L.WMS>> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         let layers = _.chain(items)
           .filter((item) => {
             let result = _.has(this._wmsLayers, item.id);
@@ -149,7 +150,7 @@ export class LeafletMapService {
             return !result;
           })
           .map((item) => {
-            let layer = (L as any).tileLayer.wms(url, item.options);
+            let layer = this._leafletApi.tileLayer.wms(url, item.options);
 
             // the created layer to the map
             map.addLayer(layer);
@@ -169,9 +170,9 @@ export class LeafletMapService {
 
   clearWMSLayers(): Promise<void> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         // remove any existing layers
-        _.each(this._wmsLayers, (value: WMS, id: string) => {
+        _.each(this._wmsLayers, (value: L.WMS, id: string) => {
           map.removeLayer(value);
         });
 
@@ -183,7 +184,7 @@ export class LeafletMapService {
 
   removeWMSLayer(id: string): Promise<void | Error> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (!_.has(this._wmsLayers, id)) {
           return Promise.reject(new Error(`ID ${id} does not exist. Cannot remove WMS layer.`));
         }
@@ -198,14 +199,14 @@ export class LeafletMapService {
 
   getWMSLayers(): Promise<any> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         return this._wmsLayers;
       });
   }
 
   getTileLayers(): Promise<any> {
     return this.getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         return this._tileLayers;
       });
   }

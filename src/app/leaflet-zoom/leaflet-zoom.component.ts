@@ -6,8 +6,8 @@
  */
 
 import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
-import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-zoom',
@@ -15,7 +15,7 @@ import { LeafletMapService } from '../leaflet-map.service';
   styleUrls: ['./leaflet-zoom.component.sass']
 })
 export class LeafletZoomComponent implements OnInit {
-  public control: Control;
+  public control: L.Control;
 
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
@@ -29,7 +29,7 @@ export class LeafletZoomComponent implements OnInit {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         // add to the map
         this.control.addTo(map);
 

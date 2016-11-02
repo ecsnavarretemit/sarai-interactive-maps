@@ -8,8 +8,8 @@
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
-import { Map } from 'leaflet';
 import { keys } from 'lodash';
+import * as L from 'leaflet';
 import {
   Component,
   OnInit,
@@ -84,7 +84,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         // add default tile
         this._tileProvider.baseMaps[this.tileProviderKey].addTo(map);
       });
@@ -133,7 +133,7 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         if (typeof resolvedTile !== 'undefined') {
           // remove the current layer
           map.removeLayer(this._tileProvider.baseMaps[this.tileProviderKey]);

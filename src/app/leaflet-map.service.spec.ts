@@ -8,8 +8,8 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { Map, TileLayer } from 'leaflet';
 import { LeafletMapService } from './leaflet-map.service';
+import * as L from 'leaflet';
 
 describe('Service: LeafletMap', () => {
   let el: HTMLElement;
@@ -31,7 +31,7 @@ describe('Service: LeafletMap', () => {
   it('should create map', async(inject([LeafletMapService], (service: LeafletMapService) => {
     service.createMap(el, {});
 
-    service.getMap().then((map: Map) => {
+    service.getMap().then((map: L.Map) => {
       expect(map).toBeTruthy();
     });
   })));
@@ -41,7 +41,7 @@ describe('Service: LeafletMap', () => {
       .addNewTileLayer('test-tile-layer', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors'
       })
-      .then((layer: TileLayer) => {
+      .then((layer: L.TileLayer) => {
         expect(layer).toBeTruthy();
       })
       ;
@@ -51,7 +51,7 @@ describe('Service: LeafletMap', () => {
     service
       .clearTileLayers()
       .then(() => {
-        return service.getTileLayers()
+        return service.getTileLayers();
       })
       .then((layers: any) => {
         let keys = Object.keys(layers);
@@ -62,7 +62,7 @@ describe('Service: LeafletMap', () => {
   })));
 
   afterEach(inject([LeafletMapService], (service: LeafletMapService) => {
-    service.getMap().then((map: Map) => {
+    service.getMap().then((map: L.Map) => {
       // remove the map
       map.remove();
 

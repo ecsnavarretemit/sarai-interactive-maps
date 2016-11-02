@@ -9,9 +9,9 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input, Renderer } 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { TileLayer } from 'leaflet';
 import { LayerState } from '../store';
 import { LeafletMapService } from '../leaflet-map.service';
+import * as L from 'leaflet';
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
@@ -67,7 +67,7 @@ export class LeafletOpacitySliderComponent implements OnInit, OnDestroy {
       .then((values) => {
         let flattened = _.assign({}, ...values);
 
-        _.each(flattened, (layer: TileLayer) => {
+        _.each(flattened, (layer: L.TileLayer) => {
           layer.setOpacity(opacity);
         });
       })
