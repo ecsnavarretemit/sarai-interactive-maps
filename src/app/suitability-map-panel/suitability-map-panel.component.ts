@@ -15,6 +15,8 @@ import * as _ from 'lodash';
 import {
   Component,
   OnInit,
+  Output,
+  EventEmitter,
   ViewChild,
   ViewChildren,
   QueryList,
@@ -52,6 +54,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
   public levels: Array<any> = [];
   public controlWrapperAnimationState: string = 'hidden';
 
+  @Output() hideButtonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChildren('suitabilityLevel') suitabilityLevelsCheckBoxes: QueryList<ElementRef>;
 
@@ -95,6 +98,13 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
     // redirect to the URL
     this.router.navigateByUrl(`/suitability-maps/${crop}`);
+  }
+
+  onHideButtonClick(event) {
+    // switch the panel animation state to hidden
+    this.controlWrapperAnimationState = 'hidden';
+
+    this.hideButtonClick.emit(event);
   }
 
   togglePanelVisibility(event) {
