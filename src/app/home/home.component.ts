@@ -63,20 +63,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       let result = this.mapTypePanels.filter((panel) => {
         let flag = false;
 
-        if (button.btnTooltip === 'Suitability Maps' && panel instanceof SuitabilityMapPanelComponent) {
-          flag = true;
-        }
-
-        if (button.btnTooltip === 'Crop Production Area' && panel instanceof CropProductionAreaPanelComponent) {
-          flag = true;
-        }
-
-        if (button.btnTooltip === 'Normalized Difference Vegetation Index (NDVI)' && panel instanceof NdviPanelComponent) {
-          flag = true;
-        }
-
-
-        if (button.btnTooltip === 'Rainfall Map' && panel instanceof RainfallMapPanelComponent) {
+        if (
+          (button.btnTooltip === 'Suitability Maps' && panel instanceof SuitabilityMapPanelComponent) ||
+          (button.btnTooltip === 'Crop Production Area' && panel instanceof CropProductionAreaPanelComponent) ||
+          (button.btnTooltip === 'Normalized Difference Vegetation Index (NDVI)' && panel instanceof NdviPanelComponent) ||
+          (button.btnTooltip === 'Rainfall Map' && panel instanceof RainfallMapPanelComponent)
+        ) {
           flag = true;
         }
 
