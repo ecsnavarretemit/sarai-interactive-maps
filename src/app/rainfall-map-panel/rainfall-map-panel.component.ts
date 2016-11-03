@@ -11,6 +11,8 @@ import { CustomValidators } from 'ng2-validation';
 import {
   Component,
   OnInit,
+  Output,
+  EventEmitter,
   ViewChild,
   ElementRef,
   trigger,
@@ -46,6 +48,7 @@ export class RainfallMapPanelComponent implements OnInit {
   public scanDate: FormControl;
   public controlWrapperAnimationState: string = 'hidden';
 
+  @Output() hideButtonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
@@ -71,7 +74,14 @@ export class RainfallMapPanelComponent implements OnInit {
     this._router.navigateByUrl(`/rainfall-maps/${value.scanDate}`);
   }
 
-  togglePanelVisibility(event) {
+  onHideButtonClick(event) {
+    // switch the panel animation state to hidden
+    this.controlWrapperAnimationState = 'hidden';
+
+    this.hideButtonClick.emit(event);
+  }
+
+  togglePanelVisibility() {
     if (this.controlWrapperAnimationState === 'hidden') {
       this.controlWrapperAnimationState = 'visible';
       return;

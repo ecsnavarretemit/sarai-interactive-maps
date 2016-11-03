@@ -11,6 +11,8 @@ import { CustomValidators } from 'ng2-validation';
 import {
   Component,
   OnInit,
+  Output,
+  EventEmitter,
   ViewChild,
   ElementRef,
   trigger,
@@ -47,6 +49,7 @@ export class NdviPanelComponent implements OnInit {
   public scanRange: FormControl;
   public controlWrapperAnimationState: string = 'hidden';
 
+  @Output() hideButtonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
@@ -78,7 +81,14 @@ export class NdviPanelComponent implements OnInit {
     this._router.navigateByUrl(`/ndvi/${value.startDate}/${value.scanRange}`);
   }
 
-  togglePanelVisibility(event) {
+  onHideButtonClick(event) {
+    // switch the panel animation state to hidden
+    this.controlWrapperAnimationState = 'hidden';
+
+    this.hideButtonClick.emit(event);
+  }
+
+  togglePanelVisibility() {
     if (this.controlWrapperAnimationState === 'hidden') {
       this.controlWrapperAnimationState = 'visible';
       return;
