@@ -15,7 +15,7 @@ import { each } from 'lodash';
 })
 export class LeafletButtonComponent implements OnInit {
   private _tooltipEnabled = false;
-  private _clicked = false;
+  public active = false;
 
   @Input() controlClass: string;
   @Input() btnTooltip: string = 'Default Text';
@@ -41,14 +41,16 @@ export class LeafletButtonComponent implements OnInit {
     }
   }
 
-  onClick(event) {
+  toggleActiveState() {
     // invert the value
-    this._clicked = !this._clicked;
+    this.active = !this.active;
 
+    this._renderer.setElementClass(this.button.nativeElement, 'btn--inverted', this.active);
+  }
+
+  onClick(event) {
     // emit the button click event
     this.buttonClick.emit(event);
-
-    this._renderer.setElementClass(this.button.nativeElement, 'btn--inverted', this._clicked);
   }
 
 }
