@@ -88,7 +88,7 @@ export class NdviPanelComponent implements OnInit {
     this.hideButtonClick.emit(event);
   }
 
-  togglePanelVisibility(event) {
+  togglePanelVisibility() {
     if (this.controlWrapperAnimationState === 'hidden') {
       this.controlWrapperAnimationState = 'visible';
       return;
