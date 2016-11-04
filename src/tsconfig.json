@@ -13,7 +13,9 @@
     "typeRoots": [
       "../node_modules/@types",
       "../node_modules/@ngrx",
-      "../node_modules/ng2-bootstrap"
+      "../node_modules/ng2-bootstrap",
+      "../node_modules/ng2-translate",
+      "../node_modules/ng2-validation"
     ]
   }
 }
