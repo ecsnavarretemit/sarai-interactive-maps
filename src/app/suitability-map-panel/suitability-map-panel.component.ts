@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
+import { MdCheckbox } from '@angular2-material/checkbox';
 import { Crop } from '../crop.interface';
 import * as _ from 'lodash';
 import {
@@ -56,7 +57,7 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
   @Output() hideButtonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
-  @ViewChildren('suitabilityLevel') suitabilityLevelsCheckBoxes: QueryList<ElementRef>;
+  @ViewChildren(MdCheckbox) suitabilityLevelsCheckBoxes: QueryList<MdCheckbox>;
 
   constructor(
     public router: Router,
