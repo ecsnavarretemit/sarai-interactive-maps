@@ -5,29 +5,13 @@
  * Licensed under MIT
  */
 
-
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
-import { MdCheckbox } from '@angular2-material/checkbox';
 import { Crop } from '../crop.interface';
 import * as _ from 'lodash';
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-  ElementRef,
-  trigger,
-  state,
-  style,
-  transition,
-  animate
-} from '@angular/core';
 
 @Component({
   selector: 'app-suitability-map-panel',
@@ -57,7 +41,6 @@ export class SuitabilityMapPanelComponent implements OnInit {
 
   @Output() hideButtonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
-  @ViewChildren(MdCheckbox) suitabilityLevelsCheckBoxes: QueryList<MdCheckbox>;
 
   constructor(
     public router: Router,
