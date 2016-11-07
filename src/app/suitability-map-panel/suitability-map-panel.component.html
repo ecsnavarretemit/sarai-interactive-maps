@@ -43,20 +43,13 @@
 
         <div class="map__control__body">
             <ul class="list list-unstyled list--suitability-level">
-                <li class="list__item" *ngFor="let level of levels; let i = index">
-                    <label attr.for="suitability_levels-{{ level.slug }}">
-                        <input type="checkbox"
-                            name="suitability_levels[]"
-                            class="label__field field checkbox"
-                            attr.id="suitability_levels-{{ level.slug }}"
-                            [attr.checked]="level.checked"
-                            [attr.value]="level.gridcode"
-                            [ngModel]="level.checked"
-                            (ngModelChange)="onToggleCheckbox($event, level)"
-                            #suitabilityLevel />
-
-                        <span class="label__text">{{ level.name }}</span>
-                    </label>
+                <li class="list__item suitability_levels--{{ level.slug }}" *ngFor="let level of levels">
+                    <md-checkbox
+                        [checked]="level.checked"
+                        [ngModel]="level.checked"
+                        (ngModelChange)="onToggleCheckbox($event, level)">
+                        {{ level.name }}
+                    </md-checkbox>
                 </li>
             </ul>
         </div>
