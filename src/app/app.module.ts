@@ -14,6 +14,7 @@ import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
+import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { WindowService } from './window.service';
@@ -78,6 +79,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     TooltipModule,
     AccordionModule,
     ModalModule,
+    MdCheckboxModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
