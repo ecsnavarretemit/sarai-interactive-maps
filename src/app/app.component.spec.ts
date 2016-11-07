@@ -15,6 +15,7 @@ import { HttpModule, Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
@@ -61,6 +62,7 @@ describe('App: SaraiNg2', () => {
         TooltipModule,
         AccordionModule,
         ModalModule,
+        MdCheckboxModule,
         TranslateModule.forRoot({
           provide: TranslateLoader,
           useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
