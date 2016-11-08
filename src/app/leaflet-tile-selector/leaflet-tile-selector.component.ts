@@ -5,6 +5,11 @@
  * Licensed under MIT
  */
 
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
@@ -14,6 +19,7 @@ import {
   Component,
   OnInit,
   AfterViewInit,
+  OnDestroy,
   ViewChild,
   Input,
   Output,
@@ -54,11 +60,13 @@ import {
     ])
   ]
 })
-export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
+export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDestroy {
   public tileKeys: any;
   public tileProviderKey: string;
   public controlWrapperAnimationState: string = 'visible';
   public buttonState: string = 'hidden';
+  private _mouseOverSubscription: Subscription;
+  private _mouseLeaveListener: Function;
 
   @Input() controlTitle: string = 'Map Source';
   @Input() hideTooltipTxt: string = 'Hide';
@@ -93,6 +101,20 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // set default select value
     this._renderer.setElementProperty(this.tileSelector.nativeElement, 'value', this.tileProviderKey);
+
+    // since mouseover is fire continuously, we throttle it so that it is only fired every 600 ms
+    this._mouseOverSubscription = Observable
+      .fromEvent(this.controlWrapper.nativeElement, 'mouseover')
+      .throttleTime(600)
+      .subscribe(() => {
+        this.mouseMovementOnMapControl('over');
+      })
+      ;
+
+    // listen to the mouseleave event
+    this._mouseLeaveListener = this._renderer.listen(this.controlWrapper.nativeElement, 'mouseleave', () => {
+      this.mouseMovementOnMapControl('leave');
+    });
   }
 
   onControlWrapperAnimationStart(event: AnimationTransitionEvent) {
@@ -146,6 +168,35 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit {
         }
       })
       ;
+  }
+
+  mouseMovementOnMapControl(type: string) {
+    this._mapService
+      .getMap()
+      .then((map: L.Map) => {
+        if (type === 'over') {
+          // disable dragging when the mouse is over the panel
+          map.dragging.disable();
+
+          // disable scroll wheel zoom when the mouse is over the panel
+          map.scrollWheelZoom.disable();
+        } else {
+          // enable dragging when the mouse is not ove the panel
+          map.dragging.enable();
+
+          // enable scroll wheel zoom when the mouse is not ove the panel
+          map.scrollWheelZoom.enable();
+        }
+      })
+      ;
+  }
+
+  ngOnDestroy() {
+    // remove event listener
+    this._mouseLeaveListener();
+
+    // remove the subscription from the event
+    this._mouseOverSubscription.unsubscribe();
   }
 
 }
