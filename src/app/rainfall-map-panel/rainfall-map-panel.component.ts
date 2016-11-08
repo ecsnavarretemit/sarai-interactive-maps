@@ -8,13 +8,23 @@
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
+import { LeafletMapService } from '../leaflet-map.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import * as L from 'leaflet';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
 import {
   Component,
   OnInit,
+  AfterViewInit,
+  OnDestroy,
   Output,
   EventEmitter,
   ViewChild,
   ElementRef,
+  Renderer,
   trigger,
   state,
   style,
@@ -43,17 +53,21 @@ import {
     ])
   ]
 })
-export class RainfallMapPanelComponent implements OnInit {
+export class RainfallMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   public filterForm: FormGroup;
   public scanDate: FormControl;
   public controlWrapperAnimationState: string = 'hidden';
+  private _mouseOverSubscription: Subscription;
+  private _mouseLeaveListener: Function;
 
   @Output() hideButtonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _renderer: Renderer,
+    private _mapService: LeafletMapService
   ) {
     this.scanDate = new FormControl('', [
       Validators.required,
@@ -66,6 +80,22 @@ export class RainfallMapPanelComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  ngAfterViewInit() {
+    // since mouseover is fire continuously, we throttle it so that it is only fired every 600 ms
+    this._mouseOverSubscription = Observable
+      .fromEvent(this.controlWrapper.nativeElement, 'mouseover')
+      .throttleTime(600)
+      .subscribe(() => {
+        this.mouseMovementOnMapControl('over');
+      })
+      ;
+
+    // listen to the mouseleave event
+    this._mouseLeaveListener = this._renderer.listen(this.controlWrapper.nativeElement, 'mouseleave', () => {
+      this.mouseMovementOnMapControl('leave');
+    });
+  }
 
   processRequest() {
     let value = this.filterForm.value;
@@ -88,6 +118,35 @@ export class RainfallMapPanelComponent implements OnInit {
     }
 
     this.controlWrapperAnimationState = 'hidden';
+  }
+
+  mouseMovementOnMapControl(type: string) {
+    this._mapService
+      .getMap()
+      .then((map: L.Map) => {
+        if (type === 'over') {
+          // disable dragging when the mouse is over the panel
+          map.dragging.disable();
+
+          // disable scroll wheel zoom when the mouse is over the panel
+          map.scrollWheelZoom.disable();
+        } else {
+          // enable dragging when the mouse is not ove the panel
+          map.dragging.enable();
+
+          // enable scroll wheel zoom when the mouse is not ove the panel
+          map.scrollWheelZoom.enable();
+        }
+      })
+      ;
+  }
+
+  ngOnDestroy() {
+    // remove event listener
+    this._mouseLeaveListener();
+
+    // remove the subscription from the event
+    this._mouseOverSubscription.unsubscribe();
   }
 
 }
