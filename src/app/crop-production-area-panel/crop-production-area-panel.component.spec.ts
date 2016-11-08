@@ -7,15 +7,24 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { Renderer } from '@angular/core';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { LeafletMapService } from '../leaflet-map.service';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel.component';
 
 describe('Component: CropProductionAreaPanel', () => {
 
-  it('should create an instance', () => {
-    let component = new CropProductionAreaPanelComponent();
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      LeafletMapService,
+      Renderer,
+      CropProductionAreaPanelComponent
+    ]
+  }));
+
+  it('should create an instance', inject([CropProductionAreaPanelComponent], (component: CropProductionAreaPanelComponent) => {
     expect(component).toBeTruthy();
-  });
+  }));
 
 });
 

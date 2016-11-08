@@ -6,8 +6,8 @@
  */
 
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Map } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-map',
@@ -32,7 +32,7 @@ export class LeafletMapComponent implements OnInit {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         map.setView([this.lat, this.lng], this.zoom);
       });
   }

@@ -49,9 +49,11 @@
 
 .map__control--panel
   left: 65px
-  display: none
   width: 100%
   max-width: 250px
+  height: 0
+  overflow: hidden
+  opacity: 0
 
   .map__control__title
     border-bottom: 1px solid #FFFFFF
@@ -127,14 +129,8 @@
     background: #FFF
     color: #000
 
-    label
-      position: relative
-      padding-left: 20px
-
-    .label__field
-      position: absolute
-      top: 0
-      left: 0
+    .md-checkbox-label
+      max-width: 150px
 
 // [Suitability Map Controls] ::start
 
@@ -214,7 +210,6 @@
 
 .map__control--tile-selector-settings
   right: 10px
-  display: none
 
 // --------------------------------------
 // [Button] ::end

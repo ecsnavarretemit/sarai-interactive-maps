@@ -6,8 +6,8 @@
  */
 
 import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
-import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
+import * as L from 'leaflet';
 import 'leaflet-sidebar';
 
 @Component({
@@ -16,7 +16,7 @@ import 'leaflet-sidebar';
   styleUrls: ['./leaflet-sidebar.component.sass']
 })
 export class LeafletSidebarComponent implements OnInit, OnDestroy {
-  public control: Control;
+  public control: L.Control;
   private _added: boolean = false;
   private _controlContainer: HTMLElement;
 
@@ -40,7 +40,7 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         // add the control to the map instance
         this.control.addTo(map);
 
@@ -96,7 +96,7 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         // remove the control from the map
         (this.control as any).removeFrom(map);
 

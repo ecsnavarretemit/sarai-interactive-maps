@@ -7,7 +7,7 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
-import { WMS, WMSOptions } from 'leaflet';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-leaflet-wms-layer',
@@ -15,12 +15,12 @@ import { WMS, WMSOptions } from 'leaflet';
   styleUrls: ['./leaflet-wms-layer.component.sass']
 })
 export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
-  public layer: WMS;
+  public layer: L.WMS;
   private _layerAdded: boolean = false;
 
   @Input() id: string;
   @Input() url: string;
-  @Input() layerOptions: WMSOptions;
+  @Input() layerOptions: L.WMSOptions;
 
   constructor(private _mapService: LeafletMapService) {}
 
@@ -39,7 +39,7 @@ export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
 
     this._mapService
       .addNewWMSLayer(this.id, this.url, this.layerOptions)
-      .then((layer: WMS) => {
+      .then((layer: L.WMS) => {
         // store the generated layer
         this.layer = layer;
 

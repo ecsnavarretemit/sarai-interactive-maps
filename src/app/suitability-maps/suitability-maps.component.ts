@@ -14,8 +14,8 @@ import { LeafletWmsLayerComponent } from '../leaflet-wms-layer/leaflet-wms-layer
 import { LayerState, SuitabilityLevelsState, Layer } from '../store';
 import { LeafletMapService } from '../leaflet-map.service';
 import { TileLayerService } from '../tile-layer.service';
-import { Map, WMSOptions } from 'leaflet';
 import { map, omit } from 'lodash';
+import * as L from 'leaflet';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
 
@@ -28,7 +28,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public WMSTileUrl: string;
   public crop: string;
   public layersCollection: Array<Layer> = [];
-  private _map: Map;
+  private _map: L.Map;
   private _layerState: string = 'resampled';
   private _mapLayers: Observable<any>;
   private _suitabilityLevels: Observable<any>;
@@ -104,7 +104,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     // retrieve the map instance
     this._mapService
       .getMap()
-      .then((mapInstance: Map) => {
+      .then((mapInstance: L.Map) => {
         // save the reference to the map
         this._map = mapInstance;
 
@@ -132,7 +132,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     let layers = this._tileLayerService[method](this.crop);
 
     // assemble the layers payload for saving to the application store.
-    let processedLayers = map(layers, (layer: WMSOptions) => {
+    let processedLayers = map(layers, (layer: L.WMSOptions) => {
       let payload: Layer = {
         id: layer.layers,
         type: layerType,

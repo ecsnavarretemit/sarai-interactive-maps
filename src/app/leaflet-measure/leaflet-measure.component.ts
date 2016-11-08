@@ -6,8 +6,8 @@
  */
 
 import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
-import { Map, Control } from 'leaflet';
 import { LeafletMapService } from '../leaflet-map.service';
+import * as L from 'leaflet';
 import 'leaflet-measure/dist/leaflet-measure';
 
 @Component({
@@ -16,7 +16,7 @@ import 'leaflet-measure/dist/leaflet-measure';
   styleUrls: ['./leaflet-measure.component.sass']
 })
 export class LeafletMeasureComponent implements OnInit {
-  public control: Control;
+  public control: L.Control;
 
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
@@ -36,7 +36,7 @@ export class LeafletMeasureComponent implements OnInit {
 
     this._mapService
       .getMap()
-      .then((map: Map) => {
+      .then((map: L.Map) => {
         let container = this.control.onAdd(map);
 
         // append the element container to the controlWrapper

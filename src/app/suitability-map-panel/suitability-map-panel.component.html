@@ -1,8 +1,11 @@
-<div class="map__control map__control--panel map__control--suitability-map-panel" #controlwrapper>
+<div class="map__control map__control--panel map__control--suitability-map-panel"
+    [@controlWrapper]="controlWrapperAnimationState"
+    #controlwrapper>
+
     <section class="map__control__section">
         <h2 class="map__control__title title">
             <span class="title__text">Suitability Map</span>
-            <span class="pull-right title__icon title__icon--actionable" (click)="onPanelIconClick($event)">
+            <span class="pull-right title__icon title__icon--actionable" (click)="onHideButtonClick($event)">
                 <i class="glyphicon glyphicon-chevron-left" tooltipPlacement="bottom" tooltip="Hide"></i>
             </span>
         </h2>
@@ -40,20 +43,13 @@
 
         <div class="map__control__body">
             <ul class="list list-unstyled list--suitability-level">
-                <li class="list__item" *ngFor="let level of levels; let i = index">
-                    <label attr.for="suitability_levels-{{ level.slug }}">
-                        <input type="checkbox"
-                            name="suitability_levels[]"
-                            class="label__field field checkbox"
-                            attr.id="suitability_levels-{{ level.slug }}"
-                            [attr.checked]="level.checked"
-                            [attr.value]="level.gridcode"
-                            [ngModel]="level.checked"
-                            (ngModelChange)="onToggleCheckbox($event, level)"
-                            #suitabilityLevel />
-
-                        <span class="label__text">{{ level.name }}</span>
-                    </label>
+                <li class="list__item suitability_levels--{{ level.slug }}" *ngFor="let level of levels">
+                    <md-checkbox
+                        [checked]="level.checked"
+                        [ngModel]="level.checked"
+                        (ngModelChange)="onToggleCheckbox($event, level)">
+                        {{ level.name }}
+                    </md-checkbox>
                 </li>
             </ul>
         </div>
