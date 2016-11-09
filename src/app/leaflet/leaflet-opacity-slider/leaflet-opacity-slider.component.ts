@@ -9,7 +9,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inp
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-// import { LayerState } from '../store';
+import { LayerState } from '../../store';
 import { LeafletMapService } from '../leaflet-map.service';
 import { assign, each } from 'lodash';
 import * as L from 'leaflet';
@@ -43,19 +43,19 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
     // add a flag to show or hide the control
     this.hasLayers = false;
 
-    // // get the map state store from the store
-    // this._mapLayers = this._mapLayersStore.select('mapLayers');
+    // get the map state store from the store
+    this._mapLayers = this._mapLayersStore.select('mapLayers');
   }
 
   ngOnInit() {
-    // // check if our store has layers and fire subscribe every 300ms
-    // this._mapLayersSubscription = this._mapLayers
-    //   .debounceTime(300)
-    //   .subscribe((layerState: LayerState) => {
-    //     // set the flag to the value of the condition
-    //     this.hasLayers = (layerState.ids.length > 0);
-    //   })
-    //   ;
+    // check if our store has layers and fire subscribe every 300ms
+    this._mapLayersSubscription = this._mapLayers
+      .debounceTime(300)
+      .subscribe((layerState: LayerState) => {
+        // set the flag to the value of the condition
+        this.hasLayers = (layerState.ids.length > 0);
+      })
+      ;
 
     // reflect the default value
     this._renderer.setElementProperty(this.range.nativeElement, 'value', this.opacity);
@@ -81,24 +81,19 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
   }
 
   setOpacity(opacity: number) {
-    this._mapService.getMap().then((map: L.Map) => {
-      map.eachLayer((layer: L.Layer) => {
-        console.log(layer);
-      });
-    });
-    // Promise
-    //   .all([
-    //     this._mapService.getWMSLayers(),
-    //     this._mapService.getTileLayers()
-    //   ])
-    //   .then((values) => {
-    //     let flattened = assign({}, ...values);
+    Promise
+      .all([
+        this._mapService.getWMSLayers(),
+        this._mapService.getTileLayers()
+      ])
+      .then((values) => {
+        let flattened = assign({}, ...values);
 
-    //     each(flattened, (layer: L.TileLayer) => {
-    //       layer.setOpacity(opacity);
-    //     });
-    //   })
-    //   ;
+        each(flattened, (layer: L.TileLayer) => {
+          layer.setOpacity(opacity);
+        });
+      })
+      ;
   }
 
   adjustOpacity(event) {
@@ -127,10 +122,10 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnDestroy() {
-    // // unsubscribe to the store observable
-    // if (typeof this._mapLayersSubscription !== 'undefined') {
-    //   this._mapLayersSubscription.unsubscribe();
-    // }
+    // unsubscribe to the store observable
+    if (typeof this._mapLayersSubscription !== 'undefined') {
+      this._mapLayersSubscription.unsubscribe();
+    }
 
     // remove event listener
     this._mouseLeaveListener();
