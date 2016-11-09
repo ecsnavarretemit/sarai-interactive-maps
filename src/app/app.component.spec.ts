@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 
@@ -27,6 +27,7 @@ import { SuitabilityMapService } from './suitability-map.service';
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
+import { TranslationFactoryLoader } from './app-translation-factory.service';
 import { MapLayersReducer, SuitabilityLevelsReducer } from './store';
 
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
@@ -65,7 +66,7 @@ describe('App: SaraiNg2', () => {
         MdCheckboxModule,
         TranslateModule.forRoot({
           provide: TranslateLoader,
-          useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+          useFactory: TranslationFactoryLoader,
           deps: [Http]
         }),
         StoreModule.provideStore({
