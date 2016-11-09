@@ -12,11 +12,11 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
-import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { SaraiNg2RoutingModule } from './app-routing.module';
+import { StoreModule } from './store';
 import { LeafletModule } from './leaflet';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
@@ -54,15 +54,12 @@ describe('App: SaraiNg2', () => {
         AccordionModule,
         ModalModule,
         MdCheckboxModule,
+        StoreModule,
         LeafletModule,
         TranslateModule.forRoot({
           provide: TranslateLoader,
           useFactory: TranslationFactoryLoader,
           deps: [Http]
-        }),
-        StoreModule.provideStore({
-          mapLayers: MapLayersReducer,
-          suitabilityLevels: SuitabilityLevelsReducer
         })
       ],
 

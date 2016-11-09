@@ -5,6 +5,7 @@
  * Licensed under MIT
  */
 
+export * from './store.module';
 export * from './map-layers/map-layers.reducer';
 export * from './suitability-levels/suitability-levels.reducer';
 

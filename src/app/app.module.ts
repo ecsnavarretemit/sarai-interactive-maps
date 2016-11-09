@@ -10,11 +10,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { HttpModule, Http } from '@angular/http';
-import { StoreModule } from '@ngrx/store';
 import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { SaraiNg2RoutingModule } from './app-routing.module';
+import { StoreModule } from './store';
 import { LeafletModule } from './leaflet';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
@@ -25,7 +25,6 @@ import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 
 import { TranslationFactoryLoader } from './app-translation-factory.service';
-import { MapLayersReducer, SuitabilityLevelsReducer } from './store';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -62,16 +61,14 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     AccordionModule,
     ModalModule,
     MdCheckboxModule,
+    StoreModule,
     LeafletModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: TranslationFactoryLoader,
       deps: [Http]
     }),
-    StoreModule.provideStore({
-      mapLayers: MapLayersReducer,
-      suitabilityLevels: SuitabilityLevelsReducer
-    })
+
   ],
   providers: [
     AppLoggerService,
