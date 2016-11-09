@@ -7,13 +7,16 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Http } from '@angular/http';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { AppLoggerService } from './app-logger.service';
+import { TranslationFactoryLoader } from './app-translation-factory.service';
 
 import { AppComponent } from './app.component';
 
@@ -26,7 +29,12 @@ import { AppComponent } from './app.component';
     SaraiNg2RoutingModule,
     ModalModule,
     StoreModule,
-    MapModule
+    MapModule,
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: TranslationFactoryLoader,
+      deps: [Http]
+    })
   ],
   providers: [
     AppLoggerService,

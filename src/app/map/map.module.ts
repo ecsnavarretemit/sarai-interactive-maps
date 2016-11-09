@@ -8,19 +8,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { CustomFormsModule } from 'ng2-validation';
-import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TranslateModule } from 'ng2-translate';
 import { LeafletModule } from '../leaflet';
 
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
-import { TranslationFactoryLoader } from '../app-translation-factory.service';
 
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
@@ -43,12 +42,8 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     TooltipModule,
     AccordionModule,
     MdCheckboxModule,
-    LeafletModule,
-    TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: TranslationFactoryLoader,
-      deps: [Http]
-    }),
+    TranslateModule,
+    LeafletModule
   ],
   declarations: [
     HomeComponent,
