@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
 import { APP_CONFIG } from '../app.config';
 import { Store } from '@ngrx/store';
-import { LeafletMapService } from '../leaflet-map.service';
+import { LeafletMapService } from '../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../app-logger.service';
 import { Layer } from '../store';

@@ -8,7 +8,7 @@
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
-import { LeafletMapService } from '../leaflet-map.service';
+import { LeafletMapService } from '../leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as L from 'leaflet';

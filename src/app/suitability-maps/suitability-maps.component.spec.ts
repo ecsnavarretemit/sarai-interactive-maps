@@ -14,7 +14,7 @@ import { provideStore } from '@ngrx/store';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { AppLoggerService } from '../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
-import { LeafletMapService } from '../leaflet-map.service';
+import { LeafletMapService } from '../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../store';
 import { MockActivatedRoute, MockRouter } from '../mocks/router';
 import { SuitabilityMapsComponent } from './suitability-maps.component';

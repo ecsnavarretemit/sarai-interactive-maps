@@ -15,6 +15,7 @@ import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-b
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { SaraiNg2RoutingModule } from './app-routing.module';
+import { LeafletModule } from './leaflet';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { WindowService } from './window.service';
@@ -22,22 +23,11 @@ import { AppConfig, APP_CONFIG } from './app.config';
 import { AppLoggerService } from './app-logger.service';
 import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
-import { LeafletMapService } from './leaflet-map.service';
-import { LeafletTileProviderService } from './leaflet-tile-provider.service';
 
 import { TranslationFactoryLoader } from './app-translation-factory.service';
 import { MapLayersReducer, SuitabilityLevelsReducer } from './store';
 
 import { AppComponent } from './app.component';
-import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
-import { LeafletTileSelectorComponent } from './leaflet-tile-selector/leaflet-tile-selector.component';
-import { LeafletGeocoderComponent } from './leaflet-geocoder/leaflet-geocoder.component';
-import { LeafletZoomComponent } from './leaflet-zoom/leaflet-zoom.component';
-import { LeafletMeasureComponent } from './leaflet-measure/leaflet-measure.component';
-import { LeafletButtonComponent } from './leaflet-button/leaflet-button.component';
-import { LeafletWmsLayerComponent } from './leaflet-wms-layer/leaflet-wms-layer.component';
-import { LeafletOpacitySliderComponent } from './leaflet-opacity-slider/leaflet-opacity-slider.component';
-import { LeafletSidebarComponent } from './leaflet-sidebar/leaflet-sidebar.component';
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitability-map-panel.component';
@@ -51,15 +41,6 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LeafletMapComponent,
-    LeafletTileSelectorComponent,
-    LeafletGeocoderComponent,
-    LeafletZoomComponent,
-    LeafletMeasureComponent,
-    LeafletButtonComponent,
-    LeafletWmsLayerComponent,
-    LeafletOpacitySliderComponent,
-    LeafletSidebarComponent,
     HomeComponent,
     SuitabilityMapsComponent,
     SuitabilityMapPanelComponent,
@@ -81,6 +62,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     AccordionModule,
     ModalModule,
     MdCheckboxModule,
+    LeafletModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: TranslationFactoryLoader,
@@ -94,8 +76,6 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
   providers: [
     AppLoggerService,
     CookieService,
-    LeafletMapService,
-    LeafletTileProviderService,
     TileLayerService,
     SuitabilityMapService,
 
