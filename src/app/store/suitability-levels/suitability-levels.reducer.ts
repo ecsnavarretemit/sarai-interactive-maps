@@ -7,7 +7,7 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 import { assign, map, omit, size, isArray, has, filter, reduce } from 'lodash';
-import { SuitabilityLevel } from '../../suitability-level.interface';
+import { SuitabilityLevel } from '../../map/suitability-level.interface';
 
 export interface SuitabilityLevelsState {
   gridcodes: Array<number>;
