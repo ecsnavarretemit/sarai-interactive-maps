@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { LayerState } from '../store';
 import { LeafletMapService } from '../leaflet-map.service';
+import { assign, each } from 'lodash';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/throttleTime';
@@ -86,9 +87,9 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
         this._mapService.getTileLayers()
       ])
       .then((values) => {
-        let flattened = _.assign({}, ...values);
+        let flattened = assign({}, ...values);
 
-        _.each(flattened, (layer: L.TileLayer) => {
+        each(flattened, (layer: L.TileLayer) => {
           layer.setOpacity(opacity);
         });
       })
