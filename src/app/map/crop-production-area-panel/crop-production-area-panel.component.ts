@@ -1,16 +1,13 @@
 /*!
- * NDVI Panel Component
+ * Crop Production Area Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CustomValidators } from 'ng2-validation';
-import { LeafletMapService } from '../leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { LeafletMapService } from '../../leaflet';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -33,9 +30,9 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-ndvi-panel',
-  templateUrl: './ndvi-panel.component.html',
-  styleUrls: ['./ndvi-panel.component.sass'],
+  selector: 'app-crop-production-area-panel',
+  templateUrl: './crop-production-area-panel.component.html',
+  styleUrls: ['./crop-production-area-panel.component.sass'],
   animations: [
     trigger('controlWrapper', [
       state('void', style({
@@ -53,10 +50,7 @@ import {
     ])
   ]
 })
-export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
-  public filterForm: FormGroup;
-  public startDate: FormControl;
-  public scanRange: FormControl;
+export class CropProductionAreaPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   public controlWrapperAnimationState: string = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
@@ -65,26 +59,9 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
-    private _formBuilder: FormBuilder,
-    private _router: Router,
     private _renderer: Renderer,
-    private _mapService: LeafletMapService
-  ) {
-    this.startDate = new FormControl('', [
-      Validators.required,
-      CustomValidators.dateISO
-    ]);
-
-    this.scanRange = new FormControl('', [
-      Validators.required,
-      CustomValidators.number
-    ]);
-
-    this.filterForm = this._formBuilder.group({
-      startDate: this.startDate,
-      scanRange: this.scanRange
-    });
-  }
+    private _mapService: LeafletMapService,
+  ) { }
 
   ngOnInit() { }
 
@@ -102,13 +79,6 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     this._mouseLeaveListener = this._renderer.listen(this.controlWrapper.nativeElement, 'mouseleave', () => {
       this.mouseMovementOnMapControl('leave');
     });
-  }
-
-  processRequest() {
-    let value = this.filterForm.value;
-
-    // redirect to the URL
-    this._router.navigateByUrl(`/ndvi/${value.startDate}/${value.scanRange}`);
   }
 
   onHideButtonClick(event) {

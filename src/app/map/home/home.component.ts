@@ -9,7 +9,7 @@ import { Component, AfterViewInit, OnDestroy, ViewChild, ViewChildren, QueryList
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
-import { LeafletButtonComponent } from '../leaflet';
+import { LeafletButtonComponent } from '../../leaflet';
 import { SuitabilityMapPanelComponent } from '../suitability-map-panel/suitability-map-panel.component';
 import { CropProductionAreaPanelComponent } from '../crop-production-area-panel/crop-production-area-panel.component';
 import { NdviPanelComponent } from '../ndvi-panel/ndvi-panel.component';

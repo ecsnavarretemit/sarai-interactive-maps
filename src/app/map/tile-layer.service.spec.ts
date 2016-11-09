@@ -8,8 +8,8 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { AppConfig, APP_CONFIG } from './app.config';
-import { environment } from '../environments/environment';
+import { MapConfig, MAP_CONFIG } from './map.config';
+import { environment } from '../../environments/environment';
 import { TileLayerService } from './tile-layer.service';
 
 describe('Service: TileLayerService', () => {
@@ -18,7 +18,7 @@ describe('Service: TileLayerService', () => {
     TestBed.configureTestingModule({
       providers: [
         TileLayerService,
-        { provide: APP_CONFIG, useValue: AppConfig }
+        { provide: MAP_CONFIG, useValue: MapConfig }
       ]
     });
   });

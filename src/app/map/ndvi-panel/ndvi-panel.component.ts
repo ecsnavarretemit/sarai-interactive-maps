@@ -1,5 +1,5 @@
 /*!
- * Rainfall Map Panel Component
+ * NDVI Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -8,7 +8,7 @@
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
-import { LeafletMapService } from '../leaflet';
+import { LeafletMapService } from '../../leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as L from 'leaflet';
@@ -33,9 +33,9 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-rainfall-map-panel',
-  templateUrl: './rainfall-map-panel.component.html',
-  styleUrls: ['./rainfall-map-panel.component.sass'],
+  selector: 'app-ndvi-panel',
+  templateUrl: './ndvi-panel.component.html',
+  styleUrls: ['./ndvi-panel.component.sass'],
   animations: [
     trigger('controlWrapper', [
       state('void', style({
@@ -53,9 +53,10 @@ import {
     ])
   ]
 })
-export class RainfallMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   public filterForm: FormGroup;
-  public scanDate: FormControl;
+  public startDate: FormControl;
+  public scanRange: FormControl;
   public controlWrapperAnimationState: string = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
@@ -69,13 +70,19 @@ export class RainfallMapPanelComponent implements OnInit, AfterViewInit, OnDestr
     private _renderer: Renderer,
     private _mapService: LeafletMapService
   ) {
-    this.scanDate = new FormControl('', [
+    this.startDate = new FormControl('', [
       Validators.required,
       CustomValidators.dateISO
     ]);
 
+    this.scanRange = new FormControl('', [
+      Validators.required,
+      CustomValidators.number
+    ]);
+
     this.filterForm = this._formBuilder.group({
-      scanDate: this.scanDate
+      startDate: this.startDate,
+      scanRange: this.scanRange
     });
   }
 
@@ -101,7 +108,7 @@ export class RainfallMapPanelComponent implements OnInit, AfterViewInit, OnDestr
     let value = this.filterForm.value;
 
     // redirect to the URL
-    this._router.navigateByUrl(`/rainfall-maps/${value.scanDate}`);
+    this._router.navigateByUrl(`/ndvi/${value.startDate}/${value.scanRange}`);
   }
 
   onHideButtonClick(event) {

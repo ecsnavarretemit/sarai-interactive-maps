@@ -1,24 +1,24 @@
 /* tslint:disable:no-unused-variable */
 
 /*!
- * NDVI Maps Component Test
+ * Rainfall Maps Component Test
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpModule } from '@angular/http';
 import { provideStore } from '@ngrx/store';
-import { APP_CONFIG, AppConfig } from '../app.config';
-import { AppLoggerService } from '../app-logger.service';
+import { MapConfig, MAP_CONFIG } from '../map.config';
+import { AppLoggerService } from '../../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
-import { LeafletMapService } from '../leaflet';
-import { MapLayersReducer, SuitabilityLevelsReducer } from '../store';
-import { MockActivatedRoute, MockRouter } from '../mocks/router';
-import { NdviMapsComponent } from './ndvi-maps.component';
+import { LeafletMapService } from '../../leaflet';
+import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
+import { MockActivatedRoute, MockRouter } from '../../mocks/router';
+import { RainfallMapsComponent } from './rainfall-maps.component';
 
 describe('Component: NdviMaps', () => {
   let mockActivatedRoute: MockActivatedRoute;
@@ -41,11 +41,11 @@ describe('Component: NdviMaps', () => {
         AppLoggerService,
         TileLayerService,
         LeafletMapService,
-        NdviMapsComponent,
+        RainfallMapsComponent,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: mockRouter },
-        { provide: APP_CONFIG, useValue: AppConfig },
+        { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({
           mapLayers: MapLayersReducer,
@@ -55,7 +55,7 @@ describe('Component: NdviMaps', () => {
     });
   });
 
-  it('should create an instance', inject([NdviMapsComponent], (component: NdviMapsComponent) => {
+  it('should create an instance', inject([RainfallMapsComponent], (component: RainfallMapsComponent) => {
     expect(component).toBeTruthy();
   }));
 

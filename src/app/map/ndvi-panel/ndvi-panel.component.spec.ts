@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 /*!
- * Rainfall Map Panel Component Test
+ * NDVI Panel Component Test
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -11,11 +11,11 @@ import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { LeafletMapService } from '../leaflet';
-import { MockRouter } from '../mocks/router';
-import { RainfallMapPanelComponent } from './rainfall-map-panel.component';
+import { LeafletMapService } from '../../leaflet';
+import { MockRouter } from '../../mocks/router';
+import { NdviPanelComponent } from './ndvi-panel.component';
 
-describe('Component: RainfallMapPanel', () => {
+describe('Component: NdviPanel', () => {
   let mockRouter: MockRouter;
 
   beforeEach(() => {
@@ -26,13 +26,13 @@ describe('Component: RainfallMapPanel', () => {
         FormBuilder,
         Renderer,
         LeafletMapService,
-        RainfallMapPanelComponent,
+        NdviPanelComponent,
         { provide: Router, useValue: mockRouter }
       ]
     });
   });
 
-  it('should create an instance', inject([RainfallMapPanelComponent], (component: RainfallMapPanelComponent) => {
+  it('should create an instance', inject([NdviPanelComponent], (component: NdviPanelComponent) => {
     expect(component).toBeTruthy();
   }));
 

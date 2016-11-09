@@ -1,14 +1,20 @@
 /*!
- * Crop Production Area Panel Component
+ * Suitability Map Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { LeafletMapService } from '../leaflet';
+import { LeafletMapService } from '../../leaflet';
+import { SuitabilityMapService } from '../suitability-map.service';
+import { SuitabilityLevel } from '../suitability-level.interface';
+import { Crop } from '../crop.interface';
 import * as L from 'leaflet';
+import * as _ from 'lodash';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
@@ -30,9 +36,9 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-crop-production-area-panel',
-  templateUrl: './crop-production-area-panel.component.html',
-  styleUrls: ['./crop-production-area-panel.component.sass'],
+  selector: 'app-suitability-map-panel',
+  templateUrl: './suitability-map-panel.component.html',
+  styleUrls: ['./suitability-map-panel.component.sass'],
   animations: [
     trigger('controlWrapper', [
       state('void', style({
@@ -50,7 +56,9 @@ import {
     ])
   ]
 })
-export class CropProductionAreaPanelComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
+  public cropData: Array<Crop> = [];
+  public levels: Array<any> = [];
   public controlWrapperAnimationState: string = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
@@ -59,11 +67,39 @@ export class CropProductionAreaPanelComponent implements OnInit, AfterViewInit, 
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
+    public router: Router,
     private _renderer: Renderer,
     private _mapService: LeafletMapService,
+    private _suitabilityMapService: SuitabilityMapService,
+    private _store: Store<any>
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this._suitabilityMapService
+      .getCrops()
+      .then((crops: Array<Crop>) => {
+        this.cropData = crops;
+      })
+      ;
+
+    this._suitabilityMapService
+      .getSuitabilityLevels()
+      .then((levels: Array<SuitabilityLevel>) => {
+        // add the suitability levels to the store
+        this._store.dispatch({
+          type: 'ADD_SUITABILITY_LEVELS',
+          payload: levels
+        });
+
+        // add checked attribute
+        this.levels = _.map(levels, (level: any) => {
+          level.checked = true;
+
+          return level;
+        });
+      })
+      ;
+  }
 
   ngAfterViewInit() {
     // since mouseover is fire continuously, we throttle it so that it is only fired every 600 ms
@@ -81,6 +117,15 @@ export class CropProductionAreaPanelComponent implements OnInit, AfterViewInit, 
     });
   }
 
+  suitabilityRedirect(event, crop: string, containsChild = true) {
+    if (containsChild) {
+      return;
+    }
+
+    // redirect to the URL
+    this.router.navigateByUrl(`/suitability-maps/${crop}`);
+  }
+
   onHideButtonClick(event) {
     // switch the panel animation state to hidden
     this.controlWrapperAnimationState = 'hidden';
@@ -95,6 +140,25 @@ export class CropProductionAreaPanelComponent implements OnInit, AfterViewInit, 
     }
 
     this.controlWrapperAnimationState = 'hidden';
+  }
+
+  onToggleCheckbox(isChecked: boolean, level: any) {
+    // set the value to the corresponding object
+    level.checked = isChecked;
+
+    if (isChecked) {
+      // add the gridcode to the store
+      this._store.dispatch({
+        type: 'ADD_SUITABILITY_LEVEL',
+        payload: _.omit(level, 'checked')
+      });
+    } else {
+      // remove the gridcode from the store
+      this._store.dispatch({
+        type: 'REMOVE_SUITABILITY_LEVEL',
+        payload: level.gridcode
+      });
+    }
   }
 
   mouseMovementOnMapControl(type: string) {

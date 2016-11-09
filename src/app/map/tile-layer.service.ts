@@ -6,7 +6,7 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { APP_CONFIG } from './app.config';
+import { MAP_CONFIG } from './map.config';
 import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
 import * as L from 'leaflet';
 
@@ -22,7 +22,7 @@ export class TileLayerService {
   public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
   public wmsTileLayerUrl: string;
 
-  constructor(@Inject(APP_CONFIG) private _config: any) {
+  constructor(@Inject(MAP_CONFIG) private _config: any) {
     // EqualTo filter for GeoServer
     this._equalToFilterTmpl = template(`
       <PropertyIsEqualTo>

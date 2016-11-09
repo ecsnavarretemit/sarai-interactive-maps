@@ -1,80 +1,75 @@
 /*!
- * NDVI Maps Component
+ * Rainfall Maps Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
-import { APP_CONFIG } from '../app.config';
+import { MAP_CONFIG } from '../map.config';
 import { Store } from '@ngrx/store';
-import { LeafletMapService } from '../leaflet';
+import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
-import { AppLoggerService } from '../app-logger.service';
-import { Layer } from '../store';
-import { isNaN } from 'lodash';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/observable/combineLatest';
+import { AppLoggerService } from '../../app-logger.service';
+import { Layer } from '../../store';
 
 @Component({
-  selector: 'app-ndvi-maps',
-  templateUrl: './ndvi-maps.component.html',
-  styleUrls: ['./ndvi-maps.component.sass']
+  selector: 'app-rainfall-maps',
+  templateUrl: './rainfall-maps.component.html',
+  styleUrls: ['./rainfall-maps.component.sass']
 })
-export class NdviMapsComponent implements OnInit, OnDestroy {
+export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _layerId: string;
 
   constructor(
-    @Inject(APP_CONFIG) private _config: any,
+    @Inject(MAP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _logger: AppLoggerService,
     private _http: Http,
     private _route: ActivatedRoute,
+    private _router: Router,
     private _mapLayersStore: Store<any>
   ) { }
 
   ngOnInit() {
     // listen for changes in crop url parameter since `route.params` is an instance of Observable!
     this._route.params.forEach((params: Params) => {
-      let converted = parseInt(params['scanRange'], 10);
       // check if startDate and scanRange is valid
       if (
-        typeof params['startDate'] !== 'undefined' &&
-        typeof params['scanRange'] !== 'undefined' &&
-        /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])/g.test(params['startDate']) &&
-        !isNaN(converted)
+        typeof params['date'] !== 'undefined' &&
+        /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])/g.test(params['date'])
       ) {
-        this.processData(params['startDate'], parseInt(params['scanRange'], 10));
+        this.processData(params['date']);
       }
     });
   }
 
-  processData(startDate: string, scanRange: number) {
+  processData(date: string) {
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
     // throw error if endpoint does not exist
-    if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
+    if (typeof this._config.rainfall_maps.eeApiEndpoint === 'undefined' || this._config.rainfall_maps.eeApiEndpoint === '') {
       throw new Error('API Endpoint for NDVI Layers not specified');
     }
 
-    let endpoint = this._config.ndvi_maps.eeApiEndpoint;
+    let endpoint = this._config.rainfall_maps.eeApiEndpoint;
     let method = 'post';
     let args = [endpoint, {
-      date: startDate,
-      range: scanRange
+      date
     }];
 
-    if (this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase() === 'get') {
+    if (this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase() === 'get') {
       method = 'get';
-      endpoint += `/?date=${startDate}&range=${scanRange}`;
+      endpoint += `/?date=${date}`;
       args = [endpoint];
     }
+    // return Observable.throw(new Error('no map data available'));
 
     this._http
       [method].apply(this._http, args)
@@ -96,8 +91,8 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
         let payload: Layer = {
           id: this._layerId,
           url: tileUrl,
-          type: 'ndvi',
-          layerOptions: this._tileLayerService.getNdviLayerOptions()
+          type: 'rainfall',
+          layerOptions: this._tileLayerService.getRainFallLayerOptions()
         };
 
         // clear tile layers before adding it
@@ -117,7 +112,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           type: 'ADD_LAYER',
           payload: payload
         });
-      }, (error) => {
+      }, (error: Error) => {
         let message = error.message;
 
         if (typeof error.message === 'undefined') {
@@ -125,7 +120,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
         }
 
         // send the error to the stream
-        this._logger.log('NDVI Map Data Unavailable', message, true);
+        this._logger.log('Rainfall Map Data Unavailable', message, true);
       })
       ;
   }

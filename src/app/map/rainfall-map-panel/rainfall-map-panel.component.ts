@@ -1,20 +1,17 @@
 /*!
- * Suitability Map Panel Component
+ * Rainfall Map Panel Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { CustomValidators } from 'ng2-validation';
+import { LeafletMapService } from '../../leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { LeafletMapService } from '../leaflet';
-import { SuitabilityMapService } from '../suitability-map.service';
-import { SuitabilityLevel } from '../suitability-level.interface';
-import { Crop } from '../crop.interface';
 import * as L from 'leaflet';
-import * as _ from 'lodash';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
@@ -36,9 +33,9 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-suitability-map-panel',
-  templateUrl: './suitability-map-panel.component.html',
-  styleUrls: ['./suitability-map-panel.component.sass'],
+  selector: 'app-rainfall-map-panel',
+  templateUrl: './rainfall-map-panel.component.html',
+  styleUrls: ['./rainfall-map-panel.component.sass'],
   animations: [
     trigger('controlWrapper', [
       state('void', style({
@@ -56,9 +53,9 @@ import {
     ])
   ]
 })
-export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
-  public cropData: Array<Crop> = [];
-  public levels: Array<any> = [];
+export class RainfallMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
+  public filterForm: FormGroup;
+  public scanDate: FormControl;
   public controlWrapperAnimationState: string = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
@@ -67,39 +64,22 @@ export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDe
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(
-    public router: Router,
+    private _formBuilder: FormBuilder,
+    private _router: Router,
     private _renderer: Renderer,
-    private _mapService: LeafletMapService,
-    private _suitabilityMapService: SuitabilityMapService,
-    private _store: Store<any>
-  ) { }
+    private _mapService: LeafletMapService
+  ) {
+    this.scanDate = new FormControl('', [
+      Validators.required,
+      CustomValidators.dateISO
+    ]);
 
-  ngOnInit() {
-    this._suitabilityMapService
-      .getCrops()
-      .then((crops: Array<Crop>) => {
-        this.cropData = crops;
-      })
-      ;
-
-    this._suitabilityMapService
-      .getSuitabilityLevels()
-      .then((levels: Array<SuitabilityLevel>) => {
-        // add the suitability levels to the store
-        this._store.dispatch({
-          type: 'ADD_SUITABILITY_LEVELS',
-          payload: levels
-        });
-
-        // add checked attribute
-        this.levels = _.map(levels, (level: any) => {
-          level.checked = true;
-
-          return level;
-        });
-      })
-      ;
+    this.filterForm = this._formBuilder.group({
+      scanDate: this.scanDate
+    });
   }
+
+  ngOnInit() { }
 
   ngAfterViewInit() {
     // since mouseover is fire continuously, we throttle it so that it is only fired every 600 ms
@@ -117,13 +97,11 @@ export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDe
     });
   }
 
-  suitabilityRedirect(event, crop: string, containsChild = true) {
-    if (containsChild) {
-      return;
-    }
+  processRequest() {
+    let value = this.filterForm.value;
 
     // redirect to the URL
-    this.router.navigateByUrl(`/suitability-maps/${crop}`);
+    this._router.navigateByUrl(`/rainfall-maps/${value.scanDate}`);
   }
 
   onHideButtonClick(event) {
@@ -140,25 +118,6 @@ export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDe
     }
 
     this.controlWrapperAnimationState = 'hidden';
-  }
-
-  onToggleCheckbox(isChecked: boolean, level: any) {
-    // set the value to the corresponding object
-    level.checked = isChecked;
-
-    if (isChecked) {
-      // add the gridcode to the store
-      this._store.dispatch({
-        type: 'ADD_SUITABILITY_LEVEL',
-        payload: _.omit(level, 'checked')
-      });
-    } else {
-      // remove the gridcode from the store
-      this._store.dispatch({
-        type: 'REMOVE_SUITABILITY_LEVEL',
-        payload: level.gridcode
-      });
-    }
   }
 
   mouseMovementOnMapControl(type: string) {
