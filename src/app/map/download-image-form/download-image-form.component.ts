@@ -14,6 +14,7 @@ import { LocationsService } from '../locations.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { Crop } from '../crop.interface';
 import { trim, parseInt, reduce, each } from 'lodash';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
@@ -67,7 +68,13 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // populate the region select field
-    this.regions = this._locationsService.getRegions();
+    this.regions = this._locationsService
+      .getRegions()
+      .catch((err: any) => {
+        // catch the error but do nothing
+        return Observable.of(null);
+      })
+      ;
 
     // populate the crop select field
     this.crops = this._suitabilityMapService
