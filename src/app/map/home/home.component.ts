@@ -38,7 +38,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChildren('mapTypePanel') mapTypePanels: QueryList<any>;
 
   constructor(
-    @Inject(WindowService) private _window: Window,
+    @Inject(WindowService) private _window: any,
     private _logger: AppLoggerService,
     private _translate: TranslateService,
     private _cookieService: CookieService,
