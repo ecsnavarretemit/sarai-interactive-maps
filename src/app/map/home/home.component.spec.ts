@@ -13,6 +13,7 @@ import { Http, HttpModule} from '@angular/http';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
+import { AppLoggerService } from '../../app-logger.service';
 import { HomeComponent } from './home.component';
 
 describe('Component: Home', () => {
@@ -31,6 +32,7 @@ describe('Component: Home', () => {
       providers: [
         CookieService,
         TranslateService,
+        AppLoggerService,
         Renderer,
         HomeComponent,
 
