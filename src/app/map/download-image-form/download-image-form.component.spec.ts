@@ -7,15 +7,42 @@
  * Licensed under MIT
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+import { LocationsService } from '../locations.service';
+import { SuitabilityMapService } from '../suitability-map.service';
+import { MapConfig, MAP_CONFIG } from '../map.config';
 import { DownloadImageFormComponent } from './download-image-form.component';
 
 describe('Component: DownloadImageForm', () => {
 
-  it('should create an instance', () => {
-    let component = new DownloadImageFormComponent();
-    expect(component).toBeTruthy();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        MockBackend,
+        BaseRequestOptions,
+        FormBuilder,
+        LocationsService,
+        SuitabilityMapService,
+        DownloadImageFormComponent,
+
+        { provide: MAP_CONFIG, useValue: MapConfig },
+        {
+          provide: Http,
+          deps: [MockBackend, BaseRequestOptions],
+          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
+            return new Http(backendInstance, defaultOptions);
+          }
+        },
+      ]
+    });
   });
+
+  it('should create an instance', inject([DownloadImageFormComponent], (component: DownloadImageFormComponent) => {
+    expect(component).toBeTruthy();
+  }));
 
 });
 

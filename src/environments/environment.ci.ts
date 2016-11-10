@@ -20,6 +20,17 @@ export const environment = {
     rainfall_maps: {
       eeApiEndpoint: 'http://localhost:5000/chirps',
       eeApiEndpointMethod: 'GET'
+    },
+    location_api: {
+      region: {
+        endpoint: 'http://localhost:3000/regions',
+        method: 'GET'
+      },
+
+      province: {
+        endpoint: 'http://localhost:3000/provinces',
+        method: 'GET'
+      }
     }
   }
 };
