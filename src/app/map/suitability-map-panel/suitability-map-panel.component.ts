@@ -16,7 +16,6 @@ import { Crop } from '../crop.interface';
 import * as L from 'leaflet';
 import * as _ from 'lodash';
 import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import {
   Component,
