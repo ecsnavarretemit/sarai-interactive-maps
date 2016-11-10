@@ -54,4 +54,6 @@ typings
 src/environments/*.ts
 !src/environments/environment.ci.ts
 
+# Project Scripts
+_scripts
 
