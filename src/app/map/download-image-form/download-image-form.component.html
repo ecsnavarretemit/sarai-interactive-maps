@@ -7,8 +7,8 @@
                 {{ crop.name }}
             </option>
         </select>
-        <div [hidden]="selectCrop.valid || selectCrop.untouched">
-            <span class="help-block" [hidden]="!selectCrop.hasError('required')">
+        <div class="help-block-wrapper">
+            <span class="help-block" *ngIf="selectCrop.hasError('required') && selectCrop.touched">
                 Crop is required.
             </span>
         </div>
@@ -22,8 +22,8 @@
                 {{ region.name }}
             </option>
         </select>
-        <div [hidden]="selectRegion.valid || selectRegion.untouched">
-            <span class="help-block" [hidden]="!selectRegion.hasError('required')">
+        <div class="help-block-wrapper">
+            <span class="help-block" *ngIf="selectRegion.hasError('required') && selectRegion.touched">
                 Region is required.
             </span>
         </div>
@@ -37,8 +37,8 @@
                 {{ province.name }}
             </option>
         </select>
-        <div [hidden]="selectProvince.valid || selectProvince.untouched">
-            <span class="help-block" [hidden]="!selectProvince.hasError('required')">
+        <div class="help-block-wrapper">
+            <span class="help-block" *ngIf="selectProvince.hasError('required') && selectProvince.touched">
                 Province is required.
             </span>
         </div>
