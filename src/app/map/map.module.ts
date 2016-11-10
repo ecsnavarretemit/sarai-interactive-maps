@@ -19,6 +19,7 @@ import { LeafletModule } from '../leaflet';
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
+import { LocationsService } from './locations.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
 
 import { HomeComponent } from './home/home.component';
@@ -59,6 +60,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
   providers: [
     TileLayerService,
     SuitabilityMapService,
+    LocationsService,
 
     // using window object in Angular 2 is discouraged since
     // it isn’t only designed to run within your browser, but also on mobiles,
