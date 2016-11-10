@@ -7,10 +7,10 @@
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
-import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
-import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
+import { HomeComponent } from './map/home/home.component';
+import { SuitabilityMapsComponent } from './map/suitability-maps/suitability-maps.component';
+import { NdviMapsComponent } from './map/ndvi-maps/ndvi-maps.component';
+import { RainfallMapsComponent } from './map/rainfall-maps/rainfall-maps.component';
 
 const routes: Routes = [
   {

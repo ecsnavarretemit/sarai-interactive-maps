@@ -5026,6 +5026,12 @@ ng2-bootstrap@^1.1.8:
   dependencies:
     moment "2.15.1"
 
+ng2-pdf-viewer:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-0.1.0.tgz#e5436bd54796820b26611f9cd2684a18b230fb1b"
+  dependencies:
+    pdfjs-dist "^1.6.289"
+
 ng2-translate@^3.1.3:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ng2-translate/-/ng2-translate-3.2.1.tgz#93da04a9038471bb6e287e4f6664a06be8c18bc4"
@@ -5045,6 +5051,10 @@ node-emoji@^1.4.1:
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.4.1.tgz#c9fa0cf91094335bcb967a6f42b2305c15af2ebc"
   dependencies:
     string.prototype.codepointat "^0.2.0"
+
+node-ensure@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/node-ensure/-/node-ensure-0.0.0.tgz#ecae764150de99861ec5c810fd5d096b183932a7"
 
 node-gyp@^3.3.1:
   version "3.4.0"
@@ -5692,6 +5702,12 @@ pbkdf2@^3.0.3:
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.9.tgz#f2c4b25a600058b3c3773c086c37dbbee1ffe693"
   dependencies:
     create-hmac "^1.1.2"
+
+pdfjs-dist@^1.6.289:
+  version "1.6.313"
+  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-1.6.313.tgz#35d7249b03cb0a430b4511e6edb07c2e52d0a00d"
+  dependencies:
+    node-ensure "^0.0.0"
 
 pify@^2.0.0:
   version "2.3.0"

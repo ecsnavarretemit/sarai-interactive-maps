@@ -1,6 +1,6 @@
 {
   "name": "sarai-ng2",
-  "version": "1.0.0-alpha3",
+  "version": "1.0.0-alpha4",
   "license": "MIT",
   "author": "Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>",
   "angular-cli": {},
@@ -33,6 +33,7 @@
     "leaflet-sidebar": "^0.1.9",
     "lodash": "^4.16.4",
     "ng2-bootstrap": "^1.1.8",
+    "ng2-pdf-viewer": "^0.1.0",
     "ng2-translate": "^3.1.3",
     "ng2-validation": "^2.0.0",
     "rxjs": "5.0.0-beta.12",

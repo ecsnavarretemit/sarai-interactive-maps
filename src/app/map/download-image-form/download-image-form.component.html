@@ -1,0 +1,60 @@
+<form class="ndvi-filter-form smart-form" [formGroup]="downloadForm" (ngSubmit)="processRequest()">
+    <div class="form-group">
+        <label for="ec_crop_sel">Select crop (pick one):</label>
+        <select name="ec_crop_sel" id="ec_crop_sel" class="form-control" [formControl]="selectCrop">
+            <option value="">Select Crop</option>
+            <option *ngFor="let crop of (crops | async)" [attr.value]="crop.slug">
+                {{ crop.name }}
+            </option>
+        </select>
+        <div [hidden]="selectCrop.valid || selectCrop.untouched">
+            <span class="help-block" [hidden]="!selectCrop.hasError('required')">
+                Crop is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="ec_region_sel">Select region (pick one):</label>
+        <select name="ec_region_sel" id="ec_region_sel" class="form-control" [formControl]="selectRegion">
+            <option value="">Select Region</option>
+            <option *ngFor="let region of (regions | async)" [attr.value]="region.id">
+                {{ region.name }}
+            </option>
+        </select>
+        <div [hidden]="selectRegion.valid || selectRegion.untouched">
+            <span class="help-block" [hidden]="!selectRegion.hasError('required')">
+                Region is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="ec_province_sel">Select province (pick one):</label>
+        <select name="ec_province_sel" id="ec_province_sel" class="form-control" [formControl]="selectProvince">
+            <option value="">Select Province</option>
+            <option *ngFor="let province of (provinces | async)" [attr.value]="province.slug">
+                {{ province.name }}
+            </option>
+        </select>
+        <div [hidden]="selectProvince.valid || selectProvince.untouched">
+            <span class="help-block" [hidden]="!selectProvince.hasError('required')">
+                Province is required.
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group form-group--btn-group">
+        <button type="submit" class="btn btn-success btn-block" [disabled]="!downloadForm.valid">Preview</button>
+
+        <a class="btn btn-success btn-block"
+            [href]="pdfUrl"
+            [attr.download]="pdfFilename"
+            [ngClass]="{disabled: !(pdfUrl !== '' && pdfUrl !== '#')}"
+            (click)="download($event)">
+            Download
+        </a>
+    </div>
+</form>
+
+
