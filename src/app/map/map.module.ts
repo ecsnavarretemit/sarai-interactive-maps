@@ -11,7 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-import { CustomFormsModule } from 'ng2-validation';
 import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule } from 'ng2-translate';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
@@ -40,7 +39,6 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomFormsModule,
     TooltipModule,
     AccordionModule,
     ModalModule,
@@ -64,11 +62,8 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     TileLayerService,
     SuitabilityMapService,
     LocationsService,
+    WindowService,
 
-    // using window object in Angular 2 is discouraged since
-    // it isn’t only designed to run within your browser, but also on mobiles,
-    // the server or web workers where objects like window may not be available.
-    { provide: WindowService, useValue: window },
     { provide: MAP_CONFIG, useValue: MapConfig }
   ],
   exports: [

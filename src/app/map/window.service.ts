@@ -5,8 +5,22 @@
  * Licensed under MIT
  */
 
-import { OpaqueToken } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-export const WindowService = new OpaqueToken('WindowService');
+function _window(): any {
+   // return the global native browser window object
+   return window;
+}
+
+@Injectable()
+export class WindowService {
+
+  constructor() { }
+
+   getNativeWindow(): any {
+      return _window();
+   }
+
+}
 
 

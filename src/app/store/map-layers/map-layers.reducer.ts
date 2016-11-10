@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { ActionReducer, Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { assign, map, filter, isArray, has, omit, size, reduce } from 'lodash';
 import * as L from 'leaflet';
 
@@ -28,7 +28,7 @@ const initialState: LayerState = {
   layers: {}
 };
 
-export const MapLayersReducer: ActionReducer<LayerState> = (state: LayerState = initialState, action: Action) => {
+export function MapLayersReducer (state: LayerState = initialState, action: Action): LayerState {
   switch (action.type) {
     case 'ADD_LAYER': {
       const layer = action.payload;
