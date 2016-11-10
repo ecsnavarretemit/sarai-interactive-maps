@@ -38,7 +38,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChildren('mapTypePanel') mapTypePanels: QueryList<any>;
 
   constructor(
-    @Inject(WindowService) private _window: any,
+    private _window: WindowService,
     private _logger: AppLoggerService,
     private _translate: TranslateService,
     private _cookieService: CookieService,
@@ -145,7 +145,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
 
     // open new window
-    this._window.open(windowUrl, windowName, windowFeatures);
+    this._window.getNativeWindow().open(windowUrl, windowName, windowFeatures);
   }
 
   changeLang(event: Event) {

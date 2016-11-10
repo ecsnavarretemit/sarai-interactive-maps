@@ -64,11 +64,8 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     TileLayerService,
     SuitabilityMapService,
     LocationsService,
+    WindowService,
 
-    // using window object in Angular 2 is discouraged since
-    // it isn’t only designed to run within your browser, but also on mobiles,
-    // the server or web workers where objects like window may not be available.
-    { provide: WindowService, useValue: window },
     { provide: MAP_CONFIG, useValue: MapConfig }
   ],
   exports: [
