@@ -6,9 +6,11 @@
  */
 
 import { Component, AfterViewInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
+import { AppLoggerService } from '../../app-logger.service';
 import { LeafletButtonComponent } from '../../leaflet';
 import { SuitabilityMapPanelComponent } from '../suitability-map-panel/suitability-map-panel.component';
 import { CropProductionAreaPanelComponent } from '../crop-production-area-panel/crop-production-area-panel.component';
@@ -23,16 +25,21 @@ import { filter, forEach } from 'lodash';
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   public layersOpacity = 0.6;
+  public pdfUrl: string | null = null;
+  public tmpPdfUrl: string | null = null;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
   private _panelButtonPairs: Array<any> = [];
 
   @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
+  @ViewChild('pdfPreviewModal') pdfPreviewModal: ModalDirective;
+  @ViewChild('pdfPreviewModalTitle') pdfPreviewModalTitle: ElementRef;
   @ViewChildren(LeafletButtonComponent) mapTypeButtons: QueryList<LeafletButtonComponent>;
   @ViewChildren('mapTypePanel') mapTypePanels: QueryList<any>;
 
   constructor(
     @Inject(WindowService) private _window: Window,
+    private _logger: AppLoggerService,
     private _translate: TranslateService,
     private _cookieService: CookieService,
     private _renderer: Renderer
@@ -158,9 +165,33 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this._translate.use(this._currentLang);
   }
 
+  previewPdf(pdfMetadata: any) {
+    // show a modal saying the pdf is not available if `pdfMetadata.url` is set to false
+    // else show a modal that contains the PDF preview
+    if (pdfMetadata.url !== false) {
+      this.tmpPdfUrl = pdfMetadata.url;
+      this.pdfPreviewModal.show();
+    } else {
+      this._logger.log('Image not available', 'Map image not available.', true);
+    }
+  }
+
+  addPdf() {
+    this.pdfUrl = this.tmpPdfUrl;
+  }
+
+  removePdf() {
+    // destroy the PDF viewer instance
+    this.pdfUrl = null;
+    this.tmpPdfUrl = null;
+  }
+
   ngOnDestroy() {
     // empty the array by setting the length of the array to zero
     this._panelButtonPairs.length = 0;
+
+    // make sure we remove the PDF instance
+    this.removePdf();
   }
 
 }

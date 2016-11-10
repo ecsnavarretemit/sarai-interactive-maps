@@ -12,8 +12,9 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { CustomFormsModule } from 'ng2-validation';
-import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule } from 'ng2-translate';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { LeafletModule } from '../leaflet';
 
 import { WindowService } from './window.service';
@@ -42,6 +43,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     CustomFormsModule,
     TooltipModule,
     AccordionModule,
+    ModalModule,
     MdCheckboxModule,
     TranslateModule,
     LeafletModule
@@ -55,7 +57,8 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     RainfallMapPanelComponent,
     DownloadImageFormComponent,
     NdviMapsComponent,
-    RainfallMapsComponent
+    RainfallMapsComponent,
+    PdfViewerComponent
   ],
   providers: [
     TileLayerService,
