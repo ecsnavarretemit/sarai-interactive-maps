@@ -14,6 +14,7 @@ import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-rainfall-maps',
@@ -69,7 +70,6 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       endpoint += `/?date=${date}`;
       args = [endpoint];
     }
-    // return Observable.throw(new Error('no map data available'));
 
     this._http
       [method].apply(this._http, args)
