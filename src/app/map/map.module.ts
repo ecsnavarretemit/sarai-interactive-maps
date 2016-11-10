@@ -12,13 +12,15 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { CustomFormsModule } from 'ng2-validation';
-import { TooltipModule, AccordionModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TranslateModule } from 'ng2-translate';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { LeafletModule } from '../leaflet';
 
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
 import { SuitabilityMapService } from './suitability-map.service';
+import { LocationsService } from './locations.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
 
 import { HomeComponent } from './home/home.component';
@@ -41,6 +43,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     CustomFormsModule,
     TooltipModule,
     AccordionModule,
+    ModalModule,
     MdCheckboxModule,
     TranslateModule,
     LeafletModule
@@ -54,11 +57,13 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     RainfallMapPanelComponent,
     DownloadImageFormComponent,
     NdviMapsComponent,
-    RainfallMapsComponent
+    RainfallMapsComponent,
+    PdfViewerComponent
   ],
   providers: [
     TileLayerService,
     SuitabilityMapService,
+    LocationsService,
 
     // using window object in Angular 2 is discouraged since
     // it isn’t only designed to run within your browser, but also on mobiles,

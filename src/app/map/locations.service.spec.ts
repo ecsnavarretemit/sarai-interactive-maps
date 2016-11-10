@@ -1,32 +1,25 @@
 /* tslint:disable:no-unused-variable */
 
 /*!
- * Download Image Form Component Test
+ * Locations Service Test
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { LocationsService } from '../locations.service';
-import { SuitabilityMapService } from '../suitability-map.service';
-import { MapConfig, MAP_CONFIG } from '../map.config';
-import { DownloadImageFormComponent } from './download-image-form.component';
+import { MapConfig, MAP_CONFIG } from './map.config';
+import { LocationsService } from './locations.service';
 
-describe('Component: DownloadImageForm', () => {
+describe('Service: Locations', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         MockBackend,
         BaseRequestOptions,
-        FormBuilder,
-        LocationsService,
-        SuitabilityMapService,
-        DownloadImageFormComponent,
 
         { provide: MAP_CONFIG, useValue: MapConfig },
         {
@@ -36,12 +29,14 @@ describe('Component: DownloadImageForm', () => {
             return new Http(backendInstance, defaultOptions);
           }
         },
+
+        LocationsService
       ]
     });
   });
 
-  it('should create an instance', inject([DownloadImageFormComponent], (component: DownloadImageFormComponent) => {
-    expect(component).toBeTruthy();
+  it('should create instance', inject([LocationsService], (service: LocationsService) => {
+    expect(service).toBeTruthy();
   }));
 
 });

@@ -192,11 +192,44 @@
         </header>
 
         <div class="sidebar__content" sidebar-content>
-            <app-download-image-form></app-download-image-form>
+            <app-download-image-form (processComplete)="previewPdf($event)"></app-download-image-form>
         </div>
     </app-leaflet-sidebar>
 
     <app-leaflet-opacity-slider [opacity]="layersOpacity" map-control></app-leaflet-opacity-slider>
 </app-leaflet-map>
+
+<div class="modal--pdf-preview modal fade" tabindex="-1" role="dialog" aria-labelledby="pdfPreviewModalLabel" aria-hidden="true"
+    bsModal
+    (onShown)="addPdf()"
+    (onHidden)="removePdf()"
+    #pdfPreviewModal="bs-modal">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="pdfPreviewModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <h4 class="modal-title" #pdfPreviewModalTitle>PDF Preview</h4>
+            </div>
+
+            <div class="modal-body">
+                <pdf-viewer
+                    *ngIf="pdfUrl !== null"
+                    [src]="pdfUrl"
+                    original-size="false"
+                    show-all="true"
+                    style="display: block;">
+                </pdf-viewer>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="pdfPreviewModal.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
