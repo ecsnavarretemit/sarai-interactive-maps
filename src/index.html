@@ -126,6 +126,27 @@
             <div class="sk-rect sk-rect5"></div>
         </div>
     </div>
+    <script>
+        (function(window, document) {
+            'use strict';
+
+            window.addEventListener('load', function() {
+                var loader = document.querySelector('.loading-container');
+                var appRoot = document.querySelector('app-root');
+
+                // poll if if the application has already bootstrapped.
+                // remove the loader when the childElementCount is greater than 0
+                var timer = setInterval(function() {
+                    if (appRoot.childElementCount > 0) {
+                        loader.parentNode.removeChild(loader);
+                        loader = null;
+
+                        clearInterval(timer);
+                    }
+                }, 1000);
+            });
+        })(window, document);
+    </script>
 </body>
 </html>
 
