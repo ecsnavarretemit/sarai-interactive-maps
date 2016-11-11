@@ -10,7 +10,7 @@
   <style>
     .hidden { display: none !important; }
 
-    .loading-container {
+    .preloader {
         position: fixed;
         top: 0;
         left: 0;
@@ -25,38 +25,32 @@
         transition: opacity .8s ease-in-out;
     }
 
-    .loading-container .img-responsive {
+    .preloader .preloader__content {
         position: absolute;
-        top: 28%;
-        left: 50%;
-        margin: 0 auto;
+        top: 50%;
+        width: 100%;
 
-        -webkit-transform: translateX(-50%) translateY(50%);
-        -moz-transform: translateX(-50%) translateY(50%);
-        transform: translateX(-50%) translateY(50%);
+        -webkit-transform: translateY(50%);
+        -moz-transform: translateY(50%);
+        transform: translateY(-50%);
     }
+
+    .preloader .img-responsive { margin: 0 auto; }
 
     app-root {
         display: block;
     }
 
-    app-root:empty + .loading-container {
+    app-root:empty + .preloader {
         opacity: 1;
         z-index: 100;
     }
 
     .sk-wave {
-        position: absolute;
-        width: 100%;
-        top: 50%;
         margin: 40px auto;
         height: 40px;
         text-align: center;
         font-size: 10px;
-
-        -webkit-transform: translateY(-50%);
-        -moz-transform: translateY(-50%);
-        transform: translateY(-50%);
     }
 
     .sk-wave .sk-rect {
@@ -115,15 +109,17 @@
 </head>
 <body>
     <app-root></app-root>
-    <div class="loading-container">
-        <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
+    <div class="preloader">
+        <div class="preloader__content">
+            <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
 
-        <div class="sk-wave">
-            <div class="sk-rect sk-rect1"></div>
-            <div class="sk-rect sk-rect2"></div>
-            <div class="sk-rect sk-rect3"></div>
-            <div class="sk-rect sk-rect4"></div>
-            <div class="sk-rect sk-rect5"></div>
+            <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+            </div>
         </div>
     </div>
     <script>
@@ -131,7 +127,7 @@
             'use strict';
 
             window.addEventListener('load', function() {
-                var loader = document.querySelector('.loading-container');
+                var loader = document.querySelector('.preloader');
                 var appRoot = document.querySelector('app-root');
 
                 // poll if if the application has already bootstrapped.
