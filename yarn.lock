@@ -91,10 +91,6 @@
   version "2.5.37"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.37.tgz#15f16040b1106941ec4aeefa3cd9c55342a0dcbb"
 
-"@types/jquery@^2.0.33":
-  version "2.0.34"
-  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.34.tgz#27615b369f30e572336126514e74672dda6e3d04"
-
 "@types/leaflet@^1.0.34":
   version "1.0.36"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.36.tgz#730da1a41d2539943b95aa430f003b94e9ba237b"
