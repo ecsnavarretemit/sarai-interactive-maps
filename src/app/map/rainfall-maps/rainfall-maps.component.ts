@@ -67,7 +67,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
     if (this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase() === 'get') {
       method = 'get';
-      endpoint += `/?date=${date}`;
+      endpoint += `/${date}`;
       args = [endpoint];
     }
 

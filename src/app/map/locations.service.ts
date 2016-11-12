@@ -34,7 +34,7 @@ export class LocationsService {
   }
 
   getProvincesByRegionId(regionId: number): Observable<any> {
-    let endpoint = `${this._config.location_api.province.endpoint}?region_id=${regionId}`;
+    let endpoint = `${this._config.location_api.region.endpoint}${regionId}/provinces`;
 
     return this._http
       .get(endpoint)
