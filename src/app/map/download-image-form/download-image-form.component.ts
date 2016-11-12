@@ -70,6 +70,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     // populate the region select field
     this.regions = this._locationsService
       .getRegions()
+      .map((res) => res.result)
       .catch((err: any) => {
         // catch the error but do nothing
         return Observable.of(null);
@@ -113,7 +114,10 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
         }
 
         // get the provinces from the API
-        this.provinces = this._locationsService.getProvincesByRegionId(parseInt(trimmed, 10));
+        this.provinces = this._locationsService
+          .getProvincesByRegionId(parseInt(trimmed, 10))
+          .map((res) => res.result)
+          ;
 
         // enable the province select button
         this.selectProvince.enable();
