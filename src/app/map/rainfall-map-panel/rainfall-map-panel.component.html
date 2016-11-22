@@ -14,7 +14,7 @@
             <form class="rainfall-map-filter-form smart-form" [formGroup]="filterForm" (ngSubmit)="processRequest()">
                 <div class="form-group">
                     <label for="ec_scan_date_txt">Scan Date</label>
-                    <input type="text" id="ec_scan_date_txt" name="ec_scan_date_txt" class="form-control" [formControl]="scanDate" />
+                    <input type="text" id="ec_scan_date_txt" name="ec_scan_date_txt" class="form-control" placeholder="YYYY-MM-DD" [formControl]="scanDate" />
                     <div class="help-block-wrapper">
                         <span class="help-block" *ngIf="scanDate.hasError('required') && scanDate.touched">
                             Starting Date is required.
