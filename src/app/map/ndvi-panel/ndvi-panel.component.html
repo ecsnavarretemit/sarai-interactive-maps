@@ -14,7 +14,7 @@
             <form class="ndvi-filter-form smart-form" [formGroup]="filterForm" (ngSubmit)="processRequest()">
                 <div class="form-group">
                     <label for="ec_starting_date_sel">Starting Date</label>
-                    <input type="text" id="ec_starting_date_sel" name="ec_starting_date_sel" class="form-control" [formControl]="startDate" />
+                    <input type="text" id="ec_starting_date_sel" name="ec_starting_date_sel" class="form-control" placeholder="YYYY-MM-DD" [formControl]="startDate" />
                     <div class="help-block-wrapper">
                         <span class="help-block" *ngIf="startDate.hasError('required') && startDate.touched">
                             Starting Date is required.
