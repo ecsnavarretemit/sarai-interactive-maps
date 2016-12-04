@@ -138,7 +138,9 @@
         </ul>
     </div>
 
-    <app-leaflet-sidebar containerClass="leaflet-sidebar--sarai-1" #videoSidebar>
+    <app-leaflet-sidebar containerClass="leaflet-sidebar--sarai-1"
+        (onHidden)="suitabilityEnVideo.pause(); suitabilityFilVideo.pause();"
+        #videoSidebar>
         <header class="sidebar__title-wrapper" sidebar-title>
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
 
@@ -155,7 +157,8 @@
                             class="introductory-video-english introductory-video video-responsive aspect__media-content"
                             width="1920"
                             height="1080"
-                            controls>
+                            controls
+                            #suitabilityEnVideo>
                             <source type="video/webm" src="/assets/videos/introductory-videos/english/maps.webm">
                             <source type="video/mp4" src="/assets/videos/introductory-videos/english/maps.mp4">
                             <source type="video/ogg" src="/assets/videos/introductory-videos/english/maps.ogv">
@@ -173,7 +176,8 @@
                             class="introductory-video-filipino introductory-video video-responsive aspect__media-content"
                             width="1920"
                             height="1080"
-                            controls>
+                            controls
+                            #suitabilityFilVideo>
                             <source type="video/webm" src="/assets/videos/introductory-videos/filipino/maps.webm">
                             <source type="video/mp4" src="/assets/videos/introductory-videos/filipino/maps.mp4">
                             <source type="video/ogg" src="/assets/videos/introductory-videos/filipino/maps.ogv">
