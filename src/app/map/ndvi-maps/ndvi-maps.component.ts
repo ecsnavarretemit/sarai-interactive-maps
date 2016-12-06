@@ -73,7 +73,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
     if (this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase() === 'get') {
       method = 'get';
-      endpoint += `/?date=${startDate}&range=${scanRange}`;
+      endpoint += `/${startDate}/${scanRange}`;
       args = [endpoint];
     }
 

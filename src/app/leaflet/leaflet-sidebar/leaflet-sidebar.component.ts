@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import * as L from 'leaflet';
 import 'leaflet-sidebar';
@@ -24,6 +24,10 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
   @Input() closeButton: boolean = true;
   @Input() autoPan: boolean = false;
   @Input() containerClass: string;
+  @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onShown: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onHidden: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(private _mapService: LeafletMapService) { }
@@ -58,6 +62,12 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
         this._added = true;
       })
       ;
+
+    // Bind event listeners to the control the leaflet sidebar
+    (this.control as any).on('show', this.onBeforeShow.bind(this));
+    (this.control as any).on('shown', this.onAfterShow.bind(this));
+    (this.control as any).on('hide', this.onBeforeHide.bind(this));
+    (this.control as any).on('hidden', this.onAfterHide.bind(this));
   }
 
   show() {
@@ -90,6 +100,22 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
     (this.control as any).toggle();
   }
 
+  onBeforeShow(evt) {
+    this.onShow.emit(evt);
+  }
+
+  onAfterShow(evt) {
+    this.onShown.emit(evt);
+  }
+
+  onBeforeHide(evt) {
+    this.onHide.emit(evt);
+  }
+
+  onAfterHide(evt) {
+    this.onHidden.emit(evt);
+  }
+
   ngOnDestroy() {
     // remove the reference to the container.
     this._controlContainer = null;
@@ -102,7 +128,14 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
 
         // set the added property to false after remove the control from the map
         this._added = false;
-      });
+      })
+      ;
+
+    // Bind event listeners to the control the leaflet sidebar
+    (this.control as any).off('show');
+    (this.control as any).off('shown');
+    (this.control as any).off('hide');
+    (this.control as any).off('hidden');
   }
 
 }

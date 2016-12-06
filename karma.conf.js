@@ -31,6 +31,9 @@ module.exports = function (config) {
       config: './angular-cli.json',
       environment: 'dev'
     },
+    mime: {
+      'text/x-typescript': ['ts','tsx']
+    },
     reporters: ['progress', 'karma-remap-istanbul'],
     port: 9876,
     colors: true,

@@ -14,13 +14,13 @@
             <form class="rainfall-map-filter-form smart-form" [formGroup]="filterForm" (ngSubmit)="processRequest()">
                 <div class="form-group">
                     <label for="ec_scan_date_txt">Scan Date</label>
-                    <input type="text" id="ec_scan_date_txt" name="ec_scan_date_txt" class="form-control" [formControl]="scanDate" />
-                    <div [hidden]="scanDate.valid || scanDate.untouched">
-                        <span class="help-block" [hidden]="!scanDate.hasError('required')">
-                            Scan Date is required.
+                    <input type="text" id="ec_scan_date_txt" name="ec_scan_date_txt" class="form-control" placeholder="YYYY-MM-DD" [formControl]="scanDate" />
+                    <div class="help-block-wrapper">
+                        <span class="help-block" *ngIf="scanDate.hasError('required') && scanDate.touched">
+                            Starting Date is required.
                         </span>
-                        <span class="help-block" [hidden]="!scanDate.hasError('dateISO')">
-                            Scan Date must be in YYYY-MM-DD format.
+                        <span class="help-block" *ngIf="scanDate.hasError('dateISO') && scanDate.touched">
+                            Starting Date must be in YYYY-MM-DD format.
                         </span>
                     </div>
                 </div>

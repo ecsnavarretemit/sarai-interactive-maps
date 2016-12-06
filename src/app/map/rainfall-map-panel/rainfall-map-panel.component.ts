@@ -7,10 +7,10 @@
 
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CustomValidators } from 'ng2-validation';
 import { LeafletMapService } from '../../leaflet';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { CustomValidators } from '../../forms';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';

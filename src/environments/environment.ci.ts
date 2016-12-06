@@ -23,12 +23,12 @@ export const environment = {
     },
     location_api: {
       region: {
-        endpoint: 'http://localhost:3000/regions',
+        endpoint: 'http://localhost:3000/regions/',
         method: 'GET'
       },
 
       province: {
-        endpoint: 'http://localhost:3000/provinces',
+        endpoint: 'http://localhost:3000/provinces/',
         method: 'GET'
       }
     }

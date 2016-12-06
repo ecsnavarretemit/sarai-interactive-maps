@@ -16,6 +16,21 @@ export const environment = {
     ndvi_maps: {
       eeApiEndpoint: '',
       eeApiEndpointMethod: 'GET'
+    },
+    rainfall_maps: {
+      eeApiEndpoint: '',
+      eeApiEndpointMethod: 'GET'
+    },
+    location_api: {
+      region: {
+        endpoint: '',
+        method: 'GET'
+      },
+
+      province: {
+        endpoint: '',
+        method: 'GET'
+      }
     }
   }
 };
