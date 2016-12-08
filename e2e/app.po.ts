@@ -9,6 +9,7 @@ import { browser, element, by } from 'protractor';
 
 export class SaraiNg2Page {
   public suitabilityMapsBtn = element(by.css('app-leaflet-button .map__control--suitability-map button'));
+  public suitabilityMapsPanel = element(by.css('app-suitability-map-panel .map__control--suitability-map-panel'));
 
   navigateTo() {
     return browser.get('/');
@@ -24,6 +25,10 @@ export class SaraiNg2Page {
 
   getSuitabilityMapsButtonClass() {
     return this.suitabilityMapsBtn.getAttribute('class');
+  }
+
+  getSuitabilityMapsPanelStyle(cssProperty) {
+    return this.suitabilityMapsPanel.getCssValue(cssProperty);
   }
 
 }

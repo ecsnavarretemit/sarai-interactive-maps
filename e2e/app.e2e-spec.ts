@@ -28,6 +28,14 @@ describe('sarai-ng2 App', function() {
     expect(page.getSuitabilityMapsButtonClass()).toMatch('btn--inverted');
   });
 
+  it('should make the suitability map panel visible', () => {
+    page.navigateTo();
+
+    page.showSuitabilityMapsPanel();
+
+    expect(page.getSuitabilityMapsPanelStyle('opacity')).toMatch('1');
+  });
+
 });
 
 
