@@ -24,16 +24,18 @@ describe('Service: LeafletTileProvider', () => {
   }));
 
   it('should emit messages', async(inject([AppLoggerService], (service: AppLoggerService) => {
+    let message = 'Hi this is a test message';
+
     subscription = service
       .getMessageStream()
       .subscribe((data: StreamData) => {
         expect(data).toEqual(jasmine.objectContaining({
-          message: 'Hi this is a test message'
+          message
         }));
       })
       ;
 
-    service.write('New Message', 'log', 'Hi this is a test message', true);
+    service.write('New Message', 'log', message, true);
   })));
 
   afterAll(() => {
