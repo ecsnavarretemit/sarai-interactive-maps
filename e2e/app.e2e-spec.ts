@@ -89,7 +89,7 @@ describe('sarai-ng2 App', function() {
       ;
   });
 
-  it('should make the ndvi button contain btn--inverted class when clicked', () => {
+  it('should make the rainfall map button contain btn--inverted class when clicked', () => {
     page.navigateTo();
 
     page.showRainfallMapPanel();
@@ -97,7 +97,7 @@ describe('sarai-ng2 App', function() {
     expect(page.getRainfallMapButtonClass()).toMatch('btn--inverted');
   });
 
-  it('should make the ndvi panel visible', (done) => {
+  it('should make the rainfall map panel visible', (done) => {
     page.navigateTo();
 
     page
