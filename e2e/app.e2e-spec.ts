@@ -20,7 +20,7 @@ describe('sarai-ng2 App', function() {
     expect(page.getLogoTitle()).toEqual('Project SARAI');
   });
 
-  it('should contain the btn--inverted class when clicked', () => {
+  it('should make the suitability maps button contain btn--inverted class when clicked', () => {
     page.navigateTo();
 
     page.showSuitabilityMapsPanel();
@@ -34,6 +34,22 @@ describe('sarai-ng2 App', function() {
     page.showSuitabilityMapsPanel();
 
     expect(page.getSuitabilityMapsPanelStyle('opacity')).toMatch('1');
+  });
+
+  it('should make the crop production area button contain btn--inverted class when clicked', () => {
+    page.navigateTo();
+
+    page.showCropProductionAreaPanel();
+
+    expect(page.getCropProductionAreaButtonClass()).toMatch('btn--inverted');
+  });
+
+  it('should make the crop production area panel visible', () => {
+    page.navigateTo();
+
+    page.showCropProductionAreaPanel();
+
+    expect(page.getCropProductionAreaPanelStyle('opacity')).toMatch('1');
   });
 
 });
