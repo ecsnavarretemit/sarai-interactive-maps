@@ -28,12 +28,19 @@ describe('sarai-ng2 App', function() {
     expect(page.getSuitabilityMapsButtonClass()).toMatch('btn--inverted');
   });
 
-  it('should make the suitability map panel visible', () => {
+  it('should make the suitability map panel visible', (done) => {
     page.navigateTo();
 
-    page.showSuitabilityMapsPanel();
-
-    expect(page.getSuitabilityMapsPanelStyle('opacity')).toMatch('1');
+    page
+      .showSuitabilityMapsPanel()
+      .then(() => {
+        return page.getSuitabilityMapsPanelStyle('opacity');
+      })
+      .then((opacity) => {
+        expect(parseFloat(opacity)).toBeGreaterThan(0);
+      })
+      .thenFinally(done)
+      ;
   });
 
   it('should make the crop production area button contain btn--inverted class when clicked', () => {
@@ -44,12 +51,19 @@ describe('sarai-ng2 App', function() {
     expect(page.getCropProductionAreaButtonClass()).toMatch('btn--inverted');
   });
 
-  it('should make the crop production area panel visible', () => {
+  it('should make the crop production area panel visible', (done) => {
     page.navigateTo();
 
-    page.showCropProductionAreaPanel();
-
-    expect(page.getCropProductionAreaPanelStyle('opacity')).toMatch('1');
+    page
+      .showCropProductionAreaPanel()
+      .then(() => {
+        return page.getCropProductionAreaPanelStyle('opacity');
+      })
+      .then((opacity) => {
+        expect(parseFloat(opacity)).toBeGreaterThan(0);
+      })
+      .thenFinally(done)
+      ;
   });
 
   it('should make the ndvi button contain btn--inverted class when clicked', () => {
@@ -60,12 +74,19 @@ describe('sarai-ng2 App', function() {
     expect(page.getNdviButtonClass()).toMatch('btn--inverted');
   });
 
-  it('should make the ndvi panel visible', () => {
+  it('should make the ndvi panel visible', (done) => {
     page.navigateTo();
 
-    page.showNdviPanel();
-
-    expect(page.getNdviPanelStyle('opacity')).toMatch('1');
+    page
+      .showNdviPanel()
+      .then(() => {
+        return page.getNdviPanelStyle('opacity');
+      })
+      .then((opacity) => {
+        expect(parseFloat(opacity)).toBeGreaterThan(0);
+      })
+      .thenFinally(done)
+      ;
   });
 
   it('should make the ndvi button contain btn--inverted class when clicked', () => {
@@ -76,12 +97,19 @@ describe('sarai-ng2 App', function() {
     expect(page.getRainfallMapButtonClass()).toMatch('btn--inverted');
   });
 
-  it('should make the ndvi panel visible', () => {
+  it('should make the ndvi panel visible', (done) => {
     page.navigateTo();
 
-    page.showRainfallMapPanel();
-
-    expect(page.getRainfallMapPanelStyle('opacity')).toMatch('1');
+    page
+      .showRainfallMapPanel()
+      .then(() => {
+        return page.getRainfallMapPanelStyle('opacity');
+      })
+      .then((opacity) => {
+        expect(parseFloat(opacity)).toBeGreaterThan(0);
+      })
+      .thenFinally(done)
+      ;
   });
 
 });
