@@ -12,6 +12,8 @@ export class SaraiNg2Page {
   public suitabilityMapsPanel = element(by.css('app-suitability-map-panel .map__control--suitability-map-panel'));
   public cropProductionAreaBtn = element(by.css('app-leaflet-button .map__control--crop-production-area button'));
   public cropProductionAreaPanel = element(by.css('app-crop-production-area-panel .map__control--panel'));
+  public ndviBtn = element(by.css('app-leaflet-button .map__control--ndvi button'));
+  public ndviPanel = element(by.css('app-ndvi-panel .map__control--panel'));
 
   navigateTo() {
     return browser.get('/');
@@ -43,6 +45,18 @@ export class SaraiNg2Page {
 
   getCropProductionAreaPanelStyle(cssProperty) {
     return this.cropProductionAreaPanel.getCssValue(cssProperty);
+  }
+
+  showNdviPanel() {
+    return this.ndviBtn.click();
+  }
+
+  getNdviButtonClass() {
+    return this.ndviBtn.getAttribute('class');
+  }
+
+  getNdviPanelStyle(cssProperty) {
+    return this.ndviPanel.getCssValue(cssProperty);
   }
 
 }

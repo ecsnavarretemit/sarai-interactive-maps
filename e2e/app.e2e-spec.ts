@@ -52,6 +52,22 @@ describe('sarai-ng2 App', function() {
     expect(page.getCropProductionAreaPanelStyle('opacity')).toMatch('1');
   });
 
+  it('should make the ndvi button contain btn--inverted class when clicked', () => {
+    page.navigateTo();
+
+    page.showNdviPanel();
+
+    expect(page.getNdviButtonClass()).toMatch('btn--inverted');
+  });
+
+  it('should make the ndvi panel visible', () => {
+    page.navigateTo();
+
+    page.showNdviPanel();
+
+    expect(page.getNdviPanelStyle('opacity')).toMatch('1');
+  });
+
 });
 
 
