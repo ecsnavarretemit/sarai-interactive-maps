@@ -20,6 +20,14 @@ describe('sarai-ng2 App', function() {
     expect(page.getLogoTitle()).toEqual('Project SARAI');
   });
 
+  it('should contain the btn--inverted class when clicked', () => {
+    page.navigateTo();
+
+    page.showSuitabilityMapsPanel();
+
+    expect(page.getSuitabilityMapsButtonClass()).toMatch('btn--inverted');
+  });
+
 });
 
 

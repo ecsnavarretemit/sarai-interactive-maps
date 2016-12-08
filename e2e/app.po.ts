@@ -8,6 +8,7 @@
 import { browser, element, by } from 'protractor';
 
 export class SaraiNg2Page {
+  public suitabilityMapsBtn = element(by.css('app-leaflet-button .map__control--suitability-map button'));
 
   navigateTo() {
     return browser.get('/');
@@ -15,6 +16,14 @@ export class SaraiNg2Page {
 
   getLogoTitle() {
     return element(by.css('app-root #logo > span')).getAttribute('innerText');
+  }
+
+  showSuitabilityMapsPanel() {
+    return this.suitabilityMapsBtn.click();
+  }
+
+  getSuitabilityMapsButtonClass() {
+    return this.suitabilityMapsBtn.getAttribute('class');
   }
 
 }
