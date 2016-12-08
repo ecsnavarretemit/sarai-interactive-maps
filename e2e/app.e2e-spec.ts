@@ -1,3 +1,10 @@
+/*!
+ * Application E2E Test
+ *
+ * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
+ * Licensed under MIT
+ */
+
 import { SaraiNg2Page } from './app.po';
 
 describe('sarai-ng2 App', function() {
@@ -7,8 +14,12 @@ describe('sarai-ng2 App', function() {
     page = new SaraiNg2Page();
   });
 
-  it('should display message saying app works', () => {
+  it('should contain the text "Project SARAI"', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+
+    expect(page.getLogoTitle()).toEqual('Project SARAI');
   });
+
 });
+
+
