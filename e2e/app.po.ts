@@ -14,6 +14,8 @@ export class SaraiNg2Page {
   public cropProductionAreaPanel = element(by.css('app-crop-production-area-panel .map__control--panel'));
   public ndviBtn = element(by.css('app-leaflet-button .map__control--ndvi button'));
   public ndviPanel = element(by.css('app-ndvi-panel .map__control--panel'));
+  public rainfallMapBtn = element(by.css('app-leaflet-button .map__control--rainfall-map button'));
+  public rainfallMapPanel = element(by.css('app-rainfall-map-panel .map__control--panel'));
 
   navigateTo() {
     return browser.get('/');
@@ -57,6 +59,18 @@ export class SaraiNg2Page {
 
   getNdviPanelStyle(cssProperty) {
     return this.ndviPanel.getCssValue(cssProperty);
+  }
+
+  showRainfallMapPanel() {
+    return this.rainfallMapBtn.click();
+  }
+
+  getRainfallMapButtonClass() {
+    return this.rainfallMapBtn.getAttribute('class');
+  }
+
+  getRainfallMapPanelStyle(cssProperty) {
+    return this.rainfallMapPanel.getCssValue(cssProperty);
   }
 
 }

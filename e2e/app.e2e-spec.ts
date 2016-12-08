@@ -68,6 +68,22 @@ describe('sarai-ng2 App', function() {
     expect(page.getNdviPanelStyle('opacity')).toMatch('1');
   });
 
+  it('should make the ndvi button contain btn--inverted class when clicked', () => {
+    page.navigateTo();
+
+    page.showRainfallMapPanel();
+
+    expect(page.getRainfallMapButtonClass()).toMatch('btn--inverted');
+  });
+
+  it('should make the ndvi panel visible', () => {
+    page.navigateTo();
+
+    page.showRainfallMapPanel();
+
+    expect(page.getRainfallMapPanelStyle('opacity')).toMatch('1');
+  });
+
 });
 
 
