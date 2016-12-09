@@ -11,6 +11,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { AppLoggerService } from '../../app-logger.service';
 import { LocationsService } from '../locations.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { MapConfig, MAP_CONFIG } from '../map.config';
@@ -24,6 +25,7 @@ describe('Component: DownloadImageForm', () => {
         MockBackend,
         BaseRequestOptions,
         FormBuilder,
+        AppLoggerService,
         LocationsService,
         SuitabilityMapService,
         DownloadImageFormComponent,
