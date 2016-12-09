@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { AppLoggerService } from '../../app-logger.service';
 import { LocationsService } from '../locations.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { Crop } from '../crop.interface';
@@ -33,8 +34,8 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   public crops: Promise<Array<Crop>>;
   public regions: Observable<any>;
   public provinces: Observable<any>;
-  public pdfUrl: string = '#';
-  public pdfFilename: string | null = null;
+  public pdfUrl: string | boolean = '#';
+  public pdfFilename: string | boolean | null = null;
   private _regionChangeSubscription: Subscription;
   private _combinedRejectSubscription: Subscription;
   private _combinedResolveSubscription: Subscription;
@@ -46,6 +47,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _locationsService: LocationsService,
     private _suitabilityMapService: SuitabilityMapService,
+    private _logger: AppLoggerService
   ) {
     this.selectCrop = new FormControl('', [
       Validators.required
@@ -146,36 +148,56 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
         let crop = values[0];
         let province = values[2];
 
-        // reflect the new values to the url and file name
-        this.pdfFilename = `${crop}-${province}.pdf`;
-        this.pdfUrl = `/assets/docs/crops/${crop}/${province}.pdf`;
+        let pdfFilename = `${crop}-${province}.pdf`;
+        let pdfUrl = `/assets/docs/crops/${crop}/${province}.pdf`;
+
+        // reset to empty
+        this.pdfFilename = '';
+        this.pdfUrl = '';
+
+        // check first if the resolved url exists by sending a HEAD request
+        // if it exists save the actual filename.
+        this
+          .sendHeadRequest(pdfUrl)
+          .subscribe((res: Response) => {
+            // reflect the new values to the url and file name
+            this.pdfFilename = pdfFilename;
+            this.pdfUrl = pdfUrl;
+          }, (res: Response) => {
+            this.pdfFilename = pdfFilename;
+            this.pdfUrl = false;
+          })
+          ;
       })
       ;
   }
 
   download(e: Event) {
-    if (this.pdfUrl === '' || this.pdfUrl === '#') {
+    if (this.pdfUrl === '' || this.pdfUrl === '#' || this.pdfUrl === false) {
       e.preventDefault();
+
+      if (this.pdfUrl === false) {
+        this._logger.log('Image not available', 'Map image not available.', true);
+      }
     }
   }
 
+  sendHeadRequest(uri: string) {
+    return this._http.head(uri);
+  }
+
   processRequest() {
-    // check first if the resolved url exists by sending a HEAD request
-    // if it exists emit the actual filename. if not emit a false value for the filename
-    this._http
-      .head(this.pdfUrl)
-      .subscribe((res: Response) => {
-        this.processComplete.emit({
-          filename: this.pdfFilename,
-          url: this.pdfUrl
-        });
-      }, (res: Response) => {
-        this.processComplete.emit({
-          filename: false,
-          url: false
-        });
-      })
-      ;
+    if (this.pdfFilename !== '' && (this.pdfUrl !== '' || this.pdfUrl !== '#')) {
+       this.processComplete.emit({
+        filename: this.pdfFilename,
+        url: this.pdfUrl
+      });
+    } else {
+       this.processComplete.emit({
+        filename: false,
+        url: false
+      });
+    }
   }
 
   ngOnDestroy() {
