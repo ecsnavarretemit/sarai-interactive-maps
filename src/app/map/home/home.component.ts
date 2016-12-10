@@ -25,7 +25,8 @@ import { filter, forEach } from 'lodash';
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   public layersOpacity = 0.6;
-  public pdfUrl: string | null = null;
+  public pdfUrl: string | null  = null;
+  public pdfFilename: string | null = null;
   public tmpPdfUrl: string | null = null;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
@@ -170,6 +171,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     // else show a modal that contains the PDF preview
     if (pdfMetadata.url !== false) {
       this.tmpPdfUrl = pdfMetadata.url;
+      this.pdfFilename = pdfMetadata.filename;
       this.pdfPreviewModal.show();
     } else {
       this._logger.log('Image not available', 'Map image not available.', true);
@@ -183,6 +185,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   removePdf() {
     // destroy the PDF viewer instance
     this.pdfUrl = null;
+    this.pdfFilename = null;
     this.tmpPdfUrl = null;
   }
 
