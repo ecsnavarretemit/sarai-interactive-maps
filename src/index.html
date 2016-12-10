@@ -57,7 +57,8 @@
         display: block;
     }
 
-    app-root:empty + .preloader {
+    app-root:empty + .preloader,
+    .preloader--visible {
         opacity: 1;
         z-index: 100;
     }
@@ -125,7 +126,7 @@
 </head>
 <body>
     <app-root></app-root>
-    <div class="preloader">
+    <div class="preloader preloader--base">
         <div class="preloader__content">
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
 
@@ -143,7 +144,7 @@
             'use strict';
 
             window.addEventListener('load', function() {
-                var loader = document.querySelector('.preloader');
+                var loader = document.querySelector('.preloader--base');
                 var appRoot = document.querySelector('app-root');
 
                 // poll if if the application has already bootstrapped.
