@@ -7,7 +7,6 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Http } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
@@ -27,7 +26,6 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _logger: AppLoggerService,
-    private _http: Http,
     private _route: ActivatedRoute,
     private _mapLayersStore: Store<any>
   ) { }
