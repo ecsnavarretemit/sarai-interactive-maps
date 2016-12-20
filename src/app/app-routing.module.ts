@@ -32,11 +32,6 @@ const routes: Routes = [
         component: SuitabilityMapsComponent
       },
 
-      {
-        path: 'ndvi',
-        component: NdviMapsComponent
-      },
-
       // TODO: add date validation. for now we do nothing if invalid date is provided
       // duplicated for required url parameters `startDate` and `scanRange`
       {

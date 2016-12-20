@@ -37,18 +37,18 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     private _mapLayersStore: Store<any>
   ) { }
 
+  // TODO: create a reusable function to validate date format
   ngOnInit() {
     // listen for changes in crop url parameter since `route.params` is an instance of Observable!
     this._route.params.forEach((params: Params) => {
       let converted = parseInt(params['scanRange'], 10);
+
       // check if startDate and scanRange is valid
       if (
-        typeof params['startDate'] !== 'undefined' &&
-        typeof params['scanRange'] !== 'undefined' &&
-        /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])/g.test(params['startDate']) &&
+        /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['startDate']) &&
         !isNaN(converted)
       ) {
-        this.processData(params['startDate'], parseInt(params['scanRange'], 10));
+        this.processData(params['startDate'], converted);
       }
     });
   }
