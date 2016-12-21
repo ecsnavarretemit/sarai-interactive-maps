@@ -39,11 +39,6 @@ const routes: Routes = [
         component: NdviMapsComponent
       },
 
-      {
-        path: 'rainfall-maps',
-        component: RainfallMapsComponent
-      },
-
       // TODO: add date validation. for now we do nothing if invalid date is provided
       // duplicated for required url parameter `date`
       {
