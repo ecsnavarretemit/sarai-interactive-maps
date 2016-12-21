@@ -219,6 +219,39 @@ export class TileLayerService {
       ;
   }
 
+  getRainfallMapLayerData(date: string): Promise<any> {
+    // throw error if endpoint does not exist
+    if (typeof this._config.rainfall_maps.eeApiEndpoint === 'undefined' || this._config.rainfall_maps.eeApiEndpoint === '') {
+      return Promise.reject(new Error('API Endpoint for Rainfall Map Layers not specified'));
+    }
+
+    let endpoint = this._config.rainfall_maps.eeApiEndpoint;
+    let method = this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase();
+    let args = [endpoint, {
+      date
+    }];
+
+    if (method === 'get') {
+      endpoint += `/${date}`;
+      args = [endpoint];
+    }
+
+    return this._http
+      [method].apply(this._http, args)
+      .map((res: Response) => {
+        let jsonResult = res.json();
+
+        // throw error here so that we can handle it properly later
+        if (jsonResult.success === false) {
+          throw new Error('Map Data not found.');
+        }
+
+        return jsonResult;
+      })
+      .toPromise()
+      ;
+  }
+
   getNdviLayerOptions(options: L.TileLayerOptions = {}): L.TileLayerOptions {
     let attribution = this.getEarthEngineAttribution();
 
