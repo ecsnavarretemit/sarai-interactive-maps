@@ -8,7 +8,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
-import { ModalModule } from 'ng2-bootstrap';
+import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
@@ -27,7 +27,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     SaraiNg2RoutingModule,
-    ModalModule,
+    ModalModule.forRoot(),
+    TooltipModule.forRoot(),
+    AccordionModule.forRoot(),
     StoreModule,
     MapModule,
     TranslateModule.forRoot({
