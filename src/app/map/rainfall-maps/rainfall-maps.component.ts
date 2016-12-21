@@ -5,15 +5,13 @@
  * Licensed under MIT
  */
 
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MAP_CONFIG } from '../map.config';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
-import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-rainfall-maps',
@@ -24,7 +22,6 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _layerId: string;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _logger: AppLoggerService,
