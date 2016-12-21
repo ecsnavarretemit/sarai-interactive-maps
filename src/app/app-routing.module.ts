@@ -18,10 +18,6 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: ''
-      },
-
-      {
         path: 'suitability-maps',
         component: SuitabilityMapsComponent
       },
