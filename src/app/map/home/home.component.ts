@@ -6,7 +6,7 @@
  */
 
 import { Component, AfterViewInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
-import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';

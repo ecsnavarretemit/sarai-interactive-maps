@@ -12,7 +12,7 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Http } from '@angular/http';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 import { StoreModule } from './store';

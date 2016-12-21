@@ -8,7 +8,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { SaraiNg2RoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
