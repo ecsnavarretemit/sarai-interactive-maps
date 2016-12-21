@@ -105,9 +105,12 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     });
 
     if (typeof this._layerId !== 'undefined') {
-      this._mapService.removeTileLayer(this._layerId).catch((error: Error) => {
-        console.error(error);
-      });
+      this._mapService
+        .removeTileLayer(this._layerId)
+        .catch((error: Error) => {
+          console.error(error);
+        })
+        ;
     }
   }
 

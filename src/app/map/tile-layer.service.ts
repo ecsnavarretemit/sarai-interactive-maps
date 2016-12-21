@@ -236,8 +236,8 @@ export class TileLayerService {
       args = [endpoint];
     }
 
-    return this._http
-      [method].apply(this._http, args)
+    return this._http[method]
+      .apply(this._http, args)
       .map((res: Response) => {
         let jsonResult = res.json();
 
