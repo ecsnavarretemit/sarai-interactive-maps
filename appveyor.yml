@@ -35,6 +35,11 @@ test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
+
+  # copy first the ci config files
+  - cp src/environments/environment.ci.ts src/environments/environment.dev.ts
+  - cp src/environments/environment.ci.ts src/environments/environment.ts
+
   # run tests
   - ng test --watch false
 
