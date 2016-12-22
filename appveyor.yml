@@ -1,0 +1,37 @@
+# Test against this version of Node.js
+environment:
+  nodejs_version: "6.9.1"
+
+# fail all the builds once any of the builds fail have failed
+matrix:
+  fast_finish: true
+
+# build only this branches
+branches:
+  only:
+  - master
+  - develop
+
+# Install scripts. (runs after repo cloning)
+install:
+  # install google chrome
+  - choco install googlechrome
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # Install angular-cli globally
+  - npm install -g angular-cli
+  # install modules
+  - yarn install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - ng test --watch false
+
+# Don't actually build.
+build: off
+
+
