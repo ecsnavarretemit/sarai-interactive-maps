@@ -57,6 +57,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class SaraiNg2RoutingModule { }
+export class SaraiInteractiveMapsRoutingModule { }
 
 

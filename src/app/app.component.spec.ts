@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Http } from '@angular/http';
 import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
-import { SaraiNg2RoutingModule } from './app-routing.module';
+import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 
@@ -24,12 +24,12 @@ import { TranslationFactoryLoader } from './app-translation-factory.service';
 
 import { AppComponent } from './app.component';
 
-describe('App: SaraiNg2', () => {
+describe('App: SaraiInteractiveMaps', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        SaraiNg2RoutingModule,
+        SaraiInteractiveMapsRoutingModule,
         ModalModule.forRoot(),
         TooltipModule.forRoot(),
         AccordionModule.forRoot(),

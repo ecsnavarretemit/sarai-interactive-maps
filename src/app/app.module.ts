@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
 import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
-import { SaraiNg2RoutingModule } from './app-routing.module';
+import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 
@@ -26,7 +26,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    SaraiNg2RoutingModule,
+    SaraiInteractiveMapsRoutingModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     AccordionModule.forRoot(),
