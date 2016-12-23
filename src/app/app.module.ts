@@ -14,7 +14,7 @@ import { SaraiNg2RoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { AppLoggerService } from './app-logger.service';
 import { TranslationFactoryLoader } from './app-translation-factory.service';
 
@@ -40,7 +40,13 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     AppLoggerService,
-    CookieService
+    CookieService,
+
+    // must be present here when using AOT compilation for Angular 2.4.x or greater or else
+    // the compiled code will throw error: `No provider for CookieOptions!`
+    //
+    // Reference: <https://github.com/salemdar/angular2-cookie/issues/37>
+    { provide: CookieOptions, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })
