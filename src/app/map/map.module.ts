@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap';
 import { TranslateModule } from 'ng2-translate';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { LeafletModule } from '../leaflet';

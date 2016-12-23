@@ -1,4 +1,4 @@
-# SARAI Maps
+# SARAI Interactive Maps
 
 [![Build Status](https://travis-ci.org/ecsnavarretemit/sarai-interactive-maps.svg?branch=master)](https://travis-ci.org/ecsnavarretemit/sarai-interactive-maps)
 

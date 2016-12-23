@@ -14,7 +14,7 @@ import { each } from 'lodash';
   styleUrls: ['./leaflet-button.component.sass'],
 })
 export class LeafletButtonComponent implements OnInit {
-  private _tooltipEnabled = false;
+  public tooltipEnabled = true;
   public active = false;
 
   @Input() controlClass: string;
@@ -37,7 +37,7 @@ export class LeafletButtonComponent implements OnInit {
     }
 
     if (this.btnTooltip !== 'Default Text' && this.btnTooltip !== '') {
-      this._tooltipEnabled = true;
+      this.tooltipEnabled = false;
     }
   }
 
