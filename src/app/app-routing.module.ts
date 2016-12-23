@@ -18,10 +18,6 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: ''
-      },
-
-      {
         path: 'suitability-maps',
         component: SuitabilityMapsComponent
       },
@@ -32,21 +28,11 @@ const routes: Routes = [
         component: SuitabilityMapsComponent
       },
 
-      {
-        path: 'ndvi',
-        component: NdviMapsComponent
-      },
-
       // TODO: add date validation. for now we do nothing if invalid date is provided
       // duplicated for required url parameters `startDate` and `scanRange`
       {
         path: 'ndvi/:startDate/:scanRange',
         component: NdviMapsComponent
-      },
-
-      {
-        path: 'rainfall-maps',
-        component: RainfallMapsComponent
       },
 
       // TODO: add date validation. for now we do nothing if invalid date is provided
@@ -71,6 +57,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class SaraiNg2RoutingModule { }
+export class SaraiInteractiveMapsRoutingModule { }
 
 

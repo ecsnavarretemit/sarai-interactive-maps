@@ -8,6 +8,7 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { provideStore } from '@ngrx/store';
@@ -31,6 +32,10 @@ describe('Component: SuitabilityMaps', () => {
     mockRouter = new MockRouter();
 
     TestBed.configureTestingModule({
+      imports: [
+        HttpModule
+      ],
+
       providers: [
         TileLayerService,
         LeafletMapService,

@@ -1,0 +1,58 @@
+# Test against this version of Node.js
+environment:
+  nodejs_version: "6.9.1"
+
+# fail all the builds once any of the builds fail have failed
+matrix:
+  fast_finish: true
+
+# build only this branches
+branches:
+  only:
+  - master
+  - develop
+
+# Do not build tags
+skip_tags: true
+
+# Pull Requests do not increment build number
+pull_requests:
+  do_not_increment_build_number: true
+
+# Install scripts. (runs after repo cloning)
+install:
+  # install google chrome
+  - choco install googlechrome
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # Install angular-cli globally
+  - npm install -g angular-cli
+  # install modules
+  - yarn install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+
+  # copy first the ci config files
+  - cp src/environments/environment.ci.ts src/environments/environment.dev.ts
+  - cp src/environments/environment.ci.ts src/environments/environment.ts
+
+  # run tests
+  - ng test --watch false
+
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: VdxswwiTtaiyE19P7KmTmieabxX5oVrZLPOv7HKkS0e8AVEUe2Fj1zzumdhorbPafhUMuha6eRDs9TreH2zHRQk4AWTtLvOyHHqAi1yUiVM=
+    channel: '#interactve-maps-build'
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
+
+# Don't actually build.
+build: off
+
+

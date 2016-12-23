@@ -1,7 +1,7 @@
 <div class="map__control"
     [tooltip]="btnTooltip"
-    [tooltipPlacement]="btnTooltipPosition"
-    [tooltipEnable]="_tooltipEnabled"
+    [placement]="btnTooltipPosition"
+    [isDisabled]="tooltipEnabled"
     #controlwrapper>
 
     <button type="button" class="btn btn--leaflet" (click)="onClick($event)" #button>

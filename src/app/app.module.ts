@@ -8,13 +8,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
-import { SaraiNg2RoutingModule } from './app-routing.module';
+import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { AppLoggerService } from './app-logger.service';
 import { TranslationFactoryLoader } from './app-translation-factory.service';
 
@@ -26,8 +26,10 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    SaraiNg2RoutingModule,
-    ModalModule,
+    SaraiInteractiveMapsRoutingModule,
+    ModalModule.forRoot(),
+    TooltipModule.forRoot(),
+    AccordionModule.forRoot(),
     StoreModule,
     MapModule,
     TranslateModule.forRoot({
@@ -38,7 +40,13 @@ import { AppComponent } from './app.component';
   ],
   providers: [
     AppLoggerService,
-    CookieService
+    CookieService,
+
+    // must be present here when using AOT compilation for Angular 2.4.x or greater or else
+    // the compiled code will throw error: `No provider for CookieOptions!`
+    //
+    // Reference: <https://github.com/salemdar/angular2-cookie/issues/37>
+    { provide: CookieOptions, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })

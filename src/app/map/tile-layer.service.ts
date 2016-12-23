@@ -6,9 +6,11 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { MAP_CONFIG } from './map.config';
 import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
 import * as L from 'leaflet';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class TileLayerService {
@@ -22,7 +24,10 @@ export class TileLayerService {
   public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
   public wmsTileLayerUrl: string;
 
-  constructor(@Inject(MAP_CONFIG) private _config: any) {
+  constructor(
+    @Inject(MAP_CONFIG) private _config: any,
+    private _http: Http,
+  ) {
     // EqualTo filter for GeoServer
     this._equalToFilterTmpl = template(`
       <PropertyIsEqualTo>
@@ -177,6 +182,74 @@ export class TileLayerService {
         attribution,
       }, options);
     });
+  }
+
+  getNdviLayerData(date: string, range: number): Promise<any> {
+    // throw error if endpoint does not exist
+    if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
+      return Promise.reject(new Error('API Endpoint for NDVI Layers not specified'));
+    }
+
+    let endpoint = this._config.ndvi_maps.eeApiEndpoint;
+    let method = this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase();
+
+    let args = [endpoint, {
+      date,
+      range
+    }];
+
+    if (method === 'get') {
+      endpoint += `/${date}/${range}`;
+      args = [endpoint];
+    }
+
+    return this._http[method]
+      .apply(this._http, args)
+      .map((res: Response) => {
+        let jsonResult = res.json();
+
+        // throw error here so that we can handle it properly later
+        if (jsonResult.success === false) {
+          throw new Error('Map Data not found.');
+        }
+
+        return jsonResult;
+      })
+      .toPromise()
+      ;
+  }
+
+  getRainfallMapLayerData(date: string): Promise<any> {
+    // throw error if endpoint does not exist
+    if (typeof this._config.rainfall_maps.eeApiEndpoint === 'undefined' || this._config.rainfall_maps.eeApiEndpoint === '') {
+      return Promise.reject(new Error('API Endpoint for Rainfall Map Layers not specified'));
+    }
+
+    let endpoint = this._config.rainfall_maps.eeApiEndpoint;
+    let method = this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase();
+    let args = [endpoint, {
+      date
+    }];
+
+    if (method === 'get') {
+      endpoint += `/${date}`;
+      args = [endpoint];
+    }
+
+    return this._http[method]
+      .apply(this._http, args)
+      .map((res: Response) => {
+        let jsonResult = res.json();
+
+        // throw error here so that we can handle it properly later
+        if (jsonResult.success === false) {
+          throw new Error('Map Data not found.');
+        }
+
+        return jsonResult;
+      })
+      .toPromise()
+      ;
   }
 
   getNdviLayerOptions(options: L.TileLayerOptions = {}): L.TileLayerOptions {

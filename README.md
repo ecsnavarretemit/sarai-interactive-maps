@@ -1,8 +1,14 @@
-# SARAI Maps
+# SARAI Interactive Maps
 
-[![Build Status](https://travis-ci.org/ecsnavarretemit/sarai-ng2.svg?branch=master)](https://travis-ci.org/ecsnavarretemit/sarai-ng2)
+[![Build Status](https://travis-ci.org/ecsnavarretemit/sarai-interactive-maps.svg?branch=master)](https://travis-ci.org/ecsnavarretemit/sarai-interactive-maps)
+[![Build status](https://ci.appveyor.com/api/projects/status/td5fh9a0x2x9rr5g?svg=true)](https://ci.appveyor.com/project/ecsnavarretemit/sarai-interactive-maps)
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.16.
+
+## Installing dependencies
+Dependencies of this project can be installed via [NPM](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/).
+It is recommended to use Yarn instead of NPM due to the assurance that the dependencies that will be installed is the same across all machines.
+Although there is the `npm shrinkwrap` which aims to achieve what is stated above, read this about [yarn.lock and npm shrinkwrap](https://yarnpkg.com/en/docs/yarn-lock).
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

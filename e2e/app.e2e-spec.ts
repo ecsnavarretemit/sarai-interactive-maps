@@ -5,13 +5,13 @@
  * Licensed under MIT
  */
 
-import { SaraiNg2Page } from './app.po';
+import { SaraiInteractiveMapsPage } from './app.po';
 
-describe('sarai-ng2 App', function() {
-  let page: SaraiNg2Page;
+describe('sarai-interactive-maps App', function() {
+  let page: SaraiInteractiveMapsPage;
 
   beforeEach(() => {
-    page = new SaraiNg2Page();
+    page = new SaraiInteractiveMapsPage();
   });
 
   it('should contain the text "Project SARAI"', () => {

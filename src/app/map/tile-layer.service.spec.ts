@@ -8,6 +8,8 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
 import { MapConfig, MAP_CONFIG } from './map.config';
 import { environment } from '../../environments/environment';
 import { TileLayerService } from './tile-layer.service';
@@ -17,8 +19,18 @@ describe('Service: TileLayerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MockBackend,
+        BaseRequestOptions,
         TileLayerService,
-        { provide: MAP_CONFIG, useValue: MapConfig }
+
+        { provide: MAP_CONFIG, useValue: MapConfig },
+        {
+          provide: Http,
+          deps: [MockBackend, BaseRequestOptions],
+          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
+            return new Http(backendInstance, defaultOptions);
+          }
+        },
       ]
     });
   });

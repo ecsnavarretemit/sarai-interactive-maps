@@ -6,7 +6,7 @@
  */
 
 import { Component, AfterViewInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
-import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
@@ -25,7 +25,9 @@ import { filter, forEach } from 'lodash';
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   public layersOpacity = 0.6;
-  public pdfUrl: string | null = null;
+  public pdfUrl: string | null  = null;
+  public pdfFilename: string | null = null;
+  public pdfLoaderVisible: boolean = false;
   public tmpPdfUrl: string | null = null;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
@@ -166,14 +168,37 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   previewPdf(pdfMetadata: any) {
+    // hide the loader indicator
+    this.pdfLoaderVisible = false;
+
     // show a modal saying the pdf is not available if `pdfMetadata.url` is set to false
     // else show a modal that contains the PDF preview
     if (pdfMetadata.url !== false) {
       this.tmpPdfUrl = pdfMetadata.url;
+      this.pdfFilename = pdfMetadata.filename;
+
+      // show the loader indicator
+      this.pdfLoaderVisible = true;
+
+      // show the modal
       this.pdfPreviewModal.show();
     } else {
       this._logger.log('Image not available', 'Map image not available.', true);
     }
+  }
+
+  /**
+   * When calling this function as the after-load-complete callback of the pdf component,
+   * use: `[after-load-complete]="pdfLoadComplete.bind(this)"` instead of the this
+   * `[after-load-complete]="pdfLoadComplete"` because the pdf component changes the value of this
+   * to the value of this in the pdf component which makes us unable to get this component's `this` value.
+   */
+  pdfLoadComplete(pdf: any) {
+    // hide the loader indicator after 3s since the pdf viewer does not provide a callback
+    // after rendering the PDF
+    setTimeout(() => {
+      this.pdfLoaderVisible = false;
+    }, 3000);
   }
 
   addPdf() {
@@ -181,8 +206,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   removePdf() {
+    // hide the loader indicator
+    this.pdfLoaderVisible = false;
+
     // destroy the PDF viewer instance
     this.pdfUrl = null;
+    this.pdfFilename = null;
     this.tmpPdfUrl = null;
   }
 
