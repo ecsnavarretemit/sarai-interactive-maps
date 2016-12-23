@@ -43,6 +43,15 @@ test_script:
   # run tests
   - ng test --watch false
 
+notifications:
+  - provider: Slack
+    incoming_webhook:
+      secure: VdxswwiTtaiyE19P7KmTmieabxX5oVrZLPOv7HKkS0e8AVEUe2Fj1zzumdhorbPafhUMuha6eRDs9TreH2zHRQk4AWTtLvOyHHqAi1yUiVM=
+    channel: '#interactve-maps-build'
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
+
 # Don't actually build.
 build: off
 
