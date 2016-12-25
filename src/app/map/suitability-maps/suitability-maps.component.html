@@ -1,5 +1,5 @@
 <app-leaflet-wms-layer
-        *ngFor="let layer of layersCollection; trackBy: layerTracker"
+        *ngFor="let layer of (layersCollection | async); trackBy: layerTracker"
         [url]="layer.url"
         [layerOptions]="layer.layerOptions"
         [id]="layer.id">
