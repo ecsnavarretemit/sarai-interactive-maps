@@ -17,9 +17,9 @@ export class WindowService {
 
   constructor() { }
 
-   getNativeWindow(): any {
-      return _window();
-   }
+  getNativeWindow(): any {
+    return _window();
+  }
 
 }
 
