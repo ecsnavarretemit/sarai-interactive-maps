@@ -15,17 +15,17 @@ describe('Service: Window', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: WindowService, useValue: window }
+        WindowService
       ]
     });
   });
 
-  it('should instantiate the service', inject([WindowService], (service: Window) => {
+  it('should instantiate the service', inject([WindowService], (service: WindowService) => {
     expect(service).toBeTruthy();
   }));
 
-  it('should be an instance of window object', inject([WindowService], (service: Window) => {
-    expect(service).toBe(window);
+  it('should return an instance of window object', inject([WindowService], (service: WindowService) => {
+    expect(service.getNativeWindow()).toBe(window);
   }));
 
 });

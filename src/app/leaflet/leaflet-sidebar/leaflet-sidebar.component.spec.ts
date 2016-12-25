@@ -13,6 +13,9 @@ import { LeafletMapService } from '../leaflet-map.service';
 
 describe('Component: LeafletSidebar', () => {
   beforeEach(() => TestBed.configureTestingModule({
+    declarations: [
+      LeafletSidebarComponent
+    ],
     providers: [
       LeafletMapService,
       LeafletSidebarComponent
@@ -21,6 +24,38 @@ describe('Component: LeafletSidebar', () => {
 
   it('should create an instance', inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
     expect(component).toBeTruthy();
+  }));
+
+  it('should emit onBeforeShow', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
+    component.onShow.subscribe((event: Event) => {
+      expect(event).toBeTruthy();
+    });
+
+    component.onBeforeShow(new Event('beforeShow'));
+  }));
+
+  it('should emit onAfterShow', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
+    component.onShown.subscribe((event: Event) => {
+      expect(event).toBeTruthy();
+    });
+
+    component.onAfterShow(new Event('afterShow'));
+  }));
+
+  it('should emit onBeforeHide', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
+    component.onHide.subscribe((event: Event) => {
+      expect(event).toBeTruthy();
+    });
+
+    component.onBeforeHide(new Event('beforeHide'));
+  }));
+
+  it('should emit onAfterHide', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
+    component.onHidden.subscribe((event: Event) => {
+      expect(event).toBeTruthy();
+    });
+
+    component.onBeforeHide(new Event('afterHide'));
   }));
 
 });
