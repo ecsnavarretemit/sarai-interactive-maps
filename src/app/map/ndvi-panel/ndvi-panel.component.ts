@@ -6,8 +6,9 @@
  */
 
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, UrlTree, NavigationExtras } from '@angular/router';
 import { LeafletMapService } from '../../leaflet';
+import { LocationsService } from '../locations.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { CustomValidators } from '../../forms';
@@ -56,7 +57,9 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   public filterForm: FormGroup;
   public startDate: FormControl;
   public scanRange: FormControl;
+  public province: FormControl;
   public controlWrapperAnimationState: string = 'hidden';
+  public provinces: Observable<any>;
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
 
@@ -67,7 +70,8 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _renderer: Renderer,
-    private _mapService: LeafletMapService
+    private _mapService: LeafletMapService,
+    private _locationsService: LocationsService
   ) {
     this.startDate = new FormControl('', [
       Validators.required,
@@ -79,13 +83,20 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
       CustomValidators.number
     ]);
 
+    this.province = new FormControl('', [
+      Validators.nullValidator
+    ]);
+
     this.filterForm = this._formBuilder.group({
       startDate: this.startDate,
-      scanRange: this.scanRange
+      scanRange: this.scanRange,
+      province: this.province
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.provinces = this._locationsService.getProvincesFromFT();
+  }
 
   ngAfterViewInit() {
     // since mouseover is fire continuously, we throttle it so that it is only fired every 600 ms
@@ -105,9 +116,21 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   processRequest() {
     let value = this.filterForm.value;
+    let urlExtras: NavigationExtras = {};
+    let urlTree: UrlTree;
+
+    // add a province query parameter
+    if (value.province !== '') {
+      urlExtras.queryParams = {
+        province: value.province
+      };
+    }
+
+    // create the url tree
+    urlTree = this._router.createUrlTree(['/ndvi', value.startDate, value.scanRange], urlExtras);
 
     // redirect to the URL
-    this._router.navigateByUrl(`/ndvi/${value.startDate}/${value.scanRange}`);
+    this._router.navigateByUrl(urlTree);
   }
 
   onHideButtonClick(event) {
