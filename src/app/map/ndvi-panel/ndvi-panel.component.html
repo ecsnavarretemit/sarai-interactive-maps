@@ -42,8 +42,8 @@
                     <label for="ec_provice_filter_sel">Filter by Provice:</label>
                     <select name="ec_starting_date_sel" id="ec_starting_date_sel" class="form-control" [formControl]="province">
                         <option value="">Select Province</option>
-                        <option *ngFor="let province_name of (provinces | async)?.places" [attr.value]="province_name">
-                            {{ province_name }}
+                        <option *ngFor="let place_data of (provinces | async)?.places" [ngValue]="place_data">
+                            {{ place_data.name }}
                         </option>
                     </select>
                 </div>

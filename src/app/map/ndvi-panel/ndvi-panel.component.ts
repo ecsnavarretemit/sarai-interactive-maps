@@ -119,10 +119,11 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     let urlExtras: NavigationExtras = {};
     let urlTree: UrlTree;
 
-    // add a province query parameter
     if (value.province !== '') {
+      // add a province query parameter
       urlExtras.queryParams = {
-        province: value.province
+        province: value.province.name,
+        center: `${value.province.center.coordinates[0]},${value.province.center.coordinates[1]}`
       };
     }
 
