@@ -9,6 +9,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { MAP_CONFIG } from './map.config';
+import { trimEnd } from 'lodash';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -54,6 +55,21 @@ export class LocationsService {
 
     return this._http
       .get(endpoint, {
+        headers
+      })
+      .map((res: Response) => res.json())
+      ;
+  }
+
+  getProvincesFromFT(): Observable<any> {
+    // assemble the request headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let endpoint = trimEnd(this._config.location_api.province.endpoint, '/');
+
+    return this._http
+      .get(`${endpoint}/ft`, {
         headers
       })
       .map((res: Response) => res.json())

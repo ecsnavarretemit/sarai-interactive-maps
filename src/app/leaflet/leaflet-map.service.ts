@@ -37,6 +37,18 @@ export class LeafletMapService {
 
   getMap(): Promise<L.Map> { return this._map; }
 
+  panTo(lat: number, lng: number, zoom?: number): Promise<L.Map> {
+    return this._map
+      .then((map: L.Map) => {
+        if (typeof zoom === 'undefined') {
+          zoom = 6;
+        }
+
+        map.setView([lat, lng], zoom);
+      })
+      ;
+  }
+
   addTileLayer(id: string, layer: L.TileLayer): Promise<void | Error> {
     return this.getMap()
       .then((map: L.Map) => {

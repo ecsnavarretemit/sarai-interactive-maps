@@ -8,11 +8,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
 import { isNaN } from 'lodash';
+import * as L from 'leaflet';
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'app-ndvi-maps',
@@ -21,6 +25,9 @@ import { isNaN } from 'lodash';
 })
 export class NdviMapsComponent implements OnInit, OnDestroy {
   private _layerId: string;
+  private _routerParamSubscription: Subscription;
+  private _oldCenter: L.LatLngLiteral;
+  private _oldZoom: number;
 
   constructor(
     private _mapService: LeafletMapService,
@@ -32,28 +39,58 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
   // TODO: create a reusable function to validate date format
   ngOnInit() {
-    // listen for changes in crop url parameter since `route.params` is an instance of Observable!
-    this._route.params.forEach((params: Params) => {
-      let converted = parseInt(params['scanRange'], 10);
+    this._mapService
+      .getMap()
+      .then((map: L.Map) => {
+        let {lat, lng} = map.getCenter();
 
-      // check if startDate and scanRange is valid
-      if (
-        /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['startDate']) &&
-        !isNaN(converted)
-      ) {
-        this.processData(params['startDate'], converted);
-      }
-    });
+        // store the lat and lng coordinates before we pan into the new coords.
+        this._oldCenter = {
+          lat,
+          lng
+        };
+
+        // also store the zoom level
+        this._oldZoom = map.getZoom();
+      })
+      ;
+
+    // get the the route params and query parameters by
+    // combining the latest values from the two observables
+    this._routerParamSubscription = Observable
+      .combineLatest(this._route.params, this._route.queryParams)
+      .subscribe((params: [Params, Params]) => {
+        let [routeParams, queryParams] = params;
+
+        let converted = parseInt(routeParams['scanRange'], 10);
+
+        // set the center of the map to the value of the center query parameter
+        // and zoom to tha location
+        if (typeof queryParams['center'] !== 'undefined') {
+          let [lat, lng] = queryParams['center'].split(',');
+
+          this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
+        }
+
+        // check if startDate and scanRange is valid
+        if (
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
+          !isNaN(converted)
+        ) {
+          this.processData(routeParams['startDate'], converted, queryParams['province']);
+        }
+      })
+      ;
   }
 
-  processData(startDate: string, scanRange: number) {
+  processData(startDate: string, scanRange: number, place?: string) {
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
     this._tileLayerService
-      .getNdviLayerData(startDate, scanRange)
+      .getNdviLayerData(startDate, scanRange, place)
       .then((response: any) => {
         let tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
@@ -99,6 +136,12 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // go the old zoom and lat,lng coords.
+    this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
+
+    // remove custom router subscription
+    this._routerParamSubscription.unsubscribe();
+
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
