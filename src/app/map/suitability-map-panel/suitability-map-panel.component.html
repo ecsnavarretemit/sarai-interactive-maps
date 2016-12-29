@@ -15,8 +15,8 @@
                 Shows what crops are best to plant in a specific area to attain maximum yield.
             </p>
 
-            <accordion closeOthers="true" *ngIf="cropData.length > 0">
-                <accordion-group *ngFor="let data of cropData" [isDisabled]="!data.subcrops" [class.active]="router.isActive('/suitability-maps/' + data.slug)">
+            <accordion closeOthers="true" *ngIf="(cropData | async)?.length > 0">
+                <accordion-group *ngFor="let data of (cropData | async)" [isDisabled]="!data.subcrops" [class.active]="router.isActive('/suitability-maps/' + data.slug)">
                     <div accordion-heading
                         (click)="suitabilityRedirect($event, data.slug, !!data.subcrops)">
                         <span class="heading__icon">
@@ -36,14 +36,14 @@
         </div>
     </section>
 
-    <section class="map__control__section suitability-level-filter" *ngIf="levels.length > 0 && router.isActive('/suitability-maps')">
+    <section class="map__control__section suitability-level-filter" *ngIf="(levels | async)?.length > 0 && router.isActive('/suitability-maps')">
         <h2 class="map__control__title title">
             <span class="title__text">Suitability Level</span>
         </h2>
 
         <div class="map__control__body">
             <ul class="list list-unstyled list--suitability-level">
-                <li class="list__item suitability_levels--{{ level.slug }}" *ngFor="let level of levels">
+                <li class="list__item suitability_levels--{{ level.slug }}" *ngFor="let level of (levels | async)">
                     <md-checkbox
                         [checked]="level.checked"
                         [ngModel]="level.checked"

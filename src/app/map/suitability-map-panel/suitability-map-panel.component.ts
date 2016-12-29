@@ -56,8 +56,8 @@ import {
   ]
 })
 export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
-  public cropData: Array<Crop> = [];
-  public levels: Array<any> = [];
+  public cropData: Promise<Array<Crop>>;
+  public levels: Promise<Array<any>>;
   public controlWrapperAnimationState: string = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
@@ -74,14 +74,9 @@ export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDe
   ) { }
 
   ngOnInit() {
-    this._suitabilityMapService
-      .getCrops()
-      .then((crops: Array<Crop>) => {
-        this.cropData = crops;
-      })
-      ;
+    this.cropData = this._suitabilityMapService.getCrops();
 
-    this._suitabilityMapService
+    this.levels = this._suitabilityMapService
       .getSuitabilityLevels()
       .then((levels: Array<SuitabilityLevel>) => {
         // add the suitability levels to the store
@@ -91,7 +86,7 @@ export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDe
         });
 
         // add checked attribute
-        this.levels = _.map(levels, (level: any) => {
+        return _.map(levels, (level: any) => {
           level.checked = true;
 
           return level;
