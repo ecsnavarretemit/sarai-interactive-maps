@@ -79,6 +79,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
       })
       ;
 
+    // TODO: replace this with the API version
     // populate the crop select field
     this.crops = this._suitabilityMapService
       .getCrops()
@@ -182,6 +183,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO: add this method to the SuitabilityMapService
   sendHeadRequest(uri: string) {
     return this._http.head(uri);
   }
