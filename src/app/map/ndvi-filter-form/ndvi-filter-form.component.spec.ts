@@ -16,8 +16,6 @@ import { LeafletMapService } from '../../leaflet';
 import { LocationsService } from '../locations.service';
 import { MockRouter } from '../../mocks/router';
 import { MockLocationsService } from '../../mocks/map';
-import { MapConfig, MAP_CONFIG } from '../map.config';
-
 import { NdviFilterFormComponent } from './ndvi-filter-form.component';
 
 describe('Component: NdviFilterForm', () => {
@@ -49,7 +47,6 @@ describe('Component: NdviFilterForm', () => {
         LeafletMapService,
 
         { provide: Router, useValue: mockRouter },
-        { provide: MAP_CONFIG, useValue: MapConfig },
         { provide: LocationsService, useClass: MockLocationsService }
       ]
     })
