@@ -45,6 +45,14 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
         let converted = parseInt(routeParams['scanRange'], 10);
 
+        // set the center of the map to the value of the center query parameter
+        // and zoom to tha location
+        if (typeof queryParams['center'] !== 'undefined') {
+          let [lat, lng] = queryParams['center'].split(',');
+
+          this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
+        }
+
         // check if startDate and scanRange is valid
         if (
           /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&

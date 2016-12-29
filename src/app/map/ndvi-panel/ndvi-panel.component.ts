@@ -123,7 +123,7 @@ export class NdviPanelComponent implements OnInit, AfterViewInit, OnDestroy {
       // add a province query parameter
       urlExtras.queryParams = {
         province: value.province.name,
-        center: `${value.province.center.coordinates[0]},${value.province.center.coordinates[1]}`
+        center: `${value.province.center.coordinates[1]},${value.province.center.coordinates[0]}`
       };
     }
 
