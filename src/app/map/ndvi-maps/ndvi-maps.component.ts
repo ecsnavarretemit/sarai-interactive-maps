@@ -15,6 +15,7 @@ import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
 import { isNaN } from 'lodash';
+import * as L from 'leaflet';
 import 'rxjs/add/observable/combineLatest';
 
 @Component({
@@ -25,6 +26,8 @@ import 'rxjs/add/observable/combineLatest';
 export class NdviMapsComponent implements OnInit, OnDestroy {
   private _layerId: string;
   private _routerParamSubscription: Subscription;
+  private _oldCenter: L.LatLngLiteral;
+  private _oldZoom: number;
 
   constructor(
     private _mapService: LeafletMapService,
@@ -36,6 +39,22 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
 
   // TODO: create a reusable function to validate date format
   ngOnInit() {
+    this._mapService
+      .getMap()
+      .then((map: L.Map) => {
+        let {lat, lng} = map.getCenter();
+
+        // store the lat and lng coordinates before we pan into the new coords.
+        this._oldCenter = {
+          lat,
+          lng
+        };
+
+        // also store the zoom level
+        this._oldZoom = map.getZoom();
+      })
+      ;
+
     // get the the route params and query parameters by
     // combining the latest values from the two observables
     this._routerParamSubscription = Observable
@@ -117,6 +136,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // go the old zoom and lat,lng coords.
+    this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
+
     // remove custom router subscription
     this._routerParamSubscription.unsubscribe();
 
