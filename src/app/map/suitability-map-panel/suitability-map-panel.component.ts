@@ -14,7 +14,8 @@ import { LeafletMapService } from '../../leaflet';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
 import { Crop } from '../crop.interface';
-import * as _ from 'lodash';
+import map from 'lodash-es/map';
+import omit from 'lodash-es/omit';
 
 @Component({
   selector: 'app-suitability-map-panel',
@@ -56,7 +57,7 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
         });
 
         // add checked attribute
-        return _.map(levels, (level: any) => {
+        return map(levels, (level: any) => {
           level.checked = true;
 
           return level;
@@ -82,7 +83,7 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
       // add the gridcode to the store
       this._store.dispatch({
         type: 'ADD_SUITABILITY_LEVEL',
-        payload: _.omit(level, 'checked')
+        payload: omit(level, 'checked')
       });
     } else {
       // remove the gridcode from the store

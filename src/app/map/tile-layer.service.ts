@@ -8,7 +8,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { MAP_CONFIG } from './map.config';
-import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
+import { TemplateExecutor } from 'lodash';
+import assign from 'lodash-es/assign';
+import groupBy from 'lodash-es/groupBy';
+import map from 'lodash-es/map';
+import max from 'lodash-es/max';
+import min from 'lodash-es/min';
+import reduce from 'lodash-es/reduce';
+import snakeCase from 'lodash-es/snakeCase';
+import size from 'lodash-es/size';
+import template from 'lodash-es/template';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/toPromise';
 

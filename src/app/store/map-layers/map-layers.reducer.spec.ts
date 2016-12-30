@@ -9,7 +9,6 @@
 
 import { async, inject } from '@angular/core/testing';
 import { MapLayersReducer, LayerState } from './map-layers.reducer';
-import { assign } from 'lodash';
 
 describe('NgRx Store Reducer: Map Layers', () => {
 

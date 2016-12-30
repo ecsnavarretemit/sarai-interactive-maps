@@ -12,11 +12,12 @@ import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
 import { LayerState, SuitabilityLevelsState, Layer } from '../../store';
 import { TileLayerService } from '../tile-layer.service';
-import { map, omit } from 'lodash';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
+import map from 'lodash-es/map';
+import omit from 'lodash-es/omit';
 
 @Component({
   selector: 'app-suitability-maps',
