@@ -14,7 +14,8 @@ import { AppLoggerService } from '../../app-logger.service';
 import { LocationsService } from '../locations.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { Crop } from '../crop.interface';
-import { trim, parseInt, reduce, each } from 'lodash';
+import { trim, parseInt, reduce, each, map } from 'lodash';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
@@ -32,7 +33,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   public selectCrop: FormControl;
   public selectRegion: FormControl;
   public selectProvince: FormControl;
-  public crops: Promise<Array<Crop>>;
+  public crops: Observable<Array<Crop>>;
   public regions: Observable<any>;
   public provinces: Observable<any>;
   public pdfUrl: string | boolean = '#';
@@ -80,24 +81,16 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
       })
       ;
 
-    // TODO: replace this with the API version
     // populate the crop select field
     this.crops = this._suitabilityMapService
       .getCrops()
-      .then((crops: Array<Crop>) => {
-        let transformedValue: Array<Crop> = reduce(crops, (values: Array<Crop>, crop: Crop) => {
-          if (typeof crop.subcrops === 'undefined') {
-            values.push(crop);
-          } else {
-            each(crop.subcrops, (subcrop: Crop) => {
-              values.push(subcrop);
-            });
-          }
-
-          return values;
-        }, []);
-
-        return Promise.resolve(transformedValue);
+      .map((crops: any) => {
+        return map(crops.result, (crop: any) => {
+          return {
+            name: crop.name,
+            slug: crop.slug
+          };
+        });
       })
       ;
 

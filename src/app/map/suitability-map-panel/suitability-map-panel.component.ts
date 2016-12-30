@@ -56,7 +56,7 @@ import {
   ]
 })
 export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDestroy {
-  public cropData: Promise<Array<Crop>>;
+  public cropData: Observable<Array<Crop>>;
   public levels: Promise<Array<any>>;
   public controlWrapperAnimationState: string = 'hidden';
   private _mouseOverSubscription: Subscription;
@@ -74,7 +74,7 @@ export class SuitabilityMapPanelComponent implements OnInit, AfterViewInit, OnDe
   ) { }
 
   ngOnInit() {
-    this.cropData = this._suitabilityMapService.getCrops();
+    this.cropData = this._suitabilityMapService.getCropsOrganizedByType();
 
     this.levels = this._suitabilityMapService
       .getSuitabilityLevels()
