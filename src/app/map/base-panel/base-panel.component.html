@@ -1,0 +1,21 @@
+<div class="map__control map__control--panel"
+    [@controlWrapper]="controlWrapperAnimationState"
+    #controlwrapper>
+
+    <section class="map__control__section">
+        <h2 class="map__control__title title">
+            <span class="title__text">Base Panel</span>
+            <span class="pull-right title__icon title__icon--actionable" (click)="onHideButtonClick($event)">
+                <i class="glyphicon glyphicon-chevron-left" placement="bottom" tooltip="Hide"></i>
+            </span>
+        </h2>
+
+        <div class="map__control__body">
+            <p>
+                This is the base panel. Do not use this. This component is for parent for all panels in this project.
+            </p>
+        </div>
+    </section>
+</div>
+
+
