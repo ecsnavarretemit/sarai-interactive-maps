@@ -14,6 +14,9 @@ import { LeafletMapService } from '../leaflet-map.service';
 describe('Component: LeafletMap', () => {
 
   beforeEach(() => TestBed.configureTestingModule({
+    declarations: [
+      LeafletMapComponent
+    ],
     providers: [
       LeafletMapService,
       LeafletMapComponent
@@ -23,6 +26,26 @@ describe('Component: LeafletMap', () => {
   it('should create an instance', inject([LeafletMapComponent], (component: LeafletMapComponent) => {
     expect(component).toBeTruthy();
   }));
+
+  it('should create map', async(inject([LeafletMapService], (service: LeafletMapService) => {
+    // assemble the component
+    let fixture = TestBed.createComponent(LeafletMapComponent);
+
+    // get the instance of the component
+    let component: LeafletMapComponent = fixture.componentInstance;
+    component.lat = 13;
+    component.lng = 122;
+    component.zoom = 6;
+
+    fixture.detectChanges();
+
+    service
+      .getMap()
+      .then((map: L.Map) => {
+        expect(map).toBeTruthy();
+      })
+      ;
+  })));
 
 });
 

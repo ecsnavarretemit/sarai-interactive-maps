@@ -8,8 +8,8 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { Http, BaseRequestOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+import { Http, BaseRequestOptions, RequestMethod, Response, ResponseOptions } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
 import { MapConfig, MAP_CONFIG } from './map.config';
 import { environment } from '../../environments/environment';
 import { TileLayerService } from './tile-layer.service';
@@ -51,6 +51,109 @@ describe('Service: TileLayerService', () => {
       `${property}=10 OR ${property}=21 OR ${property}=22 OR ${property}=23 OR ${property}=35`
     );
   }));
+
+  it('should get NDVI layer data', async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
+    let dataToSend = {
+      'mapId': 'a',
+      'mapToken': 'b',
+      'success': true
+    };
+
+    backend.connections.subscribe((connection: MockConnection) => {
+      let options = new ResponseOptions({
+        body: JSON.stringify(dataToSend)
+      });
+
+      connection.mockRespond(new Response(options));
+
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+    });
+
+    service
+      .getNdviLayerData('2016-10-01', 10)
+      .then((data) => {
+        expect(data.success).toBe(true);
+      })
+      ;
+  })));
+
+  it('should throw an error when getting NDVI layer data',
+    async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
+      let dataToSend = {
+        'success': false
+      };
+
+      backend.connections.subscribe((connection: MockConnection) => {
+        let options = new ResponseOptions({
+          body: JSON.stringify(dataToSend)
+        });
+
+        connection.mockRespond(new Response(options));
+
+        expect(connection.request.method).toEqual(RequestMethod.Get);
+      });
+
+      service
+        .getNdviLayerData('2016-10-01', 10)
+        .catch((err: Error) => {
+          expect(() => {
+            throw err;
+          }).toThrowError(Error);
+        })
+        ;
+    })));
+
+  it('should get rainfall layer data', async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
+    let dataToSend = {
+      'mapId': 'a',
+      'mapToken': 'b',
+      'success': true
+    };
+
+    backend.connections.subscribe((connection: MockConnection) => {
+      let options = new ResponseOptions({
+        body: JSON.stringify(dataToSend)
+      });
+
+      connection.mockRespond(new Response(options));
+
+      expect(connection.request.method).toEqual(RequestMethod.Get);
+    });
+
+    service
+      .getRainfallMapLayerData('2016-10-01')
+      .then((data) => {
+        expect(data.success).toBe(true);
+      })
+      ;
+  })));
+
+  it('should throw an error getting rainfall layer data',
+    async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
+      let dataToSend = {
+        'success': false
+      };
+
+      backend.connections.subscribe((connection: MockConnection) => {
+        let options = new ResponseOptions({
+          body: JSON.stringify(dataToSend)
+        });
+
+        connection.mockRespond(new Response(options));
+
+        expect(connection.request.method).toEqual(RequestMethod.Get);
+      });
+
+      service
+        .getRainfallMapLayerData('2016-10-01')
+        .catch((err: Error) => {
+          expect(() => {
+            throw err;
+          }).toThrowError(Error);
+        })
+        ;
+    })));
+
 
 });
 

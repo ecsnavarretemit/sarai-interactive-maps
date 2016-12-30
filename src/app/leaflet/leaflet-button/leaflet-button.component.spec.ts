@@ -8,12 +8,19 @@
  */
 
 import { Renderer } from '@angular/core';
-import { TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { LeafletButtonComponent } from './leaflet-button.component';
+import { TooltipModule } from 'ng2-bootstrap';
 
 describe('Component: LeafletButton', () => {
 
   beforeEach(() => TestBed.configureTestingModule({
+    declarations: [
+      LeafletButtonComponent
+    ],
+    imports: [
+      TooltipModule.forRoot()
+    ],
     providers: [
       Renderer,
       LeafletButtonComponent
@@ -22,6 +29,28 @@ describe('Component: LeafletButton', () => {
 
   it('should create an instance', inject([LeafletButtonComponent], (component: LeafletButtonComponent) => {
     expect(component).toBeTruthy();
+  }));
+
+  it('should emit buttonClick', async(inject([LeafletButtonComponent], (component: LeafletButtonComponent) => {
+    component.buttonClick.subscribe((event: Event) => {
+      expect(event).toBeTruthy();
+    });
+
+    component.onClick(new Event('click'));
+  }));
+
+  it('should toggle active state', async(() => {
+    // assemble the component
+    let fixture = TestBed.createComponent(LeafletButtonComponent);
+    fixture.detectChanges();
+
+    // get the instance of the component
+    let component: LeafletButtonComponent = fixture.componentInstance;
+
+    // trigger toggle of active state
+    component.toggleActiveState();
+
+    expect(component.active).toBe(true);
   }));
 
 });

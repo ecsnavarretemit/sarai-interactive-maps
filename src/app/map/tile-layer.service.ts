@@ -8,7 +8,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { MAP_CONFIG } from './map.config';
-import { map, assign, snakeCase, groupBy, template, reduce, min, max, size, TemplateExecutor } from 'lodash';
+import { TemplateExecutor } from 'lodash';
+import assign from 'lodash-es/assign';
+import groupBy from 'lodash-es/groupBy';
+import map from 'lodash-es/map';
+import max from 'lodash-es/max';
+import min from 'lodash-es/min';
+import reduce from 'lodash-es/reduce';
+import snakeCase from 'lodash-es/snakeCase';
+import size from 'lodash-es/size';
+import template from 'lodash-es/template';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/toPromise';
 
@@ -184,7 +193,7 @@ export class TileLayerService {
     });
   }
 
-  getNdviLayerData(date: string, range: number): Promise<any> {
+  getNdviLayerData(date: string, range: number, place?: string): Promise<any> {
     // throw error if endpoint does not exist
     if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for NDVI Layers not specified'));
@@ -200,6 +209,12 @@ export class TileLayerService {
 
     if (method === 'get') {
       endpoint += `/${date}/${range}`;
+
+      // add a query string to the endpoint
+      if (typeof place !== 'undefined') {
+        endpoint += `?place=${place}`;
+      }
+
       args = [endpoint];
     }
 

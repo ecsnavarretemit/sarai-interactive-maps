@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { LeafletMapService } from '../leaflet-map.service';
 import { LeafletTileProviderService } from '../leaflet-tile-provider.service';
 import { LeafletButtonComponent } from '../leaflet-button/leaflet-button.component';
-import { keys } from 'lodash';
+import keys from 'lodash-es/keys';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';

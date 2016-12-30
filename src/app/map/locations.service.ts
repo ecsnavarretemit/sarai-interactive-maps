@@ -6,9 +6,10 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { MAP_CONFIG } from './map.config';
+import trimEnd from 'lodash-es/trimEnd';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -20,15 +21,27 @@ export class LocationsService {
   ) { }
 
   getRegions(): Observable<any> {
+    // assemble the request headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
     return this._http
-      .get(this._config.location_api.region.endpoint)
+      .get(this._config.location_api.region.endpoint, {
+        headers
+      })
       .map((res: Response) => res.json())
       ;
   }
 
   getProvinces(): Observable<any> {
+    // assemble the request headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
     return this._http
-      .get(this._config.location_api.province.endpoint)
+      .get(this._config.location_api.province.endpoint, {
+        headers
+      })
       .map((res: Response) => res.json())
       ;
   }
@@ -36,8 +49,29 @@ export class LocationsService {
   getProvincesByRegionId(regionId: number): Observable<any> {
     let endpoint = `${this._config.location_api.region.endpoint}${regionId}/provinces`;
 
+    // assemble the request headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
     return this._http
-      .get(endpoint)
+      .get(endpoint, {
+        headers
+      })
+      .map((res: Response) => res.json())
+      ;
+  }
+
+  getProvincesFromFT(): Observable<any> {
+    // assemble the request headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let endpoint = trimEnd(this._config.location_api.province.endpoint, '/');
+
+    return this._http
+      .get(`${endpoint}/ft`, {
+        headers
+      })
       .map((res: Response) => res.json())
       ;
   }

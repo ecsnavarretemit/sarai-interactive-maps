@@ -8,16 +8,16 @@
 import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
 import { LayerState, SuitabilityLevelsState, Layer } from '../../store';
 import { TileLayerService } from '../tile-layer.service';
-import { map, omit } from 'lodash';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
+import map from 'lodash-es/map';
+import omit from 'lodash-es/omit';
 
 @Component({
   selector: 'app-suitability-maps',
@@ -27,12 +27,11 @@ import 'rxjs/add/observable/combineLatest';
 export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public WMSTileUrl: string;
   public crop: string;
-  public layersCollection: Array<Layer> = [];
+  public layersCollection: Observable<Array<Layer>>;
   private _map: L.Map;
   private _layerState: string = 'resampled';
   private _mapLayers: Observable<any>;
   private _suitabilityLevels: Observable<any>;
-  private _combinedSubscription: Subscription;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
@@ -60,26 +59,14 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // combine 2 observables to check for us to check if we need to provide cql_filter
     // to our layers and fire subscribe every 300ms
-    this._combinedSubscription = Observable
+    this.layersCollection = Observable
       .combineLatest(this._mapLayers, this._suitabilityLevels)
       .debounceTime(300)
       .map((states: [LayerState, SuitabilityLevelsState]) => {
         let layerState = states[0];
         let levelsState = states[1];
 
-        let layers = map(layerState.layers, (layer: Layer) => {
-          return layer;
-        });
-
-        return [layers, levelsState];
-      })
-      .subscribe((states: [Array<Layer>, SuitabilityLevelsState]) => {
-        let layers = states[0];
-        let levelsState = states[1];
-
-        // TODO: determine if state is mutated here.
-        // if yes, then refactor this part to prevent state mutation.
-        this.layersCollection = map(layers, (layer: Layer) => {
+        return map(layerState.layers, (layer: Layer) => {
           if (levelsState.gridcodes.length < 15) {
             (layer.layerOptions as any).cql_filter = this._tileLayerService.getCQLFilterByGridcode(levelsState.gridcodes);
           } else {
@@ -178,9 +165,6 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
-
-    // reset the layers collection to empty.
-    this.layersCollection = [];
   }
 
   layerTracker(index, item) {
@@ -197,9 +181,6 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // remove all layers published on the store and on the collection
     this.removeLayers();
-
-    // cleanup subscriptions
-    this._combinedSubscription.unsubscribe();
   }
 
 }

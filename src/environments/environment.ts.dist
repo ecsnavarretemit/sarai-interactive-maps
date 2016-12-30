@@ -11,7 +11,10 @@ export const environment = {
     suitability_maps: {
       countrLevelLayerSuffix: '',
       municipalLevelLayerSuffix: '',
-      propertyFilterName: ''
+      propertyFilterName: '',
+      cropsApiEndpoint: '',
+      cropsApiEndpointMethod: 'GET',
+      imageRootPath: ''
     },
     ndvi_maps: {
       eeApiEndpoint: '',

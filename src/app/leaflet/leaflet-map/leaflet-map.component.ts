@@ -34,7 +34,8 @@ export class LeafletMapComponent implements OnInit {
       .getMap()
       .then((map: L.Map) => {
         map.setView([this.lat, this.lng], this.zoom);
-      });
+      })
+      ;
   }
 
 }

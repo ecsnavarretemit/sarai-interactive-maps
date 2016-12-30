@@ -7,17 +7,23 @@
 
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { AppLoggerService } from '../../app-logger.service';
 import { LocationsService } from '../locations.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { Crop } from '../crop.interface';
-import { trim, parseInt, reduce, each } from 'lodash';
+import each from 'lodash-es/each';
+import map from 'lodash-es/map';
+import parseInt from 'lodash-es/parseInt';
+import reduce from 'lodash-es/reduce';
+import trim from 'lodash-es/trim';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/combineLatest';
 
 @Component({
@@ -31,7 +37,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   public selectCrop: FormControl;
   public selectRegion: FormControl;
   public selectProvince: FormControl;
-  public crops: Promise<Array<Crop>>;
+  public crops: Observable<Array<Crop>>;
   public regions: Observable<any>;
   public provinces: Observable<any>;
   public pdfUrl: string | boolean = '#';
@@ -43,7 +49,6 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   @Output() processComplete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private _http: Http,
     private _formBuilder: FormBuilder,
     private _locationsService: LocationsService,
     private _suitabilityMapService: SuitabilityMapService,
@@ -82,20 +87,13 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     // populate the crop select field
     this.crops = this._suitabilityMapService
       .getCrops()
-      .then((crops: Array<Crop>) => {
-        let transformedValue: Array<Crop> = reduce(crops, (values: Array<Crop>, crop: Crop) => {
-          if (typeof crop.subcrops === 'undefined') {
-            values.push(crop);
-          } else {
-            each(crop.subcrops, (subcrop: Crop) => {
-              values.push(subcrop);
-            });
-          }
-
-          return values;
-        }, []);
-
-        return Promise.resolve(transformedValue);
+      .map((crops: any) => {
+        return map(crops.result, (crop: any) => {
+          return {
+            name: crop.name,
+            slug: crop.slug
+          };
+        });
       })
       ;
 
@@ -145,27 +143,24 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
       })
       .debounceTime(300)
       .subscribe((values: [string, string, string]) => {
-        let crop = values[0];
-        let province = values[2];
-
+        let [crop, region, province] = values;
         let pdfFilename = `${crop}-${province}.pdf`;
-        let pdfUrl = `/assets/docs/crops/${crop}/${province}.pdf`;
 
         // reset to empty
         this.pdfFilename = '';
-        this.pdfUrl = '';
+        this.pdfUrl = '#';
 
         // check first if the resolved url exists by sending a HEAD request
         // if it exists save the actual filename.
-        this
-          .sendHeadRequest(pdfUrl)
-          .subscribe((res: Response) => {
+        this._suitabilityMapService
+          .checkIfSuitabilityMapImageExists(crop, province)
+          .then((res: Response) => {
             // reflect the new values to the url and file name
             this.pdfFilename = pdfFilename;
-            this.pdfUrl = pdfUrl;
+            this.pdfUrl = res.url;
           }, (res: Response) => {
             this.pdfFilename = pdfFilename;
-            this.pdfUrl = false;
+            this.pdfUrl = '#';
           })
           ;
       })
@@ -180,10 +175,6 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
         this._logger.log('Image not available', 'Map image not available.', true);
       }
     }
-  }
-
-  sendHeadRequest(uri: string) {
-    return this._http.head(uri);
   }
 
   processRequest() {

@@ -5,47 +5,84 @@
  * Licensed under MIT
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { Headers, Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { MAP_CONFIG } from './map.config';
 import { SuitabilityLevel } from './suitability-level.interface';
 import { Crop } from './crop.interface';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
+import values from 'lodash-es/values';
 
 @Injectable()
 export class SuitabilityMapService {
 
-  constructor() { }
+  constructor(
+    @Inject(MAP_CONFIG) private _config: any,
+    private _http: Http
+  ) { }
 
-  getCrops(): Promise<Array<Crop>> {
-    return Promise.resolve().then(() => {
-      return [
-        {
-          name: 'Rice',
-          slug: 'rice'
-        }, {
-          name: 'Corn',
-          slug: 'corn',
-          subcrops: [
-            {name: 'Corn Dry', slug: 'corn-dry'},
-            {name: 'Corn Wet', slug: 'corn-wet'}
-          ]
-        }, {
-          name: 'Banana',
-          slug: 'banana'
-        }, {
-          name: 'Coconut',
-          slug: 'coconut'
-        }, {
-          name: 'Coffee',
-          slug: 'coffee',
-          subcrops: [
-            {name: 'Coffee Arabica', slug: 'coffee-arabica'},
-            {name: 'Coffee Robusta', slug: 'coffee-robusta'}
-          ]
-        }, {
-          name: 'Cacao',
-          slug: 'cacao'
-        }
-      ];
-    });
+  getCrops(): Observable<any> {
+    // assemble the request headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this._http
+      .get(this._config.suitability_maps.cropsApiEndpoint, {
+        headers
+      })
+      .map((res: Response) => res.json())
+      ;
+  }
+
+  // This function only exists to simulate the old `getCrops()` behavior.
+  getCropsOrganizedByType(): Observable<Array<Crop>> {
+    return this.getCrops()
+      .map((response: any) => {
+        // reduce the data to the format we need
+        let transformedData = reduce(response.result, (collection: any, crop: any) => {
+          let type = crop.crop_type;
+          let title = map(type.split('-'), (word: string) => {
+            return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+          }).join(' ');
+
+          // create the key for the value of type it it doesn't exist and store the value
+          if (typeof collection[type] === 'undefined') {
+            collection[type] = {
+              name: title,
+              slug: type
+            };
+          }
+
+          // if the slug doesnt match with the crop type, then the crop category has crops under it,
+          // so we create subcrops to store the crops under the crop category
+          if (type !== crop.slug) {
+            if (typeof collection[type].subcrops === 'undefined') {
+              collection[type].subcrops = [];
+            }
+
+            collection[type].subcrops.push({
+              name: crop.name,
+              slug: crop.slug
+            });
+          }
+
+          return collection;
+        }, {});
+
+        // we only need the values of the object so we return an array of the values
+        return values(transformedData);
+      })
+      ;
+  }
+
+  checkIfSuitabilityMapImageExists(crop: string, province: string, extension = 'pdf'): Promise<any> {
+    return this._http
+      .head(`${this._config.suitability_maps.imageRootPath}/${crop}/${province}.${extension}`)
+      .toPromise();
   }
 
   getSuitabilityLevels(): Promise<Array<SuitabilityLevel>> {
