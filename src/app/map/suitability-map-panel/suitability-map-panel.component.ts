@@ -6,7 +6,7 @@
  */
 
 import { Component, OnInit, Renderer } from '@angular/core';
-import { BasePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
+import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,7 @@ import * as _ from 'lodash';
   templateUrl: './suitability-map-panel.component.html',
   styleUrls: ['./suitability-map-panel.component.sass'],
   animations: [
-    BasePanelAnimation()
+    basePanelAnimation()
   ]
 })
 export class SuitabilityMapPanelComponent extends BasePanelComponent implements OnInit {

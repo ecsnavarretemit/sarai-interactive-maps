@@ -6,14 +6,14 @@
  */
 
 import { Component } from '@angular/core';
-import { BasePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
+import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 
 @Component({
   selector: 'app-ndvi-panel',
   templateUrl: './ndvi-panel.component.html',
   styleUrls: ['./ndvi-panel.component.sass'],
   animations: [
-    BasePanelAnimation()
+    basePanelAnimation()
   ]
 })
 export class NdviPanelComponent extends BasePanelComponent  {

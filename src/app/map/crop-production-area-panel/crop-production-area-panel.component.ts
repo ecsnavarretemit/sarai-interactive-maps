@@ -6,14 +6,14 @@
  */
 
 import { Component } from '@angular/core';
-import { BasePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
+import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 
 @Component({
   selector: 'app-crop-production-area-panel',
   templateUrl: './crop-production-area-panel.component.html',
   styleUrls: ['./crop-production-area-panel.component.sass'],
   animations: [
-    BasePanelAnimation()
+    basePanelAnimation()
   ]
 })
 export class CropProductionAreaPanelComponent extends BasePanelComponent {

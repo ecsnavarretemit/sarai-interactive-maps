@@ -8,7 +8,7 @@
 import { Component, Renderer } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BasePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
+import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 import { LeafletMapService } from '../../leaflet';
 import { CustomValidators } from '../../forms';
 
@@ -17,7 +17,7 @@ import { CustomValidators } from '../../forms';
   templateUrl: './rainfall-map-panel.component.html',
   styleUrls: ['./rainfall-map-panel.component.sass'],
   animations: [
-    BasePanelAnimation()
+    basePanelAnimation()
   ]
 })
 export class RainfallMapPanelComponent extends BasePanelComponent {

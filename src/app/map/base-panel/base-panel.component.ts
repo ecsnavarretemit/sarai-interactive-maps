@@ -28,7 +28,7 @@ import {
   animate
 } from '@angular/core';
 
-export function BasePanelAnimation() {
+export function basePanelAnimation() {
   return trigger('controlWrapper', [
     state('void', style({
       height: 0
@@ -50,7 +50,7 @@ export function BasePanelAnimation() {
   templateUrl: './base-panel.component.html',
   styleUrls: ['./base-panel.component.sass'],
   animations: [
-    BasePanelAnimation()
+    basePanelAnimation()
   ]
 })
 export class BasePanelComponent implements OnInit, AfterViewInit, OnDestroy {
