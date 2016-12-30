@@ -6,8 +6,17 @@
  */
 
 import { Action } from '@ngrx/store';
-import { assign, map, omit, size, isArray, has, filter, reduce } from 'lodash';
 import { SuitabilityLevel } from '../../map/suitability-level.interface';
+
+// lodash imports
+const assign = require('lodash/assign');
+const filter = require('lodash/filter');
+const has = require('lodash/has');
+const isArray = require('lodash/isArray');
+const map = require('lodash/map');
+const omit = require('lodash/omit');
+const reduce = require('lodash/reduce');
+const size = require('lodash/size');
 
 export interface SuitabilityLevelsState {
   gridcodes: Array<number>;

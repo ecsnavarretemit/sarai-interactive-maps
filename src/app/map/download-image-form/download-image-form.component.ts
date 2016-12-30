@@ -14,13 +14,19 @@ import { AppLoggerService } from '../../app-logger.service';
 import { LocationsService } from '../locations.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { Crop } from '../crop.interface';
-import { trim, parseInt, reduce, each, map } from 'lodash';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/combineLatest';
+
+// lodash imports
+const each = require('lodash/each');
+const map = require('lodash/map');
+const parseInt = require('lodash/parseInt');
+const reduce = require('lodash/reduce');
+const trim = require('lodash/trim');
 
 @Component({
   selector: 'app-download-image-form',

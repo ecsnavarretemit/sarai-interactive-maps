@@ -9,8 +9,10 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { MAP_CONFIG } from './map.config';
-import { trimEnd } from 'lodash';
 import 'rxjs/add/operator/map';
+
+// lodash imports
+const trimEnd = require('lodash/trimEnd');
 
 @Injectable()
 export class LocationsService {
