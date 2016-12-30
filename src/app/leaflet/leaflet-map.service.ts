@@ -6,13 +6,11 @@
  */
 
 import { Injectable } from '@angular/core';
+import each from 'lodash-es/each';
+import filter from 'lodash-es/filter';
+import has from 'lodash-es/has';
+import map from 'lodash-es/map';
 import * as L from 'leaflet';
-
-// lodash imports
-const each = require('lodash/each');
-const filter = require('lodash/filter');
-const has = require('lodash/has');
-const map = require('lodash/map');
 
 interface LayerCollection {
   [id: string]: L.TileLayer | L.WMS;

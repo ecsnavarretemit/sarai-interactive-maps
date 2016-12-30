@@ -14,10 +14,8 @@ import { LeafletMapService } from '../../leaflet';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { SuitabilityLevel } from '../suitability-level.interface';
 import { Crop } from '../crop.interface';
-
-// lodash imports
-const map = require('lodash/map');
-const omit = require('lodash/omit');
+import map from 'lodash-es/map';
+import omit from 'lodash-es/omit';
 
 @Component({
   selector: 'app-suitability-map-panel',

@@ -16,10 +16,8 @@ import { SuitabilityMapPanelComponent } from '../suitability-map-panel/suitabili
 import { CropProductionAreaPanelComponent } from '../crop-production-area-panel/crop-production-area-panel.component';
 import { NdviPanelComponent } from '../ndvi-panel/ndvi-panel.component';
 import { RainfallMapPanelComponent } from '../rainfall-map-panel/rainfall-map-panel.component';
-
-// lodash imports
-const filter = require('lodash/filter');
-const forEach = require('lodash/forEach');
+import filter from 'lodash-es/filter';
+import forEach from 'lodash-es/forEach';
 
 @Component({
   selector: 'app-home',

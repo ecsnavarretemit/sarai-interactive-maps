@@ -6,17 +6,15 @@
  */
 
 import { Action } from '@ngrx/store';
+import assign from 'lodash-es/assign';
+import filter from 'lodash-es/filter';
+import has from 'lodash-es/has';
+import isArray from 'lodash-es/isArray';
+import map from 'lodash-es/map';
+import omit from 'lodash-es/omit';
+import reduce from 'lodash-es/reduce';
+import size from 'lodash-es/size';
 import * as L from 'leaflet';
-
-// lodash imports
-const assign = require('lodash/assign');
-const filter = require('lodash/filter');
-const has = require('lodash/has');
-const isArray = require('lodash/isArray');
-const map = require('lodash/map');
-const omit = require('lodash/omit');
-const reduce = require('lodash/reduce');
-const size = require('lodash/size');
 
 export interface Layer {
   id: string;

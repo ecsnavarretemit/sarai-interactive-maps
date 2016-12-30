@@ -14,11 +14,9 @@ import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
+import isNaN from 'lodash-es/isNaN';
 import * as L from 'leaflet';
 import 'rxjs/add/observable/combineLatest';
-
-// lodash imports
-const isNaN = require('lodash/isNaN');
 
 @Component({
   selector: 'app-ndvi-maps',

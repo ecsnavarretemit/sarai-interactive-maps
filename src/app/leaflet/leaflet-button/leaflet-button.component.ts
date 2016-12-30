@@ -6,9 +6,7 @@
  */
 
 import { Component, OnInit, Input, Output, ViewChild, EventEmitter, ElementRef, Renderer } from '@angular/core';
-
-// lodash imports
-const each = require('lodash/each');
+import each from 'lodash-es/each';
 
 @Component({
   selector: 'app-leaflet-button',

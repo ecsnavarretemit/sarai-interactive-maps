@@ -16,10 +16,8 @@ import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
-
-// lodash imports
-const map = require('lodash/map');
-const omit = require('lodash/omit');
+import map from 'lodash-es/map';
+import omit from 'lodash-es/omit';
 
 @Component({
   selector: 'app-suitability-maps',

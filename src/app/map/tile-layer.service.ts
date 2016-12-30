@@ -8,25 +8,24 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { MAP_CONFIG } from './map.config';
+import { TemplateExecutor } from 'lodash';
+import assign from 'lodash-es/assign';
+import groupBy from 'lodash-es/groupBy';
+import map from 'lodash-es/map';
+import max from 'lodash-es/max';
+import min from 'lodash-es/min';
+import reduce from 'lodash-es/reduce';
+import snakeCase from 'lodash-es/snakeCase';
+import size from 'lodash-es/size';
+import template from 'lodash-es/template';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/toPromise';
-
-// lodash imports
-const assign = require('lodash/assign');
-const groupBy = require('lodash/groupBy');
-const map = require('lodash/map');
-const max = require('lodash/max');
-const min = require('lodash/min');
-const reduce = require('lodash/reduce');
-const snakeCase = require('lodash/snakeCase');
-const size = require('lodash/size');
-const template = require('lodash/template');
 
 @Injectable()
 export class TileLayerService {
   private _leafletApi: any = L;
-  private _equalToFilterTmpl: Function;
-  private _betweenFilterTmpl: Function;
+  private _equalToFilterTmpl: TemplateExecutor;
+  private _betweenFilterTmpl: TemplateExecutor;
 
   public imageFormat: string = 'image/png';
   public transparent: boolean = true;

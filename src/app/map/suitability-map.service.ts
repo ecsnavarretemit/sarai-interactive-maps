@@ -13,11 +13,9 @@ import { SuitabilityLevel } from './suitability-level.interface';
 import { Crop } from './crop.interface';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-
-// lodash imports
-const map = require('lodash/map');
-const reduce = require('lodash/reduce');
-const values = require('lodash/values');
+import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
+import values from 'lodash-es/values';
 
 @Injectable()
 export class SuitabilityMapService {

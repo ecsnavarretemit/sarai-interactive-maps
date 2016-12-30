@@ -11,15 +11,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { LayerState } from '../../store';
 import { LeafletMapService } from '../leaflet-map.service';
+import assign from 'lodash-es/assign';
+import each from 'lodash-es/each';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
-
-// lodash imports
-const each = require('lodash/each');
-const assign = require('lodash/assign');
 
 @Component({
   selector: 'app-leaflet-opacity-slider',
