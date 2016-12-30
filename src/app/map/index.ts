@@ -20,5 +20,6 @@ export * from './rainfall-map-panel/rainfall-map-panel.component';
 export * from './download-image-form/download-image-form.component';
 export * from './ndvi-maps/ndvi-maps.component';
 export * from './rainfall-maps/rainfall-maps.component';
+export * from './ndvi-filter-form/ndvi-filter-form.component';
 
 
