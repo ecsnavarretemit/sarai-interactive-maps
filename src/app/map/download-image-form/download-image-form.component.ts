@@ -7,7 +7,7 @@
 
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { AppLoggerService } from '../../app-logger.service';
@@ -45,7 +45,6 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   @Output() processComplete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private _http: Http,
     private _formBuilder: FormBuilder,
     private _locationsService: LocationsService,
     private _suitabilityMapService: SuitabilityMapService,
@@ -140,27 +139,24 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
       })
       .debounceTime(300)
       .subscribe((values: [string, string, string]) => {
-        let crop = values[0];
-        let province = values[2];
-
+        let [crop, region, province] = values;
         let pdfFilename = `${crop}-${province}.pdf`;
-        let pdfUrl = `/assets/docs/crops/${crop}/${province}.pdf`;
 
         // reset to empty
         this.pdfFilename = '';
-        this.pdfUrl = '';
+        this.pdfUrl = '#';
 
         // check first if the resolved url exists by sending a HEAD request
         // if it exists save the actual filename.
-        this
-          .sendHeadRequest(pdfUrl)
-          .subscribe((res: Response) => {
+        this._suitabilityMapService
+          .checkIfSuitabilityMapImageExists(crop, province)
+          .then((res: Response) => {
             // reflect the new values to the url and file name
             this.pdfFilename = pdfFilename;
-            this.pdfUrl = pdfUrl;
+            this.pdfUrl = res.url;
           }, (res: Response) => {
             this.pdfFilename = pdfFilename;
-            this.pdfUrl = false;
+            this.pdfUrl = '#';
           })
           ;
       })
@@ -175,11 +171,6 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
         this._logger.log('Image not available', 'Map image not available.', true);
       }
     }
-  }
-
-  // TODO: add this method to the SuitabilityMapService
-  sendHeadRequest(uri: string) {
-    return this._http.head(uri);
   }
 
   processRequest() {
