@@ -32,6 +32,7 @@ import { DownloadImageFormComponent } from './download-image-form/download-image
 import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
 import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 import { NdviFilterFormComponent } from './ndvi-filter-form/ndvi-filter-form.component';
+import { BasePanelComponent } from './base-panel/base-panel.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { NdviFilterFormComponent } from './ndvi-filter-form/ndvi-filter-form.com
     NdviMapsComponent,
     RainfallMapsComponent,
     PdfViewerComponent,
-    NdviFilterFormComponent
+    NdviFilterFormComponent,
+    BasePanelComponent
   ],
   providers: [
     TileLayerService,
