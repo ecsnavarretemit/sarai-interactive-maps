@@ -13,7 +13,8 @@ export const environment = {
       municipalLevelLayerSuffix: '_minicipal_suffix',
       propertyFilterName: 'GRIDCODE',
       cropsApiEndpoint: 'http://localhost:3000/crops/',
-      cropsApiEndpointMethod: 'GET'
+      cropsApiEndpointMethod: 'GET',
+      imageRootPath: 'http://localhost:4200/assets/docs/crops'
     },
     ndvi_maps: {
       eeApiEndpoint: 'http://localhost:5000/ndvi',

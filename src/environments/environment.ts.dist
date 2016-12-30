@@ -13,7 +13,8 @@ export const environment = {
       municipalLevelLayerSuffix: '',
       propertyFilterName: '',
       cropsApiEndpoint: '',
-      cropsApiEndpointMethod: 'GET'
+      cropsApiEndpointMethod: 'GET',
+      imageRootPath: ''
     },
     ndvi_maps: {
       eeApiEndpoint: '',
