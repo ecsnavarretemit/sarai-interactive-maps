@@ -15,6 +15,7 @@ import { LeafletMapService } from '../../leaflet';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
 import { MockRouter } from '../../mocks/router';
+import { MockSuitabilityMapService } from '../../mocks/map';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel.component';
 
 describe('Component: SuitabilityMapPanel', () => {
@@ -27,9 +28,9 @@ describe('Component: SuitabilityMapPanel', () => {
       providers: [
         Renderer,
         LeafletMapService,
-        SuitabilityMapService,
         SuitabilityMapPanelComponent,
 
+        { provide: SuitabilityMapService, useClass: MockSuitabilityMapService }
         { provide: Router, useValue: mockRouter },
 
         provideStore({

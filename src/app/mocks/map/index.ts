@@ -6,5 +6,6 @@
  */
 
 export * from './locations.service.mock';
+export * from './suitability-map.service.mock';
 
 

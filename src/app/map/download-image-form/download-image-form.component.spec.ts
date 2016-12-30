@@ -11,12 +11,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http, BaseRequestOptions } from '@angular/http';                                               │
-import { MockBackend } from '@angular/http/testing';
 import { AppLoggerService } from '../../app-logger.service';
 import { SuitabilityMapService } from '../suitability-map.service';
 import { LocationsService } from '../locations.service';
-import { MockLocationsService } from '../../mocks/map';
+import { MockLocationsService, MockSuitabilityMapService } from '../../mocks/map';
 import { DownloadImageFormComponent } from './download-image-form.component';
 
 describe('Component: DownloadImageForm', () => {
@@ -43,18 +41,7 @@ describe('Component: DownloadImageForm', () => {
       providers: [
         FormBuilder,
         AppLoggerService,
-        SuitabilityMapService,
-        MockBackend,
-        BaseRequestOptions,
-
-        {
-          provide: Http,
-          deps: [MockBackend, BaseRequestOptions],
-          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backendInstance, defaultOptions);
-          }
-        },
-
+        { provide: SuitabilityMapService, useClass: MockSuitabilityMapService },
         { provide: LocationsService, useClass: MockLocationsService }
       ]
     })
@@ -79,6 +66,15 @@ describe('Component: DownloadImageForm', () => {
   it('should create an instance', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should contain at least one crop', async(() => {
+    fixture
+      .whenStable()
+      .then(() => {
+        expect(cropSelectEl.querySelectorAll('option').length).toBeGreaterThanOrEqual(2);
+      })
+      ;
+  }));
 
   it('should show that crop is required', async(() => {
     cropSelectEl.focus();
