@@ -96,7 +96,13 @@
   dependencies:
     "@types/geojson" "0.0.31"
 
-"@types/lodash@^4.14.44":
+"@types/lodash-es@^4.14.1":
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.14.1.tgz#575cacbf6ccb3e5d0a1b75684af656400125a9ca"
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*", "@types/lodash@^4.14.44":
   version "4.14.44"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.44.tgz#04585ff0b80d5e434a5f86f15e7964be4f775cba"
 
@@ -3190,6 +3196,10 @@ loader-utils@0.2.x, loader-utils@0.x.x, loader-utils@^0.2.11, loader-utils@^0.2.
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
+lodash-es@^4.17.3:
+  version "4.17.3"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.3.tgz#567a08d2f0c91d92b31ce35c5565e1f337fb81db"
+
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._arraycopy/-/lodash._arraycopy-3.0.0.tgz#76e7b7c1f1fb92547374878a562ed06a3e50f6e1"
@@ -5655,13 +5665,9 @@ typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@2.0.10:
+typescript@~2.0.10, typescript@~2.0.3:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.10.tgz#ccdd4ed86fd5550a407101a0814012e1b3fac3dd"
-
-typescript@~2.0.3:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.8.tgz#c249f530890e0f992e71733b2e0554d792cb8970"
 
 uc.micro@^1.0.0, uc.micro@^1.0.1:
   version "1.0.3"
