@@ -11,7 +11,9 @@ export const environment = {
     suitability_maps: {
       countrLevelLayerSuffix: '_country_suffix',
       municipalLevelLayerSuffix: '_minicipal_suffix',
-      propertyFilterName: 'GRIDCODE'
+      propertyFilterName: 'GRIDCODE',
+      cropsApiEndpoint: 'http://localhost:3000/crops/',
+      cropsApiEndpointMethod: 'GET'
     },
     ndvi_maps: {
       eeApiEndpoint: 'http://localhost:5000/ndvi',
