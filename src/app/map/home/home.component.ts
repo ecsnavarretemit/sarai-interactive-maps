@@ -5,40 +5,38 @@
  * Licensed under MIT
  */
 
-import { Component, AfterViewInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { LeafletButtonComponent } from '../../leaflet';
-import { SuitabilityMapPanelComponent } from '../suitability-map-panel/suitability-map-panel.component';
-import { CropProductionAreaPanelComponent } from '../crop-production-area-panel/crop-production-area-panel.component';
-import { NdviPanelComponent } from '../ndvi-panel/ndvi-panel.component';
-import { RainfallMapPanelComponent } from '../rainfall-map-panel/rainfall-map-panel.component';
+import { MapTypeComponent } from '../map-type/map-type.component';
 import filter from 'lodash-es/filter';
 import forEach from 'lodash-es/forEach';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
-export class HomeComponent implements AfterViewInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   public layersOpacity = 0.6;
+  public mapZoom: number = 6;
+  public mapCoords: L.LatLngLiteral;
   public pdfUrl: string | null  = null;
   public pdfFilename: string | null = null;
   public pdfLoaderVisible: boolean = false;
   public tmpPdfUrl: string | null = null;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
-  private _panelButtonPairs: Array<any> = [];
 
   @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
   @ViewChild('pdfPreviewModal') pdfPreviewModal: ModalDirective;
   @ViewChild('pdfPreviewModalTitle') pdfPreviewModalTitle: ElementRef;
-  @ViewChildren(LeafletButtonComponent) mapTypeButtons: QueryList<LeafletButtonComponent>;
-  @ViewChildren('mapTypePanel') mapTypePanels: QueryList<any>;
+  @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
     private _window: WindowService,
@@ -64,61 +62,23 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this._translate.use(lang);
   }
 
-  ngAfterViewInit() {
-    this.mapTypeButtons.forEach((button: LeafletButtonComponent) => {
-      let pair: any = {};
-
-      pair.button = button;
-
-      let result = this.mapTypePanels.filter((panel) => {
-        let flag = false;
-
-        if (
-          (button.btnTooltip === 'Suitability Maps' && panel instanceof SuitabilityMapPanelComponent) ||
-          (button.btnTooltip === 'Crop Production Area' && panel instanceof CropProductionAreaPanelComponent) ||
-          (button.btnTooltip === 'Normalized Difference Vegetation Index (NDVI)' && panel instanceof NdviPanelComponent) ||
-          (button.btnTooltip === 'Rainfall Map' && panel instanceof RainfallMapPanelComponent)
-        ) {
-          flag = true;
-        }
-
-        return flag;
-      });
-
-      if (result.length > 0) {
-        pair.panel = result[0];
-      }
-
-      // save the pair
-      this._panelButtonPairs.push(pair);
-    });
+  ngOnInit() {
+    // set default coords for the map
+    this.mapCoords = {
+      lat: 13,
+      lng: 122
+    };
   }
 
-  toggleMapTypesState(
-    button: LeafletButtonComponent,
-    panel: SuitabilityMapPanelComponent | CropProductionAreaPanelComponent | NdviPanelComponent | RainfallMapPanelComponent
-  ) {
-    // get all button/panel pairs that are currently open
-    let openedPairs = filter(this._panelButtonPairs, (pair: any) => {
-      return (typeof pair.panel !== 'undefined' && pair.panel !== panel && pair.panel.controlWrapperAnimationState === 'visible');
-    });
-
-    // close all panels before opening the new one.
-    if (openedPairs.length > 0) {
-      forEach(openedPairs, (pair) => {
-        // toggle button state
-        pair.button.toggleActiveState();
-
-        // toggle panel visibility
-        pair.panel.togglePanelVisibility();
-      });
-    }
-
-    // toggle button state
-    button.toggleActiveState();
-
-    // toggle panel visibility
-    panel.togglePanelVisibility();
+  togglePanels(mapType: MapTypeComponent) {
+    this.mapTypes
+      .filter((mapTypeItem: MapTypeComponent) => {
+        return mapType !== mapTypeItem && mapTypeItem.active === true;
+      })
+      .forEach((mapTypeItem: MapTypeComponent) => {
+        mapTypeItem.toggleActiveState();
+      })
+      ;
   }
 
   onTileSelectorHide(event) {
@@ -217,9 +177,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // empty the array by setting the length of the array to zero
-    this._panelButtonPairs.length = 0;
-
     // make sure we remove the PDF instance
     this.removePdf();
   }
