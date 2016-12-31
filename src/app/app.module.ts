@@ -8,7 +8,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
-import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap/modal';
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
+import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
