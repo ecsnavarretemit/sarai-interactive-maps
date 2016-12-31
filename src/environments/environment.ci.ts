@@ -8,6 +8,12 @@ export const environment = {
       wmsTileLayerUrl: `http://demo.opengeo.org/geoserver/${geoserverWorkspace}/wms?tiled=true`,
       restApiEndpoint: 'http://demo.opengeo.org/geoserver/rest'
     },
+    translations: {
+      static: {
+        prefix: 'http://localhost:4200/assets/i18n',
+        ext: '.json'
+      }
+    },
     suitability_maps: {
       countrLevelLayerSuffix: '_country_suffix',
       municipalLevelLayerSuffix: '_minicipal_suffix',

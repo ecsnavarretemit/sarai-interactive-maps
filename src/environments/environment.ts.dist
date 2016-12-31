@@ -8,6 +8,12 @@ export const environment = {
       wmsTileLayerUrl: '',
       restApiEndpoint: ''
     },
+    translations: {
+      static: {
+        prefix: '',
+        ext: '.json'
+      }
+    },
     suitability_maps: {
       countrLevelLayerSuffix: '',
       municipalLevelLayerSuffix: '',
