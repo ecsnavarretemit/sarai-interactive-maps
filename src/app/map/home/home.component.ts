@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
@@ -15,14 +15,17 @@ import { LeafletButtonComponent } from '../../leaflet';
 import { MapTypeComponent } from '../map-type/map-type.component';
 import filter from 'lodash-es/filter';
 import forEach from 'lodash-es/forEach';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   public layersOpacity = 0.6;
+  public mapZoom: number = 6;
+  public mapCoords: L.LatLngLiteral;
   public pdfUrl: string | null  = null;
   public pdfFilename: string | null = null;
   public pdfLoaderVisible: boolean = false;
@@ -57,6 +60,14 @@ export class HomeComponent implements OnDestroy {
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     this._translate.use(lang);
+  }
+
+  ngOnInit() {
+    // set default coords for the map
+    this.mapCoords = {
+      lat: 13,
+      lng: 122
+    };
   }
 
   togglePanels(mapType: MapTypeComponent) {

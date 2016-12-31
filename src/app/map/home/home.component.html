@@ -1,4 +1,4 @@
-<app-leaflet-map lat="13" lng="122" zoom="6" #leaflet>
+<app-leaflet-map [lat]="mapCoords.lat" [lng]="mapCoords.lng" [zoom]="mapZoom" #leaflet>
     <router-outlet></router-outlet>
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
