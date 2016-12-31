@@ -11,7 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
-import { TooltipModule, AccordionModule, ModalModule } from 'ng2-bootstrap';
+import { AccordionModule } from 'ng2-bootstrap/accordion';
+import { ModalModule } from 'ng2-bootstrap/modal';
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from 'ng2-translate';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { LeafletModule } from '../leaflet';
@@ -33,6 +35,7 @@ import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
 import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 import { NdviFilterFormComponent } from './ndvi-filter-form/ndvi-filter-form.component';
 import { BasePanelComponent } from './base-panel/base-panel.component';
+import { MapTypeComponent } from './map-type/map-type.component';
 
 @NgModule({
   imports: [
@@ -60,7 +63,8 @@ import { BasePanelComponent } from './base-panel/base-panel.component';
     RainfallMapsComponent,
     PdfViewerComponent,
     NdviFilterFormComponent,
-    BasePanelComponent
+    BasePanelComponent,
+    MapTypeComponent
   ],
   providers: [
     TileLayerService,

@@ -6,7 +6,7 @@
  */
 
 import { Component, ViewChild, ElementRef, AfterViewInit, Renderer } from '@angular/core';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 import { AppLoggerService, StreamData } from './app-logger.service';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';

@@ -7,7 +7,8 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TooltipModule, AccordionModule } from 'ng2-bootstrap';
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
+import { AccordionModule } from 'ng2-bootstrap/accordion';
 
 import { LeafletMapService } from './leaflet-map.service';
 import { LeafletTileProviderService } from './leaflet-tile-provider.service';
