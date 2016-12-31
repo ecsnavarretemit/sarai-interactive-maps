@@ -23,6 +23,11 @@ export class MapTypeComponent {
   @ContentChild(LeafletButtonComponent) button: LeafletButtonComponent;
 
   toggleActiveState(includePanel = true) {
+    // button and panel is required for this component method to work
+    if (typeof this.button === 'undefined' || typeof this.panel === 'undefined') {
+      return;
+    }
+
     // toggle button state
     this.button.toggleActiveState();
 

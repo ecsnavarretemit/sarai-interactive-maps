@@ -13,7 +13,7 @@ import { DebugElement } from '@angular/core';
 
 import { MapTypeComponent } from './map-type.component';
 
-describe('MapTypeComponent', () => {
+describe('Component: MapType', () => {
   let component: MapTypeComponent;
   let fixture: ComponentFixture<MapTypeComponent>;
 
@@ -32,6 +32,11 @@ describe('MapTypeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not toggle the active status when panel or button is not present', () => {
+    component.toggleActiveState();
+    expect(component.active).toBeFalsy();
   });
 
 });
