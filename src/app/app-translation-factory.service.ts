@@ -7,9 +7,12 @@
 
 import { Http } from '@angular/http';
 import { TranslateStaticLoader } from 'ng2-translate';
+import { environment } from '../environments/environment';
 
 export function TranslationFactoryLoader(http: Http) {
-  return new TranslateStaticLoader(http, '/assets/i18n', '.json');
+  let translationConfig = environment.sarai_map_config.translations;
+
+  return new TranslateStaticLoader(http, translationConfig.static.prefix, translationConfig.static.ext);
 };
 
 
