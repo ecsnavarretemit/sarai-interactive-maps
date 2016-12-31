@@ -2,65 +2,69 @@
     <router-outlet></router-outlet>
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
-        <div class="map-type">
+        <app-map-type (activate)="togglePanels(suitabilityMapType)" #suitabilityMapType>
             <app-leaflet-button
+                map-type-button
                 controlClass="map__control--map-data-type map__control--suitability-map"
                 btnTooltip="Suitability Maps"
                 btnTooltipPosition="right"
-                (buttonClick)="toggleMapTypesState(suitabilityMapButton, suitabilityMapPanel)"
+                (buttonClick)="suitabilityMapType.toggleActiveState()"
                 #suitabilityMapButton>
 
                 <i class="glyphicon glyphicon-grain"></i>
             </app-leaflet-button>
 
-            <app-suitability-map-panel (hideButtonClick)="suitabilityMapButton.toggleActiveState()" #suitabilityMapPanel #mapTypePanel>
+            <app-suitability-map-panel map-type-panel (hideButtonClick)="suitabilityMapType.toggleActiveState(false)" #mapTypePanel>
             </app-suitability-map-panel>
-        </div>
+        </app-map-type>
 
-        <div class="map-type">
+        <app-map-type (activate)="togglePanels(cropProductionAreaMapType)" #cropProductionAreaMapType>
             <app-leaflet-button
+                map-type-button
                 controlClass="map__control--map-data-type map__control--crop-production-area"
                 btnTooltip="Crop Production Area"
                 btnTooltipPosition="right"
-                (buttonClick)="toggleMapTypesState(cropProductionAreaButton, cropProductionAreaPanel)"
+                (buttonClick)="cropProductionAreaMapType.toggleActiveState()"
                 #cropProductionAreaButton>
 
                 <i class="glyphicon glyphicon-leaf"></i>
             </app-leaflet-button>
 
-            <app-crop-production-area-panel (hideButtonClick)="cropProductionAreaButton.toggleActiveState()" #cropProductionAreaPanel #mapTypePanel>
+            <app-crop-production-area-panel map-type-panel (hideButtonClick)="cropProductionAreaMapType.toggleActiveState(false)" #mapTypePanel>
             </app-crop-production-area-panel>
-        </div>
+        </app-map-type>
 
-        <div class="map-type">
+        <app-map-type (activate)="togglePanels(ndviMapType)" #ndviMapType>
             <app-leaflet-button
+                map-type-button
                 controlClass="map__control--map-data-type map__control--ndvi"
                 btnTooltip="Normalized Difference Vegetation Index (NDVI)"
                 btnTooltipPosition="right"
-                (buttonClick)="toggleMapTypesState(ndviButton, ndviPanel)"
+                (buttonClick)="ndviMapType.toggleActiveState()"
                 #ndviButton>
 
                 <i class="glyphicon glyphicon-cloud"></i>
             </app-leaflet-button>
 
-            <app-ndvi-panel (hideButtonClick)="ndviButton.toggleActiveState()" #ndviPanel #mapTypePanel>
+            <app-ndvi-panel map-type-panel (hideButtonClick)="ndviMapType.toggleActiveState(false)" #mapTypePanel>
             </app-ndvi-panel>
-        </div>
+        </app-map-type>
 
-        <div class="map-type">
+        <app-map-type (activate)="togglePanels(rainfallMapType)" #rainfallMapType>
             <app-leaflet-button
+                map-type-button
                 controlClass="map__control--map-data-type map__control--rainfall-map"
                 btnTooltip="Rainfall Map"
                 btnTooltipPosition="right"
-                (buttonClick)="toggleMapTypesState(rainfallMapButton, rainfallMapPanel)"
+                (buttonClick)="rainfallMapType.toggleActiveState()"
                 #rainfallMapButton>
 
                 <i class="glyphicon glyphicon-tint"></i>
             </app-leaflet-button>
 
-            <app-rainfall-map-panel (hideButtonClick)="rainfallMapButton.toggleActiveState()" #rainfallMapPanel #mapTypePanel>
+            <app-rainfall-map-panel map-type-panel (hideButtonClick)="rainfallMapType.toggleActiveState(false)" #mapTypePanel>
             </app-rainfall-map-panel>
-        </div>
+        </app-map-type>
     </div>
 
     <div class="control-wrapper control-wrapper--right pull-right" map-control #controlWrapperUpperRight>
