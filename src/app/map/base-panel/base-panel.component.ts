@@ -25,23 +25,42 @@ import {
   state,
   style,
   transition,
-  animate
+  animate,
+  AnimationEntryMetadata
 } from '@angular/core';
 
-export function basePanelAnimation() {
+export function basePanelAnimation(): AnimationEntryMetadata {
+  let visibleStyles = {
+    opacity: 1,
+    height: 'auto'
+  };
+
+  let hiddenStyles = {
+    opacity: 0,
+    height: 0
+  };
+
   return trigger('controlWrapper', [
     state('void', style({
       height: 0
     })),
-    state('visible', style({
-      opacity: 1,
-      height: 'auto'
-    })),
-    state('hidden', style({
-      opacity: 0,
-      height: 0
-    })),
-    transition('* => *', animate(500))
+    state('visible', style(visibleStyles)),
+    state('hidden', style(hiddenStyles)),
+    transition('void => visible', animate(500)),
+    transition('visible => hidden', animate(500)),
+    transition('hidden => void', animate(500)),
+    transition('void => hidden', animate(500)),
+    transition('hidden => visible', animate(500)),
+    transition('visible => void', animate(500)),
+
+    state('visible-immediate', style(visibleStyles)),
+    state('hidden-immediate', style(hiddenStyles)),
+    transition('void => visible-immediate', animate(0)),
+    transition('visible-immediate => hidden-immediate', animate(0)),
+    transition('hidden-immediate => void', animate(0)),
+    transition('void => hidden-immediate', animate(0)),
+    transition('hidden-immediate => visible-immediate', animate(0)),
+    transition('visible-immediate => void', animate(0)),
   ]);
 }
 
@@ -91,13 +110,21 @@ export class BasePanelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.hideButtonClick.emit(event);
   }
 
-  togglePanelVisibility() {
-    if (this.controlWrapperAnimationState === 'hidden') {
-      this.controlWrapperAnimationState = 'visible';
-      return;
+  togglePanelVisibility(immediate = false) {
+    let [state, ...extraState] = this.controlWrapperAnimationState.split('-');
+
+    if (state === 'hidden') {
+      state = 'visible';
+    } else {
+      state = 'hidden';
     }
 
-    this.controlWrapperAnimationState = 'hidden';
+    // show immediately without animating it
+    if (immediate === true) {
+      state += '-immediate';
+    }
+
+    this.controlWrapperAnimationState = state;
   }
 
   mouseMovementOnMapControl(type: string) {
