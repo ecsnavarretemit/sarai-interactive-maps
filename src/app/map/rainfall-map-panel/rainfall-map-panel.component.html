@@ -17,10 +17,10 @@
                     <app-forms-flatpickr name="ec_scan_date_txt" formControlName="scanDate" [options]="datepickerOpts"></app-forms-flatpickr>
                     <div class="help-block-wrapper">
                         <span class="help-block" *ngIf="scanDate.hasError('required') && scanDate.touched">
-                            Starting Date is required.
+                            Scan Date is required.
                         </span>
                         <span class="help-block" *ngIf="scanDate.hasError('dateISO') && scanDate.touched">
-                            Starting Date must be in YYYY-MM-DD format.
+                            Scan Date must be in YYYY-MM-DD format.
                         </span>
                     </div>
                 </div>
