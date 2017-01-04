@@ -9,29 +9,17 @@
 
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../forms';
 import { LeafletMapService } from '../../leaflet';
-import { MockRouter } from '../../mocks/router';
 import { RainfallMapPanelComponent } from './rainfall-map-panel.component';
 
 describe('Component: RainfallMapPanel', () => {
-  let mockRouter: MockRouter;
 
   beforeEach(() => {
-    mockRouter = new MockRouter();
-
     TestBed.configureTestingModule({
-      imports: [
-        SaraiInteractiveMapsFormsModule
-      ],
       providers: [
-        FormBuilder,
         Renderer,
         LeafletMapService,
-        RainfallMapPanelComponent,
-        { provide: Router, useValue: mockRouter }
+        RainfallMapPanelComponent
       ]
     });
   });
