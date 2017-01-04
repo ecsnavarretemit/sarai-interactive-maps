@@ -25,7 +25,7 @@ export interface Flatpickr {
   parseDate(date: string): Date;
   redraw(): void;
   set(option: string, value: any): void;
-  setDate(date: FlatpickrTypes.DateString | FlatpickrTypes.DateString[]): void;
+  setDate(date: FlatpickrTypes.DateString | FlatpickrTypes.DateString[], triggerChange?: boolean): void;
   toggle(): void;
 }
 
