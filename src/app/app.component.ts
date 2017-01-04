@@ -41,8 +41,8 @@ export class AppComponent implements AfterViewInit {
         }
 
         // change the title and body content
-        this._renderer.setText(this.logModalTitle.nativeElement, data.title);
-        this._renderer.setText(this.logModalBody.nativeElement, data.message);
+        this._renderer.setElementProperty(this.logModalTitle.nativeElement, 'textContent', data.title);
+        this._renderer.setElementProperty(this.logModalBody.nativeElement, 'textContent', data.message);
 
         this.logModal.show();
       })
