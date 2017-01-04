@@ -8,5 +8,6 @@
 export * from './forms.module';
 export * from './custom-validators';
 export * from './flatpickr/flatpickr.component';
+export * from './flatpickr/flatpickr.model';
 
 
