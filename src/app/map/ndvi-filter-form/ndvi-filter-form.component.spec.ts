@@ -12,6 +12,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../forms';
 import { LeafletMapService } from '../../leaflet';
 import { LocationsService } from '../locations.service';
 import { MockRouter } from '../../mocks/router';
@@ -40,7 +41,8 @@ describe('Component: NdviFilterForm', () => {
       ],
       imports: [
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SaraiInteractiveMapsFormsModule
       ],
       providers: [
         FormBuilder,
@@ -59,7 +61,7 @@ describe('Component: NdviFilterForm', () => {
     fixture.detectChanges();
 
     // get the starting date and helper element
-    startingDate = fixture.debugElement.query(By.css('#ec_starting_date_sel'));
+    startingDate = fixture.debugElement.query(By.directive(FlatpickrComponent));
     startingDateEl = startingDate.nativeElement;
 
     // get the scan range element
@@ -76,8 +78,7 @@ describe('Component: NdviFilterForm', () => {
   });
 
   it('should show that date is required', async(() => {
-    startingDateEl.focus();
-    startingDateEl.blur();
+    component.startDate.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
@@ -87,29 +88,6 @@ describe('Component: NdviFilterForm', () => {
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Starting Date is required.');
-    }, 0);
-  }));
-
-  it('should show that date is invalid', async(() => {
-    // gain focus of the element
-    startingDateEl.focus();
-
-    startingDateEl.value = '2016-1-10';
-
-    // dispatch input event
-    startingDateEl.dispatchEvent(new Event('input'));
-
-    // remove the focus from the event
-    startingDateEl.blur();
-
-    // detect changes in the fixture
-    fixture.detectChanges();
-
-    setTimeout(() => {
-      let helpBlockEl = startingDateEl.parentElement.querySelector('.help-block-wrapper');
-
-      expect(helpBlockEl.children.length).toBe(1);
-      expect(helpBlockEl.children[0].textContent.trim()).toBe('Starting Date must be in YYYY-MM-DD format.');
     }, 0);
   }));
 

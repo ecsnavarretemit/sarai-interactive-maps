@@ -17,6 +17,7 @@ import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from 'ng2-translate';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { LeafletModule } from '../leaflet';
+import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
 
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
@@ -44,6 +45,7 @@ import { MapTypeComponent } from './map-type/map-type.component';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    SaraiInteractiveMapsFormsModule,
     TooltipModule,
     AccordionModule,
     ModalModule,
