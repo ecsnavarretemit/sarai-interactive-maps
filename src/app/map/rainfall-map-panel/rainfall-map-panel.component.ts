@@ -5,12 +5,13 @@
  * Licensed under MIT
  */
 
-import { Component, Renderer } from '@angular/core';
+import { Component, OnInit, Renderer } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 import { LeafletMapService } from '../../leaflet';
-import { CustomValidators } from '../../forms';
+import { CustomValidators, FlatpickrOptions } from '../../forms';
+import includes from 'lodash-es/includes';
 
 @Component({
   selector: 'app-rainfall-map-panel',
@@ -20,9 +21,10 @@ import { CustomValidators } from '../../forms';
     basePanelAnimation()
   ]
 })
-export class RainfallMapPanelComponent extends BasePanelComponent {
+export class RainfallMapPanelComponent extends BasePanelComponent implements OnInit {
   public filterForm: FormGroup;
   public scanDate: FormControl;
+  public datepickerOpts: FlatpickrOptions = {};
   public controlWrapperAnimationState: string = 'hidden';
 
   constructor(
@@ -42,6 +44,22 @@ export class RainfallMapPanelComponent extends BasePanelComponent {
     this.filterForm = this._formBuilder.group({
       scanDate: this.scanDate
     });
+  }
+
+  ngOnInit() {
+    // call the pareng ngOnInit method
+    super.ngOnInit();
+
+    this.datepickerOpts = {
+      disable: [
+        (date: Date): boolean =>  {
+          let allowedDates = [1, 6, 11, 16, 21, 26, 31];
+
+          // only allow the dates specified in the variable
+          return !includes(allowedDates, date.getDate());
+        }
+      ]
+    }
   }
 
   processRequest() {
