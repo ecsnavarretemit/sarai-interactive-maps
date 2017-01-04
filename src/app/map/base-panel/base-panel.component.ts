@@ -30,22 +30,18 @@ import {
 } from '@angular/core';
 
 export function basePanelAnimation(): AnimationEntryMetadata {
-  let visibleStyles = {
-    opacity: 1,
-    height: 'auto'
-  };
-
-  let hiddenStyles = {
-    opacity: 0,
-    height: 0
-  };
-
   return trigger('controlWrapper', [
     state('void', style({
       height: 0
     })),
-    state('visible', style(visibleStyles)),
-    state('hidden', style(hiddenStyles)),
+    state('visible', style({
+      opacity: 1,
+      height: 'auto'
+    })),
+    state('hidden', style({
+      opacity: 0,
+      height: 0
+    })),
     transition('void => visible', animate(500)),
     transition('visible => hidden', animate(500)),
     transition('hidden => void', animate(500)),
@@ -53,8 +49,14 @@ export function basePanelAnimation(): AnimationEntryMetadata {
     transition('hidden => visible', animate(500)),
     transition('visible => void', animate(500)),
 
-    state('visible-immediate', style(visibleStyles)),
-    state('hidden-immediate', style(hiddenStyles)),
+    state('visible-immediate', style({
+      opacity: 1,
+      height: 'auto'
+    })),
+    state('hidden-immediate', style({
+      opacity: 0,
+      height: 0
+    })),
     transition('void => visible-immediate', animate(0)),
     transition('visible-immediate => hidden-immediate', animate(0)),
     transition('hidden-immediate => void', animate(0)),
