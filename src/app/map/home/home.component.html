@@ -2,7 +2,10 @@
     <router-outlet></router-outlet>
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
-        <app-map-type (activate)="togglePanels(suitabilityMapType)" #suitabilityMapType>
+        <app-map-type
+            [activateImmediately]="router.isActive('/suitability-maps', false)"
+            (activate)="togglePanels(suitabilityMapType)"
+            #suitabilityMapType>
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--suitability-map"
@@ -34,7 +37,9 @@
             </app-crop-production-area-panel>
         </app-map-type>
 
-        <app-map-type (activate)="togglePanels(ndviMapType)" #ndviMapType>
+        <app-map-type
+            [activateImmediately]="router.isActive('/ndvi', false)"
+            (activate)="togglePanels(ndviMapType)" #ndviMapType>
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--ndvi"
@@ -50,7 +55,9 @@
             </app-ndvi-panel>
         </app-map-type>
 
-        <app-map-type (activate)="togglePanels(rainfallMapType)" #rainfallMapType>
+        <app-map-type
+            [activateImmediately]="router.isActive('/rainfall-maps', false)"
+            (activate)="togglePanels(rainfallMapType)" #rainfallMapType>
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--rainfall-map"
