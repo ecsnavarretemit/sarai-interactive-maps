@@ -7,6 +7,7 @@
 
 import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Flatpickr as FlatpickrObj, FlatpickrOptions } from './flatpickr.model';
 
 // type definition throws error so we fallback to common js module format.
 const Flatpickr = require('flatpickr');
@@ -24,7 +25,7 @@ const Flatpickr = require('flatpickr');
   styleUrls: ['./flatpickr.component.sass']
 })
 export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, OnDestroy, OnInit {
-  @Input('options') options: any = {};
+  @Input('options') options: FlatpickrOptions = {};
   @Input('placeholder') placeholder: string = 'Select Date';
   @Output('change') change: EventEmitter<string> = new EventEmitter<string>();
   @Output('close') close: EventEmitter<string> = new EventEmitter<string>();
@@ -33,14 +34,14 @@ export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, 
   @ViewChild('inputControl') inputControl: ElementRef;
 
   public dateValue: string;
-  private _pluginInstance: any;
+  private _pluginInstance: FlatpickrObj;
   private _propagateChange = (_: any) => {};
   private _propagateTouch = () => {};
 
   constructor() { }
 
   // throw a warning to the component user if he tries to access this property directly.
-  get pluginInstance() {
+  get pluginInstance(): FlatpickrObj {
     console.warn('Accessing this property may bear unexpected results. Please use the shimmed methods for the correct behavior.');
 
     return this._pluginInstance;
