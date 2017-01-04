@@ -91,28 +91,6 @@ describe('Component: NdviFilterForm', () => {
     }, 0);
   }));
 
-  it('should not show any error messages for date', async(() => {
-    // gain focus of the element
-    startingDateEl.focus();
-
-    startingDateEl.value = '2016-11-10';
-
-    // dispatch input event
-    startingDateEl.dispatchEvent(new Event('input'));
-
-    // remove the focus from the event
-    startingDateEl.blur();
-
-    // detect changes in the fixture
-    fixture.detectChanges();
-
-    setTimeout(() => {
-      let helpBlockEl = startingDateEl.parentElement.querySelector('.help-block-wrapper');
-
-      expect(helpBlockEl.children.length).toBe(0);
-    }, 0);
-  }));
-
   it('should show that scan range is required', async(() => {
     scanRangeEl.focus();
     scanRangeEl.blur();
