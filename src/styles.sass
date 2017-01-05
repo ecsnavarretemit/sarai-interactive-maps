@@ -4,4 +4,16 @@
 
 @import "sass/main/main"
 
+app-root
+  display: block
+
+app-root:empty + .preloader,
+.preloader--visible
+  opacity: 1
+  z-index: 100
+
++min-screen-height(900px)
+  .loading-container .img-responsive
+    top: 34%
+
 
