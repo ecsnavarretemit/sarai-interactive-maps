@@ -92,77 +92,92 @@ export class SuitabilityMapService {
           gridcode: 10,
           category: 'S1',
           name: 'Highly Suitable',
-          slug: 'highly-suitable'
+          slug: 'highly-suitable',
+          translationKey: '1'
         }, {
           gridcode: 21,
           category: 'S2 E',
           name: 'Moderately Suitable with limitation in elevation',
-          slug: 'moderately-suitable-with-limitation-in-elevation'
+          slug: 'moderately-suitable-with-limitation-in-elevation',
+          translationKey: '2'
         }, {
           gridcode: 22,
           category: 'S2 T',
           name: 'Moderately Suitable with limitation in slope',
-          slug: 'moderately-suitable-with-limitation-in-slope'
+          slug: 'moderately-suitable-with-limitation-in-slope',
+          translationKey: '3'
         }, {
           gridcode: 23,
           category: 'S2 S',
           name: 'Moderately Suitable with limitation in soil',
-          slug: 'moderately-suitable-with-limitation-in-soil'
+          slug: 'moderately-suitable-with-limitation-in-soil',
+          translationKey: '4'
         }, {
           gridcode: 24,
           category: 'S2 ET',
           name: 'Moderately Suitable with limitation in elevation and slope',
-          slug: 'moderately-suitable-with-limitation-in-elevation-and-slope'
+          slug: 'moderately-suitable-with-limitation-in-elevation-and-slope',
+          translationKey: '5'
         }, {
           gridcode: 25,
           category: 'S2 TS',
           name: 'Moderately Suitable with limitation in slope and soil',
-          slug: 'moderately-suitable-with-limitation-in-slope-and-soil'
+          slug: 'moderately-suitable-with-limitation-in-slope-and-soil',
+          translationKey: '6'
         }, {
           gridcode: 26,
           category: 'S2 ES',
           name: 'Moderately Suitable with limitation in elevation and soil',
-          slug: 'moderately-suitable-with-limitation-in-elevation-and-soil'
+          slug: 'moderately-suitable-with-limitation-in-elevation-and-soil',
+          translationKey: '7'
         }, {
           gridcode: 27,
           category: 'S2 ETS',
           name: 'Moderately Suitable with limitation in elevation, slope and soil',
-          slug: 'moderately-suitable-with-limitation-in-elevation-slope-and-soil'
+          slug: 'moderately-suitable-with-limitation-in-elevation-slope-and-soil',
+          translationKey: '8'
         }, {
           gridcode: 31,
           category: 'S2 E',
           name: 'Marginally Suitable with limitation in elevation',
-          slug: 'marginally-suitable-with-limitation-in-elevation'
+          slug: 'marginally-suitable-with-limitation-in-elevation',
+          translationKey: '9'
         }, {
           gridcode: 32,
           category: 'S2 T',
           name: 'Marginally Suitable with limitation in slope',
-          slug: 'marginally-suitable-with-limitation-in-slope'
+          slug: 'marginally-suitable-with-limitation-in-slope',
+          translationKey: '10'
         }, {
           gridcode: 33,
           category: 'S2 S',
           name: 'Marginally Suitable with limitation in soil',
-          slug: 'marginally-suitable-with-limitation-in-soil'
+          slug: 'marginally-suitable-with-limitation-in-soil',
+          translationKey: '11'
         }, {
           gridcode: 34,
           category: 'S2 ET',
           name: 'Marginally Suitable with limitation in elevation and slope',
-          slug: 'marginally-suitable-with-limitation-in-elevation-and-slope'
+          slug: 'marginally-suitable-with-limitation-in-elevation-and-slope',
+          translationKey: '12'
         }, {
           gridcode: 35,
           category: 'S2 TS',
           name: 'Marginally Suitable with limitation in slope and soil',
-          slug: 'marginally-suitable-with-limitation-in-slope-and-soil'
+          slug: 'marginally-suitable-with-limitation-in-slope-and-soil',
+          translationKey: '13'
         }, {
           gridcode: 36,
           category: 'S2 ES',
           name: 'Marginally Suitable with limitation in elevation and soil',
-          slug: 'marginally-suitable-with-limitation-in-elevation-and-soil'
+          slug: 'marginally-suitable-with-limitation-in-elevation-and-soil',
+          translationKey: '14'
         }, {
           gridcode: 37,
           category: 'S2 ETS',
           name: 'Marginally Suitable with limitation in elevation, slope and soil',
-          slug: 'marginally-suitable-with-limitation-in-elevation-slope-and-soil'
+          slug: 'marginally-suitable-with-limitation-in-elevation-slope-and-soil',
+          translationKey: '15'
         }
       ];
     });

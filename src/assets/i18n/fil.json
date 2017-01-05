@@ -38,5 +38,55 @@
     "TOOLTIP": {
       "MAIN": "Panoorin ang mga panimulang video"
     }
+  },
+  "SUITABILITY": {
+    "TITLE": "Mapa ng Pagka-angkop",
+    "DESCRIPTION": "Pinapakita kung ano ang mainam itanim sa inyong lugar na maaaring makakuha ng pinakamaraming ani",
+    "Rice": "Palay",
+    "Corn": "Mais",
+    "Banana": "Saging",
+    "Coconut": "Niyog",
+    "Coffee": "Kape",
+    "Cacao": "Kakaw",
+    "Corn Dry": "Mais na Tuyo",
+    "Corn Wet": "Mais na Basa",
+    "Coffee Arabica": "Kapeng Arabica",
+    "Coffee Robusta": "Kapeng Robusta"
+  },
+
+  "LEVELS": {
+    "TITLE": "Lebel ng pagka-angkop",
+    "1": "Pinakaangkop",
+    "2": "Katamtamang pagkaangkop na may limitasyon sa taas ng lugar mula sa lupa",
+    "3": "Katamtamang pagkangkop na may limitasyon sa dalisdis",
+    "4": "Katamtamang pagkangkop na may limitasyon sa lupa",
+    "5": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa at sa dalisdis",
+    "6": "Katamtamang pagkangkop na may limitasyon sa dalisdis at lupa",
+    "7": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa at sa lupa",
+    "8": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa, sa dalisdis at sa lupa",
+    "9": "Bahagyang angkop na may limitasyon sa taas mula sa lupa",
+    "10": "Bahagyang angkop na may limitasyon  sa dalisdis",
+    "11": "Bahagyang angkop na may limitasyon sa lupa",
+    "12": "Bahagyang angkop na may limitasyon sa taas mula sa lupa at sa dalisdis",
+    "13": "Bahagyang angkop na may limitasyon dalisdis sa lupa",
+    "14": "Bahagyang angkop na may limitasyon sa taas ng lupa at sa lupa",
+    "15": "Bahagyang angkop na may limitasyon sa taas mula sa lupa, sa dalisdis at sa lupa"
+  },
+
+  "CROP_PRODUCTION_AREA": {
+    "TITLE": "Pagtatanim at Pag-aani"
+  },
+
+  "NDVI": {
+    "TITLE": "Normalized Difference Vegetation Index (NDVI)",
+    "STARTING_DATE": "Petsa kung kailan magsisimula:",
+    "SCAN_RANGE": "Saklaw na mga araw:",
+    "FILTER_BY_PROVINCE": "Salain hingil sa probinsya:",
+    "SELECT_PROVINCE": "Mamili ng probinsya"
+  },
+
+  "RAINFALL": {
+    "TITLE": "Mapa ng ulan",
+    "SCAN_DATE": "Petsa na titingnan:"
   }
 }

@@ -38,5 +38,57 @@
     "TOOLTIP": {
       "MAIN": "Watch Introductory Videos"
     }
+  },
+
+  "SUITABILITY": {
+    "TITLE": "Suitability Map",
+    "DESCRIPTION": "Shows what crops are best to plant in a specific area to attain maximum yield.",
+    "Rice": "Rice",
+    "Corn": "Corn",
+    "Banana": "Banana",
+    "Coconut": "Coconut",
+    "Coffee": "Coffee",
+    "Cacao": "Cacao",
+    "Corn Dry": "Corn Dry",
+    "Corn Wet": "Corn Wet",
+    "Coffee Arabica": "Coffee Arabica",
+    "Coffee Robusta": "Coffee Robusta"
+  },
+
+  "LEVELS": {
+    "TITLE": "Suitability Level",
+    "1": "Highly suitable",
+    "2": "Moderately suitable with limitation in elevation",
+    "3": "Moderately suitable with limitation in slope",
+    "4": "Moderately suitable with limitation in soil",
+    "5": "Moderately suitable with limitation in elevation and slope",
+    "6": "Moderately suitable with limitation in slope and soil",
+    "7": "Moderately suitable with limitation in elevation and soil",
+    "8": "Moderately suitable with limitation in elevation, slope and soil",
+    "9": "Marginally suitable with limitation in elevation",
+    "10": "Marginally suitable with limitation in slope",
+    "11": "Marginally suitable with limitation in soil",
+    "12": "Marginally suitable with limitation in elevation and slope",
+    "13": "Marginally suitable with limitation in slope and soil",
+    "14": "Marginally suitable with limitation in elevation and soil",
+    "15": "Marginally suitable with limitation in elevation, slope and soil"
+  },
+
+  "CROP_PRODUCTION_AREA": {
+    "TITLE": "Crop Production"
+  },
+
+  "NDVI": {
+    "TITLE": "Normalized Difference Vegetation Index (NDVI)",
+    "STARTING_DATE": "Starting Date:",
+    "SCAN_RANGE": "Scan Range (in days):",
+    "FILTER_BY_PROVINCE": "Filter by Province:",
+    "SELECT_PROVINCE": "Select Province"
+  },
+
+  "RAINFALL": {
+    "TITLE": "Rainfall Map",
+    "SCAN_DATE": "Scan Date:"
   }
+
 }
