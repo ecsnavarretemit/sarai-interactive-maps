@@ -25,7 +25,9 @@
         "../node_modules/flatpickr/dist/flatpickr.min.css",
         "styles.sass"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/scripts/app/loader.ts"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.dev.ts",
