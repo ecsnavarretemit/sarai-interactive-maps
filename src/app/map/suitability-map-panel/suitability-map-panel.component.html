@@ -16,7 +16,11 @@
             </p>
 
             <accordion closeOthers="true" *ngIf="(cropData | async)?.length > 0">
-                <accordion-group *ngFor="let data of (cropData | async)" [isDisabled]="!data.subcrops" [class.active]="router.isActive('/suitability-maps/' + data.slug)">
+                <accordion-group
+                    *ngFor="let data of (cropData | async)"
+                    [isDisabled]="!data.subcrops"
+                    [class.active]="router.isActive('/suitability-maps/' + data.slug)">
+
                     <div accordion-heading
                         (click)="suitabilityRedirect($event, data.slug, !!data.subcrops)">
                         <span class="heading__icon">
