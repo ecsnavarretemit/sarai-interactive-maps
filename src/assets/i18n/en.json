@@ -38,5 +38,57 @@
     "TOOLTIP": {
       "MAIN": "Watch Introductory Videos"
     }
+  },
+
+  "SUITABILITY": {
+    "TITLE": "Suitability Map",
+    "DESCRIPTION": "Shows what crops are best to plant in a specific area to attain maximum yield.",
+    "Rice": "Rice",
+    "Corn": "Corn",
+    "Banana": "Banana",
+    "Coconut": "Coconut",
+    "Coffee": "Coffee",
+    "Cacao": "Cacao",
+    "Corn Dry": "Corn Dry",
+    "Corn Wet": "Corn Wet",
+    "Coffee Arabica": "Coffee Arabica",
+    "Coffee Robusta": "Coffee Robusta"
+  },
+
+  "LEVELS": {
+    "TITLE": "Suitability Level",
+    "LEVEL_1": "Highly suitable",
+    "LEVEL_2": "Moderately suitable with limitation in elevation",
+    "LEVEL_3": "Moderately suitable with limitation in slope",
+    "LEVEL_4": "Moderately suitable with limitation in soil",
+    "LEVEL_5": "Moderately suitable with limitation in elevation and slope",
+    "LEVEL_6": "Moderately suitable with limitation in slope and soil",
+    "LEVEL_7": "Moderately suitable with limitation in elevation and soil",
+    "LEVEL_8": "Moderately suitable with limitation in elevation, slope and soil",
+    "LEVEL_9": "Marginally suitable with limitation in elevation",
+    "LEVEL_10": "Marginally suitable with limitation in slope",
+    "LEVEL_11": "Marginally suitable with limitation in soil",
+    "LEVEL_12": "Marginally suitable with limitation in elevation and slope",
+    "LEVEL_13": "Marginally suitable with limitation in slope and soil",
+    "LEVEL_14": "Marginally suitable with limitation in elevation and soil",
+    "LEVEL_15": "Marginally suitable with limitation in elevation, slope and soil"
+  },
+
+  "CROP_PRODUCTION_AREA": {
+    "TITLE": "Crop Production"
+  },
+
+  "NDVI": {
+    "TITLE": "Normalized Difference Vegetation Index (NDVI)",
+    "STARTING_DATE": "Starting Date:",
+    "SCAN_RANGE": "Scan Range (in days):",
+    "FILTER_BY_PROVINCE": "Filter by Province:",
+    "SELECT_PROVINCE": "Select Province"
+  },
+
+  "RAINFALL": {
+    "TITLE": "Rainfall Map",
+    "SCAN_DATE": "Scan Date:"
   }
+
 }

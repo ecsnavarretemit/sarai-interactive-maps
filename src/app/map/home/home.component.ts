@@ -6,6 +6,7 @@
  */
 
 import { Component, OnInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateService } from 'ng2-translate';
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
+    public router: Router,
     private _window: WindowService,
     private _logger: AppLoggerService,
     private _translate: TranslateService,

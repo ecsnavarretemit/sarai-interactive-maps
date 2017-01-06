@@ -17,6 +17,7 @@ import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from 'ng2-translate';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { LeafletModule } from '../leaflet';
+import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
 
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
@@ -36,6 +37,7 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
 import { NdviFilterFormComponent } from './ndvi-filter-form/ndvi-filter-form.component';
 import { BasePanelComponent } from './base-panel/base-panel.component';
 import { MapTypeComponent } from './map-type/map-type.component';
+import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form/rainfall-map-filter-form.component';
 
 @NgModule({
   imports: [
@@ -44,6 +46,7 @@ import { MapTypeComponent } from './map-type/map-type.component';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+    SaraiInteractiveMapsFormsModule,
     TooltipModule,
     AccordionModule,
     ModalModule,
@@ -64,7 +67,8 @@ import { MapTypeComponent } from './map-type/map-type.component';
     PdfViewerComponent,
     NdviFilterFormComponent,
     BasePanelComponent,
-    MapTypeComponent
+    MapTypeComponent,
+    RainfallMapFilterFormComponent
   ],
   providers: [
     TileLayerService,

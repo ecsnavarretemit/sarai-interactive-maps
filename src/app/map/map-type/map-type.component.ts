@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, ContentChild, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, EventEmitter, Input, Output } from '@angular/core';
 import { BasePanelComponent } from '../base-panel/base-panel.component';
 import { LeafletButtonComponent } from '../../leaflet/leaflet-button/leaflet-button.component';
 
@@ -14,15 +14,23 @@ import { LeafletButtonComponent } from '../../leaflet/leaflet-button/leaflet-but
   templateUrl: './map-type.component.html',
   styleUrls: ['./map-type.component.sass']
 })
-export class MapTypeComponent {
+export class MapTypeComponent implements AfterViewInit {
   public active: boolean =  false;
 
+  @Input('activateImmediately') activateImmediately: boolean = false;
   @Output() activate: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() deactivate: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ContentChild('mapTypePanel') panel: BasePanelComponent;
   @ContentChild(LeafletButtonComponent) button: LeafletButtonComponent;
 
-  toggleActiveState(includePanel = true) {
+  ngAfterViewInit() {
+    // activate the map type when activateImmediately is set to true
+    if (this.activateImmediately === true) {
+      this.toggleActiveState(true, true);
+    }
+  }
+
+  toggleActiveState(includePanel = true, disablePanelAnimation = false) {
     // button and panel is required for this component method to work
     if (typeof this.button === 'undefined' || typeof this.panel === 'undefined') {
       return;
@@ -33,7 +41,7 @@ export class MapTypeComponent {
 
     if (includePanel) {
       // toggle panel visibility
-      this.panel.togglePanelVisibility();
+      this.panel.togglePanelVisibility(disablePanelAnimation);
     }
 
     // flip between true/false values

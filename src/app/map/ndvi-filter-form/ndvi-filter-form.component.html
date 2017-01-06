@@ -1,7 +1,7 @@
 <form class="ndvi-filter-form smart-form" [formGroup]="filterForm" (ngSubmit)="processRequest()">
     <div class="form-group">
-        <label for="ec_starting_date_sel">Starting Date</label>
-        <input type="text" id="ec_starting_date_sel" name="ec_starting_date_sel" class="form-control" placeholder="YYYY-MM-DD" [formControl]="startDate" />
+        <label for="ec_starting_date_sel">{{ 'NDVI.STARTING_DATE' | translate }}</label>
+        <app-forms-flatpickr name="ec_starting_date_sel" formControlName="startDate"></app-forms-flatpickr>
         <div class="help-block-wrapper" [hidden]="startDate.valid || startDate.untouched">
             <span class="help-block" *ngIf="startDate.hasError('required') && startDate.touched">
                 Starting Date is required.
@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group">
-        <label for="ec_scan_range_txt">Scan Range (in days):</label>
+        <label for="ec_scan_range_txt">{{ 'NDVI.SCAN_RANGE' | translate }}</label>
         <input type="text" id="ec_scan_range_txt" name="ec_scan_range_txt" class="form-control" [formControl]="scanRange" />
         <div class="help-block-wrapper" [hidden]="scanRange.valid || scanRange.untouched">
             <span class="help-block" *ngIf="scanRange.hasError('required') && scanRange.touched">
@@ -26,9 +26,9 @@
     </div>
 
     <div class="form-group">
-        <label for="ec_province_filter_sel">Filter by Province:</label>
+        <label for="ec_province_filter_sel">{{ 'NDVI.FILTER_BY_PROVINCE' | translate }}</label>
         <select name="ec_province_filter_sel" id="ec_province_filter_sel" class="form-control" [formControl]="province">
-            <option value="">Select Province</option>
+            <option value="">{{ 'NDVI.SELECT_PROVINCE' | translate }}</option>
             <option *ngFor="let place_data of (provinces | async)?.places" [ngValue]="place_data">
                 {{ place_data.name }}
             </option>

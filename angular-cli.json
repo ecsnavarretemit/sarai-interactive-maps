@@ -22,9 +22,12 @@
         "../node_modules/leaflet-control-geocoder2/dist/Control.Geocoder.css",
         "../node_modules/leaflet-measure/dist/leaflet-measure.css",
         "../node_modules/leaflet-sidebar/src/L.Control.Sidebar.css",
+        "../node_modules/flatpickr/dist/flatpickr.min.css",
         "styles.sass"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/scripts/app/loader.ts"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.dev.ts",

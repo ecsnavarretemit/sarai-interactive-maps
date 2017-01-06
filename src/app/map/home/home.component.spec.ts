@@ -10,15 +10,20 @@
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Http, HttpModule} from '@angular/http';
+import { Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
 import { AppLoggerService } from '../../app-logger.service';
+import { MockRouter } from '../../mocks/router';
 import { HomeComponent } from './home.component';
 
 describe('Component: Home', () => {
+  let mockRouter: MockRouter;
 
   beforeEach(() => {
+    mockRouter = new MockRouter();
+
     TestBed.configureTestingModule({
       imports: [
         HttpModule,
@@ -35,7 +40,9 @@ describe('Component: Home', () => {
         AppLoggerService,
         Renderer,
         WindowService,
-        HomeComponent
+        HomeComponent,
+
+        { provide: Router, useValue: mockRouter },
       ]
     });
   });

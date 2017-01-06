@@ -1,6 +1,6 @@
 {
   "name": "sarai-interactive-maps",
-  "version": "1.0.0-alpha10",
+  "version": "1.0.0-alpha11",
   "license": "MIT",
   "author": "Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>",
   "angular-cli": {},
@@ -8,6 +8,7 @@
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
+    "test-once": "ng test --watch false",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
     "build-aot": "rm -rf dist; ng build --prod --aot"
@@ -28,6 +29,7 @@
     "angular2-cookie": "^1.2.6",
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
+    "flatpickr": "^2.2.5",
     "leaflet": "^1.0.2",
     "leaflet-control-geocoder2": "^1.6.3",
     "leaflet-measure": "^2.1.1",
