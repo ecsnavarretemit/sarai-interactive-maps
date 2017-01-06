@@ -4,7 +4,7 @@
 
     <section class="map__control__section">
         <h2 class="map__control__title title">
-            <span class="title__text">{{ 'SUITABILITY.TITLE' | translate}}</span>
+            <span class="title__text">{{ 'SUITABILITY.TITLE' | translate }}</span>
             <span class="pull-right title__icon title__icon--actionable" (click)="onHideButtonClick($event)">
                 <i class="glyphicon glyphicon-chevron-left" placement="bottom" tooltip="Hide"></i>
             </span>
@@ -12,8 +12,7 @@
 
         <div class="map__control__body">
             <p>
-                <!-- Shows what crops are best to plant in a specific area to attain maximum yield. -->
-                {{ 'SUITABILITY.DESCRIPTION' | translate}}
+               {{ 'SUITABILITY.DESCRIPTION' | translate}}
             </p>
 
             <accordion closeOthers="true" *ngIf="(cropData | async)?.length > 0">
@@ -23,14 +22,14 @@
                         <span class="heading__icon">
                             <i class="crop-icon crop-icon--{{ data.slug }}"></i>
                         </span>
-                        <span class="heading__text">{{ 'SUITABILITY.' + data.name | translate}}</span>
+                        <span class="heading__text">{{ 'SUITABILITY.' + data.name | translate }}</span>
                     </div>
 
                     <div class="subcrop"
                         *ngFor="let subcrop of data.subcrops"
                         [class.active]="router.isActive('/suitability-maps/' + subcrop.slug)"
                         (click)="suitabilityRedirect($event, subcrop.slug, false)">
-                        {{ 'SUITABILITY.' + subcrop.name | translate}}
+                        {{ 'SUITABILITY.' + subcrop.name | translate }}
                     </div>
                 </accordion-group>
             </accordion>
@@ -39,7 +38,7 @@
 
     <section class="map__control__section suitability-level-filter" *ngIf="(levels | async)?.length > 0 && router.isActive('/suitability-maps')">
         <h2 class="map__control__title title">
-            <span class="title__text">{{ 'LEVELS.TITLE' | translate}}</span>
+            <span class="title__text">{{ 'LEVELS.TITLE' | translate }}</span>
         </h2>
 
         <div class="map__control__body">
@@ -49,7 +48,7 @@
                         [checked]="level.checked"
                         [ngModel]="level.checked"
                         (ngModelChange)="onToggleCheckbox($event, level)">
-                        {{ 'LEVELS.' + level.translationKey | translate}}
+                        {{ 'LEVELS.' + level.translationKey | translate }}
                     </md-checkbox>
                 </li>
             </ul>
