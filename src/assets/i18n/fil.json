@@ -56,21 +56,21 @@
 
   "LEVELS": {
     "TITLE": "Lebel ng pagka-angkop",
-    "1": "Pinakaangkop",
-    "2": "Katamtamang pagkaangkop na may limitasyon sa taas ng lugar mula sa lupa",
-    "3": "Katamtamang pagkangkop na may limitasyon sa dalisdis",
-    "4": "Katamtamang pagkangkop na may limitasyon sa lupa",
-    "5": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa at sa dalisdis",
-    "6": "Katamtamang pagkangkop na may limitasyon sa dalisdis at lupa",
-    "7": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa at sa lupa",
-    "8": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa, sa dalisdis at sa lupa",
-    "9": "Bahagyang angkop na may limitasyon sa taas mula sa lupa",
-    "10": "Bahagyang angkop na may limitasyon  sa dalisdis",
-    "11": "Bahagyang angkop na may limitasyon sa lupa",
-    "12": "Bahagyang angkop na may limitasyon sa taas mula sa lupa at sa dalisdis",
-    "13": "Bahagyang angkop na may limitasyon dalisdis sa lupa",
-    "14": "Bahagyang angkop na may limitasyon sa taas ng lupa at sa lupa",
-    "15": "Bahagyang angkop na may limitasyon sa taas mula sa lupa, sa dalisdis at sa lupa"
+    "LEVEL_1": "Pinakaangkop",
+    "LEVEL_2": "Katamtamang pagkaangkop na may limitasyon sa taas ng lugar mula sa lupa",
+    "LEVEL_3": "Katamtamang pagkangkop na may limitasyon sa dalisdis",
+    "LEVEL_4": "Katamtamang pagkangkop na may limitasyon sa lupa",
+    "LEVEL_5": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa at sa dalisdis",
+    "LEVEL_6": "Katamtamang pagkangkop na may limitasyon sa dalisdis at lupa",
+    "LEVEL_7": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa at sa lupa",
+    "LEVEL_8": "Katamtamang pagkangkop na may limitasyon sa taas mula sa lupa, sa dalisdis at sa lupa",
+    "LEVEL_9": "Bahagyang angkop na may limitasyon sa taas mula sa lupa",
+    "LEVEL_10": "Bahagyang angkop na may limitasyon  sa dalisdis",
+    "LEVEL_11": "Bahagyang angkop na may limitasyon sa lupa",
+    "LEVEL_12": "Bahagyang angkop na may limitasyon sa taas mula sa lupa at sa dalisdis",
+    "LEVEL_13": "Bahagyang angkop na may limitasyon dalisdis sa lupa",
+    "LEVEL_14": "Bahagyang angkop na may limitasyon sa taas ng lupa at sa lupa",
+    "LEVEL_15": "Bahagyang angkop na may limitasyon sa taas mula sa lupa, sa dalisdis at sa lupa"
   },
 
   "CROP_PRODUCTION_AREA": {

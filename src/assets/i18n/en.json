@@ -57,21 +57,21 @@
 
   "LEVELS": {
     "TITLE": "Suitability Level",
-    "1": "Highly suitable",
-    "2": "Moderately suitable with limitation in elevation",
-    "3": "Moderately suitable with limitation in slope",
-    "4": "Moderately suitable with limitation in soil",
-    "5": "Moderately suitable with limitation in elevation and slope",
-    "6": "Moderately suitable with limitation in slope and soil",
-    "7": "Moderately suitable with limitation in elevation and soil",
-    "8": "Moderately suitable with limitation in elevation, slope and soil",
-    "9": "Marginally suitable with limitation in elevation",
-    "10": "Marginally suitable with limitation in slope",
-    "11": "Marginally suitable with limitation in soil",
-    "12": "Marginally suitable with limitation in elevation and slope",
-    "13": "Marginally suitable with limitation in slope and soil",
-    "14": "Marginally suitable with limitation in elevation and soil",
-    "15": "Marginally suitable with limitation in elevation, slope and soil"
+    "LEVEL_1": "Highly suitable",
+    "LEVEL_2": "Moderately suitable with limitation in elevation",
+    "LEVEL_3": "Moderately suitable with limitation in slope",
+    "LEVEL_4": "Moderately suitable with limitation in soil",
+    "LEVEL_5": "Moderately suitable with limitation in elevation and slope",
+    "LEVEL_6": "Moderately suitable with limitation in slope and soil",
+    "LEVEL_7": "Moderately suitable with limitation in elevation and soil",
+    "LEVEL_8": "Moderately suitable with limitation in elevation, slope and soil",
+    "LEVEL_9": "Marginally suitable with limitation in elevation",
+    "LEVEL_10": "Marginally suitable with limitation in slope",
+    "LEVEL_11": "Marginally suitable with limitation in soil",
+    "LEVEL_12": "Marginally suitable with limitation in elevation and slope",
+    "LEVEL_13": "Marginally suitable with limitation in slope and soil",
+    "LEVEL_14": "Marginally suitable with limitation in elevation and soil",
+    "LEVEL_15": "Marginally suitable with limitation in elevation, slope and soil"
   },
 
   "CROP_PRODUCTION_AREA": {

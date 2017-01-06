@@ -16,6 +16,9 @@ import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } fr
 import { MockRouter } from '../../mocks/router';
 
 import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form.component';
+import { Http } from '@angular/http';
+import { TranslateModule, TranslateLoader } from 'ng2-translate';
+import { TranslationFactoryLoader } from '../../app-translation-factory.service';
 
 describe('Component: RainfallMapFilterForm', () => {
   let component: RainfallMapFilterFormComponent;
@@ -36,7 +39,12 @@ describe('Component: RainfallMapFilterForm', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        SaraiInteractiveMapsFormsModule
+        SaraiInteractiveMapsFormsModule,
+        TranslateModule.forRoot({
+          provide: TranslateLoader,
+          useFactory: TranslationFactoryLoader,
+          deps: [Http]
+        })
       ],
       providers: [
         FormBuilder,
