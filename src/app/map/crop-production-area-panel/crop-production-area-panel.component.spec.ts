@@ -8,19 +8,34 @@
  */
 
 import { Renderer } from '@angular/core';
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing';
+import { Http } from '@angular/http';
+import { Router } from '@angular/router';
+import { AccordionModule } from 'ng2-bootstrap/accordion';
+import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { LeafletMapService } from '../../leaflet';
+import { MockRouter } from '../../mocks/router';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel.component';
+import { CropProductionAreaMapService } from '../crop-production-area-map.service';
+import { TranslationFactoryLoader } from '../../app-translation-factory.service';
 
 describe('Component: CropProductionAreaPanel', () => {
+  let mockRouter: MockRouter;
 
-  beforeEach(() => TestBed.configureTestingModule({
-    providers: [
-      LeafletMapService,
-      Renderer,
-      CropProductionAreaPanelComponent
-    ]
-  }));
+  beforeEach(() => {
+    mockRouter = new MockRouter();
+
+    TestBed.configureTestingModule({
+      providers: [
+        Renderer,
+        LeafletMapService,
+        CropProductionAreaMapService,
+        CropProductionAreaPanelComponent,
+
+        { provide: Router, useValue: mockRouter },
+      ]
+    });
+  });
 
   it('should create an instance', inject([CropProductionAreaPanelComponent], (component: CropProductionAreaPanelComponent) => {
     expect(component).toBeTruthy();

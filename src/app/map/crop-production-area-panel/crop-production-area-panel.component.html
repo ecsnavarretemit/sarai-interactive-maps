@@ -1,4 +1,4 @@
-<div class="map__control map__control--panel"
+<div class="map__control map__control--panel map__control--crop-production-area-panel"
     [@controlWrapper]="controlWrapperAnimationState"
     #controlwrapper>
 
@@ -11,9 +11,21 @@
         </h2>
 
         <div class="map__control__body">
-            <p>
-                Under Construction.....
-            </p>
+            <accordion class="accordion--s-1" closeOthers="true" *ngIf="(cropData | async)?.length > 0">
+                <accordion-group
+                    *ngFor="let data of (cropData | async)"
+                    [isDisabled]="!data.subcrops"
+                    [class.active]="isCropActive(data.slug)">
+
+                    <div accordion-heading
+                        (click)="redirect($event, data.slug)">
+                        <span class="heading__icon">
+                            <i class="crop-icon crop-icon--{{ data.slug }}"></i>
+                        </span>
+                        <span class="heading__text">{{ data.name }}</span>
+                    </div>
+                </accordion-group>
+            </accordion>
         </div>
     </section>
 </div>

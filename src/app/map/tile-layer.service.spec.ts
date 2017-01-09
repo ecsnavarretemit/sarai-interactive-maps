@@ -13,6 +13,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { MapConfig, MAP_CONFIG } from './map.config';
 import { environment } from '../../environments/environment';
 import { TileLayerService } from './tile-layer.service';
+import trimEnd from 'lodash-es/trimEnd';
 
 describe('Service: TileLayerService', () => {
 
@@ -39,8 +40,20 @@ describe('Service: TileLayerService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should equate to the WMS Tile URL configuration', inject([TileLayerService], (service: TileLayerService) => {
-    expect(service.getUrl()).toEqual(environment.sarai_map_config.geoserver.wmsTileLayerUrl);
+  it('should generate a valid WMS Tile URL', inject([TileLayerService], (service: TileLayerService) => {
+    let resolvedConfig = environment.sarai_map_config;
+    let tileLayerUrl = service.getGeoServerWMSTileLayerBaseUrl(
+      resolvedConfig.suitability_maps.wms.workspace,
+      resolvedConfig.suitability_maps.wms.tiled
+    );
+
+    let expectedUrl = trimEnd(resolvedConfig.geoserver.baseUrl, '/') + `/${resolvedConfig.suitability_maps.wms.workspace}/wms`;
+
+    if (resolvedConfig.suitability_maps.wms.tiled === true) {
+      expectedUrl += ((expectedUrl.indexOf('?') >= 0) ? '&' : '?') + 'tiled=true';
+    }
+
+    expect(tileLayerUrl).toEqual(expectedUrl);
   }));
 
   it('should equate to the CQL Filter', inject([TileLayerService], (service: TileLayerService) => {

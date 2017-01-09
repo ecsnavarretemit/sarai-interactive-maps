@@ -5,13 +5,14 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
 import { LayerState, SuitabilityLevelsState, Layer } from '../../store';
 import { TileLayerService } from '../tile-layer.service';
+import { MAP_CONFIG } from '../map.config';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
@@ -25,10 +26,10 @@ import omit from 'lodash-es/omit';
   styleUrls: ['./suitability-maps.component.sass']
 })
 export class SuitabilityMapsComponent implements OnInit, OnDestroy {
-  public WMSTileUrl: string;
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
   private _map: L.Map;
+  private _wmsTileUrl: string;
   private _layerState: string = 'resampled';
   private _mapLayers: Observable<any>;
   private _suitabilityLevels: Observable<any>;
@@ -36,6 +37,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
   constructor(
+    @Inject(MAP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
@@ -43,11 +45,13 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     private _mapLayersStore: Store<any>,
     private _suitabilityLevelsStore: Store<any>
   ) {
-    // set the WMS tile URL
-    this.WMSTileUrl = this._tileLayerService.getUrl();
+    let resolvedConfig = this._config.suitability_maps;
 
     // set default crop
     this.crop = 'rice';
+
+    // set default wms tile layer
+    this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
 
     // get the map state store from the store
     this._mapLayers = this._mapLayersStore.select('mapLayers');
@@ -123,7 +127,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       let payload: Layer = {
         id: layer.layers,
         type: layerType,
-        url: this._tileLayerService.getUrl(),
+        url: this._wmsTileUrl,
         layerOptions: layer
       };
 

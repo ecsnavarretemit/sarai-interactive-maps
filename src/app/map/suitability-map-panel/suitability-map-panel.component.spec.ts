@@ -30,7 +30,7 @@ describe('Component: SuitabilityMapPanel', () => {
         LeafletMapService,
         SuitabilityMapPanelComponent,
 
-        { provide: SuitabilityMapService, useClass: MockSuitabilityMapService }
+        { provide: SuitabilityMapService, useClass: MockSuitabilityMapService },
         { provide: Router, useValue: mockRouter },
 
         provideStore({
