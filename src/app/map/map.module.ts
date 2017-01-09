@@ -38,6 +38,7 @@ import { NdviFilterFormComponent } from './ndvi-filter-form/ndvi-filter-form.com
 import { BasePanelComponent } from './base-panel/base-panel.component';
 import { MapTypeComponent } from './map-type/map-type.component';
 import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form/rainfall-map-filter-form.component';
+import { CropProductionAreaMapsComponent } from './crop-production-area-maps/crop-production-area-maps.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form/rainf
     NdviFilterFormComponent,
     BasePanelComponent,
     MapTypeComponent,
-    RainfallMapFilterFormComponent
+    RainfallMapFilterFormComponent,
+    CropProductionAreaMapsComponent
   ],
   providers: [
     TileLayerService,
