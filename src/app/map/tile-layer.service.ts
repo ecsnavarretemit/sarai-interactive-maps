@@ -127,6 +127,10 @@ export class TileLayerService {
         <a href="http://uplb.edu.ph/" target="_blank">University of the Philippines Los Banos</a>`;
   }
 
+  getCropProductionAreaMapAttribution() {
+    return this.getSuitabilityMapAttribution();
+  }
+
   getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
     let layers = [];
     let attribution = this.getSuitabilityMapAttribution();
@@ -188,6 +192,33 @@ export class TileLayerService {
         layers: item,
         minZoom: 11,
         maxZoom: 20,
+        attribution,
+      }, options);
+    });
+  }
+
+  getCropProductionAreaLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
+    let layers = [];
+    let attribution = this.getCropProductionAreaMapAttribution();
+    let workspace = 'sarai-crop-production-area-20161024';
+
+    switch (crop.toLocaleLowerCase()) {
+      case 'rice':
+      case 'corn':
+        layers = [
+          `${workspace}:${snakeCase(crop)}`
+        ];
+
+        break;
+
+      default:
+        throw new Error('Not yet implemented!');
+    }
+
+    return map(layers, (item) => {
+      return assign({}, this.getDefaultOptions(), this.getDefaultWMSOptions(), {
+        layers: item,
+        minZoom: 5,
         attribution,
       }, options);
     });
