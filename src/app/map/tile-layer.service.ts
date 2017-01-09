@@ -1,3 +1,4 @@
+import { UrlTree } from '@angular/router';
 /*!
  * Tile Layer Service
  *
@@ -18,6 +19,7 @@ import reduce from 'lodash-es/reduce';
 import snakeCase from 'lodash-es/snakeCase';
 import size from 'lodash-es/size';
 import template from 'lodash-es/template';
+import trimEnd from 'lodash-es/trimEnd';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/toPromise';
 
@@ -31,7 +33,6 @@ export class TileLayerService {
   public transparent: boolean = true;
   public maxZoom: number = 18;
   public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
-  public wmsTileLayerUrl: string;
 
   constructor(
     @Inject(MAP_CONFIG) private _config: any,
@@ -71,21 +72,23 @@ export class TileLayerService {
     `, {
       'variable': 'data'
     });
-
-    // set the properties based from what the config will return
-    this.wmsTileLayerUrl = this._config.geoserver.wmsTileLayerUrl;
   }
 
-  getUrl(): string {
-    return this.wmsTileLayerUrl;
+  getGeoServerWMSTileLayerBaseUrl(workspace: string, tiled = true): string {
+    let tileLayerUrl: string = trimEnd(this._config.geoserver.baseUrl, '/') + `/${workspace}/wms`;
+
+    if (tiled === true) {
+      tileLayerUrl += ((tileLayerUrl.indexOf('?') >= 0) ? '&' : '?') + 'tiled=true';
+    }
+
+    return tileLayerUrl;
   }
 
-  getFilteredUrlByGridcode(gridcodes: Array<number> = []): string {
-    let defaultUrl = this.wmsTileLayerUrl;
-    let resolvedUrl = defaultUrl;
+  getFilteredUrlByGridcode(workspace: string, tiled = true, gridcodes: Array<number> = []): string {
+    let resolvedUrl = this.getGeoServerWMSTileLayerBaseUrl(workspace, tiled);
 
     if (gridcodes.length > 0) {
-      resolvedUrl += ((defaultUrl.indexOf('?') >= 0) ? '&' : '?') + `filter=${this.createLayerFilter(gridcodes)}`;
+      resolvedUrl += ((resolvedUrl.indexOf('?') >= 0) ? '&' : '?') + `filter=${this.createLayerFilter(gridcodes)}`;
     }
 
     return resolvedUrl;
@@ -127,10 +130,6 @@ export class TileLayerService {
         <a href="http://uplb.edu.ph/" target="_blank">University of the Philippines Los Banos</a>`;
   }
 
-  getCropProductionAreaMapAttribution() {
-    return this.getSuitabilityMapAttribution();
-  }
-
   getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
     let layers = [];
     let attribution = this.getSuitabilityMapAttribution();
@@ -145,7 +144,7 @@ export class TileLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._config.geoserver.workspace}:${snakeCase(crop)}${this._config.suitability_maps.countrLevelLayerSuffix}`
+          `${this._config.suitability_maps.wms.workspace}:${snakeCase(crop)}${this._config.suitability_maps.countrLevelLayerSuffix}`
         ];
 
         break;
@@ -178,7 +177,7 @@ export class TileLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._config.geoserver.workspace}:${snakeCase(crop)}${this._config.suitability_maps.municipalLevelLayerSuffix}`
+          `${this._config.suitability_maps.wms.workspace}:${snakeCase(crop)}${this._config.suitability_maps.municipalLevelLayerSuffix}`
         ];
 
         break;
@@ -197,6 +196,10 @@ export class TileLayerService {
     });
   }
 
+  getCropProductionAreaMapAttribution() {
+    return this.getSuitabilityMapAttribution();
+  }
+
   getCropProductionAreaLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
     let layers = [];
     let attribution = this.getCropProductionAreaMapAttribution();
@@ -206,7 +209,7 @@ export class TileLayerService {
       case 'rice':
       case 'corn':
         layers = [
-          `${workspace}:${snakeCase(crop)}`
+          `${this._config.crop_production_area_maps.wms.workspace}:${snakeCase(crop)}`
         ];
 
         break;

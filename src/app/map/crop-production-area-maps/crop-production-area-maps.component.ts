@@ -5,13 +5,14 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, QueryList, ViewChildren } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LayerState, Layer } from '../../store';
 import { TileLayerService } from '../tile-layer.service';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
+import { MAP_CONFIG } from '../map.config';
 import * as L from 'leaflet';
 import map from 'lodash-es/map';
 import 'rxjs/add/operator/map';
@@ -23,21 +24,24 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./crop-production-area-maps.component.sass']
 })
 export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
-  public WMSTileUrl: string;
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
+  private _wmsTileUrl: string;
   private _map: L.Map;
   private _mapLayers: Observable<any>;
 
   constructor(
+    @Inject(MAP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _mapLayersStore: Store<any>
   ) {
-    // set the WMS tile URL
-    this.WMSTileUrl = `http://202.92.144.40:8080/geoserver/sarai-crop-production-area-20161024/wms?tiled=true`;
+    let resolvedConfig = this._config.crop_production_area_maps;
+
+    // set default wms tile layer
+    this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
 
     // set default crop
     this.crop = 'rice';
@@ -75,7 +79,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
       let payload: Layer = {
         id: layer.layers,
         type: 'crop-production-area',
-        url: this.WMSTileUrl,
+        url: this._wmsTileUrl,
         layerOptions: layer
       };
 
