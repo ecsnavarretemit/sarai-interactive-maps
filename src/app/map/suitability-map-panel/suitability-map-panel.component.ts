@@ -16,6 +16,7 @@ import { SuitabilityLevel } from '../suitability-level.interface';
 import { Crop } from '../crop.interface';
 import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
+import 'rxjs/add/operator/share';
 
 @Component({
   selector: 'app-suitability-map-panel',
@@ -31,7 +32,7 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
   public controlWrapperAnimationState: string = 'hidden';
 
   constructor(
-    public router: Router,
+    private _router: Router,
     private _childRenderer: Renderer,
     private _childMapService: LeafletMapService,
     private _suitabilityMapService: SuitabilityMapService,
@@ -66,13 +67,21 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
       ;
   }
 
-  suitabilityRedirect(event, crop: string, containsChild = true) {
+  isMapActive(): boolean {
+    return this._router.isActive(`/suitability-maps`, false);
+  }
+
+  isCropActive(crop: string, ): boolean {
+    return this._router.isActive(`/suitability-maps/${crop}`, true);
+  }
+
+  redirect(event, crop: string, containsChild = true) {
     if (containsChild) {
       return;
     }
 
     // redirect to the URL
-    this.router.navigateByUrl(`/suitability-maps/${crop}`);
+    this._router.navigateByUrl(`/suitability-maps/${crop}`);
   }
 
   onToggleCheckbox(isChecked: boolean, level: any) {

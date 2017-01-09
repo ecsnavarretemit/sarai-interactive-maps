@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
-    public router: Router,
+    public _router: Router,
     private _window: WindowService,
     private _logger: AppLoggerService,
     private _translate: TranslateService,
@@ -70,6 +70,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       lat: 13,
       lng: 122
     };
+  }
+
+  shouldActivateMapType(urlPart: string): boolean {
+    return this._router.isActive(urlPart, false);
   }
 
   togglePanels(mapType: MapTypeComponent) {
