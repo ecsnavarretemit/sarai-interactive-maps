@@ -1,0 +1,46 @@
+// *************************************#
+// [_accordions.sass]
+// *************************************#
+
+// [.accordion--s-1] ::start
+
+.accordion--s-1
+  .panel
+    +border-top-radius(0)
+    +border-right-radius(0)
+    +border-bottom-radius(0)
+    +border-left-radius(0)
+
+  .panel-heading
+    position: relative
+    padding: 5px 10px 5px 45px
+    text-transform: uppercase
+
+    .heading__icon
+      position: absolute
+      left: 10px
+
+    .heading__text
+      line-height: 1.9
+
+  .active .panel-heading
+    background-color: #98FB98
+    border-color: #98FB98
+
+  .panel-body
+    padding: 0
+
+  .accordion-toggle
+    font-weight: normal
+    outline: none
+
+    &:focus
+      outline: none
+
+    &:hover
+      color: #006400
+      text-decoration: none
+
+// [.accordion--s-1] ::end
+
+

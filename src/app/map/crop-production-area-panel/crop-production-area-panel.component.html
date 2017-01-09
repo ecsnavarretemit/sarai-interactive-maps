@@ -11,7 +11,7 @@
         </h2>
 
         <div class="map__control__body">
-            <accordion closeOthers="true" *ngIf="(cropData | async)?.length > 0">
+            <accordion class="accordion--s-1" closeOthers="true" *ngIf="(cropData | async)?.length > 0">
                 <accordion-group
                     *ngFor="let data of (cropData | async)"
                     [isDisabled]="!data.subcrops"
