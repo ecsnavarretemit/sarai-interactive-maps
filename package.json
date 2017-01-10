@@ -38,7 +38,7 @@
     "ng2-bootstrap": "^1.1.16-9",
     "ng2-pdf-viewer": "0.1.5",
     "ng2-translate": "^5.0.0",
-    "rxjs": "^5.0.2",
+    "rxjs": "^5.0.3",
     "sass-mediaqueries": "^1.6.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
