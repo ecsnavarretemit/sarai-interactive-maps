@@ -19,15 +19,7 @@
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.2.tgz#7a32c76808cbd0e80ffcd6e1fd68f58fc8d0ff61"
 
-"@angular/compiler-cli@^2.3.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.1.tgz#9291504197a199fee2f48353d67431a1a9e40833"
-  dependencies:
-    "@angular/tsc-wrapped" "0.5.0"
-    minimist "^1.2.0"
-    reflect-metadata "^0.1.2"
-
-"@angular/compiler-cli@^2.4.2":
+"@angular/compiler-cli@^2.3.1", "@angular/compiler-cli@^2.4.2":
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.2.tgz#88ab967cb75df7442f03b3a0c9f9bd1dfe0997e1"
   dependencies:
@@ -35,19 +27,11 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^2.3.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.1.tgz#62b4fbfc53c934bd5def78db594cbf245b3f446a"
-
-"@angular/compiler@^2.4.2":
+"@angular/compiler@^2.3.1", "@angular/compiler@^2.4.2":
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.2.tgz#0b1f63059330a922cd3b86444a705ca8199d69c2"
 
-"@angular/core@^2.3.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.1.tgz#3a6d2dc7fd86fdebe4febae7eb28abad7d04c76a"
-
-"@angular/core@^2.4.2":
+"@angular/core@^2.3.1", "@angular/core@^2.4.2":
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.2.tgz#774fb675733437be5eab635ab13235c76ec961ba"
 
@@ -71,13 +55,7 @@
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-3.4.2.tgz#aa787bdbb73a5436e0d0d40d2924d41249541b68"
 
-"@angular/tsc-wrapped@0.5.0", "@angular/tsc-wrapped@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@angular/tsc-wrapped/-/tsc-wrapped-0.5.0.tgz#e50f81af02c6817dcaba22032e49ba8060d628b4"
-  dependencies:
-    tsickle "^0.2"
-
-"@angular/tsc-wrapped@0.5.1":
+"@angular/tsc-wrapped@0.5.1", "@angular/tsc-wrapped@^0.5.0":
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@angular/tsc-wrapped/-/tsc-wrapped-0.5.1.tgz#7a69bec999eef41903dddaaccdc862cfcface52c"
   dependencies:
@@ -118,15 +96,15 @@
   dependencies:
     "@types/geojson" "0.0.31"
 
-"@types/lodash-es@^4.14.1":
-  version "4.14.1"
-  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.14.1.tgz#575cacbf6ccb3e5d0a1b75684af656400125a9ca"
+"@types/lodash-es@^4.14.2":
+  version "4.14.2"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.14.2.tgz#ae1d00d52d549867e1ecb1c0502559b156ce967c"
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.44":
-  version "4.14.44"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.44.tgz#04585ff0b80d5e434a5f86f15e7964be4f775cba"
+"@types/lodash@*", "@types/lodash@^4.14.48":
+  version "4.14.48"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.48.tgz#d4d7747c28c63581e803bb2d03d0f0f36d2ac624"
 
 "@types/node@^6.0.42", "@types/node@^6.0.46":
   version "6.0.52"
@@ -3226,9 +3204,9 @@ loader-utils@0.2.x, loader-utils@0.x.x, loader-utils@^0.2.11, loader-utils@^0.2.
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-lodash-es@^4.17.3:
-  version "4.17.3"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.3.tgz#567a08d2f0c91d92b31ce35c5565e1f337fb81db"
+lodash-es@^4.17.4:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
 
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
