@@ -35,7 +35,7 @@
     "leaflet-measure": "^2.1.1",
     "leaflet-sidebar": "^0.1.9",
     "lodash-es": "^4.17.4",
-    "ng2-bootstrap": "^1.1.16-9",
+    "ng2-bootstrap": "^1.1.16-11",
     "ng2-pdf-viewer": "0.1.5",
     "ng2-translate": "^5.0.0",
     "rxjs": "^5.0.3",

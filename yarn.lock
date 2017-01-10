@@ -3767,9 +3767,9 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ng2-bootstrap@^1.1.16-9:
-  version "1.1.16-9"
-  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.1.16-9.tgz#fa5862f9067898b5fd6681867170447a2f4f9db4"
+ng2-bootstrap@^1.1.16-11:
+  version "1.1.16-11"
+  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.1.16-11.tgz#273308634ea4068e684449b98f4eb61e1a20c0a5"
   dependencies:
     moment "2.17.1"
 
