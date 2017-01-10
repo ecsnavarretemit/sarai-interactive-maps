@@ -7,7 +7,7 @@ export const environment = {
     },
     translations: {
       static: {
-        prefix: 'http://localhost:4200/assets/i18n',
+        prefix: '/assets/i18n',
         ext: '.json'
       }
     },
