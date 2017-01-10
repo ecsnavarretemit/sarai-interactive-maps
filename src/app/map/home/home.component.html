@@ -3,9 +3,10 @@
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type
-            [activateImmediately]="router.isActive('/suitability-maps', false)"
+            [activateImmediately]="shouldActivateMapType('/suitability-maps')"
             (activate)="togglePanels(suitabilityMapType)"
             #suitabilityMapType>
+
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--suitability-map"
@@ -21,7 +22,11 @@
             </app-suitability-map-panel>
         </app-map-type>
 
-        <app-map-type (activate)="togglePanels(cropProductionAreaMapType)" #cropProductionAreaMapType>
+        <app-map-type
+            [activateImmediately]="shouldActivateMapType('/crop-production-area')"
+            (activate)="togglePanels(cropProductionAreaMapType)"
+            #cropProductionAreaMapType>
+
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--crop-production-area"
@@ -38,8 +43,10 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="router.isActive('/ndvi', false)"
-            (activate)="togglePanels(ndviMapType)" #ndviMapType>
+            [activateImmediately]="shouldActivateMapType('/ndvi')"
+            (activate)="togglePanels(ndviMapType)"
+            #ndviMapType>
+
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--ndvi"
@@ -56,8 +63,10 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="router.isActive('/rainfall-maps', false)"
-            (activate)="togglePanels(rainfallMapType)" #rainfallMapType>
+            [activateImmediately]="shouldActivateMapType('/rainfall-maps')"
+            (activate)="togglePanels(rainfallMapType)"
+            #rainfallMapType>
+
             <app-leaflet-button
                 map-type-button
                 controlClass="map__control--map-data-type map__control--rainfall-map"

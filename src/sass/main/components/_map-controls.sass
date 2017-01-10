@@ -58,35 +58,12 @@
   .map__control__title
     border-bottom: 1px solid #FFFFFF
 
-// [Suitability Map Controls] ::start
+// [Suitability and Crop Production Area Panel] ::start
 
-.map__control--suitability-map-panel
-  .panel
-    +border-top-radius(0)
-    +border-right-radius(0)
-    +border-bottom-radius(0)
-    +border-left-radius(0)
-
-  .panel-heading
-    position: relative
-    padding: 5px 10px 5px 45px
-    text-transform: uppercase
-
-    .heading__icon
-      position: absolute
-      left: 10px
-
-    .heading__text
-      line-height: 1.9
-
-  .panel-body
-    padding: 0
-
-  .panel-group
-    .active .panel-heading,
-    .subcrop.active
-      background-color: #98FB98
-      border-color: #98FB98
+.accordion--s-1
+  .subcrop.active
+    background-color: #98FB98
+    border-color: #98FB98
 
   .subcrop
     padding: 15px
@@ -100,16 +77,9 @@
       color: #006400
       cursor: pointer
 
-  .accordion-toggle
-    font-weight: normal
-    outline: none
+// [Suitability and Crop Production Area Panel] ::end
 
-    &:focus
-      outline: none
-
-    &:hover
-      color: #006400
-      text-decoration: none
+// [Suitability Map Controls] ::start
 
 .suitability-level-filter
   margin-top: 10px

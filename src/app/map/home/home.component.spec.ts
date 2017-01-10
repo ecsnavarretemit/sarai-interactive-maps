@@ -12,7 +12,8 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { Http, HttpModule} from '@angular/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
-import { TranslateModule, TranslateLoader, TranslateStaticLoader, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
+import { TranslationFactoryLoader } from '../../app-translation-factory.service';
 import { WindowService } from '../window.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { MockRouter } from '../../mocks/router';
@@ -29,7 +30,7 @@ describe('Component: Home', () => {
         HttpModule,
         TranslateModule.forRoot({
           provide: TranslateLoader,
-          useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+          useFactory: TranslationFactoryLoader,
           deps: [Http]
         }),
       ],

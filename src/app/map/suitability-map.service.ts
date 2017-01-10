@@ -11,11 +11,11 @@ import { Observable } from 'rxjs/Observable';
 import { MAP_CONFIG } from './map.config';
 import { SuitabilityLevel } from './suitability-level.interface';
 import { Crop } from './crop.interface';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
 import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 import values from 'lodash-es/values';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SuitabilityMapService {
@@ -82,7 +82,8 @@ export class SuitabilityMapService {
   checkIfSuitabilityMapImageExists(crop: string, province: string, extension = 'pdf'): Promise<any> {
     return this._http
       .head(`${this._config.suitability_maps.imageRootPath}/${crop}/${province}.${extension}`)
-      .toPromise();
+      .toPromise()
+      ;
   }
 
   getSuitabilityLevels(): Promise<Array<SuitabilityLevel>> {

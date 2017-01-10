@@ -1,16 +1,13 @@
-const geoserverWorkspace = 'workspace';
-
 export const environment = {
   production: false,
   sarai_map_config: {
     geoserver: {
-      workspace: geoserverWorkspace,
-      wmsTileLayerUrl: `http://demo.opengeo.org/geoserver/${geoserverWorkspace}/wms?tiled=true`,
+      baseUrl: 'http://demo.opengeo.org/geoserver',
       restApiEndpoint: 'http://demo.opengeo.org/geoserver/rest'
     },
     translations: {
       static: {
-        prefix: 'http://localhost:4200/assets/i18n',
+        prefix: '/assets/i18n',
         ext: '.json'
       }
     },
@@ -20,7 +17,17 @@ export const environment = {
       propertyFilterName: 'GRIDCODE',
       cropsApiEndpoint: 'http://localhost:3000/crops/',
       cropsApiEndpointMethod: 'GET',
-      imageRootPath: 'http://localhost:4200/assets/docs/crops'
+      imageRootPath: 'http://localhost:4200/assets/docs/crops',
+      wms: {
+        workspace: 'sarai-20161024',
+        tiled: true
+      }
+    },
+    crop_production_area_maps: {
+      wms: {
+        workspace: 'sarai-crop-production-area-20161024',
+        tiled: true
+      }
     },
     ndvi_maps: {
       eeApiEndpoint: 'http://localhost:5000/ndvi',

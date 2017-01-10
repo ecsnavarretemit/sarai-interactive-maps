@@ -34,7 +34,7 @@ export class LeafletZoomComponent implements OnInit {
         this.control.addTo(map);
 
         // remove the default container
-        this.control.getContainer().remove();
+        this._renderer.invokeElementMethod(this.control.getContainer(), 'remove');
 
         let container = this.control.onAdd(map);
 

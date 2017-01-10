@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="no-js">
 <head>
     <meta charset="utf-8">
     <title>SARAI Maps</title>
@@ -17,12 +17,27 @@
     <!-- [FB OpenGraph Meta Tags] ::end -->
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script>
+        (function(a){a=a.documentElement;a.className=a.className.replace(/(?:^|s)no-js(?!S)/,"");a.className+=" js"})(document);
+    </script>
 </head>
 <body>
     <app-root></app-root>
     <div class="preloader preloader--base">
         <div class="preloader__content">
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
+
+            <noscript>
+                <div class="no-js-message">
+                    <h1>Looks like You Don’t Have Javascript Enabled</h1>
+
+                    <p>
+                        SARAI Interactive Maps is built on the latest web technology using Javascript. To
+                        use SARAI Interactive Maps, please enable Javascript so we can serve you the best
+                        experience in using this website.
+                    </p>
+                </div>
+            </noscript>
 
             <div class="sk-wave">
                 <div class="sk-rect sk-rect1"></div>

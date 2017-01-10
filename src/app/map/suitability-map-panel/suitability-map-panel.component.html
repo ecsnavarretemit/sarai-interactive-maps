@@ -15,14 +15,14 @@
                {{ 'SUITABILITY.DESCRIPTION' | translate }}
             </p>
 
-            <accordion closeOthers="true" *ngIf="(cropData | async)?.length > 0">
+            <accordion class="accordion--s-1" closeOthers="true" *ngIf="(cropData | async)?.length > 0">
                 <accordion-group
                     *ngFor="let data of (cropData | async)"
                     [isDisabled]="!data.subcrops"
-                    [class.active]="router.isActive('/suitability-maps/' + data.slug)">
+                    [class.active]="isCropActive(data.slug)">
 
                     <div accordion-heading
-                        (click)="suitabilityRedirect($event, data.slug, !!data.subcrops)">
+                        (click)="redirect($event, data.slug, !!data.subcrops)">
                         <span class="heading__icon">
                             <i class="crop-icon crop-icon--{{ data.slug }}"></i>
                         </span>
@@ -31,8 +31,8 @@
 
                     <div class="subcrop"
                         *ngFor="let subcrop of data.subcrops"
-                        [class.active]="router.isActive('/suitability-maps/' + subcrop.slug)"
-                        (click)="suitabilityRedirect($event, subcrop.slug, false)">
+                        [class.active]="isCropActive(subcrop.slug)"
+                        (click)="redirect($event, subcrop.slug, false)">
                         {{ 'SUITABILITY.' + subcrop.name | translate }}
                     </div>
                 </accordion-group>
@@ -40,7 +40,7 @@
         </div>
     </section>
 
-    <section class="map__control__section suitability-level-filter" *ngIf="(levels | async)?.length > 0 && router.isActive('/suitability-maps')">
+    <section class="map__control__section suitability-level-filter" *ngIf="(levels | async)?.length > 0 && isMapActive()">
         <h2 class="map__control__title title">
             <span class="title__text">{{ 'LEVELS.TITLE' | translate }}</span>
         </h2>

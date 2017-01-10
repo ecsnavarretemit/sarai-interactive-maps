@@ -1,0 +1,8 @@
+<app-leaflet-wms-layer
+        *ngFor="let layer of (layersCollection | async)"
+        [url]="layer.url"
+        [layerOptions]="layer.layerOptions"
+        [id]="layer.id">
+        </app-leaflet-wms-layer>
+
+

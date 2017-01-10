@@ -37,7 +37,7 @@ describe('Component: LeafletButton', () => {
     });
 
     component.onClick(new Event('click'));
-  }));
+  })));
 
   it('should toggle active state', async(() => {
     // assemble the component
