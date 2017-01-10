@@ -16,6 +16,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from 'ng2-translate';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { MapRoutingModule } from './map-routing.module';
 import { LeafletModule } from '../leaflet';
 import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
 
@@ -54,7 +55,8 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     ModalModule,
     MdCheckboxModule,
     TranslateModule,
-    LeafletModule
+    LeafletModule,
+    MapRoutingModule
   ],
   declarations: [
     HomeComponent,
