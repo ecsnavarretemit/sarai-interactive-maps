@@ -12,13 +12,12 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../forms';
-import { MockRouter } from '../../mocks/router';
-
-import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form.component';
 import { Http } from '@angular/http';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
+import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../forms';
+import { MockRouter } from '../../mocks/router';
 import { TranslationFactoryLoader } from '../../app-translation-factory.service';
+import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form.component';
 
 describe('Component: RainfallMapFilterForm', () => {
   let component: RainfallMapFilterFormComponent;

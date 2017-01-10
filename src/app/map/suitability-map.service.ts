@@ -82,7 +82,8 @@ export class SuitabilityMapService {
   checkIfSuitabilityMapImageExists(crop: string, province: string, extension = 'pdf'): Promise<any> {
     return this._http
       .head(`${this._config.suitability_maps.imageRootPath}/${crop}/${province}.${extension}`)
-      .toPromise();
+      .toPromise()
+      ;
   }
 
   getSuitabilityLevels(): Promise<Array<SuitabilityLevel>> {

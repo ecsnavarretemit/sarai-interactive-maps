@@ -12,15 +12,15 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Http } from '@angular/http';
+import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../forms';
 import { LeafletMapService } from '../../leaflet';
 import { LocationsService } from '../locations.service';
 import { MockRouter } from '../../mocks/router';
 import { MockLocationsService } from '../../mocks/map';
-import { NdviFilterFormComponent } from './ndvi-filter-form.component';
-import { Http } from '@angular/http';
-import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { TranslationFactoryLoader } from '../../app-translation-factory.service';
+import { NdviFilterFormComponent } from './ndvi-filter-form.component';
 
 describe('Component: NdviFilterForm', () => {
   let component: NdviFilterFormComponent;
