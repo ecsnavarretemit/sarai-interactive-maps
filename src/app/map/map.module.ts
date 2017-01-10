@@ -93,7 +93,12 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     RainfallMapPanelComponent,
     DownloadImageFormComponent,
     NdviMapsComponent,
-    RainfallMapsComponent
+    RainfallMapsComponent,
+    NdviFilterFormComponent,
+    BasePanelComponent,
+    MapTypeComponent,
+    RainfallMapFilterFormComponent,
+    CropProductionAreaMapsComponent
   ]
 })
 export class MapModule { }
