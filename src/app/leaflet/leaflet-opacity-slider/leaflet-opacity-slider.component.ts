@@ -66,7 +66,7 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngAfterViewInit() {
-    // since mouseover is fire continuously, we throttle it so that it is only fired every 600 ms
+    // since mouseover is fired continuously, we throttle it so that it is only fired every 600 ms
     this._mouseOverSubscription = Observable
       .fromEvent(this.controlWrapper.nativeElement, 'mouseover')
       .throttleTime(600)
