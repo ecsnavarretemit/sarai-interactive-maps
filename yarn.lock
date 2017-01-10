@@ -90,9 +90,9 @@
   version "2.5.38"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.38.tgz#a4379124c4921d4e21de54ec74669c9e9b356717"
 
-"@types/leaflet@^1.0.41":
-  version "1.0.41"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.41.tgz#0d783bc02fa44d3a90e689e42183a2ed4c494a44"
+"@types/leaflet@^1.0.43":
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.43.tgz#a2416d599c32b913f9c698483c447168ea0cdca2"
   dependencies:
     "@types/geojson" "0.0.31"
 
@@ -106,9 +106,9 @@
   version "4.14.48"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.48.tgz#d4d7747c28c63581e803bb2d03d0f0f36d2ac624"
 
-"@types/node@^6.0.42", "@types/node@^6.0.46":
-  version "6.0.52"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.52.tgz#1ac3a99b42320f9e463482f25af4c2359473aaa6"
+"@types/node@^6.0.46", "@types/node@^6.0.59":
+  version "6.0.59"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.59.tgz#b7fd8f3144c447c829a8eab8805c3a523e9e5b44"
 
 "@types/q@^0.0.32":
   version "0.0.32"
