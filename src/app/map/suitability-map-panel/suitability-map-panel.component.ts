@@ -16,7 +16,6 @@ import { SuitabilityLevel } from '../suitability-level.interface';
 import { Crop } from '../crop.interface';
 import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
-import 'rxjs/add/operator/share';
 
 @Component({
   selector: 'app-suitability-map-panel',
