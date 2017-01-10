@@ -2043,9 +2043,9 @@ findup@0.1.5, findup@^0.1.5:
     colors "~0.6.0-1"
     commander "~2.1.0"
 
-flatpickr@^2.2.5:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.2.5.tgz#84b0612a97ad61ac126d095d719789f406244ff1"
+flatpickr@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.3.4.tgz#3af47b0b5213caa444feab4c5c34c14f991e1fc5"
 
 flatten@^1.0.2:
   version "1.0.2"
