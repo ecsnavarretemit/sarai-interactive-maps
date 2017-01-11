@@ -30,6 +30,7 @@
   .map__control__body
     padding: 15px 0
 
+
 // --------------------------------------
 // [Tile Selector] ::start
 // --------------------------------------
@@ -37,6 +38,10 @@
 .map__control--tile-selector
   right: 0
   z-index: 4
+
+  .leaflet-touch &
+    .map__control__body
+      padding: 20px 0
 
 // --------------------------------------
 // [Tile Selector] ::end
@@ -109,7 +114,7 @@
     .md-checkbox-label
       max-width: 150px
 
-// [Suitability Map Controls] ::start
+// [Suitability Map Controls] ::end
 
 // --------------------------------------
 // [Control Panel] ::end
@@ -148,6 +153,9 @@
 .map__control--measure
   top: 110px
   right: 10px
+
+  .leaflet-touch &
+    top: 125px
 
 // --------------------------------------
 // [Measure] ::end
