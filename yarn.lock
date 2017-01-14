@@ -275,6 +275,10 @@ angular2-cookie@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/angular2-cookie/-/angular2-cookie-1.2.6.tgz#8fa845531e777adb042fe2f339c0040f6ddbf09d"
 
+angulartics2@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/angulartics2/-/angulartics2-1.6.3.tgz#c1425d0e282bc57b550f76096792b46f0e538aea"
+
 ansi-align@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-1.1.0.tgz#2f0c1658829739add5ebb15e6b0c6e3423f016ba"

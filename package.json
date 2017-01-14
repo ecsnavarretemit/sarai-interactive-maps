@@ -27,6 +27,7 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
     "angular2-cookie": "^1.2.6",
+    "angulartics2": "^1.6.3",
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
     "flatpickr": "^2.3.4",
