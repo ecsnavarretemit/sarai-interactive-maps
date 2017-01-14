@@ -216,7 +216,7 @@
         </header>
 
         <div class="sidebar__content" sidebar-content>
-            <app-download-image-form (processComplete)="previewPdf($event)"></app-download-image-form>
+            <app-download-image-form (processComplete)="previewPdf($event)" (download)="onDownload($event)"></app-download-image-form>
         </div>
     </app-leaflet-sidebar>
 

@@ -3,7 +3,7 @@
         <label for="ec_crop_sel">Select crop (pick one):</label>
         <select name="ec_crop_sel" id="ec_crop_sel" class="form-control" [formControl]="selectCrop">
             <option value="">Select Crop</option>
-            <option *ngFor="let crop of (crops | async)" [attr.value]="crop.slug">
+            <option *ngFor="let crop of (crops | async)" [ngValue]="crop">
                 {{ crop.name }}
             </option>
         </select>
@@ -18,7 +18,7 @@
         <label for="ec_region_sel">Select region (pick one):</label>
         <select name="ec_region_sel" id="ec_region_sel" class="form-control" [formControl]="selectRegion">
             <option value="">Select Region</option>
-            <option *ngFor="let region of (regions | async)" [attr.value]="region.id">
+            <option *ngFor="let region of (regions | async)" [ngValue]="region">
                 {{ region.name }}
             </option>
         </select>
@@ -33,7 +33,7 @@
         <label for="ec_province_sel">Select province (pick one):</label>
         <select name="ec_province_sel" id="ec_province_sel" class="form-control" [formControl]="selectProvince">
             <option value="">Select Province</option>
-            <option *ngFor="let province of (provinces | async)" [attr.value]="province.slug">
+            <option *ngFor="let province of (provinces | async)" [ngValue]="province">
                 {{ province.name }}
             </option>
         </select>
@@ -51,7 +51,7 @@
             [href]="pdfUrl"
             [attr.download]="pdfFilename"
             [ngClass]="{disabled: !(pdfUrl !== '' && pdfUrl !== '#')}"
-            (click)="download($event)">
+            (click)="onDownloadClick($event)">
             Download
         </a>
     </div>
