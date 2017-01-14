@@ -5,8 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, isDevMode, Renderer, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
+import { Angulartics2, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { AppLoggerService, StreamData } from './app-logger.service';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
@@ -23,8 +24,13 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     private _logger: AppLoggerService,
-    private _renderer: Renderer
-  ) { }
+    private _renderer: Renderer,
+    private _angulartics: Angulartics2,
+    public angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
+  ) {
+    // set angulartics to developerMode when isDevMode() returns true
+    this._angulartics.developerMode(isDevMode());
+  }
 
   ngAfterViewInit() {
     // only get those items whose `emit` attribute is set to true

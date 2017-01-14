@@ -5,13 +5,14 @@
  * Licensed under MIT
  */
 
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
@@ -38,11 +39,15 @@ import { AppComponent } from './app.component';
       provide: TranslateLoader,
       useFactory: TranslationFactoryLoader,
       deps: [Http]
-    })
+    }),
+    Angulartics2Module.forRoot([
+      Angulartics2GoogleAnalytics
+    ])
   ],
   providers: [
     AppLoggerService,
     CookieService,
+    Title,
 
     // must be present here when using AOT compilation for Angular 2.4.x or greater or else
     // the compiled code will throw error: `No provider for CookieOptions!`

@@ -6,7 +6,8 @@
  */
 
 import { Component, Inject, OnInit, OnDestroy, QueryList, ViewChildren } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LayerState, Layer } from '../../store';
@@ -26,6 +27,7 @@ import 'rxjs/add/operator/debounceTime';
 export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
+  private _pageTitle: string = 'Crop Production Area';
   private _wmsTileUrl: string;
   private _map: L.Map;
   private _mapLayers: Observable<any>;
@@ -35,7 +37,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _title: Title,
     private _mapLayersStore: Store<any>
   ) {
     let resolvedConfig = this._config.crop_production_area_maps;
@@ -65,6 +67,9 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
       if (typeof params['crop'] !== 'undefined') {
         this.crop = params['crop'];
       }
+
+      // set the page title
+      this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
 
       // process wms layers
       this.processLayers();
@@ -104,6 +109,9 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // reset the page title
+    this._title.setTitle(`${this._config.app_title}`);
+
     // remove all layers published on the store and on the collection
     this.removeLayers();
   }

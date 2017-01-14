@@ -6,7 +6,8 @@
  */
 
 import { Component, Inject, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
@@ -28,6 +29,7 @@ import omit from 'lodash-es/omit';
 export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
+  private _pageTitle: string = 'Suitability Maps';
   private _map: L.Map;
   private _wmsTileUrl: string;
   private _layerState: string = 'resampled';
@@ -41,7 +43,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _title: Title,
     private _mapLayersStore: Store<any>,
     private _suitabilityLevelsStore: Store<any>
   ) {
@@ -87,6 +89,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       if (typeof params['crop'] !== 'undefined') {
         this.crop = params['crop'];
       }
+
+      // set the page title
+      this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
 
       // process wms layers
       this.processLayers();
@@ -183,6 +188,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // reset the page title
+    this._title.setTitle(`${this._config.app_title}`);
+
     // remove all layers published on the store and on the collection
     this.removeLayers();
   }

@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, isDevMode, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -42,10 +42,12 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   public provinces: Observable<any>;
   public pdfUrl: string | boolean = '#';
   public pdfFilename: string | boolean | null = null;
+  public pdfFileDescriptiveName: string | null = null;
   private _regionChangeSubscription: Subscription;
   private _combinedRejectSubscription: Subscription;
   private _combinedResolveSubscription: Subscription;
 
+  @Output() download: EventEmitter<any> = new EventEmitter<any>();
   @Output() processComplete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -77,7 +79,15 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     // populate the region select field
     this.regions = this._locationsService
       .getRegions()
-      .map((res) => res.result)
+      .map((res) => {
+        return map(res.result, (region: any) => {
+          return {
+            id: region.id,
+            name: region.name,
+            slug: region.slug
+          };
+        });
+      })
       .catch((err: any) => {
         // catch the error but do nothing
         return Observable.of(null);
@@ -102,10 +112,8 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
 
     this._regionChangeSubscription = this.selectRegion.valueChanges
       .subscribe((value: any) => {
-        let trimmed = trim(value);
-
         // reset the form element state when value is empty
-        if (trimmed === '') {
+        if (value === '') {
           this.selectProvince.setValue('');
           this.selectProvince.markAsPristine();
           this.selectProvince.markAsUntouched();
@@ -115,7 +123,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
 
         // get the provinces from the API
         this.provinces = this._locationsService
-          .getProvincesByRegionId(parseInt(trimmed, 10))
+          .getProvincesByRegionId(parseInt(value.id, 10))
           .map((res) => res.result)
           ;
 
@@ -126,39 +134,44 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
 
     this._combinedRejectSubscription = Observable
       .combineLatest(this.selectCrop.valueChanges, this.selectRegion.valueChanges, this.selectProvince.valueChanges)
-      .filter((values: [string, string, string]) => {
+      .filter((values: [any, any, any]) => {
         return (values[0] === '' || values[1] === '' || values[2] === '');
       })
       .debounceTime(300)
-      .subscribe((values: [string, string, string]) => {
+      .subscribe((values: [any, any, any]) => {
         this.pdfUrl = '#';
         this.pdfFilename = null;
+        this.pdfFileDescriptiveName = null;
       })
       ;
 
     this._combinedResolveSubscription = Observable
       .combineLatest(this.selectCrop.valueChanges, this.selectRegion.valueChanges, this.selectProvince.valueChanges)
-      .filter((values: [string, string, string]) => {
+      .filter((values: [any, any, any]) => {
         return (values[0] !== '' && values[1] !== '' && values[2] !== '');
       })
       .debounceTime(300)
-      .subscribe((values: [string, string, string]) => {
+      .subscribe((values: [any, any, any]) => {
         let [crop, region, province] = values;
-        let pdfFilename = `${crop}-${province}.pdf`;
+        let pdfFilename = `${crop.slug}-${province.slug}.pdf`;
+        let pdfFileDescriptiveName = `${crop.name} - ${province.name}`;
 
         // reset to empty
+        this.pdfFileDescriptiveName = null;
         this.pdfFilename = '';
         this.pdfUrl = '#';
 
         // check first if the resolved url exists by sending a HEAD request
         // if it exists save the actual filename.
         this._suitabilityMapService
-          .checkIfSuitabilityMapImageExists(crop, province)
+          .checkIfSuitabilityMapImageExists(crop.slug, province.slug)
           .then((res: Response) => {
-            // reflect the new values to the url and file name
+            // reflect the new values to the url, file name and descriptive file name
+            this.pdfFileDescriptiveName = pdfFileDescriptiveName;
             this.pdfFilename = pdfFilename;
             this.pdfUrl = res.url;
           }, (res: Response) => {
+            this.pdfFileDescriptiveName = pdfFileDescriptiveName;
             this.pdfFilename = pdfFilename;
             this.pdfUrl = '#';
           })
@@ -167,14 +180,35 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
       ;
   }
 
-  download(e: Event) {
+  onDownloadClick(e: Event) {
     if (this.pdfUrl === '' || this.pdfUrl === '#' || this.pdfUrl === false) {
       e.preventDefault();
 
       if (this.pdfUrl === false) {
         this._logger.log('Image not available', 'Map image not available.', true);
       }
+
+      return;
     }
+
+    let track = true;
+
+    // set track to false when on dev mode
+    if (isDevMode() === true) {
+      track = false;
+    }
+
+    // emit event when download is executed
+    this.download.emit({
+      track,
+      trackingProperties: {
+        action: 'download',
+        properties: {
+          category: 'suitability-map-images',
+          label: this.pdfFileDescriptiveName
+        }
+      }
+    });
   }
 
   processRequest() {

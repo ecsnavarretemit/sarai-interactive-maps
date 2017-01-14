@@ -11,7 +11,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
 import { TileLayerService } from '../tile-layer.service';
@@ -25,14 +26,11 @@ describe('Component: CropProductionAreaMaps', () => {
   let component: CropProductionAreaMapsComponent;
   let fixture: ComponentFixture<CropProductionAreaMapsComponent>;
   let mockActivatedRoute: MockActivatedRoute;
-  let mockRouter: MockRouter;
 
   beforeEach(async(() => {
     mockActivatedRoute = new MockActivatedRoute({
       crop: 'rice'
     });
-
-    mockRouter = new MockRouter();
 
     TestBed.configureTestingModule({
       declarations: [
@@ -45,9 +43,9 @@ describe('Component: CropProductionAreaMaps', () => {
       providers: [
         TileLayerService,
         LeafletMapService,
+        Title,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: Router, useValue: mockRouter },
         { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({

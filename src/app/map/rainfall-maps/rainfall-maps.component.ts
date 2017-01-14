@@ -5,13 +5,15 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
+import { MAP_CONFIG } from '../map.config';
 
 @Component({
   selector: 'app-rainfall-maps',
@@ -19,14 +21,16 @@ import { Layer } from '../../store';
   styleUrls: ['./rainfall-maps.component.sass']
 })
 export class RainfallMapsComponent implements OnInit, OnDestroy {
+  private _pageTitle: string = 'Rainfall Maps';
   private _layerId: string;
 
   constructor(
+    @Inject(MAP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _logger: AppLoggerService,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _title: Title,
     private _mapLayersStore: Store<any>
   ) { }
 
@@ -38,6 +42,9 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         typeof params['date'] !== 'undefined' &&
         /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])/g.test(params['date'])
       ) {
+        // set the page title
+        this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+
         this.processData(params['date']);
       }
     });
@@ -96,6 +103,9 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // reset the page title
+    this._title.setTitle(`${this._config.app_title}`);
+
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'

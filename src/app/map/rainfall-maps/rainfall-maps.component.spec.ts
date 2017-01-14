@@ -8,9 +8,10 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
 import { AppLoggerService } from '../../app-logger.service';
@@ -22,15 +23,12 @@ import { RainfallMapsComponent } from './rainfall-maps.component';
 
 describe('Component: NdviMaps', () => {
   let mockActivatedRoute: MockActivatedRoute;
-  let mockRouter: MockRouter;
 
   beforeEach(() => {
     mockActivatedRoute = new MockActivatedRoute({
       startDate: '2016-10-01',
       scanRange: '10'
     });
-
-    mockRouter = new MockRouter();
 
     TestBed.configureTestingModule({
       imports: [
@@ -41,10 +39,10 @@ describe('Component: NdviMaps', () => {
         AppLoggerService,
         TileLayerService,
         LeafletMapService,
+        Title,
         RainfallMapsComponent,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: Router, useValue: mockRouter },
         { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({

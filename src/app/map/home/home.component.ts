@@ -5,15 +5,18 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { Component, isDevMode, OnInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { CookieService } from 'angular2-cookie/core';
+import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from 'ng2-translate';
 import { WindowService } from '../window.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { LeafletButtonComponent } from '../../leaflet';
 import { MapTypeComponent } from '../map-type/map-type.component';
+import { MAP_CONFIG } from '../map.config';
 import filter from 'lodash-es/filter';
 import forEach from 'lodash-es/forEach';
 import * as L from 'leaflet';
@@ -40,12 +43,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
+    @Inject(MAP_CONFIG) private _config: any,
     public _router: Router,
     private _window: WindowService,
     private _logger: AppLoggerService,
     private _translate: TranslateService,
     private _cookieService: CookieService,
-    private _renderer: Renderer
+    private _renderer: Renderer,
+    private _title: Title,
+    private _angulartics: Angulartics2
   ) {
     // retreive language preference from the cookie
     let lang = this._cookieService.get(this._cookieLangKey);
@@ -70,6 +76,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       lat: 13,
       lng: 122
     };
+
+    // set the page title
+    this._title.setTitle(`${this._config.app_title}`);
   }
 
   shouldActivateMapType(urlPart: string): boolean {
@@ -132,6 +141,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // change the current language
     this._translate.use(this._currentLang);
+  }
+
+  onDownload(data: any) {
+    // track events on download when prod mode and tracking is enabled
+    if (data.track === true && isDevMode() === false && typeof data.trackingProperties !== 'undefined') {
+      this._angulartics.eventTrack.next(data.trackingProperties);
+    }
   }
 
   previewPdf(pdfMetadata: any) {
