@@ -27,7 +27,8 @@
       ],
       "scripts": [
         "assets/scripts/app/polyfill-loader.ts",
-        "assets/scripts/app/loader.ts"
+        "assets/scripts/app/loader.ts",
+        "scripts/ga.ts"
       ],
       "environments": {
         "source": "environments/environment.ts",

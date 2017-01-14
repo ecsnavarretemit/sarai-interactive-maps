@@ -1,5 +1,8 @@
 export const environment = {
   production: false,
+  ga: {
+    code: ''
+  },
   sarai_map_config: {
     geoserver: {
       baseUrl: 'http://demo.opengeo.org/geoserver',

@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Http } from '@angular/http';
 import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
+import { Angulartics2Module, Angulartics2, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
@@ -39,7 +40,10 @@ describe('App: SaraiInteractiveMaps', () => {
           provide: TranslateLoader,
           useFactory: TranslationFactoryLoader,
           deps: [Http]
-        })
+        }),
+        Angulartics2Module.forRoot([
+          Angulartics2GoogleAnalytics
+        ])
       ],
 
       declarations: [
@@ -49,6 +53,8 @@ describe('App: SaraiInteractiveMaps', () => {
       providers: [
         AppLoggerService,
         CookieService,
+        Angulartics2,
+        Angulartics2GoogleAnalytics,
 
         { provide: APP_BASE_HREF, useValue: '/' }
       ]
