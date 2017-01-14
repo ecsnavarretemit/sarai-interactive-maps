@@ -5,13 +5,13 @@
   "author": "Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve --extract-css",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "test-once": "ng test --watch false",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "build-aot": "rm -rf dist; ng build --prod --aot"
+    "build-aot": "rm -rf dist; ng build --prod --aot --extract-css"
   },
   "private": true,
   "dependencies": {
