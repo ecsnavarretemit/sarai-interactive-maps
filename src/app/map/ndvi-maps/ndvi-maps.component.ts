@@ -5,8 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,6 +15,7 @@ import { LeafletMapService } from '../../leaflet';
 import { TileLayerService } from '../tile-layer.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { Layer } from '../../store';
+import { MAP_CONFIG } from '../map.config';
 import isNaN from 'lodash-es/isNaN';
 import * as L from 'leaflet';
 import 'rxjs/add/observable/combineLatest';
@@ -24,16 +26,19 @@ import 'rxjs/add/observable/combineLatest';
   styleUrls: ['./ndvi-maps.component.sass']
 })
 export class NdviMapsComponent implements OnInit, OnDestroy {
+  private _pageTitle: string = 'NDVI Maps';
   private _layerId: string;
   private _routerParamSubscription: Subscription;
   private _oldCenter: L.LatLngLiteral;
   private _oldZoom: number;
 
   constructor(
+    @Inject(MAP_CONFIG) private _config: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _logger: AppLoggerService,
     private _route: ActivatedRoute,
+    private _title: Title,
     private _mapLayersStore: Store<any>
   ) { }
 
@@ -77,6 +82,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
           /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
           !isNaN(converted)
         ) {
+          // set the page title
+          this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+
           this.processData(routeParams['startDate'], converted, queryParams['province']);
         }
       })
@@ -136,6 +144,9 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // reset the page title
+    this._title.setTitle(`${this._config.app_title}`);
+
     // go the old zoom and lat,lng coords.
     this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
 

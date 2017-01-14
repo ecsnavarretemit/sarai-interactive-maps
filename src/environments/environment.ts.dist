@@ -4,6 +4,7 @@ export const environment = {
     code: ''
   },
   sarai_map_config: {
+    app_title: 'SARAI Interactive Maps - Project SARAI',
     geoserver: {
       baseUrl: '',
       restApiEndpoint: ''

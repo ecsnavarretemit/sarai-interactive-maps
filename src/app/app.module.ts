@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Http } from '@angular/http';
 import { ModalModule } from 'ng2-bootstrap/modal';
@@ -47,6 +47,7 @@ import { AppComponent } from './app.component';
   providers: [
     AppLoggerService,
     CookieService,
+    Title,
 
     // must be present here when using AOT compilation for Angular 2.4.x or greater or else
     // the compiled code will throw error: `No provider for CookieOptions!`
