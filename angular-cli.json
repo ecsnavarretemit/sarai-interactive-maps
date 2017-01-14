@@ -26,8 +26,8 @@
         "styles.sass"
       ],
       "scripts": [
-        "assets/scripts/app/polyfill-loader.ts",
-        "assets/scripts/app/loader.ts",
+        "scripts/polyfill-loader.ts",
+        "scripts/preloader.ts",
         "scripts/ga.ts"
       ],
       "environments": {
