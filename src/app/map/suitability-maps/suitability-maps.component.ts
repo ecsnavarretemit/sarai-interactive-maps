@@ -35,6 +35,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   private _layerState: string = 'resampled';
   private _mapLayers: Observable<any>;
   private _suitabilityLevels: Observable<any>;
+  private _zoomEndListener: L.EventHandlerFn;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
@@ -60,6 +61,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
 
     // get the suitability levels from the store
     this._suitabilityLevels = this._suitabilityLevelsStore.select('suitabilityLevels');
+
+    // make sure that the `this` value inside the onMapZoom is this component's instance.
+    this._zoomEndListener = this.onMapZoom.bind(this);
   }
 
   ngOnInit() {
@@ -105,7 +109,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
         this._map = mapInstance;
 
         // bind the zoomend callback to the zoomend event
-        mapInstance.on('zoomend', this.onMapZoom.bind(this));
+        mapInstance.on('zoomend', this._zoomEndListener);
       })
       ;
   }
@@ -188,11 +192,17 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // remove the event listener bound to the map
+    this._map.off('zoomend', this._zoomEndListener);
+
     // reset the page title
     this._title.setTitle(`${this._config.app_title}`);
 
     // remove all layers published on the store and on the collection
     this.removeLayers();
+
+    // remove the reference to the map
+    this._map = null;
   }
 
 }
