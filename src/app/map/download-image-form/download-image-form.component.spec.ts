@@ -77,8 +77,7 @@ describe('Component: DownloadImageForm', () => {
   }));
 
   it('should show that crop is required', async(() => {
-    cropSelectEl.focus();
-    cropSelectEl.blur();
+    component.selectCrop.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
@@ -101,8 +100,7 @@ describe('Component: DownloadImageForm', () => {
   }));
 
   it('should show that region is required', async(() => {
-    regionSelectEl.focus();
-    regionSelectEl.blur();
+    component.selectRegion.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
@@ -119,16 +117,13 @@ describe('Component: DownloadImageForm', () => {
     fixture
       .whenStable()
       .then(() => {
-        // gain focus of the element
-        regionSelectEl.focus();
+        component.selectRegion.setValue({
+          id: 100,
+          name: 'Ilocos Region',
+          slug: 'ilocos-region-region-i'
+        });
 
-        regionSelectEl.value = '100';
-
-        // dispatch input event
-        regionSelectEl.dispatchEvent(new Event('change'));
-
-        // remove the focus from the event
-        regionSelectEl.blur();
+        component.selectRegion.markAsDirty();
 
         // detect changes in the fixture
         fixture.detectChanges();
@@ -142,16 +137,13 @@ describe('Component: DownloadImageForm', () => {
     fixture
       .whenStable()
       .then(() => {
-        // gain focus of the element
-        regionSelectEl.focus();
+        component.selectRegion.setValue({
+          id: 100,
+          name: 'Ilocos Region',
+          slug: 'ilocos-region-region-i'
+        });
 
-        regionSelectEl.value = '100';
-
-        // dispatch input event
-        regionSelectEl.dispatchEvent(new Event('change'));
-
-        // remove the focus from the event
-        regionSelectEl.blur();
+        component.selectRegion.markAsDirty();
 
         // detect changes in the fixture
         fixture.detectChanges();
