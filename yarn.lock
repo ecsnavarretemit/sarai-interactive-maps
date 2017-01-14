@@ -3545,9 +3545,9 @@ ng2-bootstrap@^1.1.16-11:
   dependencies:
     moment "2.17.1"
 
-ng2-pdf-viewer@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-0.1.5.tgz#dd2c026f7f7c2fc590cc36f9a81085476170f52f"
+ng2-pdf-viewer@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-0.1.6.tgz#6e5fa3fceeaa1e9ae7c37ac1e74684b42b37e347"
   dependencies:
     pdfjs-dist "^1.6.329"
 
