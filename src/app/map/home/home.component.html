@@ -87,8 +87,8 @@
         <app-leaflet-tile-selector
             [controlTitle]="'TILE_SELECTOR.TITLE' | translate"
             [hideTooltipTxt]="'HIDE' | translate"
-            (onBeforeShowControl)="onTileSelectorShow($event)"
-            (onAfterHideControl)="onTileSelectorHide($event)">
+            (beforeShowControl)="onTileSelectorShow($event)"
+            (afterHideControl)="onTileSelectorHide($event)">
         </app-leaflet-tile-selector>
 
         <app-leaflet-geocoder [placeholder]="'GEOCODER.PLACEHOLDER' | translate"></app-leaflet-geocoder>
@@ -159,7 +159,7 @@
     </div>
 
     <app-leaflet-sidebar containerClass="leaflet-sidebar--sarai-1"
-        (onHidden)="suitabilityEnVideo.pause(); suitabilityFilVideo.pause();"
+        (afterHide)="suitabilityEnVideo.pause(); suitabilityFilVideo.pause();"
         #videoSidebar>
         <header class="sidebar__title-wrapper" sidebar-title>
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />

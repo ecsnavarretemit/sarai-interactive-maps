@@ -69,10 +69,10 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDe
 
   @Input() controlTitle: string = 'Map Source';
   @Input() hideTooltipTxt: string = 'Hide';
-  @Output() onBeforeHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
-  @Output() onAfterHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
-  @Output() onBeforeShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
-  @Output() onAfterShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() beforeHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() afterHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() beforeShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() afterShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('tileselector') tileSelector: ElementRef;
   @ViewChild(LeafletButtonComponent) controlSettings: LeafletButtonComponent;
@@ -118,21 +118,21 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDe
 
   onControlWrapperAnimationStart(event: AnimationTransitionEvent) {
     if (event.fromState === 'hidden' && event.toState === 'visible') {
-      this.onBeforeShowControl.emit(event);
+      this.beforeShowControl.emit(event);
     }
 
     if (event.fromState === 'visible' && event.toState === 'hidden') {
-      this.onBeforeHideControl.emit(event);
+      this.beforeHideControl.emit(event);
     }
   }
 
   onControlWrapperAnimationEnd(event: AnimationTransitionEvent) {
     if (event.fromState === 'visible' && event.toState === 'hidden') {
-      this.onAfterHideControl.emit(event);
+      this.afterHideControl.emit(event);
     }
 
     if (event.fromState === 'hidden' && event.toState === 'visible') {
-      this.onAfterShowControl.emit(event);
+      this.afterShowControl.emit(event);
     }
   }
 

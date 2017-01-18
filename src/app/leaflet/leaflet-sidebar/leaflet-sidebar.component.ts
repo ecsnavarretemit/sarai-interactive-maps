@@ -24,10 +24,10 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
   @Input() closeButton: boolean = true;
   @Input() autoPan: boolean = false;
   @Input() containerClass: string;
-  @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onShown: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onHidden: EventEmitter<any> = new EventEmitter<any>();
+  @Output() beforeShow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() afterShow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() beforeHide: EventEmitter<any> = new EventEmitter<any>();
+  @Output() afterHide: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(private _mapService: LeafletMapService) { }
@@ -101,19 +101,19 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
   }
 
   onBeforeShow(evt) {
-    this.onShow.emit(evt);
+    this.beforeShow.emit(evt);
   }
 
   onAfterShow(evt) {
-    this.onShown.emit(evt);
+    this.afterShow.emit(evt);
   }
 
   onBeforeHide(evt) {
-    this.onHide.emit(evt);
+    this.beforeHide.emit(evt);
   }
 
   onAfterHide(evt) {
-    this.onHidden.emit(evt);
+    this.afterHide.emit(evt);
   }
 
   ngOnDestroy() {
