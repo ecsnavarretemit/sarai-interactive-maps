@@ -22,7 +22,7 @@ export class LocationsService {
 
   getRegions(): Observable<any> {
     // assemble the request headers
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this._http
@@ -35,7 +35,7 @@ export class LocationsService {
 
   getProvinces(): Observable<any> {
     // assemble the request headers
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this._http
@@ -47,10 +47,10 @@ export class LocationsService {
   }
 
   getProvincesByRegionId(regionId: number): Observable<any> {
-    let endpoint = `${this._config.location_api.region.endpoint}${regionId}/provinces`;
+    const endpoint = `${this._config.location_api.region.endpoint}${regionId}/provinces`;
 
     // assemble the request headers
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this._http
@@ -62,11 +62,11 @@ export class LocationsService {
   }
 
   getProvincesFromFT(): Observable<any> {
-    // assemble the request headers
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    const endpoint = trimEnd(this._config.location_api.province.endpoint, '/');
 
-    let endpoint = trimEnd(this._config.location_api.province.endpoint, '/');
+    // assemble the request headers
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
     return this._http
       .get(`${endpoint}/ft`, {

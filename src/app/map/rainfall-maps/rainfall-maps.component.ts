@@ -59,10 +59,10 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     this._tileLayerService
       .getRainfallMapLayerData(date)
       .then((response: any) => {
-        let tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
+        const tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
         // assemble the layer
-        let layer: Layer = {
+        const layer: Layer = {
           id: response.mapId,
           url: tileUrl,
           type: 'rainfall',
@@ -79,7 +79,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         ]);
       })
       .then((resolvedValue: any) => {
-        let layer: Layer = resolvedValue[0];
+        const layer: Layer = resolvedValue[0];
 
         // add the new layer to the store
         this._mapLayersStore.dispatch({

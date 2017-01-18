@@ -47,7 +47,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     this._mapService
       .getMap()
       .then((map: L.Map) => {
-        let {lat, lng} = map.getCenter();
+        const {lat, lng} = map.getCenter();
 
         // store the lat and lng coordinates before we pan into the new coords.
         this._oldCenter = {
@@ -65,14 +65,14 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     this._routerParamSubscription = Observable
       .combineLatest(this._route.params, this._route.queryParams)
       .subscribe((params: [Params, Params]) => {
-        let [routeParams, queryParams] = params;
+        const [routeParams, queryParams] = params;
 
-        let converted = parseInt(routeParams['scanRange'], 10);
+        const converted = parseInt(routeParams['scanRange'], 10);
 
         // set the center of the map to the value of the center query parameter
         // and zoom to tha location
         if (typeof queryParams['center'] !== 'undefined') {
-          let [lat, lng] = queryParams['center'].split(',');
+          const [lat, lng] = queryParams['center'].split(',');
 
           this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
         }
@@ -100,10 +100,10 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
     this._tileLayerService
       .getNdviLayerData(startDate, scanRange, place)
       .then((response: any) => {
-        let tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
+        const tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
         // assemble the layer
-        let layer: Layer = {
+        const layer: Layer = {
           id: response.mapId,
           url: tileUrl,
           type: 'ndvi',
@@ -120,7 +120,7 @@ export class NdviMapsComponent implements OnInit, OnDestroy {
         ]);
       })
       .then((resolvedValue: any) => {
-        let layer: Layer = resolvedValue[0];
+        const layer: Layer = resolvedValue[0];
 
         // add the new layer to the store
         this._mapLayersStore.dispatch({

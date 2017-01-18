@@ -11,7 +11,6 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
 import { AppLoggerService } from '../../app-logger.service';

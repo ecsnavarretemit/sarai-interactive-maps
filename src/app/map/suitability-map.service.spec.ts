@@ -41,7 +41,7 @@ describe('Service: SuitabilityMap', () => {
   }));
 
   it('should get crops', async(inject([MockBackend, SuitabilityMapService], (backend: MockBackend, service: SuitabilityMapService) => {
-    let dataToSend = {
+    const dataToSend = {
       result: [{
           crop_type: 'rice',
           id: 100,
@@ -52,7 +52,7 @@ describe('Service: SuitabilityMap', () => {
     };
 
     backend.connections.subscribe((connection: MockConnection) => {
-      let options = new ResponseOptions({
+      const options = new ResponseOptions({
         body: JSON.stringify(dataToSend)
       });
 
@@ -72,7 +72,7 @@ describe('Service: SuitabilityMap', () => {
 
   it('should get crops according to the old spec',
     async(inject([MockBackend, SuitabilityMapService], (backend: MockBackend, service: SuitabilityMapService) => {
-      let dataToSend = {
+      const dataToSend = {
         result: [
           {
             crop_type: 'rice',
@@ -95,7 +95,7 @@ describe('Service: SuitabilityMap', () => {
       };
 
       backend.connections.subscribe((connection: MockConnection) => {
-        let options = new ResponseOptions({
+        const options = new ResponseOptions({
           body: JSON.stringify(dataToSend)
         });
 

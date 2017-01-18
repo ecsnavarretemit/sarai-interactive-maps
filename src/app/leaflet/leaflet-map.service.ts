@@ -75,7 +75,7 @@ export class LeafletMapService {
           return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
-        let layer = this._leafletApi.tileLayer(url, options);
+        const layer = this._leafletApi.tileLayer(url, options);
 
         // add the layer to the map
         mapInstance.addLayer(layer);
@@ -141,7 +141,7 @@ export class LeafletMapService {
           return Promise.reject(new Error(`ID ${id} already exists. Provide another ID for this layer`));
         }
 
-        let layer = this._leafletApi.tileLayer.wms(url, options);
+        const layer = this._leafletApi.tileLayer.wms(url, options);
 
         // add the layer to the map
         mapInstance.addLayer(layer);
@@ -159,13 +159,13 @@ export class LeafletMapService {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         let layers = filter(items, (item) => {
-          let result = has(this._wmsLayers, item.id);
+          const result = has(this._wmsLayers, item.id);
 
           return !result;
         });
 
         layers = map(layers, (item) => {
-          let layer = this._leafletApi.tileLayer.wms(url, item.options);
+          const layer = this._leafletApi.tileLayer.wms(url, item.options);
 
           // the created layer to the map
           mapInstance.addLayer(layer);

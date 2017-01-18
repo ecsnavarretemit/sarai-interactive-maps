@@ -74,7 +74,7 @@ describe('Component: RainfallMapFilterForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = scanDateEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = scanDateEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Scan Date is required.');

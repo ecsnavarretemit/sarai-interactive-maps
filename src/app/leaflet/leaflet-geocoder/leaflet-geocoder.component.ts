@@ -28,7 +28,7 @@ export class LeafletGeocoderComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // prevent 'Control' is not a propery of L
-    let controlObj = (L as any).Control;
+    const controlObj = (L as any).Control;
 
     this.control = controlObj
       .geocoder({
@@ -45,7 +45,7 @@ export class LeafletGeocoderComponent implements OnInit, OnChanges {
     this._mapService
       .getMap()
       .then((map: L.Map) => {
-        let container = this.control.onAdd(map);
+        const container = this.control.onAdd(map);
 
         // append the element container to the controlWrapper
         this._renderer.invokeElementMethod(this.controlWrapper.nativeElement, 'appendChild', [

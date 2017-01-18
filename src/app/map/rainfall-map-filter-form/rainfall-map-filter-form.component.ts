@@ -30,7 +30,7 @@ export class RainfallMapFilterFormComponent implements OnInit {
     this.datepickerOpts = {
       disable: [
         (date: Date): boolean =>  {
-          let allowedDates = [1, 6, 11, 16, 21, 26, 31];
+          const allowedDates = [1, 6, 11, 16, 21, 26, 31];
 
           // only allow the dates specified in the variable
           return !includes(allowedDates, date.getDate());
@@ -49,7 +49,7 @@ export class RainfallMapFilterFormComponent implements OnInit {
   }
 
   processRequest() {
-    let value = this.filterForm.value;
+    const value = this.filterForm.value;
 
     // redirect to the URL
     this._router.navigateByUrl(`/rainfall-maps/${value.scanDate}`);

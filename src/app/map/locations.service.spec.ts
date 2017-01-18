@@ -40,7 +40,7 @@ describe('Service: Locations', () => {
   }));
 
   it('should get regions', async(inject([MockBackend, LocationsService], (backend: MockBackend, service: LocationsService) => {
-    let dataToSend = {
+    const dataToSend = {
       'result': [{
         'id': 100,
         'name': 'Ilocos Region',
@@ -54,7 +54,7 @@ describe('Service: Locations', () => {
     };
 
     backend.connections.subscribe((connection: MockConnection) => {
-      let options = new ResponseOptions({
+      const options = new ResponseOptions({
         body: JSON.stringify(dataToSend)
       });
 
@@ -73,7 +73,7 @@ describe('Service: Locations', () => {
   })));
 
   it('should get provinces', async(inject([MockBackend, LocationsService], (backend: MockBackend, service: LocationsService) => {
-    let dataToSend = {
+    const dataToSend = {
       'result': [{
         'id': 100,
         'name': 'Ilocos Norte',
@@ -83,7 +83,7 @@ describe('Service: Locations', () => {
     };
 
     backend.connections.subscribe((connection: MockConnection) => {
-      let options = new ResponseOptions({
+      const options = new ResponseOptions({
         body: JSON.stringify(dataToSend)
       });
 
@@ -103,7 +103,7 @@ describe('Service: Locations', () => {
 
   it('should get provinces by region id', async(inject([MockBackend, LocationsService],
     (backend: MockBackend, service: LocationsService) => {
-      let dataToSend = {
+      const dataToSend = {
         'result': [{
           'id': 100,
           'name': 'Ilocos Norte',
@@ -113,7 +113,7 @@ describe('Service: Locations', () => {
       };
 
       backend.connections.subscribe((connection: MockConnection) => {
-        let options = new ResponseOptions({
+        const options = new ResponseOptions({
           body: JSON.stringify(dataToSend)
         });
 

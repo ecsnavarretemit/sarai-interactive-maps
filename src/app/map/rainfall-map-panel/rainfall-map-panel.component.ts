@@ -18,6 +18,12 @@ import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel
 })
 export class RainfallMapPanelComponent extends BasePanelComponent {
   public controlWrapperAnimationState: string = 'hidden';
+
+  onHideButtonClick(evt: Event) {
+    // call the parent method
+    super.onHideButtonClick(evt);
+  }
+
 }
 
 

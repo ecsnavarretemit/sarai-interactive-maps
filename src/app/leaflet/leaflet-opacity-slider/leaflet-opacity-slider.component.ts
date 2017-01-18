@@ -88,7 +88,7 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
         this._mapService.getTileLayers()
       ])
       .then((values) => {
-        let flattened = assign({}, ...values);
+        const flattened = assign({}, ...values);
 
         each(flattened, (layer: L.TileLayer) => {
           layer.setOpacity(opacity);

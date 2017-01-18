@@ -29,10 +29,12 @@ describe('Component: LeafletMap', () => {
 
   it('should create map', async(inject([LeafletMapService], (service: LeafletMapService) => {
     // assemble the component
-    let fixture = TestBed.createComponent(LeafletMapComponent);
+    const fixture = TestBed.createComponent(LeafletMapComponent);
 
     // get the instance of the component
-    let component: LeafletMapComponent = fixture.componentInstance;
+    const component: LeafletMapComponent = fixture.componentInstance;
+
+    // provide the inputs for the component
     component.lat = 13;
     component.lng = 122;
     component.zoom = 6;

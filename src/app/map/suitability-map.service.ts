@@ -27,7 +27,7 @@ export class SuitabilityMapService {
 
   getCrops(): Observable<any> {
     // assemble the request headers
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     return this._http
@@ -43,9 +43,9 @@ export class SuitabilityMapService {
     return this.getCrops()
       .map((response: any) => {
         // reduce the data to the format we need
-        let transformedData = reduce(response.result, (collection: any, crop: any) => {
-          let type = crop.crop_type;
-          let title = map(type.split('-'), (word: string) => {
+        const transformedData = reduce(response.result, (collection: any, crop: any) => {
+          const type = crop.crop_type;
+          const title = map(type.split('-'), (word: string) => {
             return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
           }).join(' ');
 
