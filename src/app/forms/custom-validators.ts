@@ -17,7 +17,7 @@ export class CustomValidators {
       return null;
     }
 
-    let v: string = control.value;
+    const v: string = control.value;
 
     return /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(v) ? null : {
       'dateISO': true
@@ -32,8 +32,11 @@ export class CustomValidators {
       return null;
     }
 
-    let v: string = control.value;
-    return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(v) ? null : {'number': true};
+    const v: string = control.value;
+
+    return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(v) ? null : {
+      'number': true
+    };
   }
 
 }

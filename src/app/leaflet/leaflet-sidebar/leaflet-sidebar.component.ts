@@ -34,7 +34,7 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // prevent 'Control' is not a propery of L
-    let controlObj = (L as any).control;
+    const controlObj = (L as any).control;
 
     this.control = controlObj.sidebar(this.controlWrapper.nativeElement, {
       position: this.position,
@@ -53,7 +53,7 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
 
         // add the class to the container
         if (typeof this.containerClass !== 'undefined') {
-          let split = this.containerClass.split(' ');
+          const split = this.containerClass.split(' ');
 
           this._controlContainer.classList.add(...split);
         }

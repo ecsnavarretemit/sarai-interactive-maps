@@ -48,7 +48,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     private _mapLayersStore: Store<any>,
     private _suitabilityLevelsStore: Store<any>
   ) {
-    let resolvedConfig = this._config.suitability_maps;
+    const resolvedConfig = this._config.suitability_maps;
 
     // set default crop
     this.crop = 'rice';
@@ -73,8 +73,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       .combineLatest(this._mapLayers, this._suitabilityLevels)
       .debounceTime(300)
       .map((states: [LayerState, SuitabilityLevelsState]) => {
-        let layerState = states[0];
-        let levelsState = states[1];
+        const [layerState, levelsState] = states;
 
         return map(layerState.layers, (layer: Layer) => {
           if (levelsState.gridcodes.length < 15) {
@@ -115,9 +114,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   processLayers() {
+    const layerType = 'suitability-map-simplified';
     let zoomLevel = 6;
     let method = 'getSuitabilityMapCountryLevelLayers';
-    let layerType = 'suitability-map-simplified';
 
     if (typeof this._map !== 'undefined' && this._map.getZoom() >= 12) {
       zoomLevel = 12;
@@ -129,11 +128,11 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     }
 
     // get the layers
-    let layers = this._tileLayerService[method](this.crop);
+    const layers = this._tileLayerService[method](this.crop);
 
     // assemble the layers payload for saving to the application store.
-    let processedLayers = map(layers, (layer: L.WMSOptions) => {
-      let payload: Layer = {
+    const processedLayers = map(layers, (layer: L.WMSOptions) => {
+      const payload: Layer = {
         id: layer.layers,
         type: layerType,
         url: this._wmsTileUrl,
@@ -154,7 +153,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   onMapZoom() {
-    let zoomLevel = this._map.getZoom();
+    const zoomLevel = this._map.getZoom();
 
     if (zoomLevel < 12 && this._layerState !== 'resampled') {
       // processing layer

@@ -50,6 +50,11 @@ export class CropProductionAreaPanelComponent extends BasePanelComponent impleme
     return this._router.isActive(`/crop-production-area/${crop}`, true);
   }
 
+  onHideButtonClick(evt: Event) {
+    // call the parent method
+    super.onHideButtonClick(evt);
+  }
+
 }
 
 

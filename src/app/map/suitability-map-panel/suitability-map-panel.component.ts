@@ -102,6 +102,11 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
     }
   }
 
+  onHideButtonClick(evt: Event) {
+    // call the parent method
+    super.onHideButtonClick(evt);
+  }
+
 }
 
 

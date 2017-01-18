@@ -148,9 +148,9 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDe
     this.buttonState = 'hidden';
   }
 
-  onTileChange(event) {
-    let value = event.target.value;
-    let resolvedTile = this._tileProvider.baseMaps[event.target.value];
+  onTileChange(event: Event) {
+    const value = (event.target as any).value;
+    const resolvedTile = this._tileProvider.baseMaps[value];
 
     this._mapService
       .getMap()

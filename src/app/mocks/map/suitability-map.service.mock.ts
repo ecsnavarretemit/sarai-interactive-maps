@@ -45,7 +45,7 @@ export class MockSuitabilityMapService extends SuitabilityMapService {
   }
 
   checkIfSuitabilityMapImageExists(crop: string, province: string, extension = 'pdf'): Promise<any> {
-    let responseOptions: ResponseOptions = new ResponseOptions({
+    const responseOptions: ResponseOptions = new ResponseOptions({
         url: 'http://localhost:4100',
         body: ''
     });

@@ -81,10 +81,8 @@ export function MapLayersReducer (state: LayerState = initialState, action: Acti
         return state;
       }
 
-      const layers = action.payload;
-
       // remove the existing layers from the object
-      const newLayers = filter(layers, (layer: Layer) => {
+      const newLayers = filter(action.payload, (layer: Layer) => {
         return !has(state.layers, layer.id);
       });
 

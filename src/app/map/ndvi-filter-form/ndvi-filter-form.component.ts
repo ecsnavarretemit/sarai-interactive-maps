@@ -57,8 +57,8 @@ export class NdviFilterFormComponent implements OnInit {
   }
 
   processRequest() {
-    let value = this.filterForm.value;
-    let urlExtras: NavigationExtras = {};
+    const value = this.filterForm.value;
+    const urlExtras: NavigationExtras = {};
     let urlTree: UrlTree;
 
     if (value.province !== '') {

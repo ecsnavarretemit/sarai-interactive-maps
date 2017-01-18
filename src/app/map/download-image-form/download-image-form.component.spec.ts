@@ -83,7 +83,7 @@ describe('Component: DownloadImageForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = cropSelectEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = cropSelectEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Crop is required.');
@@ -106,7 +106,7 @@ describe('Component: DownloadImageForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = regionSelectEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = regionSelectEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Region is required.');

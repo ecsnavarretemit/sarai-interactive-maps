@@ -8,7 +8,7 @@
 import { environment } from '../environments/environment';
 
 ((window) => {
-  let ga = (window as any).ga;
+  const ga = (window as any).ga;
   let mode = 'none';
 
   if (environment.production === true && location.hostname !== 'localhost') {

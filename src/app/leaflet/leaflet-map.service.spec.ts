@@ -54,7 +54,7 @@ describe('Service: LeafletMap', () => {
         return service.getTileLayers();
       })
       .then((layers: any) => {
-        let keys = Object.keys(layers);
+        const keys = Object.keys(layers);
 
         expect(keys).toEqual(0);
       })

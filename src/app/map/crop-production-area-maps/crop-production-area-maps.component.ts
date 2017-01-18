@@ -40,7 +40,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
     private _title: Title,
     private _mapLayersStore: Store<any>
   ) {
-    let resolvedConfig = this._config.crop_production_area_maps;
+    const resolvedConfig = this._config.crop_production_area_maps;
 
     // set default wms tile layer
     this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
@@ -77,11 +77,11 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   }
 
   processLayers() {
-    let layers = this._tileLayerService.getCropProductionAreaLayers(this.crop);
+    const layers = this._tileLayerService.getCropProductionAreaLayers(this.crop);
 
     // assemble the layers payload for saving to the application store.
-    let processedLayers = map(layers, (layer: L.WMSOptions) => {
-      let payload: Layer = {
+    const processedLayers = map(layers, (layer: L.WMSOptions) => {
+      const payload: Layer = {
         id: layer.layers,
         type: 'crop-production-area',
         url: this._wmsTileUrl,

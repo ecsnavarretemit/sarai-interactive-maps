@@ -92,7 +92,7 @@ describe('Component: NdviFilterForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = startingDateEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = startingDateEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Starting Date is required.');
@@ -107,7 +107,7 @@ describe('Component: NdviFilterForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Scan Range is required.');
@@ -130,7 +130,7 @@ describe('Component: NdviFilterForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
       expect(helpBlockEl.children[0].textContent.trim()).toBe('Scan Range must be a number.');
@@ -153,7 +153,7 @@ describe('Component: NdviFilterForm', () => {
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(0);
     }, 0);

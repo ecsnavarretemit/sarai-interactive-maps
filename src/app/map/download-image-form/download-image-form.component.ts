@@ -152,9 +152,9 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
       })
       .debounceTime(300)
       .subscribe((values: [any, any, any]) => {
-        let [crop, region, province] = values;
-        let pdfFilename = `${crop.slug}-${province.slug}.pdf`;
-        let pdfFileDescriptiveName = `${crop.name} - ${province.name}`;
+        const [crop, region, province] = values;
+        const pdfFilename = `${crop.slug}-${province.slug}.pdf`;
+        const pdfFileDescriptiveName = `${crop.name} - ${province.name}`;
 
         // reset to empty
         this.pdfFileDescriptiveName = null;

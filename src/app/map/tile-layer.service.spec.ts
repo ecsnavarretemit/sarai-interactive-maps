@@ -41,8 +41,8 @@ describe('Service: TileLayerService', () => {
   }));
 
   it('should generate a valid WMS Tile URL', inject([TileLayerService], (service: TileLayerService) => {
-    let resolvedConfig = environment.sarai_map_config;
-    let tileLayerUrl = service.getGeoServerWMSTileLayerBaseUrl(
+    const resolvedConfig = environment.sarai_map_config;
+    const tileLayerUrl = service.getGeoServerWMSTileLayerBaseUrl(
       resolvedConfig.suitability_maps.wms.workspace,
       resolvedConfig.suitability_maps.wms.tiled
     );
@@ -57,8 +57,8 @@ describe('Service: TileLayerService', () => {
   }));
 
   it('should equate to the CQL Filter', inject([TileLayerService], (service: TileLayerService) => {
-    let gridcodes = [10, 21, 22, 23, 35];
-    let property = environment.sarai_map_config.suitability_maps.propertyFilterName;
+    const gridcodes = [10, 21, 22, 23, 35];
+    const property = environment.sarai_map_config.suitability_maps.propertyFilterName;
 
     expect(service.getCQLFilterByGridcode(gridcodes)).toEqual(
       `${property}=10 OR ${property}=21 OR ${property}=22 OR ${property}=23 OR ${property}=35`
@@ -66,14 +66,14 @@ describe('Service: TileLayerService', () => {
   }));
 
   it('should get NDVI layer data', async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
-    let dataToSend = {
+    const dataToSend = {
       'mapId': 'a',
       'mapToken': 'b',
       'success': true
     };
 
     backend.connections.subscribe((connection: MockConnection) => {
-      let options = new ResponseOptions({
+      const options = new ResponseOptions({
         body: JSON.stringify(dataToSend)
       });
 
@@ -92,12 +92,12 @@ describe('Service: TileLayerService', () => {
 
   it('should throw an error when getting NDVI layer data',
     async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
-      let dataToSend = {
+      const dataToSend = {
         'success': false
       };
 
       backend.connections.subscribe((connection: MockConnection) => {
-        let options = new ResponseOptions({
+        const options = new ResponseOptions({
           body: JSON.stringify(dataToSend)
         });
 
@@ -117,14 +117,14 @@ describe('Service: TileLayerService', () => {
     })));
 
   it('should get rainfall layer data', async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
-    let dataToSend = {
+    const dataToSend = {
       'mapId': 'a',
       'mapToken': 'b',
       'success': true
     };
 
     backend.connections.subscribe((connection: MockConnection) => {
-      let options = new ResponseOptions({
+      const options = new ResponseOptions({
         body: JSON.stringify(dataToSend)
       });
 
@@ -143,12 +143,12 @@ describe('Service: TileLayerService', () => {
 
   it('should throw an error getting rainfall layer data',
     async(inject([MockBackend, TileLayerService], (backend: MockBackend, service: TileLayerService) => {
-      let dataToSend = {
+      const dataToSend = {
         'success': false
       };
 
       backend.connections.subscribe((connection: MockConnection) => {
-        let options = new ResponseOptions({
+        const options = new ResponseOptions({
           body: JSON.stringify(dataToSend)
         });
 
@@ -166,7 +166,6 @@ describe('Service: TileLayerService', () => {
         })
         ;
     })));
-
 
 });
 

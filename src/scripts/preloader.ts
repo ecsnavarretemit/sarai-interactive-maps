@@ -9,19 +9,19 @@
     'use strict';
 
     window.addEventListener('load', () => {
-        let body = document.body;
+        const body = document.body;
+        const appRoot = body.querySelector('app-root');
         let loader = body.querySelector('.preloader--base');
-        let appRoot = body.querySelector('app-root');
 
         // poll if if the application has already bootstrapped.
         // remove the loader when the childElementCount is greater than 0
-        let timer = setInterval(() => {
-            if (appRoot.childElementCount > 0) {
-                body.removeChild(loader);
-                loader = null;
+        const timer = setInterval(() => {
+          if (appRoot !== null && appRoot.childElementCount > 0) {
+            body.removeChild(loader);
+            loader = null;
 
-                clearInterval(timer);
-            }
+            clearInterval(timer);
+          }
         }, 100);
     });
 })(window, document);
