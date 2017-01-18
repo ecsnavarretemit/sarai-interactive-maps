@@ -100,8 +100,7 @@ describe('Component: NdviFilterForm', () => {
   }));
 
   it('should show that scan range is required', async(() => {
-    scanRangeEl.focus();
-    scanRangeEl.blur();
+    component.scanRange.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
@@ -115,16 +114,11 @@ describe('Component: NdviFilterForm', () => {
   }));
 
   it('should show that scan range is invalid', async(() => {
-    // gain focus of the element
-    scanRangeEl.focus();
+    // set the value of the form control
+    component.scanRange.setValue('10a');
 
-    scanRangeEl.value = '10a';
-
-    // dispatch input event
-    scanRangeEl.dispatchEvent(new Event('input'));
-
-    // remove the focus from the event
-    scanRangeEl.blur();
+    // mark the component as dirty
+    component.scanRange.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
@@ -138,16 +132,11 @@ describe('Component: NdviFilterForm', () => {
   }));
 
   it('should not show any error messages for scan range', async(() => {
-    // gain focus of the element
-    scanRangeEl.focus();
+    // set the value of the form control
+    component.scanRange.setValue('10');
 
-    scanRangeEl.value = '10';
-
-    // dispatch input event
-    scanRangeEl.dispatchEvent(new Event('input'));
-
-    // remove the focus from the event
-    scanRangeEl.blur();
+    // mark the component as dirty
+    component.scanRange.markAsDirty();
 
     // detect changes in the fixture
     fixture.detectChanges();
