@@ -52,7 +52,7 @@
     "@types/lodash": "^4.14.50",
     "@types/lodash-es": "^4.14.2",
     "@types/node": "^6.0.59",
-    "angular-cli": "^1.0.0-beta.25.5",
+    "angular-cli": "^1.0.0-beta.26",
     "bourbon": "^4.2.7",
     "codelyzer": "~2.0.0-beta.4",
     "jasmine-core": "2.5.2",
