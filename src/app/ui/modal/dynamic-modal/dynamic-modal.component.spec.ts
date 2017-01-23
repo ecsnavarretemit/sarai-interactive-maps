@@ -11,12 +11,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ComponentFactoryResolver, DebugElement } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 
 import { SpawnModalService } from '../spawn-modal.service';
 
 import { AlertModalComponent } from '../alert-modal/alert-modal.component';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { DynamicModalComponent } from './dynamic-modal.component';
+import { PdfPreviewModalComponent } from '../pdf-preview-modal/pdf-preview-modal.component';
 
 describe('Component: DynamicModal', () => {
   let component: DynamicModalComponent;
@@ -28,7 +30,9 @@ describe('Component: DynamicModal', () => {
         AlertModalComponent,
         BaseModalComponent,
         DynamicModalComponent,
-        ModalDirective
+        ModalDirective,
+        PdfPreviewModalComponent,
+        PdfViewerComponent
       ],
       providers: [
         SpawnModalService,

@@ -11,6 +11,7 @@ import { SpawnModalService } from '../spawn-modal.service';
 import { ModalComponentData } from '../modal-component-data.interface';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { AlertModalComponent } from '../alert-modal/alert-modal.component';
+import { PdfPreviewModalComponent } from '../pdf-preview-modal/pdf-preview-modal.component';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 
@@ -20,7 +21,8 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./dynamic-modal.component.sass'],
   entryComponents: [
     BaseModalComponent,
-    AlertModalComponent
+    AlertModalComponent,
+    PdfPreviewModalComponent
   ]
 })
 export class DynamicModalComponent implements OnInit {
