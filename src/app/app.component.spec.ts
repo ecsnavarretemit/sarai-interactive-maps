@@ -18,6 +18,7 @@ import { Angulartics2Module, Angulartics2, Angulartics2GoogleAnalytics } from 'a
 import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
+import { UiModule } from './ui';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { AppLoggerService } from './app-logger.service';
@@ -37,6 +38,7 @@ describe('App: SaraiInteractiveMaps', () => {
         AccordionModule.forRoot(),
         StoreModule,
         MapModule,
+        UiModule,
         TranslateModule.forRoot({
           provide: TranslateLoader,
           useFactory: TranslationFactoryLoader,
