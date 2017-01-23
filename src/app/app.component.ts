@@ -5,10 +5,11 @@
  * Licensed under MIT
  */
 
-import { AfterViewInit, Component, ElementRef, isDevMode, Renderer, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, isDevMode } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Angulartics2, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { AppLoggerService, StreamData } from './app-logger.service';
+import { AlertModalComponent, SpawnModalService } from './ui';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 
@@ -18,13 +19,10 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild('logModal') logModal: ModalDirective;
-  @ViewChild('logModalTitle') logModalTitle: ElementRef;
-  @ViewChild('logModalBody') logModalBody: ElementRef;
 
   constructor(
     private _logger: AppLoggerService,
-    private _renderer: Renderer,
+    private _modal: SpawnModalService,
     private _angulartics: Angulartics2,
     public angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) {
@@ -41,16 +39,15 @@ export class AppComponent implements AfterViewInit {
         return data.emit;
       })
       .subscribe((data: StreamData) => {
-        // hide the error modal before showing the data
-        if (this.logModal.isShown) {
-          this.logModal.hide();
-        }
-
-        // change the title and body content
-        this._renderer.setElementProperty(this.logModalTitle.nativeElement, 'textContent', data.title);
-        this._renderer.setElementProperty(this.logModalBody.nativeElement, 'textContent', data.message);
-
-        this.logModal.show();
+        // show an alert modal
+        this._modal.spawn({
+          component: AlertModalComponent,
+          inputs: {
+            openImmediately: true,
+            title: data.title,
+            message: data.message
+          }
+        });
       })
       ;
   }

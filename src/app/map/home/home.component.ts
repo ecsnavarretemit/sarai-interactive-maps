@@ -5,13 +5,14 @@
  * Licensed under MIT
  */
 
-import { Component, isDevMode, OnInit, OnDestroy, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { Component, isDevMode, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { CookieService } from 'angular2-cookie/core';
 import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from 'ng2-translate';
+import { PdfPreviewModalComponent, SpawnModalService } from '../../ui';
 import { WindowService } from '../window.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { LeafletButtonComponent } from '../../leaflet';
@@ -26,20 +27,14 @@ import * as L from 'leaflet';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   public layersOpacity = 0.6;
   public mapZoom: number = 6;
   public mapCoords: L.LatLngLiteral;
-  public pdfUrl: string | null  = null;
-  public pdfFilename: string | null = null;
-  public pdfLoaderVisible: boolean = false;
-  public tmpPdfUrl: string | null = null;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
 
   @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
-  @ViewChild('pdfPreviewModal') pdfPreviewModal: ModalDirective;
-  @ViewChild('pdfPreviewModalTitle') pdfPreviewModalTitle: ElementRef;
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
@@ -47,6 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     public _router: Router,
     private _window: WindowService,
     private _logger: AppLoggerService,
+    private _modal: SpawnModalService,
     private _translate: TranslateService,
     private _cookieService: CookieService,
     private _renderer: Renderer,
@@ -151,56 +147,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   previewPdf(pdfMetadata: any) {
-    // hide the loader indicator
-    this.pdfLoaderVisible = false;
+    let title = 'PDF Preview';
+
+    if (typeof pdfMetadata.title !== 'undefined') {
+      title = `${pdfMetadata.title} (${title})`;
+    }
 
     // show a modal saying the pdf is not available if `pdfMetadata.url` is set to false
     // else show a modal that contains the PDF preview
     if (pdfMetadata.url !== false) {
-      this.tmpPdfUrl = pdfMetadata.url;
-      this.pdfFilename = pdfMetadata.filename;
-
-      // show the loader indicator
-      this.pdfLoaderVisible = true;
-
-      // show the modal
-      this.pdfPreviewModal.show();
+      // show an alert modal
+      this._modal.spawn({
+        component: PdfPreviewModalComponent,
+        inputs: {
+          openImmediately: true,
+          title,
+          src: pdfMetadata.url,
+          downloadFilename: pdfMetadata.filename
+        }
+      });
     } else {
       this._logger.log('Image not available', 'Map image not available.', true);
     }
-  }
-
-  /**
-   * When calling this function as the after-load-complete callback of the pdf component,
-   * use: `[after-load-complete]="pdfLoadComplete.bind(this)"` instead of the this
-   * `[after-load-complete]="pdfLoadComplete"` because the pdf component changes the value of this
-   * to the value of this in the pdf component which makes us unable to get this component's `this` value.
-   */
-  pdfLoadComplete(pdf: any) {
-    // hide the loader indicator after 3s since the pdf viewer does not provide a callback
-    // after rendering the PDF
-    setTimeout(() => {
-      this.pdfLoaderVisible = false;
-    }, 3000);
-  }
-
-  addPdf() {
-    this.pdfUrl = this.tmpPdfUrl;
-  }
-
-  removePdf() {
-    // hide the loader indicator
-    this.pdfLoaderVisible = false;
-
-    // destroy the PDF viewer instance
-    this.pdfUrl = null;
-    this.pdfFilename = null;
-    this.tmpPdfUrl = null;
-  }
-
-  ngOnDestroy() {
-    // make sure we remove the PDF instance
-    this.removePdf();
   }
 
 }

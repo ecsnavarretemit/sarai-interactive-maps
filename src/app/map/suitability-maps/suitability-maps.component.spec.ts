@@ -13,7 +13,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
-import { AppLoggerService } from '../../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
 import { LeafletMapService } from '../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';

@@ -214,11 +214,13 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
   processRequest() {
     if (this.pdfFilename !== '' && (this.pdfUrl !== '' || this.pdfUrl !== '#')) {
        this.processComplete.emit({
+        title: this.pdfFileDescriptiveName,
         filename: this.pdfFilename,
         url: this.pdfUrl
       });
     } else {
        this.processComplete.emit({
+        title: false,
         filename: false,
         url: false
       });

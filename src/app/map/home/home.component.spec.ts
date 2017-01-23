@@ -15,6 +15,7 @@ import { Title } from '@angular/platform-browser';
 import { CookieService } from 'angular2-cookie/core';
 import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
 import { Angulartics2 } from 'angulartics2';
+import { SpawnModalService } from '../../ui';
 import { TranslationFactoryLoader } from '../../app-translation-factory.service';
 import { WindowService } from '../window.service';
 import { AppLoggerService } from '../../app-logger.service';
@@ -45,6 +46,7 @@ describe('Component: Home', () => {
         AppLoggerService,
         Renderer,
         WindowService,
+        SpawnModalService,
         Title,
         HomeComponent,
 
