@@ -5,13 +5,15 @@
  * Licensed under MIT
  */
 
-import { Component, ComponentFactoryResolver, ElementRef, OnInit, ReflectiveInjector, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SpawnModalService } from '../spawn-modal.service';
 import { ModalComponentData } from '../modal-component-data.interface';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { AlertModalComponent } from '../alert-modal/alert-modal.component';
+import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { PdfPreviewModalComponent } from '../pdf-preview-modal/pdf-preview-modal.component';
+import { ResolvesComponent } from '../resolves-component';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 
@@ -22,10 +24,11 @@ import 'rxjs/add/operator/debounceTime';
   entryComponents: [
     BaseModalComponent,
     AlertModalComponent,
+    ChartModalComponent,
     PdfPreviewModalComponent
   ]
 })
-export class DynamicModalComponent implements OnInit {
+export class DynamicModalComponent implements AfterViewInit {
   private _hideSubscription: Subscription;
   private _currentComponent = null;
 
@@ -36,7 +39,7 @@ export class DynamicModalComponent implements OnInit {
     private _resolver: ComponentFactoryResolver
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this._modalService.stream
       .debounceTime(300)
       .filter((componentData: ModalComponentData) => {
@@ -76,13 +79,21 @@ export class DynamicModalComponent implements OnInit {
         // We create the component using the factory and the injector
         const component = factory.create(injector);
 
+        // enable change detection in the component
+        component.changeDetectorRef.detectChanges();
+
+        // clean up everything when component is destroyed
+        component.onDestroy(() => {
+          this._hideSubscription.unsubscribe();
+
+          this._currentComponent.changeDetectorRef.detach();
+        });
+
         // We insert the component into the dom container
         this.modalContainer.insert(component.hostView);
 
-        // Unsubscribe and destroy the previously created component
+        // destroy the previously created component
         if (this._currentComponent !== null) {
-          this._hideSubscription.unsubscribe();
-
           this._currentComponent.destroy();
         }
 
@@ -92,11 +103,7 @@ export class DynamicModalComponent implements OnInit {
         // destroy the component on unsubscribe
         this._hideSubscription = (component.instance as BaseModalComponent).hide.subscribe(() => {
           setTimeout(() => {
-            this._hideSubscription.unsubscribe();
-
             this._currentComponent.destroy();
-
-            this._currentComponent = null;
           }, 0);
         });
       })
