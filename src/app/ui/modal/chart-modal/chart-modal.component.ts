@@ -50,6 +50,11 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
     // call the parent ngAfterViewInit()
     super.ngAfterViewInit();
 
+    // dont create any chart components when component metadata is not specified or provided.
+    if (typeof this.chartOptions === 'undefined' || this.chartOptions === null) {
+      return;
+    }
+
     if (typeof this.chartOptions.inputs !== 'undefined') {
       // Inputs need to be in the following format to be resolved properly
       const inputProviders = Object
@@ -90,8 +95,10 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
   }
 
   ngOnDestroy() {
-    // destroy the dynamically created component
-    this._currentComponent.destroy();
+    // destroy the dynamically created component when it is not null
+    if (this._currentComponent !== null) {
+      this._currentComponent.destroy();
+    }
   }
 
 }
