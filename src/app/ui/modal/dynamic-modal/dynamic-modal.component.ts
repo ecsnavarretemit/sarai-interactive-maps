@@ -102,7 +102,7 @@ export class DynamicModalComponent implements AfterViewInit {
         // destroy the component on unsubscribe
         this._hideSubscription = (component.instance as BaseModalComponent).hide.subscribe(() => {
           setTimeout(() => {
-            // this._currentComponent.destroy();
+            this._currentComponent.destroy();
           }, 0);
         });
       })
