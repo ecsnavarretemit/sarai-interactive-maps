@@ -1,5 +1,5 @@
 /*!
- * UI Module
+ * Charts Module
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -7,20 +7,20 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartsModule } from './charts';
-import { ModalModule } from './modal';
+
+import { LineChartComponent } from './line-chart/line-chart.component';
 
 @NgModule({
   imports: [
-    CommonModule,
-    ChartsModule,
-    ModalModule
+    CommonModule
+  ],
+  declarations: [
+    LineChartComponent
   ],
   exports: [
-    ChartsModule,
-    ModalModule
+    LineChartComponent
   ]
 })
-export class UiModule { }
+export class ChartsModule { }
 
 
