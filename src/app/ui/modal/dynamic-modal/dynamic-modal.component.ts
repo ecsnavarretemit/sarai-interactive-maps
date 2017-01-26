@@ -13,7 +13,6 @@ import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { AlertModalComponent } from '../alert-modal/alert-modal.component';
 import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { PdfPreviewModalComponent } from '../pdf-preview-modal/pdf-preview-modal.component';
-import { ResolvesComponent } from '../resolves-component';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 
