@@ -19,6 +19,7 @@ import { AppLoggerService } from '../../app-logger.service';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../ui';
 import { Layer } from '../../store';
 import { MAP_CONFIG } from '../map.config';
+import assign from 'lodash-es/assign';
 import every from 'lodash-es/every';
 import forEach from 'lodash-es/forEach';
 import isNaN from 'lodash-es/isNaN';
@@ -207,29 +208,14 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         return result;
       })
       .subscribe((result: any) => {
+        const dataset: Chart.ChartDataSets = this.genereateChartDataSetOption({
+          data: result.data,
+          label: 'NDVI'
+        });
+
         const data = {
           labels: result.labels,
-          datasets: [{
-            label: 'NDVI',
-            data: result.data,
-            fill: false,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 2,
-            pointHoverRadius: 8,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 3,
-            pointRadius: 5,
-            pointHitRadius: 10,
-            spanGaps: false
-          }]
+          datasets: [dataset]
         };
 
         const yTicks: Chart.LinearTickOptions = {
@@ -342,6 +328,28 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         this._logger.log('NDVI Map Data Unavailable', message, true);
       })
       ;
+  }
+
+  genereateChartDataSetOption(dataset: Chart.ChartDataSets): Chart.ChartDataSets {
+    return assign({}, {
+      fill: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.4)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'rgba(75, 192, 192, 1)',
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
+      pointHoverBorderColor: 'rgba(220, 220, 220, 1)',
+      pointHoverBorderWidth: 3,
+      pointRadius: 5,
+      pointHitRadius: 10,
+      spanGaps: false
+    }, dataset);
   }
 
   generatePopupHtml(coords: L.LatLngLiteral): string {
