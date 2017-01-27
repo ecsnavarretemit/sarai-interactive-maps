@@ -143,6 +143,12 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   onMapClick(evt: Event) {
     const { lat, lng }: L.LatLngLiteral = (evt as any).latlng;
+    const originalTarget = (evt as any).originalEvent.target;
+
+    // do nothing when the target element is not the map container
+    if (!originalTarget.classList.contains('leaflet-container')) {
+      return;
+    }
 
     // remove marker before creating new one
     this.removeMarker();
