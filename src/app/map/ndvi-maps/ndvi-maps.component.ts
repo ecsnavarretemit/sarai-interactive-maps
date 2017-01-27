@@ -23,6 +23,7 @@ import every from 'lodash-es/every';
 import forEach from 'lodash-es/forEach';
 import isNaN from 'lodash-es/isNaN';
 import map from 'lodash-es/map';
+import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
@@ -220,15 +221,40 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
             borderJoinStyle: 'miter',
             pointBorderColor: 'rgba(75,192,192,1)',
             pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
+            pointBorderWidth: 2,
+            pointHoverRadius: 8,
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
             pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointHoverBorderWidth: 3,
+            pointRadius: 5,
             pointHitRadius: 10,
             spanGaps: false
           }]
+        };
+
+        const yTicks: Chart.LinearTickOptions = {
+          beginAtZero: true,
+          stepSize: 2500
+        };
+
+        const options: Chart.ChartOptions = {
+          maintainAspectRatio: false,
+          responsive: true,
+          scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'NDVI'
+              },
+              ticks: yTicks
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Date'
+              }
+            }]
+          }
         };
 
         // show the chart modal
@@ -240,7 +266,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
             chartOptions: {
               type: LineChartComponent,
               inputs: {
-                data
+                data,
+                options
               }
             }
           }

@@ -18,47 +18,19 @@ export class LineChartComponent implements AfterViewInit, OnDestroy {
   private _chartInstance: Chart;
 
   @Input('data') data: Chart.LinearChartData;
-  @Input('xAxisLabel') xAxisLabel: string;
-  @Input('yAxisLabel') yAxisLabel: string;
+  @Input('options') options: Chart.ChartOptions;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
   constructor(injector: Injector) {
     // retrieve properties from the injector
     this.data = injector.get('data', {});
-    this.xAxisLabel = injector.get('xAxisLabel', '');
-    this.yAxisLabel = injector.get('yAxisLabel', '');
+    this.options = injector.get('options', {});
   }
 
   ngAfterViewInit() {
-    const ticks: Chart.LinearTickOptions = {
-      beginAtZero: true
-    };
-
-    const scaleOptions: Chart.ChartScales = {};
-
-    if (typeof this.xAxisLabel !== 'undefined' && typeof this.xAxisLabel !== '') {
-      scaleOptions.xAxes = [{
-        scaleLabel: {
-          display: true,
-          labelString: this.xAxisLabel
-        }
-      }];
-    }
-
-    if (typeof this.yAxisLabel !== 'undefined' && typeof this.yAxisLabel !== '') {
-      scaleOptions.yAxes = [{
-        scaleLabel: {
-          display: true,
-          labelString: this.yAxisLabel
-        }
-      }];
-    }
-
     this._chartInstance = new Chart((this.chartCanvas.nativeElement as HTMLCanvasElement), {
       type: 'line',
-      options: {
-        scales: scaleOptions
-      },
+      options: this.options,
       data: this.data
     });
   }
