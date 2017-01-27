@@ -44,6 +44,9 @@ export class PdfPreviewModalComponent extends BaseModalComponent implements OnIn
   }
 
   onShow() {
+    // call the parent on show method
+    super.onShow();
+
     this.modalVisible = true;
   }
 

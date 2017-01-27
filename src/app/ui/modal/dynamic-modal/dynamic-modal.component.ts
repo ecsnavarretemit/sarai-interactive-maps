@@ -5,7 +5,6 @@
  * Licensed under MIT
  */
 
-import { AfterViewInit, Component, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SpawnModalService } from '../spawn-modal.service';
 import { ModalComponentData } from '../modal-component-data.interface';
@@ -15,6 +14,15 @@ import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { PdfPreviewModalComponent } from '../pdf-preview-modal/pdf-preview-modal.component';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  HostBinding,
+  ReflectiveInjector,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 
 @Component({
   selector: 'app-dynamic-modal',
@@ -29,8 +37,10 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class DynamicModalComponent implements AfterViewInit {
   private _hideSubscription: Subscription;
+  private _showSubscription: Subscription;
   private _currentComponent = null;
 
+  @HostBinding('class.modal-open') modalOpen: boolean = false;
   @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer: ViewContainerRef;
 
   constructor(
@@ -83,6 +93,8 @@ export class DynamicModalComponent implements AfterViewInit {
 
         // clean up everything when component is destroyed
         component.onDestroy(() => {
+          this._showSubscription.unsubscribe();
+
           this._hideSubscription.unsubscribe();
 
           this._currentComponent.changeDetectorRef.detach();
@@ -99,8 +111,16 @@ export class DynamicModalComponent implements AfterViewInit {
         // save the current component
         this._currentComponent = component;
 
+        this._showSubscription = (component.instance as BaseModalComponent).show.subscribe(() => {
+          // add the class when modal is opened.
+          this.modalOpen = true;
+        });
+
         // destroy the component on unsubscribe
         this._hideSubscription = (component.instance as BaseModalComponent).hide.subscribe(() => {
+          // remove the class when modal is closed
+          this.modalOpen = false;
+
           setTimeout(() => {
             this._currentComponent.destroy();
           }, 0);

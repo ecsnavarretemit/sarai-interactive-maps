@@ -17,6 +17,7 @@ export class BaseModalComponent implements AfterViewInit {
   @Input('openImmediately') openImmediately: boolean = false;
   @Input('title') title: string = 'Modal Title';
   @Output() hide: EventEmitter<string> = new EventEmitter<string>();
+  @Output() show: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('contentModal') contentModal: ModalDirective;
   @ViewChild('contentModalTitle') contentModalTitle: ElementRef;
   @ViewChild('contentModalBody') contentModalBody: ElementRef;
@@ -35,6 +36,10 @@ export class BaseModalComponent implements AfterViewInit {
 
   onHide() {
     this.hide.emit('hide');
+  }
+
+  onShow() {
+    this.show.emit('show');
   }
 
 }

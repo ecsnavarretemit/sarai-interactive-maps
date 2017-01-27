@@ -1,5 +1,6 @@
 <div class="modal--base modal fade" tabindex="-1" role="dialog" aria-labelledby="baseModalLabel" aria-hidden="true"
     bsModal
+    (onShown)="onShow($event)"
     (onHidden)="onHide($event)"
     #contentModal="bs-modal">
 
