@@ -23,6 +23,7 @@ import every from 'lodash-es/every';
 import forEach from 'lodash-es/forEach';
 import isNaN from 'lodash-es/isNaN';
 import map from 'lodash-es/map';
+import * as moment from 'moment';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
@@ -172,6 +173,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   }
 
   showTimeSeriesChart(coords: L.LatLngLiteral, startDate: string, endDate: string) {
+    const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
+    const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
+
     // notify the user about chart generation
     this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
 
@@ -194,8 +198,10 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         const result: any = {};
 
         // extract the time and ndvi into separate properties
-        result.labels = map(data.result, 'time');
         result.data = map(data.result, 'ndvi');
+        result.labels = map(data.result, (item: any) => {
+          return moment(item['time'], 'YYYY-MM-DD').format('MMMM D, YYYY');
+        });
 
         return result;
       })
@@ -230,7 +236,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           component: ChartModalComponent,
           inputs: {
             openImmediately: true,
-            title: 'NDVI Time Series Data',
+            title: `NDVI Time Series Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
             chartOptions: {
               type: LineChartComponent,
               inputs: {
