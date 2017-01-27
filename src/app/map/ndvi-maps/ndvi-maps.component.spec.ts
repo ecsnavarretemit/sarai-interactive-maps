@@ -8,6 +8,7 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
+import { Renderer } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { Title } from '@angular/platform-browser';
@@ -16,8 +17,10 @@ import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
 import { AppLoggerService } from '../../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
+import { NdviMapService } from '../ndvi-map.service';
 import { LeafletMapService } from '../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
+import { SpawnModalService } from '../../ui';
 import { MockActivatedRoute, MockRouter } from '../../mocks/router';
 import { NdviMapsComponent } from './ndvi-maps.component';
 
@@ -38,7 +41,10 @@ describe('Component: NdviMaps', () => {
       providers: [
         AppLoggerService,
         TileLayerService,
+        NdviMapService,
         LeafletMapService,
+        SpawnModalService,
+        Renderer,
         Title,
         NdviMapsComponent,
 
