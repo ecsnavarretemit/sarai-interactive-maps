@@ -32,7 +32,7 @@
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
     "flatpickr": "^2.3.5",
-    "leaflet": "^1.0.2",
+    "leaflet": "^1.0.3",
     "leaflet-control-geocoder2": "^1.6.3",
     "leaflet-measure": "^2.1.1",
     "leaflet-sidebar": "^0.1.9",
@@ -48,7 +48,7 @@
   "devDependencies": {
     "@angular/compiler-cli": "^2.4.5",
     "@types/jasmine": "2.5.38",
-    "@types/leaflet": "^1.0.48",
+    "@types/leaflet": "^1.0.50",
     "@types/lodash": "^4.14.50",
     "@types/lodash-es": "^4.14.2",
     "@types/node": "^6.0.59",

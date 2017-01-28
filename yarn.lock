@@ -86,19 +86,19 @@
     magic-string "^0.16.0"
     source-map "^0.5.6"
 
-"@types/geojson@0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-0.0.31.tgz#ad8d4cb76f7bf13c59babc5bed77f2dd2c4175bc"
+"@types/geojson@*":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-0.0.32.tgz#1571eeaf045337b242852885f08d9a945e1cc940"
 
 "@types/jasmine@2.5.38", "@types/jasmine@^2.5.36":
   version "2.5.38"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.38.tgz#a4379124c4921d4e21de54ec74669c9e9b356717"
 
-"@types/leaflet@^1.0.48":
-  version "1.0.48"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.48.tgz#a3fb461dfb7d6f9c3d862aad81dc42ee969dc27d"
+"@types/leaflet@^1.0.50":
+  version "1.0.50"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.50.tgz#3463b409e314d11c6e2f85fa68a0367761637c23"
   dependencies:
-    "@types/geojson" "0.0.31"
+    "@types/geojson" "*"
 
 "@types/lodash-es@^4.14.2":
   version "4.14.2"
@@ -2906,9 +2906,9 @@ leaflet-sidebar@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/leaflet-sidebar/-/leaflet-sidebar-0.1.9.tgz#7eab226043119c7936af06cf006f265ce9daeb8c"
 
-leaflet@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.2.tgz#fa4fbcb7844944fc2bfb0bcf9ca0dea13463ca21"
+leaflet@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.3.tgz#1f401b98b45c8192134c6c8d69686253805007c8"
 
 less-loader@^2.2.3:
   version "2.2.3"
