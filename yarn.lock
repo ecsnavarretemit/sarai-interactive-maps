@@ -19,15 +19,7 @@
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.5.tgz#ada1a22b7ba01d1fdeb300115584478e031e9a4f"
 
-"@angular/compiler-cli@^2.3.1":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.4.tgz#726598f850e599677fa1638d1728096384665a63"
-  dependencies:
-    "@angular/tsc-wrapped" "0.5.1"
-    minimist "^1.2.0"
-    reflect-metadata "^0.1.2"
-
-"@angular/compiler-cli@^2.4.5":
+"@angular/compiler-cli@^2.3.1", "@angular/compiler-cli@^2.4.5":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.5.tgz#efabbe10558b233dcdfe985af2bd2e84f1414c97"
   dependencies:
@@ -35,19 +27,11 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^2.3.1":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.4.tgz#86b861685ebc4c7b19b1133bf8c5bf4d28c71475"
-
-"@angular/compiler@^2.4.5":
+"@angular/compiler@^2.3.1", "@angular/compiler@^2.4.5":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.5.tgz#521da325e2e002398e8f9de52cfb03d303729e72"
 
-"@angular/core@^2.3.1":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.4.tgz#eafef7bbdefea321fa5e79998bb2f6707c70729d"
-
-"@angular/core@^2.4.5":
+"@angular/core@^2.3.1", "@angular/core@^2.4.5":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.5.tgz#8b05156398afde9636e65527ffb61fc74236af5a"
 
@@ -1909,9 +1893,9 @@ findup@0.1.5:
     colors "~0.6.0-1"
     commander "~2.1.0"
 
-flatpickr@^2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.3.4.tgz#3af47b0b5213caa444feab4c5c34c14f991e1fc5"
+flatpickr@^2.3.5:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.3.5.tgz#bde04999d8bb362b7f117e169224310868044194"
 
 flatten@^1.0.2:
   version "1.0.2"
