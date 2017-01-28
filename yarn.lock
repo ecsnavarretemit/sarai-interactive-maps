@@ -15,45 +15,45 @@
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/@angular-cli/base-href-webpack/-/base-href-webpack-1.0.15.tgz#a260c386392ed5fca179ac5aa7f3838893f3cb09"
 
-"@angular/common@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.4.tgz#039520c6395476d7f35ca250973dfef946c62831"
+"@angular/common@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.5.tgz#ada1a22b7ba01d1fdeb300115584478e031e9a4f"
 
-"@angular/compiler-cli@^2.3.1", "@angular/compiler-cli@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.4.tgz#726598f850e599677fa1638d1728096384665a63"
+"@angular/compiler-cli@^2.3.1", "@angular/compiler-cli@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.5.tgz#efabbe10558b233dcdfe985af2bd2e84f1414c97"
   dependencies:
     "@angular/tsc-wrapped" "0.5.1"
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^2.3.1", "@angular/compiler@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.4.tgz#86b861685ebc4c7b19b1133bf8c5bf4d28c71475"
+"@angular/compiler@^2.3.1", "@angular/compiler@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.5.tgz#521da325e2e002398e8f9de52cfb03d303729e72"
 
-"@angular/core@^2.3.1", "@angular/core@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.4.tgz#eafef7bbdefea321fa5e79998bb2f6707c70729d"
+"@angular/core@^2.3.1", "@angular/core@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.5.tgz#8b05156398afde9636e65527ffb61fc74236af5a"
 
-"@angular/forms@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.4.4.tgz#9679ca369d5bc2968ee1a67634ac221d75487364"
+"@angular/forms@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.4.5.tgz#468bd040518595c3598742ac1a22c506a7f1ab0f"
 
-"@angular/http@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.4.4.tgz#e41a9808eeec9cfdf3d5f9f92d0041b5c041fd60"
+"@angular/http@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.4.5.tgz#de94b2daa4ff24e8b6c8839ffaf8089b62d4430b"
 
-"@angular/platform-browser-dynamic@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.4.4.tgz#b5948cf2cac33c9634a400a7ece8fb5600f83107"
+"@angular/platform-browser-dynamic@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.4.5.tgz#36fa975a8ee2dfe3f60bab561143974e6bdb1eff"
 
-"@angular/platform-browser@^2.4.4":
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.4.4.tgz#0bff3512d00b199211ff28df0aa5c6841718a19c"
+"@angular/platform-browser@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.4.5.tgz#fa1bc891b1309bca83845787b9a08db36a787fee"
 
-"@angular/router@^3.4.4":
-  version "3.4.4"
-  resolved "https://registry.yarnpkg.com/@angular/router/-/router-3.4.4.tgz#8564889d5bf322a1a4b679bd82c053df03eabb72"
+"@angular/router@^3.4.5":
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-3.4.5.tgz#5a471a4e49a7eba6a460761129c0684a4b730a1a"
 
 "@angular/tsc-wrapped@0.5.1", "@angular/tsc-wrapped@^0.5.0":
   version "0.5.1"
@@ -86,33 +86,37 @@
     magic-string "^0.16.0"
     source-map "^0.5.6"
 
-"@types/geojson@0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-0.0.31.tgz#ad8d4cb76f7bf13c59babc5bed77f2dd2c4175bc"
+"@types/geojson@*":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-0.0.32.tgz#1571eeaf045337b242852885f08d9a945e1cc940"
 
 "@types/jasmine@2.5.38", "@types/jasmine@^2.5.36":
   version "2.5.38"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.38.tgz#a4379124c4921d4e21de54ec74669c9e9b356717"
 
-"@types/leaflet@^1.0.48":
-  version "1.0.48"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.48.tgz#a3fb461dfb7d6f9c3d862aad81dc42ee969dc27d"
+"@types/leaflet@^1.0.50":
+  version "1.0.50"
+  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.0.50.tgz#3463b409e314d11c6e2f85fa68a0367761637c23"
   dependencies:
-    "@types/geojson" "0.0.31"
+    "@types/geojson" "*"
 
-"@types/lodash-es@^4.14.2":
-  version "4.14.2"
-  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.14.2.tgz#ae1d00d52d549867e1ecb1c0502559b156ce967c"
+"@types/lodash-es@^4.14.3":
+  version "4.14.3"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.14.3.tgz#3ceb7808e5215368a90fb1f6d33174e3dad3ee0a"
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.50":
-  version "4.14.50"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.50.tgz#2227da4d65fafe249bccd59c7b9396e27674c8f7"
+"@types/lodash@*", "@types/lodash@^4.14.51":
+  version "4.14.51"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.51.tgz#8454ce32d367824e4e30d910a5c1a84c14e5626f"
 
 "@types/node@^6.0.46", "@types/node@^6.0.59":
   version "6.0.59"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.59.tgz#b7fd8f3144c447c829a8eab8805c3a523e9e5b44"
+
+"@types/pdf@0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/pdf/-/pdf-0.0.31.tgz#c0b210ce752fd59ad8331be5d4b55cf369141b93"
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -1893,9 +1897,9 @@ findup@0.1.5:
     colors "~0.6.0-1"
     commander "~2.1.0"
 
-flatpickr@^2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.3.4.tgz#3af47b0b5213caa444feab4c5c34c14f991e1fc5"
+flatpickr@^2.3.5:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.3.5.tgz#bde04999d8bb362b7f117e169224310868044194"
 
 flatten@^1.0.2:
   version "1.0.2"
@@ -2906,9 +2910,9 @@ leaflet-sidebar@^0.1.9:
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/leaflet-sidebar/-/leaflet-sidebar-0.1.9.tgz#7eab226043119c7936af06cf006f265ce9daeb8c"
 
-leaflet@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.2.tgz#fa4fbcb7844944fc2bfb0bcf9ca0dea13463ca21"
+leaflet@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.3.tgz#1f401b98b45c8192134c6c8d69686253805007c8"
 
 less-loader@^2.2.3:
   version "2.2.3"
@@ -3455,16 +3459,17 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ng2-bootstrap@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.2.6.tgz#fd79faf84082e2515bf72eb182c5ef7144035ac0"
+ng2-bootstrap@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.3.1.tgz#001442b850f980c84311421590834340a9071ba0"
   dependencies:
     moment "2.17.1"
 
-ng2-pdf-viewer@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-0.1.6.tgz#6e5fa3fceeaa1e9ae7c37ac1e74684b42b37e347"
+ng2-pdf-viewer@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-1.0.1.tgz#c6edad346fbc2843618dce2075cbdbfabd080f2c"
   dependencies:
+    "@types/pdf" "0.0.31"
     pdfjs-dist "^1.6.329"
 
 ng2-translate@^5.0.0:
