@@ -31,7 +31,7 @@
                     <pdf-viewer
                         *ngIf="modalVisible"
                         [src]="src"
-                        [after-load-complete]="onLoadComplete.bind(this)"
+                        (after-load-complete)="onLoadComplete($event)"
                         original-size="false"
                         show-all="true">
                     </pdf-viewer>

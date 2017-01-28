@@ -47,12 +47,6 @@ export class PdfPreviewModalComponent extends BaseModalComponent implements OnIn
     this.modalVisible = true;
   }
 
-  /**
-   * When calling this function as the after-load-complete callback of the pdf component,
-   * use: `[after-load-complete]="pdfLoadComplete.bind(this)"` instead of the this
-   * `[after-load-complete]="pdfLoadComplete"` because the pdf component changes the value of this
-   * to the value of this in the pdf component which makes us unable to get this component's `this` value.
-   */
   onLoadComplete() {
     // hide the loader indicator after 3s since the pdf viewer does not provide a callback
     // after rendering the PDF
@@ -62,3 +56,5 @@ export class PdfPreviewModalComponent extends BaseModalComponent implements OnIn
   }
 
 }
+
+
