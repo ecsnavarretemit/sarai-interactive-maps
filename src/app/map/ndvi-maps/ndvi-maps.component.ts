@@ -199,27 +199,24 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         return Observable.of(data);
       })
       .map((data: any) => {
-        const result: any = {};
-
         // extract the time and ndvi into separate properties
-        result.data = map(data.result, 'ndvi');
-        result.labels = map(data.result, (item: any) => {
+        const labels = map(data.result, (item: any) => {
           return moment(item['time'], 'YYYY-MM-DD').format('MMMM D, YYYY');
         });
 
-        return result;
-      })
-      .subscribe((result: any) => {
         const dataset: Chart.ChartDataSets = this.genereateChartDataSetOption({
-          data: result.data,
+          data: map(data.result, 'ndvi'),
           label: 'NDVI'
         });
 
-        const data = {
-          labels: result.labels,
-          datasets: [dataset]
+        return {
+          labels,
+          datasets: [
+            dataset
+          ]
         };
-
+      })
+      .subscribe((data: Chart.LinearChartData) => {
         const yTicks: Chart.LinearTickOptions = {
           beginAtZero: true,
           stepSize: 2500
