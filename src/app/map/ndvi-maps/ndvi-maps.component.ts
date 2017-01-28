@@ -21,9 +21,11 @@ import { Layer } from '../../store';
 import { MAP_CONFIG } from '../map.config';
 import assign from 'lodash-es/assign';
 import every from 'lodash-es/every';
+import fill from 'lodash-es/fill';
 import forEach from 'lodash-es/forEach';
 import isNaN from 'lodash-es/isNaN';
 import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
@@ -266,7 +268,163 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   }
 
   showDayOfTheYearChart(coords: L.LatLngLiteral, startDate: string, endDate: string) {
-    console.log('Show doy data');
+    const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
+    const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
+
+    // notify the user about chart generation
+    this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
+
+    this._ndviMapService
+      .getNdviTimeSeriesByLatLng(coords, startDate, endDate)
+      .mergeMap((data: any) => {
+        const isEmpty: boolean = every(data.result, (item: any) => {
+          return item.ndvi !== null;
+        });
+
+        // throw a new observable containing the error message when all ndvi value are null
+        if (isEmpty === false) {
+          return Observable.throw(new Error('Please click on a land surface.'));
+        }
+
+        // create a new observable out of the data
+        return Observable.of(data);
+      })
+      .map((data: any) => {
+        const result: any = {};
+
+        result.datasets = reduce(data.result, (yearlyData: any, value: any, key: number) => {
+          const parsedDate = moment(value['time'], 'YYYY-MM-DD');
+          const year = parsedDate.year();
+
+          // create new object property based on the year if it doesn't exist yet
+          // add supply initial data
+          if (typeof yearlyData[year] === 'undefined') {
+            const startPoint = parsedDate.dayOfYear() - 1;
+
+            yearlyData[year] = {
+              leapyear: parsedDate.isLeapYear()
+            };
+
+            // fill the array with null values if the starting point is greater than 0
+            if (startPoint >= 0) {
+              yearlyData[year].values = fill(Array(startPoint), null);
+            } else {
+              yearlyData[year].values = [];
+            }
+          }
+
+          // push the values to the corresponding year
+          yearlyData[year].values.push(value['ndvi']);
+
+          // add 15 nulls after the pushed value
+          yearlyData[year].values = yearlyData[year].values.concat(fill(Array(15), null));
+
+          return yearlyData;
+        }, {});
+
+        forEach(result.data, (yearlyData: any, idx: string) => {
+          const expectedPoints = yearlyData.leapyear ? 366 : 365;
+
+          if (yearlyData.values.length < expectedPoints) {
+            const filler = fill(Array((expectedPoints - 1) - (yearlyData.values.length - 1)), null);
+
+            result.datasets[idx].values = yearlyData.values.concat(filler);
+          }
+
+          if (yearlyData.values.length > expectedPoints) {
+            result.datasets[idx].values = yearlyData.values.slice(0, expectedPoints);
+          }
+        });
+
+        // create the labels
+        result.labels = Array
+          .apply(null, {
+            length: 366
+          })
+          .map((value, index) => {
+            return index + 1;
+          })
+          ;
+
+        // assemble the dataset
+        result.datasets = reduce(result.datasets, (datasets: any, yearlyData: any, key: string): Array<Chart.ChartDataSets> => {
+          const color = this.generateRandomRGB();
+          const dataset = this.genereateChartDataSetOption({
+            data: yearlyData.values,
+            label: key,
+            backgroundColor: this.rgbtoRGBA(color, 0.4),
+            borderColor: this.rgbtoRGBA(color, 1),
+            pointBorderColor: this.rgbtoRGBA(color, 1),
+            pointHoverBackgroundColor: this.rgbtoRGBA(color, 1),
+            spanGaps: true
+          });
+
+          // add to the datasets config
+          datasets.push(dataset);
+
+          return datasets;
+        }, []);
+
+        return result;
+      })
+      .subscribe((data: Chart.LinearChartData) => {
+        const yTicks: Chart.LinearTickOptions = {
+          beginAtZero: true,
+          stepSize: 2500
+        };
+
+        const xTicks: Chart.LinearTickOptions = {
+          autoSkip: false,
+          callback: (value) => {
+            if ((value % 60) === 0 && value > 0) {
+              return value + '';
+            }
+
+            return '';
+          },
+        };
+
+        const options: any = {
+          maintainAspectRatio: false,
+          responsive: true,
+          scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'NDVI'
+              },
+              ticks: yTicks
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Day of the Year'
+              },
+              ticks: xTicks
+            }]
+          }
+        };
+
+        // charts fail to render properly due to xAxis does not offer stepSize option.
+        // Too many ticks rendered on the X Axis of the chart.see this issues:
+        // <https://github.com/chartjs/Chart.js/issues/3811>
+        // <https://github.com/chartjs/Chart.js/issues/2419>
+        this._modalService.spawn({
+          component: ChartModalComponent,
+          inputs: {
+            openImmediately: true,
+            title: `NDVI Day of the Year Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            chartOptions: {
+              type: LineChartComponent,
+              inputs: {
+                data,
+                options
+              }
+            }
+          }
+        });
+      })
+      ;
   }
 
   removeMarker() {
@@ -330,7 +488,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       ;
   }
 
-  genereateChartDataSetOption(dataset: Chart.ChartDataSets): Chart.ChartDataSets {
+  genereateChartDataSetOption(dataset: any): Chart.ChartDataSets {
     return assign({}, {
       fill: false,
       backgroundColor: 'rgba(75, 192, 192, 0.4)',
@@ -370,6 +528,22 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
             <a href="#" class="link link--ndvi-doy">Show</a>
         </dd>
     </dl>`;
+  }
+
+  generateRandomRGB(alpha: number = null): string {
+    let alphaStr = '';
+    if (alpha !== null) {
+      alphaStr = `, ${alpha}`;
+    }
+
+    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}${alphaStr})`;
+  }
+
+  rgbtoRGBA(color: string, alpha: number): string {
+    return color
+      .replace(')', `, ${alpha})`)
+      .replace('rgb', 'rgba')
+      ;
   }
 
   ngOnDestroy() {
