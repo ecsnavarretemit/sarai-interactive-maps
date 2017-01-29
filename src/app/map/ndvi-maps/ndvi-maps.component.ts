@@ -230,6 +230,13 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
       this.showDayOfTheYearChart(markerPos, startDate, endDate, queryDataChanged);
     }));
+
+    this._popupEventListeners.push(delegate(targetEl, 'click', '.link--delete-marker', (evt: Event) => {
+      // prevent default behavior when either of the links are clicked
+      evt.preventDefault();
+
+      this.removeMarker();
+    }));
   }
 
   onMapClick(evt: Event) {
@@ -256,7 +263,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     // show marker and popup to offer user what type of chart data to show
     this._marker
       .bindPopup(this.generatePopupHtml((evt as any).latlng), {
-        className: 'leaflet-popup--ndvi-popup'
+        className: 'leaflet-popup--ndvi leaflet-popup--with-footer-controls'
       })
       .openPopup()
       ;
@@ -599,7 +606,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   }
 
   generatePopupHtml(coords: L.LatLngLiteral): string {
-    return `<dl>
+    return `<dl class="list list--feature-info">
       <dt>Latitude:</dt>
       <dd>${coords.lat}</dd>
 
@@ -615,7 +622,15 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       <dd>
           <a href="#" class="link link--ndvi-doy">Show</a>
       </dd>
-    </dl>`;
+    </dl>
+    <ul class="list list-unstyled clearfix popup-controls">
+      <li class="list__item">
+        <a href="#" class="link link--delete-marker">
+          <i class="glyphicon glyphicon-trash link__icon"></i>
+          <span class="link link__text">Remove Marker</span>
+        </a>
+      </li>
+    </ul>`;
   }
 
   generateRandomRGB(alpha: number = null): string {
