@@ -48,7 +48,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   private _oldZoom: number;
   private _marker: L.Marker;
   private _mapClickListener: L.EventHandlerFn;
-  private _popupClickListener: Function;
+  private _popupEventListeners: Array<Function> = [];
   private _oldTimeSeriesData: any;
   private _oldDOYData: any;
 
@@ -140,15 +140,30 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       markerPos: null
     };
 
-    // delegate event to the popup pane and remove it later when the component is removed
-    this._popupClickListener = this._renderer.listen(targetEl, 'click', (evt: Event) => {
-      const target = (evt.target as HTMLElement);
-      const markerPos: L.LatLng = this._marker.getLatLng();
+    // create delegate function to handle event delegation
+    const delegate = (el: any, eventName: string, selector: string, callback: Function) => {
+      return this._renderer.listen(el, eventName, (evt: Event) => {
+        const possibleTargets = el.querySelectorAll(selector);
+        const target = evt.target;
 
-      // prevent default behavior when either of the links are clicked
-      if (target.classList.contains('link--ndvi-time-series') || target.classList.contains('link--ndvi-doy')) {
-        evt.preventDefault();
-      }
+        const l = possibleTargets.length;
+        for (let i = 0; i < l; i++) {
+          const p = possibleTargets[i];
+          let resolvedEl: any = target;
+
+          while (resolvedEl && resolvedEl !== el) {
+            if (resolvedEl === p) {
+              return callback.call(p, evt);
+            }
+
+            resolvedEl = resolvedEl.parentNode;
+          }
+        }
+      });
+    };
+
+    const checkQueryChanged = () => {
+      const markerPos: L.LatLng = this._marker.getLatLng();
 
       // if the marker position, startDate and endDate has not changed set the queryDataChanged to false
       if (
@@ -189,19 +204,32 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       if (oldQueryData.endDate === null) {
         oldQueryData.endDate = endDate;
       }
+    };
 
-      // check if the clicked element is the time series link.
-      // if it is show the time series chart
-      if (typeof this._marker !== 'undefined' && target.classList.contains('link--ndvi-time-series')) {
-        this.showTimeSeriesChart(markerPos, '2015-10-01', '2016-10-31', queryDataChanged);
-      }
+    // listen to click events by delegating click event to the targetEl
+    this._popupEventListeners.push(delegate(targetEl, 'click', '.link--ndvi-time-series', (evt: Event) => {
+      const markerPos: L.LatLng = this._marker.getLatLng();
 
-      // check if the clicked element is the doy link.
-      // if it is show the doy chart
-      if (typeof this._marker !== 'undefined' && target.classList.contains('link--ndvi-doy')) {
-        this.showDayOfTheYearChart(markerPos, '2015-10-01', '2016-10-31', queryDataChanged);
-      }
-    });
+      // prevent default behavior when either of the links are clicked
+      evt.preventDefault();
+
+      // check if there is changes to the query
+      checkQueryChanged();
+
+      this.showTimeSeriesChart(markerPos, startDate, endDate, queryDataChanged);
+    }));
+
+    this._popupEventListeners.push(delegate(targetEl, 'click', '.link--ndvi-doy', (evt: Event) => {
+      const markerPos: L.LatLng = this._marker.getLatLng();
+
+      // prevent default behavior when either of the links are clicked
+      evt.preventDefault();
+
+      // check if there is changes to the query
+      checkQueryChanged();
+
+      this.showDayOfTheYearChart(markerPos, startDate, endDate, queryDataChanged);
+    }));
   }
 
   onMapClick(evt: Event) {
@@ -572,21 +600,21 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   generatePopupHtml(coords: L.LatLngLiteral): string {
     return `<dl>
-        <dt>Latitude:</dt>
-        <dd>${coords.lat}</dd>
+      <dt>Latitude:</dt>
+      <dd>${coords.lat}</dd>
 
-        <dt>Longitude:</dt>
-        <dd>${coords.lng}</dd>
+      <dt>Longitude:</dt>
+      <dd>${coords.lng}</dd>
 
-        <dt>NDVI Time Series:</dt>
-        <dd>
-            <a href="#" class="link link--ndvi-time-series">Show</a>
-        </dd>
+      <dt>NDVI Time Series:</dt>
+      <dd>
+          <a href="#" class="link link--ndvi-time-series">Show</a>
+      </dd>
 
-        <dt>NDVI Day of the Year:</dt>
-        <dd>
-            <a href="#" class="link link--ndvi-doy">Show</a>
-        </dd>
+      <dt>NDVI Day of the Year:</dt>
+      <dd>
+          <a href="#" class="link link--ndvi-doy">Show</a>
+      </dd>
     </dl>`;
   }
 
@@ -620,7 +648,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     this._map.off('click', this._mapClickListener);
 
     // remove the event listener bound by the angular renderer
-    this._popupClickListener();
+    forEach(this._popupEventListeners, (listener: Function) => {
+      listener();
+    });
 
     // remove any existing marker on the map
     this.removeMarker();
