@@ -21,13 +21,12 @@ import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
 import { MockActivatedRoute, MockRouter } from '../../mocks/router';
 import { RainfallMapsComponent } from './rainfall-maps.component';
 
-describe('Component: NdviMaps', () => {
+describe('Component: RainfallMaps', () => {
   let mockActivatedRoute: MockActivatedRoute;
 
   beforeEach(() => {
     mockActivatedRoute = new MockActivatedRoute({
-      startDate: '2016-10-01',
-      scanRange: '10'
+      date: '2016-10-01'
     });
 
     TestBed.configureTestingModule({
