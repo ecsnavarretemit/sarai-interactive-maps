@@ -86,13 +86,13 @@
     magic-string "^0.16.0"
     source-map "^0.5.6"
 
-"@types/geojson@*":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-0.0.32.tgz#1571eeaf045337b242852885f08d9a945e1cc940"
-
 "@types/chart.js@^0.0.12":
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-0.0.12.tgz#919b3ebba009dcafb09e713fe8d027b6c8324d23"
+
+"@types/geojson@*":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-0.0.32.tgz#1571eeaf045337b242852885f08d9a945e1cc940"
 
 "@types/jasmine@2.5.38", "@types/jasmine@^2.5.36":
   version "2.5.38"
@@ -1928,6 +1928,10 @@ flatpickr@^2.3.5:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
+
+font-awesome@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
 for-in@^0.1.5:
   version "0.1.6"
