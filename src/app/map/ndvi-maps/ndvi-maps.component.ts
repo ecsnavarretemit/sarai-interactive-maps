@@ -607,22 +607,22 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   generatePopupHtml(coords: L.LatLngLiteral): string {
     return `<dl class="list list--feature-info">
-      <dt>Latitude:</dt>
-      <dd>${coords.lat}</dd>
+      <dt class="list__item list__item--key">Latitude:</dt>
+      <dd class="list__item list__item--value">${coords.lat}</dd>
 
-      <dt>Longitude:</dt>
-      <dd>${coords.lng}</dd>
+      <dt class="list__item list__item--key">Longitude:</dt>
+      <dd class="list__item list__item--value">${coords.lng}</dd>
 
-      <dt>NDVI Time Series Chart:</dt>
-      <dd>
+      <dt class="list__item list__item--key">NDVI Time Series Chart:</dt>
+      <dd class="list__item list__item--value">
           <a href="#" class="link link--ndvi-time-series">
             <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
             <span class="link__text">Show</span>
           </a>
       </dd>
 
-      <dt>NDVI Day of the Year Chart:</dt>
-      <dd>
+      <dt class="list__item list__item--key">NDVI Day of the Year Chart:</dt>
+      <dd class="list__item list__item--value">
           <a href="#" class="link link--ndvi-doy">
             <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
             <span class="link__text">Show</span>
