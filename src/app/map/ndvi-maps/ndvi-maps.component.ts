@@ -613,21 +613,28 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       <dt>Longitude:</dt>
       <dd>${coords.lng}</dd>
 
-      <dt>NDVI Time Series:</dt>
+      <dt>NDVI Time Series Chart:</dt>
       <dd>
-          <a href="#" class="link link--ndvi-time-series">Show</a>
+          <a href="#" class="link link--ndvi-time-series">
+            <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
+            <span class="link__text">Show</span>
+          </a>
       </dd>
 
-      <dt>NDVI Day of the Year:</dt>
+      <dt>NDVI Day of the Year Chart:</dt>
       <dd>
-          <a href="#" class="link link--ndvi-doy">Show</a>
+          <a href="#" class="link link--ndvi-doy">
+            <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
+            <span class="link__text">Show</span>
+          </a>
       </dd>
     </dl>
+
     <ul class="list list-unstyled clearfix popup-controls">
       <li class="list__item">
         <a href="#" class="link link--delete-marker">
           <i class="glyphicon glyphicon-trash link__icon"></i>
-          <span class="link link__text">Remove Marker</span>
+          <span class="link__text">Remove Marker</span>
         </a>
       </li>
     </ul>`;
