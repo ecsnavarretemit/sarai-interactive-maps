@@ -1,12 +1,11 @@
 /*!
- * UI Exporter
+ * Charts Exporter
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
-export * from './ui.module';
-export * from './charts';
-export * from './modal';
+export * from './charts.module';
+export * from './line-chart/line-chart.component';
 
 

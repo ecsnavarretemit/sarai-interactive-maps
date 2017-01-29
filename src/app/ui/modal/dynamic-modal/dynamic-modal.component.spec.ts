@@ -17,6 +17,7 @@ import { SpawnModalService } from '../spawn-modal.service';
 
 import { AlertModalComponent } from '../alert-modal/alert-modal.component';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
+import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { DynamicModalComponent } from './dynamic-modal.component';
 import { PdfPreviewModalComponent } from '../pdf-preview-modal/pdf-preview-modal.component';
 
@@ -29,6 +30,7 @@ describe('Component: DynamicModal', () => {
       declarations: [
         AlertModalComponent,
         BaseModalComponent,
+        ChartModalComponent,
         DynamicModalComponent,
         ModalDirective,
         PdfPreviewModalComponent,

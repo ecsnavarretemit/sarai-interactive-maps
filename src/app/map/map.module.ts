@@ -23,6 +23,7 @@ import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
 import { CropProductionAreaMapService } from './crop-production-area-map.service';
+import { NdviMapService } from './ndvi-map.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LocationsService } from './locations.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
@@ -78,6 +79,7 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
   providers: [
     TileLayerService,
     CropProductionAreaMapService,
+    NdviMapService,
     SuitabilityMapService,
     LocationsService,
     WindowService,
