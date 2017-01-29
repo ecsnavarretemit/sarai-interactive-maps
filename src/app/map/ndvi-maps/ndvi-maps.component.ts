@@ -20,7 +20,6 @@ import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../.
 import { Layer } from '../../store';
 import { MAP_CONFIG } from '../map.config';
 import assign from 'lodash-es/assign';
-import every from 'lodash-es/every';
 import fill from 'lodash-es/fill';
 import forEach from 'lodash-es/forEach';
 import isNaN from 'lodash-es/isNaN';
@@ -30,10 +29,9 @@ import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
 
 @Component({
   selector: 'app-ndvi-maps',
@@ -51,6 +49,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   private _marker: L.Marker;
   private _mapClickListener: L.EventHandlerFn;
   private _popupClickListener: Function;
+  private _oldTimeSeriesData: any;
+  private _oldDOYData: any;
 
   constructor(
     @Inject(MAP_CONFIG) private _config: any,
@@ -91,27 +91,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         // bind the click callback to the click event
         mapInstance.on('click', this._mapClickListener);
 
-        // delegate event to the popup pane and remove it later when the component is removed
-        this._popupClickListener = this._renderer.listen(popupPane, 'click', (evt: Event) => {
-          const target = (evt.target as HTMLElement);
-
-          // prevent default behavior when either of the links are clicked
-          if (target.classList.contains('link--ndvi-time-series') || target.classList.contains('link--ndvi-doy')) {
-            evt.preventDefault();
-          }
-
-          // check if the clicked element is the time series link.
-          // if it is show the time series chart
-          if (typeof this._marker !== 'undefined' && target.classList.contains('link--ndvi-time-series')) {
-            this.showTimeSeriesChart(this._marker.getLatLng(), '2015-10-01', '2016-10-31');
-          }
-
-          // check if the clicked element is the doy link.
-          // if it is show the doy chart
-          if (typeof this._marker !== 'undefined' && target.classList.contains('link--ndvi-doy')) {
-            this.showDayOfTheYearChart(this._marker.getLatLng(), '2015-10-01', '2016-10-31');
-          }
-        });
+        // setup map click event listener
+        this.setupMapClick(popupPane);
       })
       ;
 
@@ -146,6 +127,83 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       ;
   }
 
+  setupMapClick(targetEl: HTMLElement) {
+    let queryDataChanged = false;
+
+    // delete this later when utilizing router parameters.
+    const startDate = '2015-10-01';
+    const endDate = '2016-10-31';
+
+    let oldQueryData = {
+      startDate: null,
+      endDate: null,
+      markerPos: null
+    };
+
+    // delegate event to the popup pane and remove it later when the component is removed
+    this._popupClickListener = this._renderer.listen(targetEl, 'click', (evt: Event) => {
+      const target = (evt.target as HTMLElement);
+      const markerPos: L.LatLng = this._marker.getLatLng();
+
+      // prevent default behavior when either of the links are clicked
+      if (target.classList.contains('link--ndvi-time-series') || target.classList.contains('link--ndvi-doy')) {
+        evt.preventDefault();
+      }
+
+      // if the marker position, startDate and endDate has not changed set the queryDataChanged to false
+      if (
+        (oldQueryData.startDate !== null && oldQueryData.startDate === startDate) &&
+        (oldQueryData.endDate !== null && oldQueryData.endDate === endDate) &&
+        (oldQueryData.markerPos !== null && (markerPos.lat === oldQueryData.markerPos.lat && markerPos.lng === oldQueryData.markerPos.lng))
+      ) {
+        queryDataChanged = false;
+      }
+
+      // if the marker position, startDate and endDate has changed set the queryDataChanged to true
+      // and invalidate any cached data.
+      if (
+        (oldQueryData.startDate !== null && oldQueryData.startDate !== startDate) ||
+        (oldQueryData.endDate !== null && oldQueryData.endDate !== endDate) ||
+        (oldQueryData.markerPos !== null && (markerPos.lat !== oldQueryData.markerPos.lat || markerPos.lng !== oldQueryData.markerPos.lng))
+      ) {
+        queryDataChanged = true;
+
+        oldQueryData = {
+          markerPos,
+          startDate,
+          endDate
+        };
+
+        this._oldDOYData = undefined;
+        this._oldTimeSeriesData = undefined;
+      }
+
+      if (oldQueryData.markerPos === null) {
+        oldQueryData.markerPos = this._marker.getLatLng();
+      }
+
+      if (oldQueryData.startDate === null) {
+        oldQueryData.startDate = startDate;
+      }
+
+      if (oldQueryData.endDate === null) {
+        oldQueryData.endDate = endDate;
+      }
+
+      // check if the clicked element is the time series link.
+      // if it is show the time series chart
+      if (typeof this._marker !== 'undefined' && target.classList.contains('link--ndvi-time-series')) {
+        this.showTimeSeriesChart(markerPos, '2015-10-01', '2016-10-31', queryDataChanged);
+      }
+
+      // check if the clicked element is the doy link.
+      // if it is show the doy chart
+      if (typeof this._marker !== 'undefined' && target.classList.contains('link--ndvi-doy')) {
+        this.showDayOfTheYearChart(markerPos, '2015-10-01', '2016-10-31', queryDataChanged);
+      }
+    });
+  }
+
   onMapClick(evt: Event) {
     const { lat, lng }: L.LatLngLiteral = (evt as any).latlng;
     const originalTarget = (evt as any).originalEvent.target;
@@ -176,28 +234,29 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       ;
   }
 
-  showTimeSeriesChart(coords: L.LatLngLiteral, startDate: string, endDate: string) {
+  showTimeSeriesChart(coords: L.LatLngLiteral, startDate: string, endDate: string, changed = true) {
     const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
+    let dataObservable: Observable<any>;
 
-    // notify the user about chart generation
-    this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
+    if (changed === false && typeof this._oldTimeSeriesData !== 'undefined') {
+      dataObservable = Observable.of(this._oldTimeSeriesData);
+    } else {
+      // notify the user about chart generation
+      this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
 
-    this._ndviMapService
-      .getNdviTimeSeriesByLatLng(coords, startDate, endDate)
-      .mergeMap((data: any) => {
-        const isEmpty: boolean = every(data.result, (item: any) => {
-          return item.ndvi !== null;
-        });
+      dataObservable = this._ndviMapService
+        .getNdviTimeSeriesByLatLng(coords, startDate, endDate)
+        .map((data: any) => {
+          this._oldTimeSeriesData = data;
 
-        // throw a new observable containing the error message when all ndvi value are null
-        if (isEmpty === false) {
-          return Observable.throw(new Error('Please click on a land surface.'));
-        }
+          return data;
+        })
+        ;
+    }
 
-        // create a new observable out of the data
-        return Observable.of(data);
-      })
+    dataObservable
+      .delay(300)
       .map((data: any) => {
         // extract the time and ndvi into separate properties
         const labels = map(data.result, (item: any) => {
@@ -246,8 +305,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         this._modalService.spawn({
           component: ChartModalComponent,
           inputs: {
-            openImmediately: true,
             title: `NDVI Time Series Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            openImmediately: true,
             chartOptions: {
               type: LineChartComponent,
               inputs: {
@@ -264,28 +323,29 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       ;
   }
 
-  showDayOfTheYearChart(coords: L.LatLngLiteral, startDate: string, endDate: string) {
+  showDayOfTheYearChart(coords: L.LatLngLiteral, startDate: string, endDate: string, changed = true) {
     const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
+    let dataObservable: Observable<any>;
 
-    // notify the user about chart generation
-    this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
+    if (changed === false && typeof this._oldDOYData !== 'undefined') {
+      dataObservable = Observable.of(this._oldDOYData);
+    } else {
+      // notify the user about chart generation
+      this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
 
-    this._ndviMapService
-      .getNdviTimeSeriesByLatLng(coords, startDate, endDate)
-      .mergeMap((data: any) => {
-        const isEmpty: boolean = every(data.result, (item: any) => {
-          return item.ndvi !== null;
-        });
+      dataObservable = this._ndviMapService
+        .getNdviTimeSeriesByLatLng(coords, startDate, endDate)
+        .map((data: any) => {
+          this._oldDOYData = data;
 
-        // throw a new observable containing the error message when all ndvi value are null
-        if (isEmpty === false) {
-          return Observable.throw(new Error('Please click on a land surface.'));
-        }
+          return data;
+        })
+        ;
+    }
 
-        // create a new observable out of the data
-        return Observable.of(data);
-      })
+    dataObservable
+      .delay(300)
       .map((data: any) => {
         const result: any = {};
 
@@ -420,6 +480,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
             }
           }
         });
+      }, (error: Error) => {
+        // send the error to the logger stream
+        this._logger.log('Error loading data', error.message, true);
       })
       ;
   }
