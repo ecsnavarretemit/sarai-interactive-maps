@@ -226,7 +226,7 @@ export class TileLayerService {
     });
   }
 
-  getNdviLayerData(date: string, range: number, place?: string): Promise<any> {
+  getNdviLayerData(startDate: string, endDate: string, place?: string): Promise<any> {
     // throw error if endpoint does not exist
     if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for NDVI Layers not specified'));
@@ -236,12 +236,12 @@ export class TileLayerService {
     let endpoint = this._config.ndvi_maps.eeApiEndpoint;
 
     let args = [endpoint, {
-      date,
-      range
+      startDate,
+      endDate
     }];
 
     if (method === 'get') {
-      endpoint += `/${date}/${range}`;
+      endpoint += `/${startDate}/${endDate}`;
 
       // add a query string to the endpoint
       if (typeof place !== 'undefined') {

@@ -30,8 +30,8 @@ describe('Component: NdviFilterForm', () => {
   // elements
   let startingDate: DebugElement;
   let startingDateEl: HTMLInputElement;
-  let scanRange: DebugElement;
-  let scanRangeEl: HTMLInputElement;
+  let endDate: DebugElement;
+  let endDateEl: HTMLInputElement;
   let provinceSelect: DebugElement;
   let provinceSelectEl: HTMLElement;
 
@@ -69,12 +69,12 @@ describe('Component: NdviFilterForm', () => {
     fixture.detectChanges();
 
     // get the starting date and helper element
-    startingDate = fixture.debugElement.query(By.directive(FlatpickrComponent));
+    startingDate = fixture.debugElement.query(By.css('[name="ec_starting_date_txt"]'));
     startingDateEl = startingDate.nativeElement;
 
     // get the scan range element
-    scanRange = fixture.debugElement.query(By.css('#ec_scan_range_txt'));
-    scanRangeEl = scanRange.nativeElement;
+    endDate = fixture.debugElement.query(By.css('[name="ec_end_date_txt"]'));
+    endDateEl = endDate.nativeElement;
 
     // get the province selector
     provinceSelect = fixture.debugElement.query(By.css('#ec_province_filter_sel'));
@@ -85,7 +85,7 @@ describe('Component: NdviFilterForm', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show that date is required', async(() => {
+  it('should show that start date is required', async(() => {
     component.startDate.markAsTouched();
 
     // detect changes in the fixture
@@ -99,52 +99,17 @@ describe('Component: NdviFilterForm', () => {
     }, 0);
   }));
 
-  it('should show that scan range is required', async(() => {
-    component.scanRange.markAsTouched();
+  it('should show that end date is required', async(() => {
+    component.endDate.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
 
     setTimeout(() => {
-      const helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = endDateEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
-      expect(helpBlockEl.children[0].textContent.trim()).toBe('Scan Range is required.');
-    }, 0);
-  }));
-
-  it('should show that scan range is invalid', async(() => {
-    // set the value of the form control
-    component.scanRange.setValue('10a');
-
-    // mark the component as dirty
-    component.scanRange.markAsTouched();
-
-    // detect changes in the fixture
-    fixture.detectChanges();
-
-    setTimeout(() => {
-      const helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
-
-      expect(helpBlockEl.children.length).toBe(1);
-      expect(helpBlockEl.children[0].textContent.trim()).toBe('Scan Range must be a number.');
-    }, 0);
-  }));
-
-  it('should not show any error messages for scan range', async(() => {
-    // set the value of the form control
-    component.scanRange.setValue('10');
-
-    // mark the component as dirty
-    component.scanRange.markAsDirty();
-
-    // detect changes in the fixture
-    fixture.detectChanges();
-
-    setTimeout(() => {
-      const helpBlockEl = scanRangeEl.parentElement.querySelector('.help-block-wrapper');
-
-      expect(helpBlockEl.children.length).toBe(0);
+      expect(helpBlockEl.children[0].textContent.trim()).toBe('Until Date is required.');
     }, 0);
   }));
 

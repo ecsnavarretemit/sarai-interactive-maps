@@ -51,6 +51,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   private _popupEventListeners: Array<Function> = [];
   private _oldTimeSeriesData: any;
   private _oldDOYData: any;
+  private _currentStartDate: string;
+  private _currentEndDate: string;
 
   constructor(
     @Inject(MAP_CONFIG) private _config: any,
@@ -103,8 +105,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       .subscribe((params: [Params, Params]) => {
         const [routeParams, queryParams] = params;
 
-        const converted = parseInt(routeParams['scanRange'], 10);
-
         // set the center of the map to the value of the center query parameter
         // and zoom to tha location
         if (typeof queryParams['center'] !== 'undefined') {
@@ -113,15 +113,19 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
         }
 
-        // check if startDate and scanRange is valid
+        // check if startDate and endDate is valid
         if (
           /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
-          !isNaN(converted)
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['endDate'])
         ) {
           // set the page title
           this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
 
-          this.processData(routeParams['startDate'], converted, queryParams['province']);
+          // save the new values of start and end date
+          this._currentStartDate = routeParams['startDate'];
+          this._currentEndDate = routeParams['endDate'];
+
+          this.processData(this._currentStartDate, this._currentEndDate, queryParams['province']);
         }
       })
       ;
@@ -129,10 +133,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   setupMapClick(targetEl: HTMLElement) {
     let queryDataChanged = false;
-
-    // delete this later when utilizing router parameters.
-    const startDate = '2015-10-01';
-    const endDate = '2016-10-31';
 
     let oldQueryData = {
       startDate: null,
@@ -167,8 +167,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
       // if the marker position, startDate and endDate has not changed set the queryDataChanged to false
       if (
-        (oldQueryData.startDate !== null && oldQueryData.startDate === startDate) &&
-        (oldQueryData.endDate !== null && oldQueryData.endDate === endDate) &&
+        (oldQueryData.startDate !== null && oldQueryData.startDate === this._currentStartDate) &&
+        (oldQueryData.endDate !== null && oldQueryData.endDate === this._currentEndDate) &&
         (oldQueryData.markerPos !== null && (markerPos.lat === oldQueryData.markerPos.lat && markerPos.lng === oldQueryData.markerPos.lng))
       ) {
         queryDataChanged = false;
@@ -177,16 +177,16 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       // if the marker position, startDate and endDate has changed set the queryDataChanged to true
       // and invalidate any cached data.
       if (
-        (oldQueryData.startDate !== null && oldQueryData.startDate !== startDate) ||
-        (oldQueryData.endDate !== null && oldQueryData.endDate !== endDate) ||
+        (oldQueryData.startDate !== null && oldQueryData.startDate !== this._currentStartDate) ||
+        (oldQueryData.endDate !== null && oldQueryData.endDate !== this._currentEndDate) ||
         (oldQueryData.markerPos !== null && (markerPos.lat !== oldQueryData.markerPos.lat || markerPos.lng !== oldQueryData.markerPos.lng))
       ) {
         queryDataChanged = true;
 
         oldQueryData = {
           markerPos,
-          startDate,
-          endDate
+          startDate: this._currentStartDate,
+          endDate: this._currentEndDate
         };
 
         this._oldDOYData = undefined;
@@ -198,11 +198,11 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       }
 
       if (oldQueryData.startDate === null) {
-        oldQueryData.startDate = startDate;
+        oldQueryData.startDate = this._currentStartDate;
       }
 
       if (oldQueryData.endDate === null) {
-        oldQueryData.endDate = endDate;
+        oldQueryData.endDate = this._currentEndDate;
       }
     };
 
@@ -216,7 +216,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       // check if there is changes to the query
       checkQueryChanged();
 
-      this.showTimeSeriesChart(markerPos, startDate, endDate, queryDataChanged);
+      this.showTimeSeriesChart(markerPos, this._currentStartDate, this._currentEndDate, queryDataChanged);
     }));
 
     this._popupEventListeners.push(delegate(targetEl, 'click', '.link--ndvi-doy', (evt: Event) => {
@@ -228,7 +228,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       // check if there is changes to the query
       checkQueryChanged();
 
-      this.showDayOfTheYearChart(markerPos, startDate, endDate, queryDataChanged);
+      this.showDayOfTheYearChart(markerPos, this._currentStartDate, this._currentEndDate, queryDataChanged);
     }));
 
     this._popupEventListeners.push(delegate(targetEl, 'click', '.link--delete-marker', (evt: Event) => {
@@ -531,14 +531,14 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     }
   }
 
-  processData(startDate: string, scanRange: number, place?: string) {
+  processData(startDate: string, endDate: string, place?: string) {
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
     this._tileLayerService
-      .getNdviLayerData(startDate, scanRange, place)
+      .getNdviLayerData(startDate, endDate, place)
       .then((response: any) => {
         const tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
