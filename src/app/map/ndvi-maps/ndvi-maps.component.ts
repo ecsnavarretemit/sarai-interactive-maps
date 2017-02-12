@@ -103,8 +103,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       .subscribe((params: [Params, Params]) => {
         const [routeParams, queryParams] = params;
 
-        const converted = parseInt(routeParams['scanRange'], 10);
-
         // set the center of the map to the value of the center query parameter
         // and zoom to tha location
         if (typeof queryParams['center'] !== 'undefined') {
@@ -113,15 +111,15 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
         }
 
-        // check if startDate and scanRange is valid
+        // check if startDate and endDate is valid
         if (
           /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
-          !isNaN(converted)
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['endDate'])
         ) {
           // set the page title
           this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
 
-          this.processData(routeParams['startDate'], converted, queryParams['province']);
+          this.processData(routeParams['startDate'], routeParams['endDate'], queryParams['province']);
         }
       })
       ;
@@ -531,14 +529,14 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     }
   }
 
-  processData(startDate: string, scanRange: number, place?: string) {
+  processData(startDate: string, endDate: string, place?: string) {
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
     this._tileLayerService
-      .getNdviLayerData(startDate, scanRange, place)
+      .getNdviLayerData(startDate, endDate, place)
       .then((response: any) => {
         const tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 

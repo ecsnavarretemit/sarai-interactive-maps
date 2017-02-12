@@ -5,13 +5,14 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, UrlTree, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { LeafletMapService } from '../../leaflet';
 import { LocationsService } from '../locations.service';
-import { CustomValidators } from '../../forms';
+import { CustomValidators, FlatpickrComponent } from '../../forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ndvi-filter-form',
@@ -21,9 +22,12 @@ import { CustomValidators } from '../../forms';
 export class NdviFilterFormComponent implements OnInit {
   public filterForm: FormGroup;
   public startDate: FormControl;
-  public scanRange: FormControl;
+  public endDate: FormControl;
   public province: FormControl;
   public provinces: Observable<any>;
+
+  @ViewChild('startDatePicker') startDatePicker: FlatpickrComponent;
+  @ViewChild('endDatePicker') endDatePicker: FlatpickrComponent;
 
   constructor(
     private _router: Router,
@@ -36,9 +40,9 @@ export class NdviFilterFormComponent implements OnInit {
       CustomValidators.dateISO
     ]);
 
-    this.scanRange = new FormControl('', [
+    this.endDate = new FormControl('', [
       Validators.required,
-      CustomValidators.number
+      CustomValidators.dateISO
     ]);
 
     this.province = new FormControl('', [
@@ -47,13 +51,36 @@ export class NdviFilterFormComponent implements OnInit {
 
     this.filterForm = this._formBuilder.group({
       startDate: this.startDate,
-      scanRange: this.scanRange,
+      endDate: this.endDate,
       province: this.province
     });
   }
 
   ngOnInit() {
     this.provinces = this._locationsService.getProvincesFromFT();
+  }
+
+  onStartDateChange(date: string) {
+    const parsedDate = moment(date, 'YYYY-MM-DD');
+
+    // add 1 day to the parsed date
+    parsedDate.add(1, 'days');
+
+    // save the formatted date
+    const formattedDate = parsedDate.format('YYYY-MM-DD');
+
+    // set the minimum date for the end datepicker
+    this.endDatePicker.setOption('minDate', formattedDate);
+
+    // close the start datepicker
+    this.startDatePicker.hidePicker();
+
+    // show the end datepicker
+    setTimeout(() => {
+      this.endDatePicker.showPicker();
+
+      this.endDatePicker.jumpToDate(formattedDate);
+    }, 0);
   }
 
   processRequest() {
@@ -70,7 +97,7 @@ export class NdviFilterFormComponent implements OnInit {
     }
 
     // create the url tree
-    urlTree = this._router.createUrlTree(['/ndvi', value.startDate, value.scanRange], urlExtras);
+    urlTree = this._router.createUrlTree(['/ndvi', value.startDate, value.endDate], urlExtras);
 
     // redirect to the URL
     this._router.navigateByUrl(urlTree);
