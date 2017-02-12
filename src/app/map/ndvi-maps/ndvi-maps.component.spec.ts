@@ -30,7 +30,7 @@ describe('Component: NdviMaps', () => {
   beforeEach(() => {
     mockActivatedRoute = new MockActivatedRoute({
       startDate: '2016-10-01',
-      scanRange: '10'
+      endDate: '2016-10-31'
     });
 
     TestBed.configureTestingModule({

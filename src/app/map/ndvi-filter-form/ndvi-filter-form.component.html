@@ -1,8 +1,8 @@
 <form class="ndvi-filter-form smart-form" [formGroup]="filterForm" (ngSubmit)="processRequest()">
     <div class="form-group">
-        <label for="ec_starting_date_sel">{{ 'NDVI.STARTING_DATE' | translate }}</label>
+        <label for="ec_starting_date_txt">{{ 'NDVI.STARTING_DATE' | translate }}</label>
         <app-forms-flatpickr
-            name="ec_starting_date_sel"
+            name="ec_starting_date_txt"
             formControlName="startDate"
             (change)="onStartDateChange($event)"
             #startDatePicker>
@@ -21,11 +21,11 @@
         <label for="ec_end_date_txt">Until Date:</label>
         <app-forms-flatpickr name="ec_end_date_txt" formControlName="endDate" #endDatePicker></app-forms-flatpickr>
         <div class="help-block-wrapper" [hidden]="endDate.valid || endDate.untouched">
-            <span class="help-block" *ngIf="startDate.hasError('required') && startDate.touched">
-                Starting Date is required.
+            <span class="help-block" *ngIf="endDate.hasError('required') && endDate.touched">
+                Until Date is required.
             </span>
-            <span class="help-block" *ngIf="startDate.hasError('dateISO') && startDate.touched">
-                Starting Date must be in YYYY-MM-DD format.
+            <span class="help-block" *ngIf="endDate.hasError('dateISO') && endDate.touched">
+                Until Date must be in YYYY-MM-DD format.
             </span>
         </div>
     </div>

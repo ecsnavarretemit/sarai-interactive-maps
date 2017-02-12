@@ -37,7 +37,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // listen for changes in crop url parameter since `route.params` is an instance of Observable!
     this._route.params.forEach((params: Params) => {
-      // check if startDate and scanRange is valid
+      // check if date is valid
       if (
         typeof params['date'] !== 'undefined' &&
         /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])/g.test(params['date'])
