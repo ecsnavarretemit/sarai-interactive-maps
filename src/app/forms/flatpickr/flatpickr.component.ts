@@ -5,9 +5,21 @@
  * Licensed under MIT
  */
 
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Flatpickr as FlatpickrObj, FlatpickrOptions } from './flatpickr.model';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer,
+  ViewChild
+} from '@angular/core';
 
 // type definition throws error so we fallback to common js module format.
 const Flatpickr = require('flatpickr');
@@ -38,7 +50,7 @@ export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, 
   private _propagateChange = (_: any) => {};
   private _propagateTouch = () => {};
 
-  constructor() { }
+  constructor(private _renderer: Renderer) { }
 
   // throw a warning to the component user if he tries to access this property directly.
   get pluginInstance(): FlatpickrObj {
@@ -94,6 +106,12 @@ export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, 
   ngAfterViewInit() {
     // instantiate the plugin
     this._pluginInstance = new Flatpickr(this.inputControl.nativeElement, this.options);
+
+    // stop propagating the change upwards to prevent change event of this component
+    // from being incorrectly fired due to the same event name
+    this._renderer.listen(this.inputControl.nativeElement, 'change', (evt: Event) => {
+      evt.stopPropagation();
+    });
   }
 
   ngOnDestroy() {
