@@ -8,6 +8,7 @@
   z-index: 3
 
   .map__control__section
+    margin-top: 10px
     padding: 0 15px
     background-color: rgba(27, 83, 52, 0.9)
 
@@ -15,6 +16,9 @@
     +border-right-radius(4px)
     +border-bottom-radius(4px)
     +border-left-radius(4px)
+
+    &:first-child
+      margin-top: 0
 
     p,
     .smart-form label,
@@ -63,6 +67,39 @@
   .map__control__title
     border-bottom: 1px solid #FFFFFF
 
+// [Map Legends] ::start
+
+.legend-list
+  padding: 10px
+  background-color: #FFFFFF
+
+  .legend-item--header
+    font-size: 14px
+    font-weight: bold
+    line-height: 1.5
+
+  .legend-item
+    text-align: center
+
+  .legend-item--key
+    width: 100px
+    margin-bottom: 5px
+
+  .legend-item--value
+    margin-left: 100px
+    color: #000000
+    font-size: 14px
+    line-height: 1.5
+
+  .color-block
+    display: block
+    width: 50px
+    height: 25px
+    margin: 0 auto
+    border: 1px solid #F9F9F9
+
+// [Map Legends] ::ebnd
+
 // [Suitability and Crop Production Area Panel] ::start
 
 .accordion--s-1
@@ -87,8 +124,6 @@
 // [Suitability Map Controls] ::start
 
 .suitability-level-filter
-  margin-top: 10px
-
   .map__control__title
     border-bottom: none
 
@@ -233,6 +268,26 @@
 
 // --------------------------------------
 // [Sidebar] ::end
+// --------------------------------------
+
+
+// --------------------------------------
+// [Browser Width: 0px to 768px] ::start
+// --------------------------------------
+
++max-screen(768px)
+  .legend-list
+    .legend-item--key
+      float: left
+      width: 160px
+      clear: left
+      text-align: right
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+
+// --------------------------------------
+// [Browser Width: 0px to 768px] ::end
 // --------------------------------------
 
 
