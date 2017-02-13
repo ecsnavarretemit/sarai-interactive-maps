@@ -5,7 +5,9 @@
  * Licensed under MIT
  */
 
-import { Component } from '@angular/core';
+import { Component, Renderer } from '@angular/core';
+import { Router } from '@angular/router';
+import { LeafletMapService } from '../../leaflet';
 import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 
 @Component({
@@ -18,6 +20,19 @@ import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel
 })
 export class RainfallMapPanelComponent extends BasePanelComponent {
   public controlWrapperAnimationState: string = 'hidden';
+
+  constructor(
+    private _router: Router,
+    _renderer: Renderer,
+    _mapService: LeafletMapService
+  ) {
+    // call the parent constructor
+    super(_renderer, _mapService);
+  }
+
+  isMapActive(): boolean {
+    return this._router.isActive(`/rainfall-maps`, false);
+  }
 
   onHideButtonClick(evt: Event) {
     // call the parent method
