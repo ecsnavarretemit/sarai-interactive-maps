@@ -313,7 +313,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       .subscribe((data: Chart.LinearChartData) => {
         const yTicks: Chart.LinearTickOptions = {
           beginAtZero: true,
-          stepSize: 2500
+          stepSize: 0.1
         };
 
         const options: Chart.ChartOptions = {
@@ -462,7 +462,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       .subscribe((data: Chart.LinearChartData) => {
         const yTicks: Chart.LinearTickOptions = {
           beginAtZero: true,
-          stepSize: 2500
+          stepSize: 0.1
         };
 
         const xTicks: Chart.LinearTickOptions = {
