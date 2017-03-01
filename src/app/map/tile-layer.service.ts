@@ -267,7 +267,7 @@ export class TileLayerService {
       ;
   }
 
-  getRainfallMapLayerData(date: string): Promise<any> {
+  getRainfallMapLayerData(startDate: string, endDate: string): Promise<any> {
     // throw error if endpoint does not exist
     if (typeof this._config.rainfall_maps.eeApiEndpoint === 'undefined' || this._config.rainfall_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for Rainfall Map Layers not specified'));
@@ -276,11 +276,12 @@ export class TileLayerService {
     const method = this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase();
     let endpoint = this._config.rainfall_maps.eeApiEndpoint;
     let args = [endpoint, {
-      date
+      startDate,
+      endDate
     }];
 
     if (method === 'get') {
-      endpoint += `/${date}`;
+      endpoint += `/${startDate}/${endDate}`;
       args = [endpoint];
     }
 

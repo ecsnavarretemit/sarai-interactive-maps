@@ -36,8 +36,8 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _marker: L.Marker;
   private _mapClickListener: L.EventHandlerFn;
   private _popupEventListeners: Array<Function> = [];
-  private _currentStartDate: string = '2016-07-01';
-  private _currentEndDate: string = '2016-10-01';
+  private _currentStartDate: string;
+  private _currentEndDate: string;
   private _oldCumulativeRainfallData: any;
 
   constructor(
@@ -61,13 +61,17 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     this._route.params.forEach((params: Params) => {
       // check if date is valid
       if (
-        typeof params['date'] !== 'undefined' &&
-        /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])/g.test(params['date'])
+        /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['startDate']) &&
+        /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['endDate'])
       ) {
         // set the page title
         this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
 
-        this.processData(params['date']);
+        // save the new values of start and end date
+        this._currentStartDate = params['startDate'];
+        this._currentEndDate = params['endDate'];
+
+        this.processData(this._currentStartDate, this._currentEndDate);
       }
     });
 
@@ -312,14 +316,14 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     }
   }
 
-  processData(date: string) {
+  processData(startDate: string, endDate: string) {
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
     this._tileLayerService
-      .getRainfallMapLayerData(date)
+      .getRainfallMapLayerData(startDate, endDate)
       .then((response: any) => {
         const tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
