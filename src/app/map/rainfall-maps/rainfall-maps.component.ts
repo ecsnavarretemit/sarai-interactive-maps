@@ -183,8 +183,6 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       evt.preventDefault();
 
       this.removeMarker();
-
-      console.log('remove marker');
     }));
   }
 
