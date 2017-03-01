@@ -7,6 +7,7 @@
  * Licensed under MIT
  */
 
+import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -17,8 +18,10 @@ import { MapConfig, MAP_CONFIG } from '../map.config';
 import { AppLoggerService } from '../../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
 import { LeafletMapService } from '../../leaflet';
+import { RainfallMapService } from '../rainfall-map.service';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
 import { MockActivatedRoute, MockRouter } from '../../mocks/router';
+import { SpawnModalService } from '../../ui';
 import { RainfallMapsComponent } from './rainfall-maps.component';
 
 describe('Component: RainfallMaps', () => {
@@ -38,6 +41,9 @@ describe('Component: RainfallMaps', () => {
         AppLoggerService,
         TileLayerService,
         LeafletMapService,
+        RainfallMapService,
+        SpawnModalService,
+        Renderer,
         Title,
         RainfallMapsComponent,
 

@@ -83,7 +83,7 @@ describe('Service: TileLayerService', () => {
     });
 
     service
-      .getNdviLayerData('2016-10-01', 10)
+      .getNdviLayerData('2016-10-01', '2016-10-31')
       .then((data) => {
         expect(data.success).toBe(true);
       })
@@ -107,7 +107,7 @@ describe('Service: TileLayerService', () => {
       });
 
       service
-        .getNdviLayerData('2016-10-01', 10)
+        .getNdviLayerData('2016-10-01', '2016-10-31')
         .catch((err: Error) => {
           expect(() => {
             throw err;
@@ -134,7 +134,7 @@ describe('Service: TileLayerService', () => {
     });
 
     service
-      .getRainfallMapLayerData('2016-10-01')
+      .getRainfallMapLayerData('2016-10-01', '2016-10-31')
       .then((data) => {
         expect(data.success).toBe(true);
       })
@@ -158,7 +158,7 @@ describe('Service: TileLayerService', () => {
       });
 
       service
-        .getRainfallMapLayerData('2016-10-01')
+        .getRainfallMapLayerData('2016-10-01', '2016-10-31')
         .catch((err: Error) => {
           expect(() => {
             throw err;

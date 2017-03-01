@@ -48,9 +48,9 @@ const routes: Routes = [
       },
 
       // TODO: add date validation. for now we do nothing if invalid date is provided
-      // duplicated for required url parameter `date`
+      // duplicated for required url parameter `startDate` and `endDate`
       {
-        path: 'rainfall-maps/:date',
+        path: 'rainfall-maps/:startDate/:endDate',
         component: RainfallMapsComponent
       },
     ]
