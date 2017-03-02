@@ -6,8 +6,8 @@
  */
 
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Flatpickr as FlatpickrObj, FlatpickrOptions } from './flatpickr.model';
 import assign from 'lodash-es/assign';
+import * as Flatpickr from 'flatpickr';
 import {
   AfterViewInit,
   Component,
@@ -22,9 +22,6 @@ import {
   ViewChild
 } from '@angular/core';
 
-// type definition throws error so we fallback to common js module format.
-const Flatpickr = require('flatpickr');
-
 @Component({
   selector: 'app-forms-flatpickr',
   providers: [
@@ -38,7 +35,7 @@ const Flatpickr = require('flatpickr');
   styleUrls: ['./flatpickr.component.sass']
 })
 export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, OnDestroy, OnInit {
-  @Input('options') options: FlatpickrOptions = {};
+  @Input('options') options: Flatpickr.Options = {};
   @Input('placeholder') placeholder: string = 'Select Date';
   @Output('change') change: EventEmitter<string> = new EventEmitter<string>();
   @Output('close') close: EventEmitter<string> = new EventEmitter<string>();
@@ -47,14 +44,14 @@ export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, 
   @ViewChild('inputControl') inputControl: ElementRef;
 
   public dateValue: string;
-  private _pluginInstance: FlatpickrObj;
+  private _pluginInstance: Flatpickr;
   private _propagateChange = (_: any) => {};
   private _propagateTouch = () => {};
 
   constructor(private _renderer: Renderer) { }
 
   // throw a warning to the component user if he tries to access this property directly.
-  get pluginInstance(): FlatpickrObj {
+  get pluginInstance(): Flatpickr {
     console.warn('Accessing this property may bear unexpected results. Please use the shimmed methods for the correct behavior.');
 
     return this._pluginInstance;

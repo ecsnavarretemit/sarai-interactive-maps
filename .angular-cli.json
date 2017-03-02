@@ -1,6 +1,6 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-beta.26",
     "name": "sarai-interactive-maps"
   },
   "apps": [
@@ -14,9 +14,10 @@
       "index": "index.html",
       "main": "main.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.json",
+      "polyfills": "polyfills.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "mobile": false,
       "styles": [
         "../node_modules/leaflet/dist/leaflet.css",
         "../node_modules/leaflet-control-geocoder2/dist/Control.Geocoder.css",
@@ -27,19 +28,16 @@
       ],
       "scripts": [
         "scripts/polyfill-loader.ts",
-        "scripts/preloader.ts",
-        "scripts/ga.ts"
+        "scripts/preloader.ts"
       ],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.dev.ts",
         "prod": "environments/environment.prod.ts",
         "ci": "environments/environment.ci.ts"
       }
     }
   ],
-  "addons": [],
-  "packages": [],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
@@ -50,20 +48,19 @@
       "config": "./karma.conf.js"
     }
   },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
   "defaults": {
     "styleExt": "sass",
-    "prefixInterfaces": false,
-    "inline": {
-      "style": false,
-      "template": false
-    },
-    "spec": {
-      "class": false,
-      "component": true,
-      "directive": true,
-      "module": false,
-      "pipe": true,
-      "service": true
-    }
+    "component": {}
   }
 }

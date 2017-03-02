@@ -9,7 +9,6 @@ import { UrlTree } from '@angular/router';
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { MAP_CONFIG } from './map.config';
-import { TemplateExecutor } from 'lodash';
 import assign from 'lodash-es/assign';
 import groupBy from 'lodash-es/groupBy';
 import map from 'lodash-es/map';
@@ -26,8 +25,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class TileLayerService {
   private _leafletApi: any = L;
-  private _equalToFilterTmpl: TemplateExecutor;
-  private _betweenFilterTmpl: TemplateExecutor;
+  private _equalToFilterTmpl: Function;
+  private _betweenFilterTmpl: Function;
 
   public imageFormat: string = 'image/png';
   public transparent: boolean = true;

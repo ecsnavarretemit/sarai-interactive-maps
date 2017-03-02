@@ -13,7 +13,7 @@ import map from 'lodash-es/map';
 import * as L from 'leaflet';
 
 interface LayerCollection {
-  [id: string]: L.TileLayer | L.WMS;
+  [id: string]: L.TileLayer | L.TileLayer.WMS;
 }
 
 @Injectable()
@@ -118,7 +118,7 @@ export class LeafletMapService {
       ;
   }
 
-  addWMSLayer(id: string, layer: L.WMS): Promise<void | Error> {
+  addWMSLayer(id: string, layer: L.TileLayer.WMS): Promise<void | Error> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._wmsLayers, id)) {
@@ -134,7 +134,7 @@ export class LeafletMapService {
       ;
   }
 
-  addNewWMSLayer(id: string, url: string, options: L.WMSOptions): Promise<L.WMS | Error> {
+  addNewWMSLayer(id: string, url: string, options: L.WMSOptions): Promise<L.TileLayer.WMS | Error> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._wmsLayers, id)) {
@@ -155,7 +155,7 @@ export class LeafletMapService {
       ;
   }
 
-  addNewWMSLayers(url: string, items: Array<{id: string, options: L.WMSOptions}>): Promise<Array<L.WMS>> {
+  addNewWMSLayers(url: string, items: Array<{ id: string, options: L.WMSOptions }>): Promise<Array<L.TileLayer.WMS>> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         let layers = filter(items, (item) => {
@@ -185,7 +185,7 @@ export class LeafletMapService {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         // remove any existing layers
-        each(this._wmsLayers, (value: L.WMS, id: string) => {
+        each(this._wmsLayers, (value: L.TileLayer.WMS, id: string) => {
           mapInstance.removeLayer(value);
         });
 
