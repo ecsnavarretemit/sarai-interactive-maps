@@ -26,7 +26,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # Install angular-cli globally
-  - npm install -g angular-cli
+  - npm install -g @angular/cli
   # install modules
   - yarn install
 
