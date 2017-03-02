@@ -7,6 +7,8 @@
 
 import { SaraiInteractiveMapsPage } from './app.po';
 
+// TODO: replace `.then(done)` calls to `.finally(done)` when the webdriver ts definitions get updated.
+// TODO: remove `--no-webdriver-update` from the e2e npm script.
 describe('sarai-interactive-maps App', function() {
   let page: SaraiInteractiveMapsPage;
 
@@ -39,7 +41,7 @@ describe('sarai-interactive-maps App', function() {
       .then((opacity) => {
         expect(parseFloat(opacity)).toBeGreaterThan(0);
       })
-      .thenFinally(done)
+      .then(done)
       ;
   });
 
@@ -62,7 +64,7 @@ describe('sarai-interactive-maps App', function() {
       .then((opacity) => {
         expect(parseFloat(opacity)).toBeGreaterThan(0);
       })
-      .thenFinally(done)
+      .then(done)
       ;
   });
 
@@ -85,7 +87,7 @@ describe('sarai-interactive-maps App', function() {
       .then((opacity) => {
         expect(parseFloat(opacity)).toBeGreaterThan(0);
       })
-      .thenFinally(done)
+      .then(done)
       ;
   });
 
@@ -108,7 +110,7 @@ describe('sarai-interactive-maps App', function() {
       .then((opacity) => {
         expect(parseFloat(opacity)).toBeGreaterThan(0);
       })
-      .thenFinally(done)
+      .then(done)
       ;
   });
 
