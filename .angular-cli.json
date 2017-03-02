@@ -28,8 +28,7 @@
       ],
       "scripts": [
         "scripts/polyfill-loader.ts",
-        "scripts/preloader.ts",
-        "scripts/ga.ts"
+        "scripts/preloader.ts"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
