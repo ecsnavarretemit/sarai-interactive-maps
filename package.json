@@ -58,7 +58,7 @@
     "@types/lodash": "^4.14.54",
     "@types/lodash-es": "^4.14.4",
     "@types/node": "^6.0.64",
-    "bourbon": "^4.2.7",
+    "bourbon": "^4.3.3",
     "codelyzer": "~2.0.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "^3.2.0",
