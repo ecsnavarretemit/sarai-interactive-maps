@@ -73,15 +73,7 @@
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.9.tgz#3094f973e18330526256dcd13fcf27609b7abc08"
 
-"@angular/compiler-cli@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0":
-  version "2.4.8"
-  resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.8.tgz#6dad3b467243166bf2515d21993d2d1a4700a161"
-  dependencies:
-    "@angular/tsc-wrapped" "0.5.2"
-    minimist "^1.2.0"
-    reflect-metadata "^0.1.2"
-
-"@angular/compiler-cli@^2.4.9":
+"@angular/compiler-cli@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0", "@angular/compiler-cli@^2.4.9":
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.9.tgz#8ac4e28c12d2b09a10aabf9cb95c569844b90db3"
   dependencies:
@@ -89,19 +81,11 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0":
-  version "2.4.8"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.8.tgz#fa788fc8bed9f322b040af2b9a06a70991390e23"
-
-"@angular/compiler@^2.4.9":
+"@angular/compiler@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0", "@angular/compiler@^2.4.9":
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.9.tgz#ee159181c4013046598e1d176b45063bddb141f6"
 
-"@angular/core@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0":
-  version "2.4.8"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.8.tgz#bf1a4fc324827516e6c3222047a9b2cbdaee6976"
-
-"@angular/core@^2.4.9":
+"@angular/core@>=2.3.1 <5.0.0 || >=4.0.0-beta <5.0.0", "@angular/core@^2.4.9":
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.9.tgz#85dca2afa4021be91512c97597702ac8d73092e6"
 
@@ -2970,9 +2954,9 @@ leaflet-control-geocoder2@^1.6.3:
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/leaflet-control-geocoder2/-/leaflet-control-geocoder2-1.6.3.tgz#337a382b0860ce82eb64321339be5da0c0cbeefb"
 
-leaflet-measure@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/leaflet-measure/-/leaflet-measure-2.1.1.tgz#d63139a12977d7a961e7bce32623c7b60540f7af"
+leaflet-measure@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/leaflet-measure/-/leaflet-measure-2.1.5.tgz#2ff5d8b32175aa58f462c453c7b9eff30f25a9df"
   dependencies:
     brfs "^1.4.3"
     color "^0.8.0"
@@ -3299,15 +3283,15 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ng2-bootstrap@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.3.1.tgz#001442b850f980c84311421590834340a9071ba0"
+ng2-bootstrap@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.3.3.tgz#2c66781d2e4d4620237bd455250105dab97ee94f"
   dependencies:
     moment "2.17.1"
 
-ng2-pdf-viewer@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-1.0.1.tgz#c6edad346fbc2843618dce2075cbdbfabd080f2c"
+ng2-pdf-viewer@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ng2-pdf-viewer/-/ng2-pdf-viewer-1.0.2.tgz#1e8d740c06b3c1b92e6fefd83a1703ef44a6ef0a"
   dependencies:
     "@types/pdf" "0.0.31"
     pdfjs-dist "^1.6.329"
