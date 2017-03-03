@@ -33,7 +33,7 @@
     "bootstrap-sass": "^3.3.7",
     "chart.js": "^2.5.0",
     "core-js": "^2.4.1",
-    "flatpickr": "^2.4.2",
+    "flatpickr": "^2.4.3",
     "font-awesome": "^4.7.0",
     "leaflet": "^1.0.3",
     "leaflet-control-geocoder2": "^1.6.3",

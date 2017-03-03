@@ -1898,9 +1898,9 @@ findup-sync@~0.3.0:
   dependencies:
     glob "~5.0.0"
 
-flatpickr@^2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.4.2.tgz#8a92ef6daac4fd298f0dd247e13228197de58e7d"
+flatpickr@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.4.3.tgz#e5178a24ab9abb3438ad7d996bc1dffd9c541257"
 
 flatten@^1.0.2:
   version "1.0.2"
