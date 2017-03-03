@@ -18,6 +18,7 @@ import { MapRoutingModule } from './map-routing.module';
 import { LeafletModule } from '../leaflet';
 import { UiModule as MapUiModule } from './ui';
 import { SharedModule } from './shared';
+import { PagesModule } from './pages';
 
 import { WindowService } from './window.service';
 import { CropProductionAreaMapService } from './crop-production-area-map.service';
@@ -46,7 +47,8 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     LeafletModule,
     MapRoutingModule,
     MapUiModule,
-    SharedModule
+    SharedModule,
+    PagesModule
   ],
   declarations: [
     HomeComponent,
