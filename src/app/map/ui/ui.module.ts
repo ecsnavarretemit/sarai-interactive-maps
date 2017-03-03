@@ -9,14 +9,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PanelModule } from './panel';
+import { FormsModule as MapUiFormsModule } from './forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    PanelModule
+    PanelModule,
+    MapUiFormsModule
   ],
   exports: [
-    PanelModule
+    PanelModule,
+    MapUiFormsModule
   ]
 })
 export class UiModule { }
