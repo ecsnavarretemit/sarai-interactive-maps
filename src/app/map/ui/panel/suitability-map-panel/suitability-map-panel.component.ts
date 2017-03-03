@@ -10,10 +10,10 @@ import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { LeafletMapService } from '../../leaflet';
-import { SuitabilityMapService } from '../suitability-map.service';
-import { SuitabilityLevel } from '../suitability-level.interface';
-import { Crop } from '../crop.interface';
+import { LeafletMapService } from '../../../../leaflet';
+import { SuitabilityMapService } from '../../../suitability-map.service';
+import { SuitabilityLevel } from '../../../suitability-level.interface';
+import { Crop } from '../../../crop.interface';
 import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
 

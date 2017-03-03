@@ -7,7 +7,7 @@
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { LeafletMapService } from '../../leaflet';
+import { LeafletMapService } from '../../../../leaflet';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';

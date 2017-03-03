@@ -8,9 +8,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { PanelModule } from './panel';
+
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PanelModule
+  ],
+  exports: [
+    PanelModule
   ]
 })
 export class UiModule { }

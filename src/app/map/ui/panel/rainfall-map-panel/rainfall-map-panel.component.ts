@@ -7,7 +7,7 @@
 
 import { Component, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
-import { LeafletMapService } from '../../leaflet';
+import { LeafletMapService } from '../../../../leaflet';
 import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 
 @Component({
