@@ -7,5 +7,6 @@
 
 export * from './ui.module';
 export * from './panel';
+export * from './forms';
 
 

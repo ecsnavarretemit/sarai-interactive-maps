@@ -7,7 +7,6 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // could be removed if all the forms are in a separate module
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
@@ -17,7 +16,6 @@ import { TranslateModule } from 'ng2-translate';
 import { Angulartics2Module } from 'angulartics2';
 import { MapRoutingModule } from './map-routing.module';
 import { LeafletModule } from '../leaflet';
-import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
 import { UiModule as MapUiModule } from './ui';
 
 import { WindowService } from './window.service';
@@ -31,12 +29,9 @@ import { MapConfig, MAP_CONFIG } from './map.config';
 
 import { HomeComponent } from './home/home.component';
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
-import { DownloadImageFormComponent } from './download-image-form/download-image-form.component';
 import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
 import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
-import { NdviFilterFormComponent } from './ndvi-filter-form/ndvi-filter-form.component';
 import { MapTypeComponent } from './map-type/map-type.component';
-import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form/rainfall-map-filter-form.component';
 import { CropProductionAreaMapsComponent } from './crop-production-area-maps/crop-production-area-maps.component';
 
 @NgModule({
@@ -44,9 +39,6 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     CommonModule,
     RouterModule,
     HttpModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SaraiInteractiveMapsFormsModule,
     TooltipModule,
     AccordionModule,
     ModalModule,
@@ -59,12 +51,9 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
   declarations: [
     HomeComponent,
     SuitabilityMapsComponent,
-    DownloadImageFormComponent,
     NdviMapsComponent,
     RainfallMapsComponent,
-    NdviFilterFormComponent,
     MapTypeComponent,
-    RainfallMapFilterFormComponent,
     CropProductionAreaMapsComponent
   ],
   providers: [
@@ -81,12 +70,9 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
   exports: [
     HomeComponent,
     SuitabilityMapsComponent,
-    DownloadImageFormComponent,
     NdviMapsComponent,
     RainfallMapsComponent,
-    NdviFilterFormComponent,
     MapTypeComponent,
-    RainfallMapFilterFormComponent,
     CropProductionAreaMapsComponent
   ]
 })

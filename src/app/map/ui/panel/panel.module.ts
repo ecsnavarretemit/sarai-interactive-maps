@@ -13,13 +13,14 @@ import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from 'ng2-translate';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 
+import { FormsModule as MapUiFormsModule } from '../forms';
+
 import { BasePanelComponent } from './base-panel/base-panel.component';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel/crop-production-area-panel.component';
 import { NdviPanelComponent } from './ndvi-panel/ndvi-panel.component';
 import { RainfallMapPanelComponent } from './rainfall-map-panel/rainfall-map-panel.component';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitability-map-panel.component';
 
-// TODO: Activate the Rainfall Panel's and NDVI Panel's form after migrating the form in a proper separate module.
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitabilit
     MdCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
+    MapUiFormsModule,
   ],
   declarations: [
     BasePanelComponent,

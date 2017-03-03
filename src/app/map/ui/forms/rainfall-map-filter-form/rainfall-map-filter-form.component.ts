@@ -1,5 +1,5 @@
 /*!
- * NDVI Filter Form Component
+ * Rainfall Map Filter Form Component
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -7,34 +7,46 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, UrlTree, NavigationExtras } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { LeafletMapService } from '../../leaflet';
-import { LocationsService } from '../locations.service';
-import { CustomValidators, FlatpickrComponent } from '../../forms';
+import { Router } from '@angular/router';
+import { CustomValidators, FlatpickrComponent, FlatpickrOptions } from '../../../../forms';
+import assign from 'lodash-es/assign';
+import includes from 'lodash-es/includes';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-ndvi-filter-form',
-  templateUrl: './ndvi-filter-form.component.html',
-  styleUrls: ['./ndvi-filter-form.component.sass']
+  selector: 'app-rainfall-map-filter-form',
+  templateUrl: './rainfall-map-filter-form.component.html',
+  styleUrls: ['./rainfall-map-filter-form.component.sass']
 })
-export class NdviFilterFormComponent implements OnInit {
+export class RainfallMapFilterFormComponent implements OnInit {
   public filterForm: FormGroup;
   public startDate: FormControl;
   public endDate: FormControl;
-  public province: FormControl;
-  public provinces: Observable<any>;
+  public startDatepickerOpts: FlatpickrOptions = {};
+  public endDatepickerOpts: FlatpickrOptions = {};
 
   @ViewChild('startDatePicker') startDatePicker: FlatpickrComponent;
   @ViewChild('endDatePicker') endDatePicker: FlatpickrComponent;
 
   constructor(
-    private _router: Router,
     private _formBuilder: FormBuilder,
-    private _locationsService: LocationsService,
-    private _mapService: LeafletMapService
-  ) {
+    private _router: Router
+  ) { }
+
+  ngOnInit() {
+    this.startDatepickerOpts = {
+      disable: [
+        (date: Date): boolean =>  {
+          const allowedDates = [1, 6, 11, 16, 21, 26, 31];
+
+          // only allow the dates specified in the variable
+          return !includes(allowedDates, date.getDate());
+        }
+      ]
+    };
+
+    this.endDatepickerOpts = assign({}, this.startDatepickerOpts);
+
     this.startDate = new FormControl('', [
       Validators.required,
       CustomValidators.dateISO
@@ -45,19 +57,10 @@ export class NdviFilterFormComponent implements OnInit {
       CustomValidators.dateISO
     ]);
 
-    this.province = new FormControl('', [
-      Validators.nullValidator
-    ]);
-
     this.filterForm = this._formBuilder.group({
       startDate: this.startDate,
-      endDate: this.endDate,
-      province: this.province
+      endDate: this.endDate
     });
-  }
-
-  ngOnInit() {
-    this.provinces = this._locationsService.getProvincesFromFT();
   }
 
   onStartDateChange(date: string) {
@@ -85,22 +88,9 @@ export class NdviFilterFormComponent implements OnInit {
 
   processRequest() {
     const value = this.filterForm.value;
-    const urlExtras: NavigationExtras = {};
-    let urlTree: UrlTree;
-
-    if (value.province !== '') {
-      // add a province query parameter
-      urlExtras.queryParams = {
-        province: value.province.name,
-        center: `${value.province.center.coordinates[1]},${value.province.center.coordinates[0]}`
-      };
-    }
-
-    // create the url tree
-    urlTree = this._router.createUrlTree(['/ndvi', value.startDate, value.endDate], urlExtras);
 
     // redirect to the URL
-    this._router.navigateByUrl(urlTree);
+    this._router.navigateByUrl(`/rainfall-maps/${value.startDate}/${value.endDate}`);
   }
 
 }
