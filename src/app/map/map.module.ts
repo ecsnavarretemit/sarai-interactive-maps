@@ -19,6 +19,7 @@ import { Angulartics2Module } from 'angulartics2';
 import { MapRoutingModule } from './map-routing.module';
 import { LeafletModule } from '../leaflet';
 import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
+import { UiModule as MapUiModule } from './ui';
 
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
@@ -59,7 +60,8 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     TranslateModule,
     Angulartics2Module.forChild(),
     LeafletModule,
-    MapRoutingModule
+    MapRoutingModule,
+    MapUiModule
   ],
   declarations: [
     HomeComponent,
