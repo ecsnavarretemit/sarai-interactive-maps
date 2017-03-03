@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/ecsnavarretemit/sarai-interactive-maps.svg?branch=master)](https://travis-ci.org/ecsnavarretemit/sarai-interactive-maps)
 [![Build status](https://ci.appveyor.com/api/projects/status/td5fh9a0x2x9rr5g?svg=true)](https://ci.appveyor.com/project/ecsnavarretemit/sarai-interactive-maps)
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-rc.0.
+This project was generated with [@angular/cli](https://github.com/angular/angular-cli) version 1.0.0-rc.1.
 
 ## Installing dependencies
 Dependencies of this project can be installed via [NPM](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/).
