@@ -8,7 +8,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { MAP_CONFIG } from './map.config';
+import { MAP_CONFIG } from '../../map.config';
 import trimEnd from 'lodash-es/trimEnd';
 import 'rxjs/add/operator/map';
 

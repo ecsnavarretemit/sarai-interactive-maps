@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { LeafletMapService } from '../../leaflet';
 import { RainfallMapService } from '../rainfall-map.service';
-import { TileLayerService } from '../tile-layer.service';
+import { TileLayerService } from '../shared';
 import { AppLoggerService } from '../../app-logger.service';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../ui';
 import { Layer } from '../../store';

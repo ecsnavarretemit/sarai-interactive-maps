@@ -16,7 +16,7 @@ import { Http } from '@angular/http';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../../../forms';
 import { LeafletMapService } from '../../../../leaflet';
-import { LocationsService } from '../../../locations.service';
+import { LocationsService } from '../../../shared';
 import { MockRouter } from '../../../../mocks/router';
 import { MockLocationsService } from '../../../../mocks/map';
 import { TranslationFactoryLoader } from '../../../../app-translation-factory.service';

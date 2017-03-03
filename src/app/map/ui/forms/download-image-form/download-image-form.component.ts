@@ -11,7 +11,7 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { AppLoggerService } from '../../../../app-logger.service';
-import { LocationsService } from '../../../locations.service';
+import { LocationsService } from '../../../shared';
 import { SuitabilityMapService } from '../../../suitability-map.service';
 import { Crop } from '../../../crop.interface';
 import each from 'lodash-es/each';

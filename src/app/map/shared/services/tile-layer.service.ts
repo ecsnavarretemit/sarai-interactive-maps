@@ -1,4 +1,3 @@
-import { UrlTree } from '@angular/router';
 /*!
  * Tile Layer Service
  *
@@ -8,7 +7,7 @@ import { UrlTree } from '@angular/router';
 
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { MAP_CONFIG } from './map.config';
+import { MAP_CONFIG } from '../../map.config';
 import assign from 'lodash-es/assign';
 import groupBy from 'lodash-es/groupBy';
 import map from 'lodash-es/map';

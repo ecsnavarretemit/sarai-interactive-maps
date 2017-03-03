@@ -17,14 +17,13 @@ import { Angulartics2Module } from 'angulartics2';
 import { MapRoutingModule } from './map-routing.module';
 import { LeafletModule } from '../leaflet';
 import { UiModule as MapUiModule } from './ui';
+import { SharedModule } from './shared';
 
 import { WindowService } from './window.service';
-import { TileLayerService } from './tile-layer.service';
 import { CropProductionAreaMapService } from './crop-production-area-map.service';
 import { NdviMapService } from './ndvi-map.service';
 import { RainfallMapService } from './rainfall-map.service';
 import { SuitabilityMapService } from './suitability-map.service';
-import { LocationsService } from './locations.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
 
 import { HomeComponent } from './home/home.component';
@@ -46,7 +45,8 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     Angulartics2Module.forChild(),
     LeafletModule,
     MapRoutingModule,
-    MapUiModule
+    MapUiModule,
+    SharedModule
   ],
   declarations: [
     HomeComponent,
@@ -57,12 +57,10 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     CropProductionAreaMapsComponent
   ],
   providers: [
-    TileLayerService,
     CropProductionAreaMapService,
     NdviMapService,
     RainfallMapService,
     SuitabilityMapService,
-    LocationsService,
     WindowService,
 
     { provide: MAP_CONFIG, useValue: MapConfig }

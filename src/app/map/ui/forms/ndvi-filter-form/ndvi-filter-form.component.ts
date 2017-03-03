@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router, UrlTree, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { LeafletMapService } from '../../../../leaflet';
-import { LocationsService } from '../../../locations.service';
+import { LocationsService } from '../../../shared';
 import { CustomValidators, FlatpickrComponent } from '../../../../forms';
 import * as moment from 'moment';
 

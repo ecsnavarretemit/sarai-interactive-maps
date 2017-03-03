@@ -11,10 +11,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppLoggerService } from '../../app-logger.service';
-import { SuitabilityMapService } from '../suitability-map.service';
-import { LocationsService } from '../locations.service';
-import { MockLocationsService, MockSuitabilityMapService } from '../../mocks/map';
+import { AppLoggerService } from '../../../../app-logger.service';
+import { SuitabilityMapService } from '../../../suitability-map.service';
+import { LocationsService } from '../../../shared';
+import { MockLocationsService, MockSuitabilityMapService } from '../../../../mocks/map';
 import { DownloadImageFormComponent } from './download-image-form.component';
 
 describe('Component: DownloadImageForm', () => {

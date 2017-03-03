@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
 import { AppLoggerService } from '../../app-logger.service';
-import { TileLayerService } from '../tile-layer.service';
+import { TileLayerService } from '../shared';
 import { NdviMapService } from '../ndvi-map.service';
 import { LeafletMapService } from '../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';

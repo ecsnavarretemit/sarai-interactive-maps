@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { LeafletMapService } from '../../leaflet';
-import { TileLayerService } from '../tile-layer.service';
+import { TileLayerService } from '../shared';
 import { NdviMapService } from '../ndvi-map.service';
 import { AppLoggerService } from '../../app-logger.service';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../ui';

@@ -15,7 +15,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
-import { TileLayerService } from '../tile-layer.service';
+import { TileLayerService } from '../shared';
 import { LeafletMapService, LeafletModule } from '../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
 import { MockActivatedRoute, MockRouter } from '../../mocks/router';

@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LayerState, Layer } from '../../store';
-import { TileLayerService } from '../tile-layer.service';
+import { TileLayerService } from '../shared';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
 import { MAP_CONFIG } from '../map.config';
 import * as L from 'leaflet';
