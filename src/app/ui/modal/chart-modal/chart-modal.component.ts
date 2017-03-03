@@ -5,6 +5,7 @@
  * Licensed under MIT
  */
 
+import { ModalDirective } from 'ng2-bootstrap/modal';
 import { LineChartComponent } from '../../charts';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { ModalComponentData } from '../modal-component-data.interface';
@@ -28,8 +29,9 @@ import {
 export class ChartModalComponent extends BaseModalComponent implements AfterViewInit, OnDestroy {
   private _currentComponent = null;
 
-  @Input('title') title: string = 'Chart Title';
+  @Input('title') title = 'Chart Title';
   @Input('chartOptions') chartOptions: ModalComponentData;
+  @ViewChild('contentModal') contentModal: ModalDirective;
   @ViewChild('chartContainer', { read: ViewContainerRef }) chartContainer: ViewContainerRef;
 
   constructor(
@@ -42,6 +44,14 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
     // retrieve properties from the injector
     this.title = injector.get('title', 'Chart Title');
     this.chartOptions = injector.get('chartOptions', null);
+  }
+
+  onHide() {
+    super.onHide();
+  }
+
+  onShow() {
+    super.onShow();
   }
 
   ngAfterViewInit() {

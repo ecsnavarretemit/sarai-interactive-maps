@@ -29,10 +29,10 @@ import omit from 'lodash-es/omit';
 export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
-  private _pageTitle: string = 'Suitability Maps';
+  private _pageTitle = 'Suitability Maps';
   private _map: L.Map;
   private _wmsTileUrl: string;
-  private _layerState: string = 'resampled';
+  private _layerState = 'resampled';
   private _mapLayers: Observable<any>;
   private _suitabilityLevels: Observable<any>;
   private _zoomEndListener: L.EventHandlerFn;

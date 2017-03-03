@@ -28,9 +28,9 @@ export class TileLayerService {
   private _equalToFilterTmpl: Function;
   private _betweenFilterTmpl: Function;
 
-  public imageFormat: string = 'image/png';
-  public transparent: boolean = true;
-  public maxZoom: number = 18;
+  public imageFormat = 'image/png';
+  public transparent = true;
+  public maxZoom = 18;
   public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
 
   constructor(

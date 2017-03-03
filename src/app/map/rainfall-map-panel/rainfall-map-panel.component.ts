@@ -19,7 +19,7 @@ import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel
   ]
 })
 export class RainfallMapPanelComponent extends BasePanelComponent {
-  public controlWrapperAnimationState: string = 'hidden';
+  public controlWrapperAnimationState = 'hidden';
 
   constructor(
     private _router: Router,

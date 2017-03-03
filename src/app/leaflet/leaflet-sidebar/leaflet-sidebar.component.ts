@@ -17,12 +17,12 @@ import 'leaflet-sidebar';
 })
 export class LeafletSidebarComponent implements OnInit, OnDestroy {
   public control: L.Control;
-  private _added: boolean = false;
+  private _added = false;
   private _controlContainer: HTMLElement;
 
-  @Input() position: string = 'right';
-  @Input() closeButton: boolean = true;
-  @Input() autoPan: boolean = false;
+  @Input() position = 'right';
+  @Input() closeButton = true;
+  @Input() autoPan = false;
   @Input() containerClass: string;
   @Output() beforeShow: EventEmitter<any> = new EventEmitter<any>();
   @Output() afterShow: EventEmitter<any> = new EventEmitter<any>();

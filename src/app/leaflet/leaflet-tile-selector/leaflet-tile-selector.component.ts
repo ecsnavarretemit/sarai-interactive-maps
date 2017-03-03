@@ -62,13 +62,13 @@ import {
 export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDestroy {
   public tileKeys: any;
   public tileProviderKey: string;
-  public controlWrapperAnimationState: string = 'visible';
-  public buttonState: string = 'hidden';
+  public controlWrapperAnimationState = 'visible';
+  public buttonState = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
 
-  @Input() controlTitle: string = 'Map Source';
-  @Input() hideTooltipTxt: string = 'Hide';
+  @Input() controlTitle = 'Map Source';
+  @Input() hideTooltipTxt = 'Hide';
   @Output() beforeHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
   @Output() afterHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
   @Output() beforeShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();

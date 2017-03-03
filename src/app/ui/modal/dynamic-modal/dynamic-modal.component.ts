@@ -40,7 +40,7 @@ export class DynamicModalComponent implements AfterViewInit {
   private _showSubscription: Subscription;
   private _currentComponent = null;
 
-  @HostBinding('class.modal-open') modalOpen: boolean = false;
+  @HostBinding('class.modal-open') modalOpen = false;
   @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer: ViewContainerRef;
 
   constructor(

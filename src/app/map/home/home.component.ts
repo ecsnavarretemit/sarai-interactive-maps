@@ -29,7 +29,7 @@ import * as L from 'leaflet';
 })
 export class HomeComponent implements OnInit {
   public layersOpacity = 0.6;
-  public mapZoom: number = 6;
+  public mapZoom = 6;
   public mapCoords: L.LatLngLiteral;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';

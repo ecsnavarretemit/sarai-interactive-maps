@@ -75,7 +75,7 @@ export function basePanelAnimation(): AnimationEntryMetadata {
   ]
 })
 export class BasePanelComponent implements OnInit, AfterViewInit, OnDestroy {
-  public controlWrapperAnimationState: string = 'hidden';
+  public controlWrapperAnimationState = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
 

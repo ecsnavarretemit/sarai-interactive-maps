@@ -40,7 +40,7 @@ import 'rxjs/add/observable/of';
 })
 export class NdviMapsComponent implements OnDestroy, OnInit {
   public chartData: Observable<any>;
-  private _pageTitle: string = 'NDVI Maps';
+  private _pageTitle = 'NDVI Maps';
   private _map: L.Map;
   private _layerId: string;
   private _routerParamSubscription: Subscription;

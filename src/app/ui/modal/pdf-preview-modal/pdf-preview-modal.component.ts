@@ -5,7 +5,8 @@
  * Licensed under MIT
  */
 
-import { AfterViewInit, Component, Injector, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Injector, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 
 @Component({
@@ -14,13 +15,14 @@ import { BaseModalComponent } from '../base-modal/base-modal.component';
   styleUrls: ['./pdf-preview-modal.component.sass']
 })
 export class PdfPreviewModalComponent extends BaseModalComponent implements OnInit, AfterViewInit {
-  public loaderVisible: boolean = true;
-  public modalVisible: boolean = false;
-  public hasPdf: boolean = false;
+  public loaderVisible = true;
+  public modalVisible = false;
+  public hasPdf = false;
 
-  @Input('title') title: string = 'PDF Preview Title';
+  @Input('title') title = 'PDF Preview Title';
   @Input('src') src: string;
   @Input('downloadFilename') downloadFilename: string;
+  @ViewChild('contentModal') contentModal: ModalDirective;
 
   constructor(injector: Injector) {
     // call the parent constructor
@@ -41,6 +43,10 @@ export class PdfPreviewModalComponent extends BaseModalComponent implements OnIn
     if (typeof this.downloadFilename === 'undefined' && typeof this.src !== 'undefined') {
       this.downloadFilename = this.src.split(/[\\/]/).pop();
     }
+  }
+
+  onHide() {
+    super.onHide();
   }
 
   onShow() {

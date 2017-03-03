@@ -30,7 +30,7 @@ import map from 'lodash-es/map';
   styleUrls: ['./rainfall-maps.component.sass']
 })
 export class RainfallMapsComponent implements OnInit, OnDestroy {
-  private _pageTitle: string = 'Rainfall Maps';
+  private _pageTitle = 'Rainfall Maps';
   private _layerId: string;
   private _map: L.Map;
   private _marker: L.Marker;

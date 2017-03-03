@@ -18,7 +18,7 @@ import 'leaflet-control-geocoder2';
 export class LeafletGeocoderComponent implements OnInit, OnChanges {
   public control: L.Control;
 
-  @Input() placeholder: string = 'Find a place...';
+  @Input() placeholder = 'Find a place...';
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(

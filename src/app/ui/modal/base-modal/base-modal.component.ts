@@ -14,8 +14,8 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
   styleUrls: ['./base-modal.component.sass']
 })
 export class BaseModalComponent implements AfterViewInit {
-  @Input('openImmediately') openImmediately: boolean = false;
-  @Input('title') title: string = 'Modal Title';
+  @Input('openImmediately') openImmediately = false;
+  @Input('title') title = 'Modal Title';
   @Output() hide: EventEmitter<string> = new EventEmitter<string>();
   @Output() show: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('contentModal') contentModal: ModalDirective;

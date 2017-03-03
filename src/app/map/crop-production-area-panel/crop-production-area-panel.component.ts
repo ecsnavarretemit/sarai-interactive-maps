@@ -21,7 +21,7 @@ import { CropProductionAreaMapService } from '../crop-production-area-map.servic
   ]
 })
 export class CropProductionAreaPanelComponent extends BasePanelComponent implements OnInit {
-  public controlWrapperAnimationState: string = 'hidden';
+  public controlWrapperAnimationState = 'hidden';
   public cropData: Observable<any>;
 
   constructor(

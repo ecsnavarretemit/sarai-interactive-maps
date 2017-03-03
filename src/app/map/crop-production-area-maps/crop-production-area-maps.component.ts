@@ -27,7 +27,7 @@ import 'rxjs/add/operator/debounceTime';
 export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
-  private _pageTitle: string = 'Crop Production Area';
+  private _pageTitle = 'Crop Production Area';
   private _wmsTileUrl: string;
   private _map: L.Map;
   private _mapLayers: Observable<any>;

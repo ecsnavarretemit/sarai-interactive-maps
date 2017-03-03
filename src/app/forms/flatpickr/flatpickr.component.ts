@@ -36,7 +36,7 @@ import {
 })
 export class FlatpickrComponent implements AfterViewInit, ControlValueAccessor, OnDestroy, OnInit {
   @Input('options') options: Flatpickr.Options = {};
-  @Input('placeholder') placeholder: string = 'Select Date';
+  @Input('placeholder') placeholder = 'Select Date';
   @Output('change') change: EventEmitter<string> = new EventEmitter<string>();
   @Output('close') close: EventEmitter<string> = new EventEmitter<string>();
   @Output('open') open: EventEmitter<string> = new EventEmitter<string>();

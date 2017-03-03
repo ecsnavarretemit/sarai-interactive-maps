@@ -16,7 +16,7 @@ import * as L from 'leaflet';
 })
 export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
   public layer: L.TileLayer.WMS;
-  private _layerAdded: boolean = false;
+  private _layerAdded = false;
 
   @Input() id: string;
   @Input() url: string;

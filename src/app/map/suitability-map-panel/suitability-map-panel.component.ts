@@ -28,7 +28,7 @@ import omit from 'lodash-es/omit';
 export class SuitabilityMapPanelComponent extends BasePanelComponent implements OnInit {
   public cropData: Observable<Array<Crop>>;
   public levels: Promise<Array<any>>;
-  public controlWrapperAnimationState: string = 'hidden';
+  public controlWrapperAnimationState = 'hidden';
 
   constructor(
     private _router: Router,
