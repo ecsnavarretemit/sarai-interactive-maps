@@ -1,0 +1,54 @@
+<div class="modal--pdf-preview modal fade" tabindex="-1" role="dialog" aria-labelledby="pdfPreviewModalLabel" aria-hidden="true"
+    bsModal
+    (onShown)="onShow($event)"
+    (onHidden)="onHide($event)"
+    #contentModal="bs-modal">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="contentModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <h4 class="modal-title" #contentModalTitle>{{ title }}</h4>
+            </div>
+
+            <div class="modal-body" #contentModalBody>
+                <div *ngIf="hasPdf">
+                    <div class="preloader preloader--pdf-loader preloader--visible" *ngIf="loaderVisible">
+                        <div class="preloader__content">
+                            <div class="sk-wave">
+                                <div class="sk-rect sk-rect1"></div>
+                                <div class="sk-rect sk-rect2"></div>
+                                <div class="sk-rect sk-rect3"></div>
+                                <div class="sk-rect sk-rect4"></div>
+                                <div class="sk-rect sk-rect5"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <pdf-viewer
+                        *ngIf="modalVisible"
+                        [src]="src"
+                        (after-load-complete)="onLoadComplete($event)"
+                        original-size="false"
+                        show-all="true">
+                    </pdf-viewer>
+                </div>
+
+                <div *ngIf="!hasPdf">
+                    No PDF has been provided for preview
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" [href]="src" [attr.download]="downloadFilename">Download</a>
+
+                <button type="button" class="btn btn-primary" (click)="contentModal.hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

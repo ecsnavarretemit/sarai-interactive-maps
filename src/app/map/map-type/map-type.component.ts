@@ -15,9 +15,9 @@ import { LeafletButtonComponent } from '../../leaflet/leaflet-button/leaflet-but
   styleUrls: ['./map-type.component.sass']
 })
 export class MapTypeComponent implements AfterViewInit {
-  public active: boolean =  false;
+  public active = false;
 
-  @Input('activateImmediately') activateImmediately: boolean = false;
+  @Input('activateImmediately') activateImmediately = false;
   @Output() activate: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() deactivate: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ContentChild('mapTypePanel') panel: BasePanelComponent;

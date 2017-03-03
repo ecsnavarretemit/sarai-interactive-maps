@@ -75,7 +75,7 @@ export function basePanelAnimation(): AnimationEntryMetadata {
   ]
 })
 export class BasePanelComponent implements OnInit, AfterViewInit, OnDestroy {
-  public controlWrapperAnimationState: string = 'hidden';
+  public controlWrapperAnimationState = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
 
@@ -105,15 +105,19 @@ export class BasePanelComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onHideButtonClick(event) {
+  onHideButtonClick(evt: Event) {
     // switch the panel animation state to hidden
     this.controlWrapperAnimationState = 'hidden';
 
-    this.hideButtonClick.emit(event);
+    this.hideButtonClick.emit(evt);
   }
 
   togglePanelVisibility(immediate = false) {
-    let [state, ...extraState] = this.controlWrapperAnimationState.split('-');
+    // store the state in a constant variable
+    const [initialState, ...extraState] = this.controlWrapperAnimationState.split('-');
+
+    // copy the first state and modify it
+    let state = initialState;
 
     if (state === 'hidden') {
       state = 'visible';

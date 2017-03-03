@@ -108,7 +108,7 @@ body
 // keep this code here while the issue is still unresolved.
 // Issue URL: <https://github.com/Leaflet/Leaflet/issues/4968>
 .leaflet-default-icon-path
-	background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/images/marker-icon.png')
+	background-image: url('https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/marker-icon.png')
 
 // --------------------------------------
 // [Map] ::end
@@ -143,6 +143,33 @@ body
 
 // --------------------------------------
 // [Download Image] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Leaflet Popups] ::start
+// --------------------------------------
+
+.leaflet-popup--with-footer-controls
+  .list--feature-info
+    padding-bottom: 10px
+    margin-bottom: 0
+
+    .list__item--value
+      margin-bottom: 5px
+
+      &:last-child
+        margin-bottom: 0
+
+  .popup-controls
+    margin-bottom: 0
+    padding-top: 10px
+    border-top: 1px solid #DDDDDD
+
+    .list__item
+      float: left
+
+// --------------------------------------
+// [Leaflet Popups] ::end
 // --------------------------------------
 
 

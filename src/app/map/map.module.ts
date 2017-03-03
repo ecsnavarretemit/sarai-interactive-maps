@@ -15,7 +15,7 @@ import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from 'ng2-translate';
-import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { Angulartics2Module } from 'angulartics2';
 import { MapRoutingModule } from './map-routing.module';
 import { LeafletModule } from '../leaflet';
 import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
@@ -23,6 +23,8 @@ import { FormsModule as SaraiInteractiveMapsFormsModule } from '../forms';
 import { WindowService } from './window.service';
 import { TileLayerService } from './tile-layer.service';
 import { CropProductionAreaMapService } from './crop-production-area-map.service';
+import { NdviMapService } from './ndvi-map.service';
+import { RainfallMapService } from './rainfall-map.service';
 import { SuitabilityMapService } from './suitability-map.service';
 import { LocationsService } from './locations.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
@@ -55,6 +57,7 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     ModalModule,
     MdCheckboxModule,
     TranslateModule,
+    Angulartics2Module.forChild(),
     LeafletModule,
     MapRoutingModule
   ],
@@ -68,7 +71,6 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
     DownloadImageFormComponent,
     NdviMapsComponent,
     RainfallMapsComponent,
-    PdfViewerComponent,
     NdviFilterFormComponent,
     BasePanelComponent,
     MapTypeComponent,
@@ -78,6 +80,8 @@ import { CropProductionAreaMapsComponent } from './crop-production-area-maps/cro
   providers: [
     TileLayerService,
     CropProductionAreaMapService,
+    NdviMapService,
+    RainfallMapService,
     SuitabilityMapService,
     LocationsService,
     WindowService,

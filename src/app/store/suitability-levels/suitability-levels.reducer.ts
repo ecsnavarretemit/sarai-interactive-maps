@@ -74,10 +74,8 @@ export function SuitabilityLevelsReducer(state: SuitabilityLevelsState = initial
         return state;
       }
 
-      const levels = action.payload;
-
       // remove the existing levels from the collection
-      const newLevels = filter(levels, (level: SuitabilityLevel) => {
+      const newLevels = filter(action.payload, (level: SuitabilityLevel) => {
         return !has(state.levels, level.gridcode);
       });
 

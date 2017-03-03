@@ -43,7 +43,7 @@ describe('Component: Flatpickr', () => {
   }));
 
   it('should emit change event', async(() => {
-    let dateStr = '2017-01-04';
+    const dateStr = '2017-01-04';
 
     component.change.subscribe((value: string) => {
       expect(value).toBe(dateStr);

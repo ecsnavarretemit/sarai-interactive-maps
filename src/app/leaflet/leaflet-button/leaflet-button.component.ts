@@ -18,8 +18,8 @@ export class LeafletButtonComponent implements OnInit {
   public active = false;
 
   @Input() controlClass: string;
-  @Input() btnTooltip: string = 'Default Text';
-  @Input() btnTooltipPosition: string = 'left';
+  @Input() btnTooltip = 'Default Text';
+  @Input() btnTooltipPosition = 'left';
   @Output() buttonClick: EventEmitter<Event> = new EventEmitter<Event>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('button') button: ElementRef;
@@ -28,7 +28,7 @@ export class LeafletButtonComponent implements OnInit {
 
   ngOnInit() {
     if (typeof this.controlClass !== 'undefined' && this.controlClass !== '') {
-      let split = this.controlClass.split(' ');
+      const split = this.controlClass.split(' ');
 
       // add the class to the content
       each(split, (className: string) => {

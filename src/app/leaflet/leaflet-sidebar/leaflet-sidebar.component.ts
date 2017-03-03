@@ -17,24 +17,24 @@ import 'leaflet-sidebar';
 })
 export class LeafletSidebarComponent implements OnInit, OnDestroy {
   public control: L.Control;
-  private _added: boolean = false;
+  private _added = false;
   private _controlContainer: HTMLElement;
 
-  @Input() position: string = 'right';
-  @Input() closeButton: boolean = true;
-  @Input() autoPan: boolean = false;
+  @Input() position = 'right';
+  @Input() closeButton = true;
+  @Input() autoPan = false;
   @Input() containerClass: string;
-  @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onShown: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onHidden: EventEmitter<any> = new EventEmitter<any>();
+  @Output() beforeShow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() afterShow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() beforeHide: EventEmitter<any> = new EventEmitter<any>();
+  @Output() afterHide: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
 
   constructor(private _mapService: LeafletMapService) { }
 
   ngOnInit() {
     // prevent 'Control' is not a propery of L
-    let controlObj = (L as any).control;
+    const controlObj = (L as any).control;
 
     this.control = controlObj.sidebar(this.controlWrapper.nativeElement, {
       position: this.position,
@@ -53,7 +53,7 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
 
         // add the class to the container
         if (typeof this.containerClass !== 'undefined') {
-          let split = this.containerClass.split(' ');
+          const split = this.containerClass.split(' ');
 
           this._controlContainer.classList.add(...split);
         }
@@ -101,19 +101,19 @@ export class LeafletSidebarComponent implements OnInit, OnDestroy {
   }
 
   onBeforeShow(evt) {
-    this.onShow.emit(evt);
+    this.beforeShow.emit(evt);
   }
 
   onAfterShow(evt) {
-    this.onShown.emit(evt);
+    this.afterShow.emit(evt);
   }
 
   onBeforeHide(evt) {
-    this.onHide.emit(evt);
+    this.beforeHide.emit(evt);
   }
 
   onAfterHide(evt) {
-    this.onHidden.emit(evt);
+    this.afterHide.emit(evt);
   }
 
   ngOnDestroy() {

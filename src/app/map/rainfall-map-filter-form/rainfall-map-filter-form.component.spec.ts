@@ -25,8 +25,10 @@ describe('Component: RainfallMapFilterForm', () => {
   let mockRouter: MockRouter;
 
   // elements
-  let scanDate: DebugElement;
-  let scanDateEl: HTMLInputElement;
+  let startDate: DebugElement;
+  let startDateEl: HTMLInputElement;
+  let endDate: DebugElement;
+  let endDateEl: HTMLInputElement;
 
   beforeEach(async(() => {
     mockRouter = new MockRouter();
@@ -59,25 +61,43 @@ describe('Component: RainfallMapFilterForm', () => {
     fixture.detectChanges();
 
     // get the starting date and helper element
-    scanDate = fixture.debugElement.query(By.directive(FlatpickrComponent));
-    scanDateEl = scanDate.nativeElement;
+    startDate = fixture.debugElement.query(By.css('[name="ec_start_date_txt"]'));
+    startDateEl = startDate.nativeElement;
+
+    // get the scan range element
+    endDate = fixture.debugElement.query(By.css('[name="ec_end_date_txt"]'));
+    endDateEl = endDate.nativeElement;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show that date is required', async(() => {
-    component.scanDate.markAsTouched();
+  it('should show that start date is required', async(() => {
+    component.startDate.markAsTouched();
 
     // detect changes in the fixture
     fixture.detectChanges();
 
     setTimeout(() => {
-      let helpBlockEl = scanDateEl.parentElement.querySelector('.help-block-wrapper');
+      const helpBlockEl = startDateEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
-      expect(helpBlockEl.children[0].textContent.trim()).toBe('Scan Date is required.');
+      expect(helpBlockEl.children[0].textContent.trim()).toBe('Start Date is required.');
+    }, 0);
+  }));
+
+  it('should show that end date is required', async(() => {
+    component.endDate.markAsTouched();
+
+    // detect changes in the fixture
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      const helpBlockEl = endDateEl.parentElement.querySelector('.help-block-wrapper');
+
+      expect(helpBlockEl.children.length).toBe(1);
+      expect(helpBlockEl.children[0].textContent.trim()).toBe('Until Date is required.');
     }, 0);
   }));
 

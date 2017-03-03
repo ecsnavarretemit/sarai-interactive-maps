@@ -16,8 +16,14 @@ import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel
     basePanelAnimation()
   ]
 })
-export class NdviPanelComponent extends BasePanelComponent  {
-  public controlWrapperAnimationState: string = 'hidden';
+export class NdviPanelComponent extends BasePanelComponent {
+  public controlWrapperAnimationState = 'hidden';
+
+  onHideButtonClick(evt: Event) {
+    // call the parent method
+    super.onHideButtonClick(evt);
+  }
+
 }
 
 

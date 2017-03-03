@@ -50,6 +50,10 @@ UPGRADE.md
 # Typescript Types
 typings
 
+# ctags
+tags
+.tags
+
 # Env
 .dir-env
 src/environments/*.ts
@@ -57,4 +61,5 @@ src/environments/*.ts
 
 # Project Scripts
 _scripts
+
 

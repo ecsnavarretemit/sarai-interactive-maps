@@ -10,7 +10,7 @@ import { TranslateStaticLoader } from 'ng2-translate';
 import { environment } from '../environments/environment';
 
 export function TranslationFactoryLoader(http: Http) {
-  let translationConfig = environment.sarai_map_config.translations;
+  const translationConfig = environment.sarai_map_config.translations;
 
   return new TranslateStaticLoader(http, translationConfig.static.prefix, translationConfig.static.ext);
 };

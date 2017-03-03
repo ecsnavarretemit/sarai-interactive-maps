@@ -6,7 +6,8 @@
  */
 
 import { Component, Inject, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../leaflet';
@@ -28,11 +29,13 @@ import omit from 'lodash-es/omit';
 export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
+  private _pageTitle = 'Suitability Maps';
   private _map: L.Map;
   private _wmsTileUrl: string;
-  private _layerState: string = 'resampled';
+  private _layerState = 'resampled';
   private _mapLayers: Observable<any>;
   private _suitabilityLevels: Observable<any>;
+  private _zoomEndListener: L.EventHandlerFn;
 
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
@@ -41,11 +44,11 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _title: Title,
     private _mapLayersStore: Store<any>,
     private _suitabilityLevelsStore: Store<any>
   ) {
-    let resolvedConfig = this._config.suitability_maps;
+    const resolvedConfig = this._config.suitability_maps;
 
     // set default crop
     this.crop = 'rice';
@@ -58,6 +61,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
 
     // get the suitability levels from the store
     this._suitabilityLevels = this._suitabilityLevelsStore.select('suitabilityLevels');
+
+    // make sure that the `this` value inside the onMapZoom is this component's instance.
+    this._zoomEndListener = this.onMapZoom.bind(this);
   }
 
   ngOnInit() {
@@ -67,8 +73,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       .combineLatest(this._mapLayers, this._suitabilityLevels)
       .debounceTime(300)
       .map((states: [LayerState, SuitabilityLevelsState]) => {
-        let layerState = states[0];
-        let levelsState = states[1];
+        const [layerState, levelsState] = states;
 
         return map(layerState.layers, (layer: Layer) => {
           if (levelsState.gridcodes.length < 15) {
@@ -88,6 +93,9 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
         this.crop = params['crop'];
       }
 
+      // set the page title
+      this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+
       // process wms layers
       this.processLayers();
     });
@@ -100,15 +108,15 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
         this._map = mapInstance;
 
         // bind the zoomend callback to the zoomend event
-        mapInstance.on('zoomend', this.onMapZoom.bind(this));
+        mapInstance.on('zoomend', this._zoomEndListener);
       })
       ;
   }
 
   processLayers() {
+    const layerType = 'suitability-map-simplified';
     let zoomLevel = 6;
     let method = 'getSuitabilityMapCountryLevelLayers';
-    let layerType = 'suitability-map-simplified';
 
     if (typeof this._map !== 'undefined' && this._map.getZoom() >= 12) {
       zoomLevel = 12;
@@ -120,11 +128,11 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     }
 
     // get the layers
-    let layers = this._tileLayerService[method](this.crop);
+    const layers = this._tileLayerService[method](this.crop);
 
     // assemble the layers payload for saving to the application store.
-    let processedLayers = map(layers, (layer: L.WMSOptions) => {
-      let payload: Layer = {
+    const processedLayers = map(layers, (layer: L.WMSOptions) => {
+      const payload: Layer = {
         id: layer.layers,
         type: layerType,
         url: this._wmsTileUrl,
@@ -145,7 +153,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   onMapZoom() {
-    let zoomLevel = this._map.getZoom();
+    const zoomLevel = this._map.getZoom();
 
     if (zoomLevel < 12 && this._layerState !== 'resampled') {
       // processing layer
@@ -183,8 +191,17 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // remove the event listener bound to the map
+    this._map.off('zoomend', this._zoomEndListener);
+
+    // reset the page title
+    this._title.setTitle(`${this._config.app_title}`);
+
     // remove all layers published on the store and on the collection
     this.removeLayers();
+
+    // remove the reference to the map
+    this._map = null;
   }
 
 }

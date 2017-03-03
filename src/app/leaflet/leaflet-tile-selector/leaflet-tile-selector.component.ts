@@ -62,17 +62,17 @@ import {
 export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDestroy {
   public tileKeys: any;
   public tileProviderKey: string;
-  public controlWrapperAnimationState: string = 'visible';
-  public buttonState: string = 'hidden';
+  public controlWrapperAnimationState = 'visible';
+  public buttonState = 'hidden';
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
 
-  @Input() controlTitle: string = 'Map Source';
-  @Input() hideTooltipTxt: string = 'Hide';
-  @Output() onBeforeHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
-  @Output() onAfterHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
-  @Output() onBeforeShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
-  @Output() onAfterShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Input() controlTitle = 'Map Source';
+  @Input() hideTooltipTxt = 'Hide';
+  @Output() beforeHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() afterHideControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() beforeShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
+  @Output() afterShowControl: EventEmitter<AnimationTransitionEvent> = new EventEmitter<AnimationTransitionEvent>();
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('tileselector') tileSelector: ElementRef;
   @ViewChild(LeafletButtonComponent) controlSettings: LeafletButtonComponent;
@@ -118,21 +118,21 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDe
 
   onControlWrapperAnimationStart(event: AnimationTransitionEvent) {
     if (event.fromState === 'hidden' && event.toState === 'visible') {
-      this.onBeforeShowControl.emit(event);
+      this.beforeShowControl.emit(event);
     }
 
     if (event.fromState === 'visible' && event.toState === 'hidden') {
-      this.onBeforeHideControl.emit(event);
+      this.beforeHideControl.emit(event);
     }
   }
 
   onControlWrapperAnimationEnd(event: AnimationTransitionEvent) {
     if (event.fromState === 'visible' && event.toState === 'hidden') {
-      this.onAfterHideControl.emit(event);
+      this.afterHideControl.emit(event);
     }
 
     if (event.fromState === 'hidden' && event.toState === 'visible') {
-      this.onAfterShowControl.emit(event);
+      this.afterShowControl.emit(event);
     }
   }
 
@@ -148,9 +148,9 @@ export class LeafletTileSelectorComponent implements OnInit, AfterViewInit, OnDe
     this.buttonState = 'hidden';
   }
 
-  onTileChange(event) {
-    let value = event.target.value;
-    let resolvedTile = this._tileProvider.baseMaps[event.target.value];
+  onTileChange(event: Event) {
+    const value = (event.target as any).value;
+    const resolvedTile = this._tileProvider.baseMaps[value];
 
     this._mapService
       .getMap()

@@ -15,8 +15,8 @@ import * as L from 'leaflet';
   styleUrls: ['./leaflet-wms-layer.component.sass']
 })
 export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
-  public layer: L.WMS;
-  private _layerAdded: boolean = false;
+  public layer: L.TileLayer.WMS;
+  private _layerAdded = false;
 
   @Input() id: string;
   @Input() url: string;
@@ -39,7 +39,7 @@ export class LeafletWmsLayerComponent implements OnInit, OnDestroy {
 
     this._mapService
       .addNewWMSLayer(this.id, this.url, this.layerOptions)
-      .then((layer: L.WMS) => {
+      .then((layer: L.TileLayer.WMS) => {
         // store the generated layer
         this.layer = layer;
 

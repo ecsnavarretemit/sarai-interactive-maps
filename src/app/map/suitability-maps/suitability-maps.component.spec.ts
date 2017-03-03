@@ -9,11 +9,10 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
-import { AppLoggerService } from '../../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
 import { LeafletMapService } from '../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
@@ -22,14 +21,11 @@ import { SuitabilityMapsComponent } from './suitability-maps.component';
 
 describe('Component: SuitabilityMaps', () => {
   let mockActivatedRoute: MockActivatedRoute;
-  let mockRouter: MockRouter;
 
   beforeEach(() => {
     mockActivatedRoute = new MockActivatedRoute({
       crop: 'rice'
     });
-
-    mockRouter = new MockRouter();
 
     TestBed.configureTestingModule({
       imports: [
@@ -40,9 +36,9 @@ describe('Component: SuitabilityMaps', () => {
         TileLayerService,
         LeafletMapService,
         SuitabilityMapsComponent,
+        Title,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: Router, useValue: mockRouter },
         { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({

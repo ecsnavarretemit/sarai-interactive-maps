@@ -31,8 +31,8 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
   private _mouseOverSubscription: Subscription;
   private _mouseLeaveListener: Function;
 
-  @Input() title: string = 'Layer Overlay Opacity';
-  @Input() opacity: number = 1;
+  @Input() title = 'Layer Overlay Opacity';
+  @Input() opacity = 1;
   @ViewChild('controlwrapper') controlWrapper: ElementRef;
   @ViewChild('range') range: ElementRef;
 
@@ -88,7 +88,7 @@ export class LeafletOpacitySliderComponent implements OnInit, AfterViewInit, OnD
         this._mapService.getTileLayers()
       ])
       .then((values) => {
-        let flattened = assign({}, ...values);
+        const flattened = assign({}, ...values);
 
         each(flattened, (layer: L.TileLayer) => {
           layer.setOpacity(opacity);

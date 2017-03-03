@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "outDir": "../out-tsc/app",
+    "target": "es5",
+    "module": "es2015",
+    "baseUrl": "",
+    "types": [],
+    "typeRoots": [
+      "../node_modules/@types",
+      "../node_modules/@ngrx",
+      "../node_modules/@angular2-material",
+      "../node_modules/angular2-cookie",
+      "../node_modules/moment",
+      "../node_modules/ng2-bootstrap",
+      "../node_modules/ng2-pdf-viewer",
+      "../node_modules/ng2-translate",
+      "../node_modules/ng2-validation"
+    ]
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

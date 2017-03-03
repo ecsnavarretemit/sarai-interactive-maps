@@ -8,29 +8,30 @@
  */
 
 import { TestBed, async, inject } from '@angular/core/testing';
+import { Renderer } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { HttpModule } from '@angular/http';
+import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../map.config';
 import { AppLoggerService } from '../../app-logger.service';
 import { TileLayerService } from '../tile-layer.service';
+import { NdviMapService } from '../ndvi-map.service';
 import { LeafletMapService } from '../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
+import { SpawnModalService } from '../../ui';
 import { MockActivatedRoute, MockRouter } from '../../mocks/router';
 import { NdviMapsComponent } from './ndvi-maps.component';
 
 describe('Component: NdviMaps', () => {
   let mockActivatedRoute: MockActivatedRoute;
-  let mockRouter: MockRouter;
 
   beforeEach(() => {
     mockActivatedRoute = new MockActivatedRoute({
       startDate: '2016-10-01',
-      scanRange: '10'
+      endDate: '2016-10-31'
     });
-
-    mockRouter = new MockRouter();
 
     TestBed.configureTestingModule({
       imports: [
@@ -40,11 +41,14 @@ describe('Component: NdviMaps', () => {
       providers: [
         AppLoggerService,
         TileLayerService,
+        NdviMapService,
         LeafletMapService,
+        SpawnModalService,
+        Renderer,
+        Title,
         NdviMapsComponent,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: Router, useValue: mockRouter },
         { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({

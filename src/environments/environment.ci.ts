@@ -1,6 +1,10 @@
 export const environment = {
   production: false,
+  ga: {
+    code: ''
+  },
   sarai_map_config: {
+    app_title: 'SARAI Interactive Maps - Project SARAI',
     geoserver: {
       baseUrl: 'http://demo.opengeo.org/geoserver',
       restApiEndpoint: 'http://demo.opengeo.org/geoserver/rest'

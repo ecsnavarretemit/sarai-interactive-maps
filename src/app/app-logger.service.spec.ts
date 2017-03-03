@@ -24,7 +24,7 @@ describe('Service: LeafletTileProvider', () => {
   }));
 
   it('should emit messages', async(inject([AppLoggerService], (service: AppLoggerService) => {
-    let message = 'Hi this is a test message';
+    const message = 'Hi this is a test message';
 
     subscription = service
       .getMessageStream()

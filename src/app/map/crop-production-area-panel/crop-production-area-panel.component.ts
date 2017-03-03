@@ -21,7 +21,7 @@ import { CropProductionAreaMapService } from '../crop-production-area-map.servic
   ]
 })
 export class CropProductionAreaPanelComponent extends BasePanelComponent implements OnInit {
-  public controlWrapperAnimationState: string = 'hidden';
+  public controlWrapperAnimationState = 'hidden';
   public cropData: Observable<any>;
 
   constructor(
@@ -48,6 +48,11 @@ export class CropProductionAreaPanelComponent extends BasePanelComponent impleme
 
   isCropActive(crop: string): boolean {
     return this._router.isActive(`/crop-production-area/${crop}`, true);
+  }
+
+  onHideButtonClick(evt: Event) {
+    // call the parent method
+    super.onHideButtonClick(evt);
   }
 
 }

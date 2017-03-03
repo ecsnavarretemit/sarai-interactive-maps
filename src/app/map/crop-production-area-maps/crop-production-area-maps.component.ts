@@ -6,7 +6,8 @@
  */
 
 import { Component, Inject, OnInit, OnDestroy, QueryList, ViewChildren } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LayerState, Layer } from '../../store';
@@ -26,6 +27,7 @@ import 'rxjs/add/operator/debounceTime';
 export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   public crop: string;
   public layersCollection: Observable<Array<Layer>>;
+  private _pageTitle = 'Crop Production Area';
   private _wmsTileUrl: string;
   private _map: L.Map;
   private _mapLayers: Observable<any>;
@@ -35,10 +37,10 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _title: Title,
     private _mapLayersStore: Store<any>
   ) {
-    let resolvedConfig = this._config.crop_production_area_maps;
+    const resolvedConfig = this._config.crop_production_area_maps;
 
     // set default wms tile layer
     this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
@@ -66,17 +68,20 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
         this.crop = params['crop'];
       }
 
+      // set the page title
+      this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+
       // process wms layers
       this.processLayers();
     });
   }
 
   processLayers() {
-    let layers = this._tileLayerService.getCropProductionAreaLayers(this.crop);
+    const layers = this._tileLayerService.getCropProductionAreaLayers(this.crop);
 
     // assemble the layers payload for saving to the application store.
-    let processedLayers = map(layers, (layer: L.WMSOptions) => {
-      let payload: Layer = {
+    const processedLayers = map(layers, (layer: L.WMSOptions) => {
+      const payload: Layer = {
         id: layer.layers,
         type: 'crop-production-area',
         url: this._wmsTileUrl,
@@ -104,6 +109,9 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // reset the page title
+    this._title.setTitle(`${this._config.app_title}`);
+
     // remove all layers published on the store and on the collection
     this.removeLayers();
   }

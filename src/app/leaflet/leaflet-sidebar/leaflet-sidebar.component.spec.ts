@@ -27,36 +27,36 @@ describe('Component: LeafletSidebar', () => {
   }));
 
   it('should emit onBeforeShow', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
-    component.onShow.subscribe((event: Event) => {
+    component.beforeShow.subscribe((event: Event) => {
       expect(event).toBeTruthy();
     });
 
     component.onBeforeShow(new Event('beforeShow'));
-  }));
+  })));
 
   it('should emit onAfterShow', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
-    component.onShown.subscribe((event: Event) => {
+    component.afterShow.subscribe((event: Event) => {
       expect(event).toBeTruthy();
     });
 
     component.onAfterShow(new Event('afterShow'));
-  }));
+  })));
 
   it('should emit onBeforeHide', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
-    component.onHide.subscribe((event: Event) => {
+    component.beforeHide.subscribe((event: Event) => {
       expect(event).toBeTruthy();
     });
 
     component.onBeforeHide(new Event('beforeHide'));
-  }));
+  })));
 
   it('should emit onAfterHide', async(inject([LeafletSidebarComponent], (component: LeafletSidebarComponent) => {
-    component.onHidden.subscribe((event: Event) => {
+    component.afterHide.subscribe((event: Event) => {
       expect(event).toBeTruthy();
     });
 
-    component.onBeforeHide(new Event('afterHide'));
-  }));
+    component.onAfterHide(new Event('afterHide'));
+  })));
 
 });
 

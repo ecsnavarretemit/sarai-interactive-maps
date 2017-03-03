@@ -41,11 +41,11 @@ describe('Component: LeafletButton', () => {
 
   it('should toggle active state', async(() => {
     // assemble the component
-    let fixture = TestBed.createComponent(LeafletButtonComponent);
+    const fixture = TestBed.createComponent(LeafletButtonComponent);
     fixture.detectChanges();
 
     // get the instance of the component
-    let component: LeafletButtonComponent = fixture.componentInstance;
+    const component: LeafletButtonComponent = fixture.componentInstance;
 
     // trigger toggle of active state
     component.toggleActiveState();

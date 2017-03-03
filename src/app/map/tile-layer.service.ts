@@ -9,7 +9,6 @@ import { UrlTree } from '@angular/router';
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { MAP_CONFIG } from './map.config';
-import { TemplateExecutor } from 'lodash';
 import assign from 'lodash-es/assign';
 import groupBy from 'lodash-es/groupBy';
 import map from 'lodash-es/map';
@@ -26,12 +25,12 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class TileLayerService {
   private _leafletApi: any = L;
-  private _equalToFilterTmpl: TemplateExecutor;
-  private _betweenFilterTmpl: TemplateExecutor;
+  private _equalToFilterTmpl: Function;
+  private _betweenFilterTmpl: Function;
 
-  public imageFormat: string = 'image/png';
-  public transparent: boolean = true;
-  public maxZoom: number = 18;
+  public imageFormat = 'image/png';
+  public transparent = true;
+  public maxZoom = 18;
   public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
 
   constructor(
@@ -131,8 +130,8 @@ export class TileLayerService {
   }
 
   getSuitabilityMapCountryLevelLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
+    const attribution = this.getSuitabilityMapAttribution();
     let layers = [];
-    let attribution = this.getSuitabilityMapAttribution();
 
     switch (crop.toLocaleLowerCase()) {
       case 'banana':
@@ -164,8 +163,8 @@ export class TileLayerService {
   }
 
   getSuitabilityMapMunicipalLevelLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
+    const attribution = this.getSuitabilityMapAttribution();
     let layers = [];
-    let attribution = this.getSuitabilityMapAttribution();
 
     switch (crop.toLocaleLowerCase()) {
       case 'banana':
@@ -201,9 +200,8 @@ export class TileLayerService {
   }
 
   getCropProductionAreaLayers(crop: string, options: any = {}): Array<L.WMSOptions> {
+    const attribution = this.getCropProductionAreaMapAttribution();
     let layers = [];
-    let attribution = this.getCropProductionAreaMapAttribution();
-    let workspace = 'sarai-crop-production-area-20161024';
 
     switch (crop.toLocaleLowerCase()) {
       case 'rice':
@@ -227,22 +225,22 @@ export class TileLayerService {
     });
   }
 
-  getNdviLayerData(date: string, range: number, place?: string): Promise<any> {
+  getNdviLayerData(startDate: string, endDate: string, place?: string): Promise<any> {
     // throw error if endpoint does not exist
     if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for NDVI Layers not specified'));
     }
 
+    const method = this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase();
     let endpoint = this._config.ndvi_maps.eeApiEndpoint;
-    let method = this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase();
 
     let args = [endpoint, {
-      date,
-      range
+      startDate,
+      endDate
     }];
 
     if (method === 'get') {
-      endpoint += `/${date}/${range}`;
+      endpoint += `/${startDate}/${endDate}`;
 
       // add a query string to the endpoint
       if (typeof place !== 'undefined') {
@@ -255,7 +253,7 @@ export class TileLayerService {
     return this._http[method]
       .apply(this._http, args)
       .map((res: Response) => {
-        let jsonResult = res.json();
+        const jsonResult = res.json();
 
         // throw error here so that we can handle it properly later
         if (jsonResult.success === false) {
@@ -268,27 +266,28 @@ export class TileLayerService {
       ;
   }
 
-  getRainfallMapLayerData(date: string): Promise<any> {
+  getRainfallMapLayerData(startDate: string, endDate: string): Promise<any> {
     // throw error if endpoint does not exist
     if (typeof this._config.rainfall_maps.eeApiEndpoint === 'undefined' || this._config.rainfall_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for Rainfall Map Layers not specified'));
     }
 
+    const method = this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase();
     let endpoint = this._config.rainfall_maps.eeApiEndpoint;
-    let method = this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase();
     let args = [endpoint, {
-      date
+      startDate,
+      endDate
     }];
 
     if (method === 'get') {
-      endpoint += `/${date}`;
+      endpoint += `/${startDate}/${endDate}`;
       args = [endpoint];
     }
 
     return this._http[method]
       .apply(this._http, args)
       .map((res: Response) => {
-        let jsonResult = res.json();
+        const jsonResult = res.json();
 
         // throw error here so that we can handle it properly later
         if (jsonResult.success === false) {
@@ -302,7 +301,7 @@ export class TileLayerService {
   }
 
   getNdviLayerOptions(options: L.TileLayerOptions = {}): L.TileLayerOptions {
-    let attribution = this.getEarthEngineAttribution();
+    const attribution = this.getEarthEngineAttribution();
 
     return assign({}, this.getDefaultOptions(), {
       attribution
@@ -310,7 +309,7 @@ export class TileLayerService {
   }
 
   getRainFallLayerOptions(options: L.TileLayerOptions = {}): L.TileLayerOptions {
-    let attribution = this.getEarthEngineAttribution();
+    const attribution = this.getEarthEngineAttribution();
 
     return assign({}, this.getDefaultOptions(), {
       attribution
@@ -318,7 +317,7 @@ export class TileLayerService {
   }
 
   createLayerFilter(gridcodes: Array<number>): string {
-    let groups = groupBy(gridcodes, (gridcode: number) => {
+    const groups = groupBy(gridcodes, (gridcode: number) => {
       return (Math.floor(gridcode / 10) * 10);
     });
 
