@@ -11,11 +11,11 @@ import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { provideStore } from '@ngrx/store';
-import { LeafletMapService } from '../../leaflet';
-import { SuitabilityMapService } from '../suitability-map.service';
-import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
-import { MockRouter } from '../../mocks/router';
-import { MockSuitabilityMapService } from '../../mocks/map';
+import { LeafletMapService } from '../../../../leaflet';
+import { SuitabilityMapService } from '../../../suitability-map.service';
+import { MapLayersReducer, SuitabilityLevelsReducer } from '../../../../store';
+import { MockRouter } from '../../../../mocks/router';
+import { MockSuitabilityMapService } from '../../../../mocks/map';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel.component';
 
 describe('Component: SuitabilityMapPanel', () => {

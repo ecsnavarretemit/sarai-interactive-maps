@@ -9,7 +9,7 @@
 
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
-import { LeafletMapService } from '../../leaflet';
+import { LeafletMapService } from '../../../../leaflet';
 import { NdviPanelComponent } from './ndvi-panel.component';
 
 describe('Component: NdviPanel', () => {

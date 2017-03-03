@@ -13,11 +13,10 @@ import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { TranslateModule, TranslateLoader } from 'ng2-translate';
-import { LeafletMapService } from '../../leaflet';
-import { MockRouter } from '../../mocks/router';
+import { LeafletMapService } from '../../../../leaflet';
+import { MockRouter } from '../../../../mocks/router';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel.component';
-import { CropProductionAreaMapService } from '../crop-production-area-map.service';
-import { TranslationFactoryLoader } from '../../app-translation-factory.service';
+import { CropProductionAreaMapService } from '../../../crop-production-area-map.service';
 
 describe('Component: CropProductionAreaPanel', () => {
   let mockRouter: MockRouter;

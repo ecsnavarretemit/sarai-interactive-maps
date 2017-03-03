@@ -11,7 +11,7 @@ import { Renderer } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { LeafletMapService } from '../../leaflet';
+import { LeafletMapService } from '../../../../leaflet';
 import { BasePanelComponent } from './base-panel.component';
 
 describe('Component: BasePanel', () => {
