@@ -40,8 +40,8 @@ export class LeafletMapService {
 
   getMap(): Promise<L.Map> { return this._map; }
 
-  panTo(lat: number, lng: number, zoom?: number): Promise<L.Map> {
-    return this._map
+  panTo(lat: number, lng: number, zoom?: number): Promise<void> {
+    return this.getMap()
       .then((mapInstance: L.Map) => {
         if (typeof zoom === 'undefined') {
           zoom = 6;
@@ -52,7 +52,7 @@ export class LeafletMapService {
       ;
   }
 
-  addTileLayer(id: string, layer: L.TileLayer): Promise<void | Error> {
+  addTileLayer(id: string, layer: L.TileLayer): Promise<L.Map> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._tileLayers, id)) {
@@ -68,7 +68,7 @@ export class LeafletMapService {
       ;
   }
 
-  addNewTileLayer(id: string, url: string, options: L.TileLayerOptions): Promise<L.TileLayer | Error> {
+  addNewTileLayer(id: string, url: string, options: L.TileLayerOptions): Promise<L.TileLayer> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._tileLayers, id)) {
@@ -89,7 +89,7 @@ export class LeafletMapService {
       ;
   }
 
-  removeTileLayer(id: string): Promise<void | Error> {
+  removeTileLayer(id: string): Promise<L.Map> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (!has(this._tileLayers, id)) {
@@ -118,7 +118,7 @@ export class LeafletMapService {
       ;
   }
 
-  addWMSLayer(id: string, layer: L.TileLayer.WMS): Promise<void | Error> {
+  addWMSLayer(id: string, layer: L.TileLayer.WMS): Promise<L.Map> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._wmsLayers, id)) {
@@ -158,14 +158,14 @@ export class LeafletMapService {
   addNewWMSLayers(url: string, items: Array<{ id: string, options: L.WMSOptions }>): Promise<Array<L.TileLayer.WMS>> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
-        let layers = filter(items, (item) => {
+        const layers = filter(items, (item) => {
           const result = has(this._wmsLayers, item.id);
 
           return !result;
         });
 
-        layers = map(layers, (item) => {
-          const layer = this._leafletApi.tileLayer.wms(url, item.options);
+        return map(layers, (item) => {
+          const layer: L.TileLayer.WMS = this._leafletApi.tileLayer.wms(url, item.options);
 
           // the created layer to the map
           mapInstance.addLayer(layer);
@@ -175,8 +175,6 @@ export class LeafletMapService {
 
           return layer;
         });
-
-        return layers;
       })
       ;
   }
@@ -195,7 +193,7 @@ export class LeafletMapService {
       ;
   }
 
-  removeWMSLayer(id: string): Promise<void | Error> {
+  removeWMSLayer(id: string): Promise<L.Map> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (!has(this._wmsLayers, id)) {
