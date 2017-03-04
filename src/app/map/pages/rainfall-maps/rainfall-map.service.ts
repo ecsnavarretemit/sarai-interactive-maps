@@ -8,7 +8,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { MAP_CONFIG } from './map.config';
+import { MAP_CONFIG } from '../../map.config';
 import * as L from 'leaflet';
 import every from 'lodash-es/every';
 import 'rxjs/add/operator/map';

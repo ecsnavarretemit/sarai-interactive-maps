@@ -42,6 +42,12 @@ const routes: Routes = [
         path: 'ndvi/:startDate/:endDate',
         loadChildren: './ndvi-maps/ndvi-maps.module#NdviMapsModule'
       },
+
+      // duplicated for required url parameter `startDate` and `endDate`
+      {
+        path: 'rainfall-maps/:startDate/:endDate',
+        loadChildren: './rainfall-maps/rainfall-maps.module#RainfallMapsModule'
+      },
     ]
   }
 ];
