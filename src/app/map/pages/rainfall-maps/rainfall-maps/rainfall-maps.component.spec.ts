@@ -15,7 +15,7 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../../../map.config';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService } from '../../../../shared';
 import { TileLayerService } from '../../../shared';
 import { LeafletMapService } from '../../../../leaflet';
 import { RainfallMapService } from '../rainfall-map.service';
@@ -38,7 +38,7 @@ describe('Component: RainfallMaps', () => {
       ],
 
       providers: [
-        AppLoggerService,
+        LoggerService,
         TileLayerService,
         LeafletMapService,
         RainfallMapService,

@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService } from '../../../../shared';
 import { LocationsService, SuitabilityMapService } from '../../../shared';
 import { Crop } from '../../../crop.interface';
 import each from 'lodash-es/each';
@@ -53,7 +53,7 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _locationsService: LocationsService,
     private _suitabilityMapService: SuitabilityMapService,
-    private _logger: AppLoggerService
+    private _logger: LoggerService
   ) {
     this.selectCrop = new FormControl('', [
       Validators.required

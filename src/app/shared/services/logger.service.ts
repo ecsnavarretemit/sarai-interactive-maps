@@ -1,5 +1,5 @@
 /*!
- * Application Logger Service
+ * Logger Service
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
@@ -16,7 +16,7 @@ export interface StreamData {
 }
 
 @Injectable()
-export class AppLoggerService {
+export class LoggerService {
   private _stream: Subject<StreamData>;
 
   constructor() {
