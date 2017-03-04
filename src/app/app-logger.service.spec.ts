@@ -10,7 +10,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { AppLoggerService, StreamData } from './app-logger.service';
 
-describe('Service: LeafletTileProvider', () => {
+describe('Service: App Logger', () => {
   let subscription = null;
 
   beforeEach(() => {

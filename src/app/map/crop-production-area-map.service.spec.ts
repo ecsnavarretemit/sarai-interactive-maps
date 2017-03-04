@@ -10,7 +10,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { CropProductionAreaMapService } from './crop-production-area-map.service';
 
-describe('CropProductionAreaMapService', () => {
+describe('Service: CropProductionAreaMap', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({

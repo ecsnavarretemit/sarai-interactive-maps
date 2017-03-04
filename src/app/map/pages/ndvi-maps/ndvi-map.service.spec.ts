@@ -11,7 +11,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { Http, BaseRequestOptions, RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { MapConfig, MAP_CONFIG } from './map.config';
+import { MapConfig, MAP_CONFIG } from '../../map.config';
 import { NdviMapService } from './ndvi-map.service';
 
 describe('Service: NdviMap', () => {

@@ -15,7 +15,7 @@ import { environment } from '../../../../environments/environment';
 import { TileLayerService } from './tile-layer.service';
 import trimEnd from 'lodash-es/trimEnd';
 
-describe('Service: TileLayerService', () => {
+describe('Service: TileLayer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({

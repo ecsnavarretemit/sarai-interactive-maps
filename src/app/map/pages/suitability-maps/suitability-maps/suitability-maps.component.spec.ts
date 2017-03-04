@@ -12,11 +12,11 @@ import { HttpModule } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
-import { MapConfig, MAP_CONFIG } from '../map.config';
-import { TileLayerService } from '../shared';
-import { LeafletMapService } from '../../leaflet';
-import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
-import { MockActivatedRoute, MockRouter } from '../../mocks/router';
+import { MapConfig, MAP_CONFIG } from '../../../map.config';
+import { TileLayerService } from '../../../shared';
+import { LeafletMapService } from '../../../../leaflet';
+import { MapLayersReducer, SuitabilityLevelsReducer } from '../../../../store';
+import { MockActivatedRoute, MockRouter } from '../../../../mocks/router';
 import { SuitabilityMapsComponent } from './suitability-maps.component';
 
 describe('Component: SuitabilityMaps', () => {

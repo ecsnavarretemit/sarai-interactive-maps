@@ -14,14 +14,14 @@ import { HttpModule } from '@angular/http';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
-import { MapConfig, MAP_CONFIG } from '../map.config';
-import { AppLoggerService } from '../../app-logger.service';
-import { TileLayerService } from '../shared';
-import { LeafletMapService } from '../../leaflet';
+import { MapConfig, MAP_CONFIG } from '../../../map.config';
+import { AppLoggerService } from '../../../../app-logger.service';
+import { TileLayerService } from '../../../shared';
+import { LeafletMapService } from '../../../../leaflet';
 import { RainfallMapService } from '../rainfall-map.service';
-import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
-import { MockActivatedRoute, MockRouter } from '../../mocks/router';
-import { SpawnModalService } from '../../ui';
+import { MapLayersReducer, SuitabilityLevelsReducer } from '../../../../store';
+import { MockActivatedRoute, MockRouter } from '../../../../mocks/router';
+import { SpawnModalService } from '../../../../ui';
 import { RainfallMapsComponent } from './rainfall-maps.component';
 
 describe('Component: RainfallMaps', () => {

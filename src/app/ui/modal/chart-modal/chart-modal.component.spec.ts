@@ -14,7 +14,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 
 import { ChartModalComponent } from './chart-modal.component';
 
-describe('ChartModalComponent', () => {
+describe('Component: ChartModal', () => {
   let component: ChartModalComponent;
   let fixture: ComponentFixture<ChartModalComponent>;
 

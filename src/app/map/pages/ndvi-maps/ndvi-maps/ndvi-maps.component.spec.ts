@@ -14,14 +14,14 @@ import { HttpModule } from '@angular/http';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
-import { MapConfig, MAP_CONFIG } from '../map.config';
-import { AppLoggerService } from '../../app-logger.service';
-import { TileLayerService } from '../shared';
+import { MapConfig, MAP_CONFIG } from '../../../map.config';
+import { AppLoggerService } from '../../../../app-logger.service';
+import { TileLayerService } from '../../../shared';
 import { NdviMapService } from '../ndvi-map.service';
-import { LeafletMapService } from '../../leaflet';
-import { MapLayersReducer, SuitabilityLevelsReducer } from '../../store';
-import { SpawnModalService } from '../../ui';
-import { MockActivatedRoute, MockRouter } from '../../mocks/router';
+import { LeafletMapService } from '../../../../leaflet';
+import { MapLayersReducer, SuitabilityLevelsReducer } from '../../../../store';
+import { SpawnModalService } from '../../../../ui';
+import { MockActivatedRoute, MockRouter } from '../../../../mocks/router';
 import { NdviMapsComponent } from './ndvi-maps.component';
 
 describe('Component: NdviMaps', () => {
