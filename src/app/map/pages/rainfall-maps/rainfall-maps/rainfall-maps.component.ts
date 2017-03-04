@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { LeafletMapService } from '../../../../leaflet';
 import { RainfallMapService } from '../rainfall-map.service';
 import { TileLayerService } from '../../../shared';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService } from '../../../../shared';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../../../ui';
 import { Layer } from '../../../../store';
 import { MAP_CONFIG } from '../../../map.config';
@@ -46,7 +46,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     private _tileLayerService: TileLayerService,
     private _rainfallMapService: RainfallMapService,
     private _modalService: SpawnModalService,
-    private _logger: AppLoggerService,
+    private _logger: LoggerService,
     private _route: ActivatedRoute,
     private _title: Title,
     private _renderer: Renderer,

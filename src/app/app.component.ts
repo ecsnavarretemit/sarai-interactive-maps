@@ -8,7 +8,7 @@
 import { AfterViewInit, Component, isDevMode } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Angulartics2, Angulartics2GoogleAnalytics } from 'angulartics2';
-import { AppLoggerService, StreamData } from './app-logger.service';
+import { LoggerService, StreamData } from './shared';
 import { AlertModalComponent, SpawnModalService } from './ui';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
@@ -21,7 +21,7 @@ import 'rxjs/add/operator/debounceTime';
 export class AppComponent implements AfterViewInit {
 
   constructor(
-    private _logger: AppLoggerService,
+    private _logger: LoggerService,
     private _modal: SpawnModalService,
     private _angulartics: Angulartics2,
     public angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics

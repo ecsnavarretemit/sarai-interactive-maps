@@ -6,6 +6,7 @@
  */
 
 export * from './services.module';
+export * from './logger.service';
 export * from './window.service';
 
 

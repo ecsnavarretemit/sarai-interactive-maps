@@ -13,8 +13,7 @@ import { CookieService } from 'angular2-cookie/core';
 import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from 'ng2-translate';
 import { PdfPreviewModalComponent, SpawnModalService } from '../../../../ui';
-import { WindowService } from '../../../../shared';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService, WindowService } from '../../../../shared';
 import { LeafletButtonComponent } from '../../../../leaflet';
 import { MapTypeComponent } from '../map-type/map-type.component';
 import { MAP_CONFIG } from '../../../map.config';
@@ -41,7 +40,7 @@ export class HomeComponent implements OnInit {
     @Inject(MAP_CONFIG) private _config: any,
     public _router: Router,
     private _window: WindowService,
-    private _logger: AppLoggerService,
+    private _logger: LoggerService,
     private _modal: SpawnModalService,
     private _translate: TranslateService,
     private _cookieService: CookieService,

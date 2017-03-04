@@ -8,6 +8,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { LoggerService } from './logger.service';
 import { WindowService } from './window.service';
 
 @NgModule({
@@ -21,6 +22,7 @@ export class ServicesModule {
     return {
       ngModule: ServicesModule,
       providers: [
+        LoggerService,
         WindowService
       ]
     };

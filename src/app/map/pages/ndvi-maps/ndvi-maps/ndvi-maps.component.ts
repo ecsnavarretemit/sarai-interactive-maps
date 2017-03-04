@@ -15,7 +15,7 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import { LeafletMapService } from '../../../../leaflet';
 import { TileLayerService } from '../../../shared';
 import { NdviMapService } from '../ndvi-map.service';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService } from '../../../../shared';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../../../ui';
 import { Layer } from '../../../../store';
 import { MAP_CONFIG } from '../../../map.config';
@@ -60,7 +60,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     private _tileLayerService: TileLayerService,
     private _ndviMapService: NdviMapService,
     private _modalService: SpawnModalService,
-    private _logger: AppLoggerService,
+    private _logger: LoggerService,
     private _route: ActivatedRoute,
     private _title: Title,
     private _renderer: Renderer,

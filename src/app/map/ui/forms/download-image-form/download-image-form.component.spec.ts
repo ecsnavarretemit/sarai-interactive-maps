@@ -11,7 +11,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService } from '../../../../shared';
 import { LocationsService, SuitabilityMapService } from '../../../shared';
 import { MockLocationsService, MockSuitabilityMapService } from '../../../../mocks/map';
 import { DownloadImageFormComponent } from './download-image-form.component';
@@ -39,7 +39,7 @@ describe('Component: DownloadImageForm', () => {
       ],
       providers: [
         FormBuilder,
-        AppLoggerService,
+        LoggerService,
         { provide: SuitabilityMapService, useClass: MockSuitabilityMapService },
         { provide: LocationsService, useClass: MockLocationsService }
       ]

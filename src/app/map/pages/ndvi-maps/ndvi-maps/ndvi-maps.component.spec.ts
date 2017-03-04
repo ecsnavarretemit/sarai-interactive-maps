@@ -15,7 +15,7 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../../../map.config';
-import { AppLoggerService } from '../../../../app-logger.service';
+import { LoggerService } from '../../../../shared';
 import { TileLayerService } from '../../../shared';
 import { NdviMapService } from '../ndvi-map.service';
 import { LeafletMapService } from '../../../../leaflet';
@@ -39,7 +39,7 @@ describe('Component: NdviMaps', () => {
       ],
 
       providers: [
-        AppLoggerService,
+        LoggerService,
         TileLayerService,
         NdviMapService,
         LeafletMapService,
