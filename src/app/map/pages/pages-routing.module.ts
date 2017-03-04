@@ -36,6 +36,12 @@ const routes: Routes = [
         path: 'crop-production-area/:crop',
         loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
       },
+
+      // duplicated for required url parameters `startDate` and `endDate`
+      {
+        path: 'ndvi/:startDate/:endDate',
+        loadChildren: './ndvi-maps/ndvi-maps.module#NdviMapsModule'
+      },
     ]
   }
 ];
