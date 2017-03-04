@@ -6,8 +6,8 @@
  */
 
 import { AfterViewInit, Component, ContentChild, EventEmitter, Input, Output } from '@angular/core';
-import { BasePanelComponent } from '../ui';
-import { LeafletButtonComponent } from '../../leaflet/leaflet-button/leaflet-button.component';
+import { BasePanelComponent } from '../../../ui';
+import { LeafletButtonComponent } from '../../../../leaflet/leaflet-button/leaflet-button.component';
 
 @Component({
   selector: 'app-map-type',

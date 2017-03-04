@@ -8,7 +8,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { HomeComponent } from './home/home/home.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'suitability-maps',
+        loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
+      },
+
+      // duplicated for required url parameter `crop`
+      {
+        path: 'suitability-maps/:crop',
+        loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
+      },
+    ]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
