@@ -208,7 +208,11 @@
         </div>
     </app-leaflet-sidebar>
 
-    <app-leaflet-sidebar containerClass="leaflet-sidebar--sarai-1 download-image-form-wrapper" #imageDownloadSidebar>
+    <app-leaflet-sidebar
+        containerClass="leaflet-sidebar--sarai-1 download-image-form-wrapper"
+        (afterHide)="dowloadImageForm.reset()"
+        #imageDownloadSidebar>
+
         <header class="sidebar__title-wrapper" sidebar-title>
             <img src="/assets/img/ui/sarai-logo-complete.png" alt="Project SARAI" class="img-responsive" />
 
@@ -216,7 +220,7 @@
         </header>
 
         <div class="sidebar__content" sidebar-content>
-            <app-download-image-form (processComplete)="previewPdf($event)" (download)="onDownload($event)"></app-download-image-form>
+            <app-download-image-form (processComplete)="previewPdf($event)" (download)="onDownload($event)" #dowloadImageForm></app-download-image-form>
         </div>
     </app-leaflet-sidebar>
 

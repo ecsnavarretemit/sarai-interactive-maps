@@ -210,6 +210,17 @@ export class DownloadImageFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  reset() {
+    // reset the form if it is dirty
+    if (this.downloadForm.dirty) {
+      this.downloadForm.reset({
+        selectCrop: '',
+        selectRegion: '',
+        selectProvince: ''
+      });
+    }
+  }
+
   processRequest() {
     if (this.pdfFilename !== '' && (this.pdfUrl !== '' || this.pdfUrl !== '#')) {
        this.processComplete.emit({
