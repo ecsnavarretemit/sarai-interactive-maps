@@ -180,14 +180,15 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   }
 
   layerTracker(index, item) {
+    let retval = item.id;
+
     // check if cql_filter is present. if it is then the layer has been modified.
-    // return the cql_filter the the new identifier
+    // append the cql_filter to the id to get a unique identifier
     if (typeof item.layerOptions.cql_filter !== 'undefined') {
-      return item.layerOptions.cql_filter;
+      retval += item.layerOptions.cql_filter;
     }
 
-    // return the item id if cql_filter is not present
-    return item.id;
+    return retval;
   }
 
   ngOnDestroy() {
