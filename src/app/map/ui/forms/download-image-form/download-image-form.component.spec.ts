@@ -153,6 +153,37 @@ describe('Component: DownloadImageForm', () => {
       ;
   }));
 
+  it('should reset the form elements all at once', (() => {
+    fixture
+      .whenStable()
+      .then(() => {
+        component.selectRegion.setValue({
+          id: 100,
+          name: 'Ilocos Region',
+          slug: 'ilocos-region-region-i'
+        });
+
+        component.selectRegion.markAsDirty();
+
+        // detect changes in the fixture
+        fixture.detectChanges();
+
+        // check the status of the form before resetting
+        expect(component.downloadForm.dirty).toBeTruthy();
+        expect(component.selectRegion.dirty).toBeTruthy();
+
+        // reset the form
+        component.reset();
+
+        // check the status of the form
+        expect(component.downloadForm.dirty).toBeFalsy();
+        expect(component.selectRegion.dirty).toBeFalsy();
+        expect(component.selectCrop.dirty).toBeFalsy();
+        expect(component.selectProvince.dirty).toBeFalsy();
+      })
+      ;
+  }));
+
 });
 
 
