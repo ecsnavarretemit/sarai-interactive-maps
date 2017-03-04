@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
@@ -40,10 +40,6 @@ import { LeafletSidebarComponent } from './leaflet-sidebar/leaflet-sidebar.compo
     LeafletOpacitySliderComponent,
     LeafletSidebarComponent,
   ],
-  providers: [
-    LeafletMapService,
-    LeafletTileProviderService
-  ],
   exports: [
     LeafletMapComponent,
     LeafletTileSelectorComponent,
@@ -56,6 +52,18 @@ import { LeafletSidebarComponent } from './leaflet-sidebar/leaflet-sidebar.compo
     LeafletSidebarComponent
   ]
 })
-export class LeafletModule { }
+export class LeafletModule {
+
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: LeafletModule,
+      providers: [
+        LeafletMapService,
+        LeafletTileProviderService
+      ]
+    };
+  }
+
+}
 
 

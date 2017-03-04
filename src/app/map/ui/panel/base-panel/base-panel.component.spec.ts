@@ -1,41 +1,38 @@
 /* tslint:disable:no-unused-variable */
 
 /*!
- * Chart Modal Component Test
+ * Base Panel Component Test
  *
  * Copyright(c) Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>
  * Licensed under MIT
  */
 
+import { Renderer } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ComponentFactoryResolver, DebugElement, Injector } from '@angular/core';
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { DebugElement } from '@angular/core';
+import { LeafletMapService } from '../../../../leaflet';
+import { BasePanelComponent } from './base-panel.component';
 
-import { ChartModalComponent } from './chart-modal.component';
-
-describe('Component: ChartModal', () => {
-  let component: ChartModalComponent;
-  let fixture: ComponentFixture<ChartModalComponent>;
+describe('Component: BasePanel', () => {
+  let component: BasePanelComponent;
+  let fixture: ComponentFixture<BasePanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ChartModalComponent
-      ],
-      imports: [
-        ModalModule.forRoot()
+        BasePanelComponent
       ],
       providers: [
-        ComponentFactoryResolver,
-        Injector
+        LeafletMapService,
+        Renderer
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChartModalComponent);
+    fixture = TestBed.createComponent(BasePanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
