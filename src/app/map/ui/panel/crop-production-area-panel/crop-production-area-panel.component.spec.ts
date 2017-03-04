@@ -16,7 +16,7 @@ import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { LeafletMapService } from '../../../../leaflet';
 import { MockRouter } from '../../../../mocks/router';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel.component';
-import { CropProductionAreaMapService } from '../../../crop-production-area-map.service';
+import { CropProductionAreaMapService } from '../../../shared';
 
 describe('Component: CropProductionAreaPanel', () => {
   let mockRouter: MockRouter;

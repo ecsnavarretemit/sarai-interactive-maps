@@ -8,9 +8,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { MAP_CONFIG } from './map.config';
-import { SuitabilityLevel } from './suitability-level.interface';
-import { Crop } from './crop.interface';
+import { MAP_CONFIG } from '../../map.config';
+import { SuitabilityLevel } from '../../suitability-level.interface';
+import { Crop } from '../../crop.interface';
 import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 import values from 'lodash-es/values';

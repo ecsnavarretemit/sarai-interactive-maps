@@ -12,8 +12,6 @@ import { SharedModule } from './shared';
 import { PagesModule } from './pages';
 
 import { WindowService } from './window.service';
-import { CropProductionAreaMapService } from './crop-production-area-map.service';
-import { SuitabilityMapService } from './suitability-map.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
 
 @NgModule({
@@ -24,8 +22,6 @@ import { MapConfig, MAP_CONFIG } from './map.config';
     PagesModule
   ],
   providers: [
-    CropProductionAreaMapService,
-    SuitabilityMapService,
     WindowService,
 
     { provide: MAP_CONFIG, useValue: MapConfig }

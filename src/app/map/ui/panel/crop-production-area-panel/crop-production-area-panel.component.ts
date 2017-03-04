@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 import { LeafletMapService } from '../../../../leaflet';
-import { CropProductionAreaMapService } from '../../../crop-production-area-map.service';
+import { CropProductionAreaMapService } from '../../../shared';
 
 @Component({
   selector: 'app-crop-production-area-panel',

@@ -8,7 +8,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { CropProductionAreaMapService } from './crop-production-area-map.service';
 import { LocationsService } from './locations.service';
+import { SuitabilityMapService } from './suitability-map.service';
 import { TileLayerService } from './tile-layer.service';
 
 @NgModule({
@@ -22,7 +24,9 @@ export class ServicesModule {
     return {
       ngModule: ServicesModule,
       providers: [
+        CropProductionAreaMapService,
         LocationsService,
+        SuitabilityMapService,
         TileLayerService
       ]
     };

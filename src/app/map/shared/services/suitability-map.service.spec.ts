@@ -10,8 +10,8 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Http, BaseRequestOptions, RequestMethod, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { MapConfig, MAP_CONFIG } from './map.config';
-import { Crop } from './crop.interface';
+import { MapConfig, MAP_CONFIG } from '../../map.config';
+import { Crop } from '../../crop.interface';
 import { SuitabilityMapService } from './suitability-map.service';
 
 describe('Service: SuitabilityMap', () => {
