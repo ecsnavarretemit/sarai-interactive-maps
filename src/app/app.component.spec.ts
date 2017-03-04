@@ -21,7 +21,7 @@ import { MapModule } from './map';
 import { UiModule } from './ui';
 
 import { CookieService } from 'angular2-cookie/services/cookies.service';
-import { AppLoggerService } from './app-logger.service';
+import { LoggerService } from './shared';
 import { TranslationFactoryLoader } from './app-translation-factory.service';
 import { MockAngulartics2, MockAngulartics2GoogleAnalytics } from './mocks/angulartics2';
 
@@ -54,7 +54,7 @@ describe('App: SaraiInteractiveMaps', () => {
       ],
 
       providers: [
-        AppLoggerService,
+        LoggerService,
         CookieService,
 
         { provide: Angulartics2, useClass: MockAngulartics2 },

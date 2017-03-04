@@ -8,7 +8,7 @@ cache:
 dist: trusty
 
 node_js:
-  - '6.9.5'
+  - '6.10.0'
 
 branches:
   only:
@@ -16,22 +16,33 @@ branches:
   - develop
 
 before_install:
- - cp src/environments/environment.ci.ts src/environments/environment.dev.ts
- - cp src/environments/environment.ci.ts src/environments/environment.ts
- - npm install -g @angular/cli
- - export CHROME_BIN=/usr/bin/google-chrome
- - export DISPLAY=:99.0
- - sh -e /etc/init.d/xvfb start
- - sudo apt-get update
- - sudo apt-get install -y libappindicator1 fonts-liberation
- - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
- - sudo dpkg -i google-chrome*.deb
+  # copy first the ci config files
+  - cp src/environments/environment.ci.ts src/environments/environment.dev.ts
+  - cp src/environments/environment.ci.ts src/environments/environment.ts
+
+  # Install @angular/cli
+  - npm install -g @angular/cli
+
+  # Install Google Chrome
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
 
 script:
- - npm rebuild node-sass # prevent errors related to this: https://github.com/sass/node-sass/issues/1804
- - ng test --watch false # http://mseemann.de/frontend/2016/05/31/setup-angular-2-app-part-1.html
- # - ng serve &
- # - ng e2e
+  # prevent errors related to this: https://github.com/sass/node-sass/issues/1804
+  - npm rebuild node-sass
+
+  # show @angular/cli version
+  - ng --version
+
+  # http://mseemann.de/frontend/2016/05/31/setup-angular-2-app-part-1.html
+  - ng test --watch false
+  # - ng serve &
+  # - ng e2e
 
 notifications:
   webhooks:

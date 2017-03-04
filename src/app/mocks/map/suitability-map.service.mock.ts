@@ -7,7 +7,7 @@
 
 import { Observable } from 'rxjs/Observable';
 import { Response, ResponseOptions } from '@angular/http';
-import { SuitabilityMapService } from '../../map/suitability-map.service';
+import { SuitabilityMapService } from '../../map';
 import { SuitabilityLevel } from '../../map/suitability-level.interface';
 import { Crop } from '../../map/crop.interface';
 import 'rxjs/add/observable/of';

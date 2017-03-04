@@ -17,9 +17,9 @@ import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 import { UiModule } from './ui';
+import { SharedModule } from './shared';
 
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
-import { AppLoggerService } from './app-logger.service';
 import { TranslationFactoryLoader } from './app-translation-factory.service';
 
 import { AppComponent } from './app.component';
@@ -37,6 +37,7 @@ import { AppComponent } from './app.component';
     StoreModule,
     MapModule,
     UiModule,
+    SharedModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: TranslationFactoryLoader,
@@ -47,7 +48,6 @@ import { AppComponent } from './app.component';
     ])
   ],
   providers: [
-    AppLoggerService,
     CookieService,
     Title,
 

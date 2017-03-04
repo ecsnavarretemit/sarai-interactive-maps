@@ -1,6 +1,6 @@
 {
   "name": "sarai-interactive-maps",
-  "version": "1.0.0-alpha14",
+  "version": "1.0.0-alpha15",
   "license": "MIT",
   "author": "Exequiel Ceasar Navarrete <esnavarrete1@up.edu.ph>",
   "scripts": {
@@ -46,11 +46,10 @@
     "ng2-translate": "^5.0.0",
     "rxjs": "^5.2.0",
     "sass-mediaqueries": "^1.6.1",
-    "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.7"
   },
   "devDependencies": {
-    "@angular/cli": "^1.0.0-rc.0",
+    "@angular/cli": "^1.0.0-rc.1",
     "@angular/compiler-cli": "^2.4.9",
     "@types/chart.js": "^0.0.14",
     "@types/flatpickr": "^2.2.0",

@@ -6,8 +6,9 @@
  */
 
 import { Observable } from 'rxjs/Observable';
-import { LocationsService } from '../../map/locations.service';
+import { LocationsService } from '../../map/shared';
 import 'rxjs/add/observable/of';
+
 export class MockLocationsService extends LocationsService {
 
   constructor() {

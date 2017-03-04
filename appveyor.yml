@@ -1,6 +1,6 @@
 # Test against this version of Node.js
 environment:
-  nodejs_version: "6.9.1"
+  nodejs_version: "6.9.5"
 
 # fail all the builds once any of the builds fail have failed
 matrix:
@@ -23,10 +23,13 @@ pull_requests:
 install:
   # install google chrome
   - choco install googlechrome
+
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-  # Install angular-cli globally
+
+  # Install @angular/cli globally
   - npm install -g @angular/cli
+
   # install modules
   - yarn install
 
@@ -35,6 +38,7 @@ test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
+  - ng --version
 
   # copy first the ci config files
   - cp src/environments/environment.ci.ts src/environments/environment.dev.ts
