@@ -11,7 +11,6 @@ import { LeafletModule } from '../leaflet';
 import { SharedModule } from './shared';
 import { PagesModule } from './pages';
 
-import { WindowService } from './window.service';
 import { MapConfig, MAP_CONFIG } from './map.config';
 
 @NgModule({
@@ -22,8 +21,6 @@ import { MapConfig, MAP_CONFIG } from './map.config';
     PagesModule
   ],
   providers: [
-    WindowService,
-
     { provide: MAP_CONFIG, useValue: MapConfig }
   ],
 })

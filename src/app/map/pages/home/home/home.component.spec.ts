@@ -17,7 +17,7 @@ import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translat
 import { Angulartics2 } from 'angulartics2';
 import { SpawnModalService } from '../../../../ui';
 import { TranslationFactoryLoader } from '../../../../app-translation-factory.service';
-import { WindowService } from '../../../window.service';
+import { WindowService } from '../../../../shared';
 import { AppLoggerService } from '../../../../app-logger.service';
 import { MapConfig, MAP_CONFIG } from '../../../map.config';
 import { MockRouter } from '../../../../mocks/router';

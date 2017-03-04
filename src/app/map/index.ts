@@ -6,7 +6,6 @@
  */
 
 export * from './map.module';
-export * from './window.service';
 export * from './map.config';
 export * from './pages';
 export * from './shared';

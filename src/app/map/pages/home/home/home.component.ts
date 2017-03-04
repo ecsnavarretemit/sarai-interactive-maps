@@ -13,7 +13,7 @@ import { CookieService } from 'angular2-cookie/core';
 import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from 'ng2-translate';
 import { PdfPreviewModalComponent, SpawnModalService } from '../../../../ui';
-import { WindowService } from '../../../window.service';
+import { WindowService } from '../../../../shared';
 import { AppLoggerService } from '../../../../app-logger.service';
 import { LeafletButtonComponent } from '../../../../leaflet';
 import { MapTypeComponent } from '../map-type/map-type.component';
