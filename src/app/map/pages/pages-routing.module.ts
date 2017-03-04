@@ -25,6 +25,17 @@ const routes: Routes = [
         path: 'suitability-maps/:crop',
         loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
       },
+
+      {
+        path: 'crop-production-area',
+        loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
+      },
+
+      // duplicated for required url parameter `crop`
+      {
+        path: 'crop-production-area/:crop',
+        loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
+      },
     ]
   }
 ];
