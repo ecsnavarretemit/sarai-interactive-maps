@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../../../forms';
 import { LeafletMapService } from '../../../../leaflet';
@@ -43,6 +43,7 @@ describe('Component: NdviFilterForm', () => {
         NdviFilterFormComponent
       ],
       imports: [
+        HttpModule,
         FormsModule,
         ReactiveFormsModule,
         SaraiInteractiveMapsFormsModule,
