@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-export * from './forms.module';
+export { FormsModule as MapUiFormsModule } from './forms.module';
 export * from './download-image-form/download-image-form.component';
 export * from './ndvi-filter-form/ndvi-filter-form.component';
 export * from './rainfall-map-filter-form/rainfall-map-filter-form.component';

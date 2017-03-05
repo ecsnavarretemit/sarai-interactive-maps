@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PanelModule } from './panel';
-import { FormsModule as MapUiFormsModule } from './forms';
+import { MapUiFormsModule } from './forms';
 
 @NgModule({
   imports: [

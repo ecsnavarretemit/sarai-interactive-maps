@@ -7,5 +7,10 @@
 
 export * from './app.component';
 export * from './app.module';
+export * from './forms';
+export * from './leaflet';
+export * from './map';
+export * from './shared';
+export * from './ui';
 
 

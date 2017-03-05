@@ -8,8 +8,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LeafletModule } from '../leaflet';
-import { SharedModule } from './shared';
-import { PagesModule } from './pages';
+import { MapSharedModule } from './shared';
+import { MapPagesModule } from './pages';
 
 import { MapConfig, MAP_CONFIG } from './map.config';
 
@@ -17,8 +17,8 @@ import { MapConfig, MAP_CONFIG } from './map.config';
   imports: [
     CommonModule,
     LeafletModule.forRoot(),
-    SharedModule,
-    PagesModule
+    MapSharedModule,
+    MapPagesModule
   ],
   providers: [
     { provide: MAP_CONFIG, useValue: MapConfig }

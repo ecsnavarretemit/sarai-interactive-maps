@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-export * from './ui.module';
+export { UiModule as MapUiModule } from './ui.module';
 export * from './panel';
 export * from './forms';
 

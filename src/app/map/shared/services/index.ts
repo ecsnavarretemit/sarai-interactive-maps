@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-export * from './services.module';
+export { ServicesModule as MapServicesModule } from './services.module';
 export * from './crop-production-area-map.service';
 export * from './tile-layer.service';
 export * from './locations.service';

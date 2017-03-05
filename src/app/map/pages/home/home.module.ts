@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { Angulartics2Module } from 'angulartics2';
 
-import { UiModule as MapUiModule } from '../../ui';
+import { MapUiModule } from '../../ui';
 import { LeafletModule } from '../../../leaflet';
 
 import { HomeComponent } from './home/home.component';

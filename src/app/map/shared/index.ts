@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-export * from './shared.module';
+export { SharedModule as MapSharedModule } from './shared.module';
 export * from './services';
 
 

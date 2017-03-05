@@ -8,12 +8,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ServicesModule } from './services';
+import { MapServicesModule } from './services';
 
 @NgModule({
   imports: [
     CommonModule,
-    ServicesModule.forRoot()
+    MapServicesModule.forRoot()
   ]
 })
 export class SharedModule { }

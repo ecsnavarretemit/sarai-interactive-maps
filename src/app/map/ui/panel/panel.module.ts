@@ -13,7 +13,7 @@ import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 
-import { FormsModule as MapUiFormsModule } from '../forms';
+import { MapUiFormsModule } from '../forms';
 
 import { BasePanelComponent } from './base-panel/base-panel.component';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel/crop-production-area-panel.component';
