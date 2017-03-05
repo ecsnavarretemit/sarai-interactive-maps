@@ -100,23 +100,23 @@
         <ul class="list list-unstyled">
             <li class="list__item">
                 <a href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=http://159.203.253.31"
-                    class="btn btn--dome btn--facebook"
-                    [tooltip]="'SHARE.FACEBOOK.TOOLTIP' | translate"
-                    placement="left"
+                    class="btn btn--dome btn--facebook tooltip-wrapper"
                     (click)="openNewWindow($event, facebookShareAnchor.href, 'shareOnFacebook', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')"
                     #facebookShareAnchor>
+
                     <i class="social-icon social-icon--facebook"></i>
+                    <span class="tooltip-holder" [tooltip]="'SHARE.FACEBOOK.TOOLTIP' | translate" placement="left"></span>
                 </a>
             </li>
 
             <li class="list__item">
                 <a href="https://twitter.com/intent/tweet/?text=Check this out! http://159.203.253.31 %23ProjectSARAI"
-                    class="btn btn--dome btn--twitter"
-                    [tooltip]="'SHARE.TWITTER.TOOLTIP' | translate"
-                    placement="left"
+                    class="btn btn--dome btn--twitter tooltip-wrapper"
                     (click)="openNewWindow($event, twitterShareAnchor.href, 'shareOnTwitter', 'toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250')"
                     #twitterShareAnchor>
+
                     <i class="social-icon social-icon--twitter"></i>
+                    <span class="tooltip-holder" [tooltip]="'SHARE.TWITTER.TOOLTIP' | translate" placement="left"></span>
                 </a>
             </li>
         </ul>
@@ -125,34 +125,29 @@
     <div class="control-wrapper control-wrapper--interface-controls" map-control>
         <ul class="list list-unstyled">
             <li class="list__item">
-                <a href="#"
-                    class="btn btn--dome btn--translate"
-                    [tooltip]="'TRANSLATE.TOOLTIP' | translate"
-                    placement="left"
-                    (click)="changeLang($event)">
+                <a href="#" class="btn btn--dome btn--translate tooltip-wrapper" (click)="changeLang($event)">
                     <i class="interface-control-icon interface-control-icon--translate"></i>
+                    <span class="tooltip-holder" [tooltip]="'TRANSLATE.TOOLTIP' | translate" placement="left" #translateTooltip="bs-tooltip"></span>
                 </a>
             </li>
 
             <li class="list__item">
                 <a href="#"
-                    class="btn btn--dome btn--download-map-image"
-                    [tooltip]="'DOWNLOAD_MAP_IMAGE.TOOLTIP.MAIN' | translate"
-                    placement="left"
+                    class="btn btn--dome btn--download-map-image tooltip-wrapper"
                     (click)="$event.preventDefault(); imageDownloadSidebar.toggle()">
 
                     <i class="interface-control-icon interface-control-icon--pdf"></i>
+                    <span class="tooltip-holder" [tooltip]="'DOWNLOAD_MAP_IMAGE.TOOLTIP.MAIN' | translate" placement="left"></span>
                 </a>
             </li>
 
             <li class="list__item">
                 <a href="#"
-                    class="btn btn--dome btn--watch-videos"
-                    [tooltip]="'WATCH_VIDEO.TOOLTIP.MAIN' | translate"
-                    placement="left"
+                    class="btn btn--dome btn--watch-videos tooltip-wrapper"
                     (click)="$event.preventDefault(); videoSidebar.toggle()">
 
                     <i class="interface-control-icon interface-control-icon--video"></i>
+                    <span class="tooltip-holder" [tooltip]="'WATCH_VIDEO.TOOLTIP.MAIN' | translate" placement="left"></span>
                 </a>
             </li>
         </ul>

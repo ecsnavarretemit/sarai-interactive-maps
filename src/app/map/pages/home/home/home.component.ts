@@ -5,10 +5,12 @@
  * Licensed under MIT
  */
 
-import { Component, isDevMode, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, Inject, Renderer } from '@angular/core';
+import { Component, ElementRef, Inject, isDevMode, OnDestroy, OnInit, QueryList, Renderer, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
 import { ModalDirective } from 'ng2-bootstrap/modal';
+import { TooltipDirective } from 'ng2-bootstrap/tooltip';
 import { CookieService } from 'angular2-cookie/core';
 import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,20 +22,24 @@ import { MAP_CONFIG } from '../../../map.config';
 import filter from 'lodash-es/filter';
 import forEach from 'lodash-es/forEach';
 import * as L from 'leaflet';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/skip';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public layersOpacity = 0.6;
   public mapZoom = 6;
   public mapCoords: L.LatLngLiteral;
   private _currentLang = 'en';
   private _cookieLangKey = 'app_lang';
+  private _langChangeSubscription: Subscription;
 
   @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
+  @ViewChild('translateTooltip') translateTooltip: TooltipDirective;
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
@@ -74,6 +80,24 @@ export class HomeComponent implements OnInit {
 
     // set the page title
     this._title.setTitle(`${this._config.app_title}`);
+
+    // listen to the translation change and skip the first language change
+    // since it is the default language being emitted
+    this._langChangeSubscription = this._translate.onLangChange
+      .skip(1)
+      .delay(300)
+      .subscribe((val: any) => {
+        // show the tooltip with the new content after n ms
+        if (!this.translateTooltip.isOpen) {
+          this.translateTooltip.show();
+        }
+
+        // invoke resize event since we do not have the access to the tooltip's `nativeElement`
+        this._renderer.invokeElementMethod(this._window.getNativeWindow(), 'dispatchEvent', [
+          new Event('resize')
+        ]);
+      })
+      ;
   }
 
   shouldActivateMapType(urlPart: string): boolean {
@@ -125,6 +149,10 @@ export class HomeComponent implements OnInit {
     // prevent the default behavior
     event.preventDefault();
 
+    // hide the tooltip first before doing some language switch
+    this.translateTooltip.hide();
+
+    // switch the language
     if (this._currentLang === 'en') {
       this._currentLang = 'fil';
     } else {
@@ -168,6 +196,11 @@ export class HomeComponent implements OnInit {
     } else {
       this._logger.log('Image not available', 'Map image not available.', true);
     }
+  }
+
+  ngOnDestroy() {
+    // remove language change subscription
+    this._langChangeSubscription.unsubscribe();
   }
 
 }
