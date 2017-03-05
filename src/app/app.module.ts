@@ -7,11 +7,11 @@
 
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
-import { TranslateModule, TranslateLoader } from 'ng2-translate';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
@@ -30,6 +30,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     SaraiInteractiveMapsRoutingModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
@@ -39,9 +40,11 @@ import { AppComponent } from './app.component';
     UiModule,
     SharedModule,
     TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: TranslationFactoryLoader,
-      deps: [Http]
+      loader: {
+        provide: TranslateLoader,
+        useFactory: TranslationFactoryLoader,
+        deps: [Http]
+      }
     }),
     Angulartics2Module.forRoot([
       Angulartics2GoogleAnalytics

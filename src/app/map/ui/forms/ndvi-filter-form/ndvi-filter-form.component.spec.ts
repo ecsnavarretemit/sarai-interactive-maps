@@ -12,8 +12,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http } from '@angular/http';
-import { TranslateModule, TranslateLoader } from 'ng2-translate';
+import { HttpModule, Http } from '@angular/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../../../forms';
 import { LeafletMapService } from '../../../../leaflet';
 import { LocationsService } from '../../../shared';
@@ -43,14 +43,17 @@ describe('Component: NdviFilterForm', () => {
         NdviFilterFormComponent
       ],
       imports: [
+        HttpModule,
         FormsModule,
         ReactiveFormsModule,
         SaraiInteractiveMapsFormsModule,
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: TranslationFactoryLoader,
-          deps: [Http]
-        })
+          loader: {
+            provide: TranslateLoader,
+            useFactory: TranslationFactoryLoader,
+            deps: [Http]
+          }
+        }),
       ],
       providers: [
         FormBuilder,

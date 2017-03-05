@@ -8,7 +8,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { Angulartics2Module } from 'angulartics2';
 

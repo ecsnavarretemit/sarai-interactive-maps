@@ -11,7 +11,7 @@ export const environment = {
     },
     translations: {
       static: {
-        prefix: '/assets/i18n',
+        prefix: '/assets/i18n/',
         ext: '.json'
       }
     },

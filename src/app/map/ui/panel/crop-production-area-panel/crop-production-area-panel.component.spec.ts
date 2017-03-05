@@ -12,7 +12,6 @@ import { TestBed, async, ComponentFixture, inject } from '@angular/core/testing'
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
-import { TranslateModule, TranslateLoader } from 'ng2-translate';
 import { LeafletMapService } from '../../../../leaflet';
 import { MockRouter } from '../../../../mocks/router';
 import { CropProductionAreaPanelComponent } from './crop-production-area-panel.component';

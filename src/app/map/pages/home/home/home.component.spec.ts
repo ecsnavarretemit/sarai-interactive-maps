@@ -13,7 +13,7 @@ import { Http, HttpModule} from '@angular/http';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CookieService } from 'angular2-cookie/core';
-import { TranslateModule, TranslateLoader, TranslateService } from 'ng2-translate';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Angulartics2 } from 'angulartics2';
 import { SpawnModalService } from '../../../../ui';
 import { TranslationFactoryLoader } from '../../../../app-translation-factory.service';
@@ -33,9 +33,11 @@ describe('Component: Home', () => {
       imports: [
         HttpModule,
         TranslateModule.forRoot({
-          provide: TranslateLoader,
-          useFactory: TranslationFactoryLoader,
-          deps: [Http]
+          loader: {
+            provide: TranslateLoader,
+            useFactory: TranslationFactoryLoader,
+            deps: [Http]
+          }
         }),
       ],
 

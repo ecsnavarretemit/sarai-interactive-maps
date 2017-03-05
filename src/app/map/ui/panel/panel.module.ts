@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule } from '@ngx-translate/core';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { FormsModule as MapUiFormsModule } from '../forms';
