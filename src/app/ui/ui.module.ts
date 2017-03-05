@@ -14,7 +14,7 @@ import { ModalModule } from './modal';
   imports: [
     CommonModule,
     ChartsModule,
-    ModalModule
+    ModalModule.forRoot()
   ],
   exports: [
     ChartsModule,
