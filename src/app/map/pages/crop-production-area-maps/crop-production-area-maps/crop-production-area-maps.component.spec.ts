@@ -15,6 +15,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { MapConfig, MAP_CONFIG } from '../../../map.config';
+import { AppConfig, APP_CONFIG } from '../../../../app.config';
 import { TileLayerService } from '../../../shared';
 import { LeafletMapService, LeafletModule } from '../../../../leaflet';
 import { MapLayersReducer, SuitabilityLevelsReducer } from '../../../../store';
@@ -46,6 +47,7 @@ describe('Component: CropProductionAreaMaps', () => {
         Title,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: APP_CONFIG, useValue: AppConfig },
         { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({

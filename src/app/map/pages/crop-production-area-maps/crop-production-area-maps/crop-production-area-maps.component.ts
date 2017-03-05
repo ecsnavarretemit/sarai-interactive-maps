@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { LayerState, Layer } from '../../../../store';
 import { TileLayerService } from '../../../shared';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../../../leaflet';
+import { APP_CONFIG } from '../../../../app.config';
 import { MAP_CONFIG } from '../../../map.config';
 import * as L from 'leaflet';
 import map from 'lodash-es/map';
@@ -33,14 +34,15 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   private _mapLayers: Observable<any>;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
+    @Inject(MAP_CONFIG) private _mapConfig: any,
+    @Inject(APP_CONFIG) private _globalConfig: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
     private _title: Title,
     private _mapLayersStore: Store<any>
   ) {
-    const resolvedConfig = this._config.crop_production_area_maps;
+    const resolvedConfig = this._mapConfig.crop_production_area_maps;
 
     // set default wms tile layer
     this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
@@ -69,7 +71,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
       }
 
       // set the page title
-      this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+      this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
 
       // process wms layers
       this.processLayers();
@@ -110,7 +112,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // reset the page title
-    this._title.setTitle(`${this._config.app_title}`);
+    this._title.setTitle(`${this._globalConfig.app_title}`);
 
     // remove all layers published on the store and on the collection
     this.removeLayers();

@@ -11,9 +11,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 
 export function TranslationFactoryLoader(http: Http): TranslateLoader {
-  const translationConfig = environment.sarai_map_config.translations;
+  const translationConfig = environment.app.global.translations;
 
-  return new TranslateHttpLoader(http, translationConfig.static.prefix, translationConfig.static.ext);
+  return new TranslateHttpLoader(http);
 };
 
 

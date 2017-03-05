@@ -7,6 +7,7 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { APP_CONFIG } from '../../../app.config';
 import { MAP_CONFIG } from '../../map.config';
 import assign from 'lodash-es/assign';
 import groupBy from 'lodash-es/groupBy';
@@ -33,7 +34,8 @@ export class TileLayerService {
   public crs: L.CRS = this._leafletApi.CRS.EPSG900913;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
+    @Inject(APP_CONFIG) private _globalConfig: any,
+    @Inject(MAP_CONFIG) private _mapConfig: any,
     private _http: Http,
   ) {
     // EqualTo filter for GeoServer
@@ -73,7 +75,7 @@ export class TileLayerService {
   }
 
   getGeoServerWMSTileLayerBaseUrl(workspace: string, tiled = true): string {
-    let tileLayerUrl: string = trimEnd(this._config.geoserver.baseUrl, '/') + `/${workspace}/wms`;
+    let tileLayerUrl: string = trimEnd(this._globalConfig.geoserver.baseUrl, '/') + `/${workspace}/wms`;
 
     if (tiled === true) {
       tileLayerUrl += ((tileLayerUrl.indexOf('?') >= 0) ? '&' : '?') + 'tiled=true';
@@ -94,7 +96,7 @@ export class TileLayerService {
 
   getCQLFilterByGridcode(gridcodes: Array<number> = []): string {
     return map(gridcodes, (value: number) => {
-      return `${this._config.suitability_maps.propertyFilterName}=${value}`;
+      return `${this._mapConfig.suitability_maps.propertyFilterName}=${value}`;
     }).join(' OR ');
   }
 
@@ -142,7 +144,7 @@ export class TileLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._config.suitability_maps.wms.workspace}:${snakeCase(crop)}${this._config.suitability_maps.countrLevelLayerSuffix}`
+          `${this._mapConfig.suitability_maps.wms.workspace}:${snakeCase(crop)}${this._mapConfig.suitability_maps.countrLevelLayerSuffix}`
         ];
 
         break;
@@ -175,7 +177,7 @@ export class TileLayerService {
       case 'corn-wet':
       case 'coconut':
         layers = [
-          `${this._config.suitability_maps.wms.workspace}:${snakeCase(crop)}${this._config.suitability_maps.municipalLevelLayerSuffix}`
+          `${this._mapConfig.suitability_maps.wms.workspace}:${snakeCase(crop)}${this._mapConfig.suitability_maps.municipalLevelLayerSuffix}`
         ];
 
         break;
@@ -206,7 +208,7 @@ export class TileLayerService {
       case 'rice':
       case 'corn':
         layers = [
-          `${this._config.crop_production_area_maps.wms.workspace}:${snakeCase(crop)}`
+          `${this._mapConfig.crop_production_area_maps.wms.workspace}:${snakeCase(crop)}`
         ];
 
         break;
@@ -226,12 +228,12 @@ export class TileLayerService {
 
   getNdviLayerData(startDate: string, endDate: string, place?: string): Promise<any> {
     // throw error if endpoint does not exist
-    if (typeof this._config.ndvi_maps.eeApiEndpoint === 'undefined' || this._config.ndvi_maps.eeApiEndpoint === '') {
+    if (typeof this._mapConfig.ndvi_maps.eeApiEndpoint === 'undefined' || this._mapConfig.ndvi_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for NDVI Layers not specified'));
     }
 
-    const method = this._config.ndvi_maps.eeApiEndpointMethod.toLowerCase();
-    let endpoint = this._config.ndvi_maps.eeApiEndpoint;
+    const method = this._mapConfig.ndvi_maps.eeApiEndpointMethod.toLowerCase();
+    let endpoint = this._mapConfig.ndvi_maps.eeApiEndpoint;
 
     let args = [endpoint, {
       startDate,
@@ -267,12 +269,12 @@ export class TileLayerService {
 
   getRainfallMapLayerData(startDate: string, endDate: string): Promise<any> {
     // throw error if endpoint does not exist
-    if (typeof this._config.rainfall_maps.eeApiEndpoint === 'undefined' || this._config.rainfall_maps.eeApiEndpoint === '') {
+    if (typeof this._mapConfig.rainfall_maps.eeApiEndpoint === 'undefined' || this._mapConfig.rainfall_maps.eeApiEndpoint === '') {
       return Promise.reject(new Error('API Endpoint for Rainfall Map Layers not specified'));
     }
 
-    const method = this._config.rainfall_maps.eeApiEndpointMethod.toLowerCase();
-    let endpoint = this._config.rainfall_maps.eeApiEndpoint;
+    const method = this._mapConfig.rainfall_maps.eeApiEndpointMethod.toLowerCase();
+    let endpoint = this._mapConfig.rainfall_maps.eeApiEndpoint;
     let args = [endpoint, {
       startDate,
       endDate
@@ -325,13 +327,13 @@ export class TileLayerService {
 
       if (value.length > 1) {
         filter = this._betweenFilterTmpl({
-          property: this._config.suitability_maps.propertyFilterName,
+          property: this._mapConfig.suitability_maps.propertyFilterName,
           lowerBoundary: min(value),
           upperBoundary: max(value)
         });
       } else {
         filter = this._equalToFilterTmpl({
-          property: this._config.suitability_maps.propertyFilterName,
+          property: this._mapConfig.suitability_maps.propertyFilterName,
           value: value[0]
         });
       }
