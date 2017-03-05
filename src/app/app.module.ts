@@ -44,7 +44,7 @@ import { AppComponent } from './app.component';
       loader: {
         provide: TranslateLoader,
         useFactory: TranslationFactoryLoader,
-        deps: [Http]
+        deps: [Http, APP_CONFIG]
       }
     }),
     Angulartics2Module.forRoot([
