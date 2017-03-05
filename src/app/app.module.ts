@@ -21,6 +21,7 @@ import { SharedModule } from './shared';
 
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { TranslationFactoryLoader } from './app-translation-factory.service';
+import { AppConfig, APP_CONFIG } from './app.config';
 
 import { AppComponent } from './app.component';
 
@@ -58,7 +59,8 @@ import { AppComponent } from './app.component';
     // the compiled code will throw error: `No provider for CookieOptions!`
     //
     // Reference: <https://github.com/salemdar/angular2-cookie/issues/37>
-    { provide: CookieOptions, useValue: {} }
+    { provide: CookieOptions, useValue: {} },
+    { provide: APP_CONFIG, useValue: AppConfig }
   ],
   bootstrap: [AppComponent]
 })
