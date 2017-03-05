@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { CookieService } from 'angular2-cookie/core';
 import { Angulartics2 } from 'angulartics2';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from '@ngx-translate/core';
 import { PdfPreviewModalComponent, SpawnModalService } from '../../../../ui';
 import { LoggerService, WindowService } from '../../../../shared';
 import { LeafletButtonComponent } from '../../../../leaflet';
