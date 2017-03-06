@@ -36,7 +36,7 @@ describe('Component: Home', () => {
           loader: {
             provide: TranslateLoader,
             useFactory: TranslationFactoryLoader,
-            deps: [Http]
+            deps: [Http, APP_CONFIG]
           }
         }),
       ],

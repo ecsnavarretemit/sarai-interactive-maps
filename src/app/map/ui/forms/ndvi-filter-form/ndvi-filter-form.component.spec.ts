@@ -19,6 +19,7 @@ import { LeafletMapService } from '../../../../leaflet';
 import { LocationsService } from '../../../shared';
 import { MockRouter } from '../../../../mocks/router';
 import { MockLocationsService } from '../../../../mocks/map';
+import { AppConfig, APP_CONFIG } from '../../../../app.config';
 import { TranslationFactoryLoader } from '../../../../app-translation-factory.service';
 import { NdviFilterFormComponent } from './ndvi-filter-form.component';
 
@@ -51,7 +52,7 @@ describe('Component: NdviFilterForm', () => {
           loader: {
             provide: TranslateLoader,
             useFactory: TranslationFactoryLoader,
-            deps: [Http]
+            deps: [Http, APP_CONFIG]
           }
         }),
       ],
@@ -59,6 +60,7 @@ describe('Component: NdviFilterForm', () => {
         FormBuilder,
         LeafletMapService,
 
+        { provide: APP_CONFIG, useValue: AppConfig },
         { provide: Router, useValue: mockRouter },
         { provide: LocationsService, useClass: MockLocationsService }
       ]
