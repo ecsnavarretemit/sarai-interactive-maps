@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { LeafletWmsLayerComponent, LeafletMapService } from '../../../../leaflet';
 import { LayerState, SuitabilityLevelsState, Layer } from '../../../../store';
 import { TileLayerService } from '../../../shared';
+import { APP_CONFIG } from '../../../../app.config';
 import { MAP_CONFIG } from '../../../map.config';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
@@ -40,7 +41,8 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   @ViewChildren(LeafletWmsLayerComponent) layers: QueryList<LeafletWmsLayerComponent>;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
+    @Inject(APP_CONFIG) private _globalConfig: any,
+    @Inject(MAP_CONFIG) private _mapConfig: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
@@ -48,7 +50,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     private _mapLayersStore: Store<any>,
     private _suitabilityLevelsStore: Store<any>
   ) {
-    const resolvedConfig = this._config.suitability_maps;
+    const resolvedConfig = this._mapConfig.suitability_maps;
 
     // set default crop
     this.crop = 'rice';
@@ -94,7 +96,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
       }
 
       // set the page title
-      this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+      this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
 
       // process wms layers
       this.processLayers();
@@ -196,7 +198,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     this._map.off('zoomend', this._zoomEndListener);
 
     // reset the page title
-    this._title.setTitle(`${this._config.app_title}`);
+    this._title.setTitle(`${this._globalConfig.app_title}`);
 
     // remove all layers published on the store and on the collection
     this.removeLayers();

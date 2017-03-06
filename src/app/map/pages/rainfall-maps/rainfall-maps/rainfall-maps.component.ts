@@ -16,7 +16,7 @@ import { TileLayerService } from '../../../shared';
 import { LoggerService } from '../../../../shared';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../../../ui';
 import { Layer } from '../../../../store';
-import { MAP_CONFIG } from '../../../map.config';
+import { APP_CONFIG } from '../../../../app.config';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
@@ -41,7 +41,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _oldCumulativeRainfallData: any;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
+    @Inject(APP_CONFIG) private _globalConfig: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _rainfallMapService: RainfallMapService,
@@ -65,7 +65,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['endDate'])
       ) {
         // set the page title
-        this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+        this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
 
         // save the new values of start and end date
         this._currentStartDate = params['startDate'];
@@ -416,7 +416,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // reset the page title
-    this._title.setTitle(`${this._config.app_title}`);
+    this._title.setTitle(`${this._globalConfig.app_title}`);
 
     // remove the event listener bound to the map
     this._map.off('click', this._mapClickListener);

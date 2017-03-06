@@ -1,55 +1,58 @@
 export const environment = {
   production: false,
-  ga: {
-    code: ''
-  },
-  sarai_map_config: {
-    app_title: 'SARAI Interactive Maps - Project SARAI',
-    geoserver: {
-      baseUrl: '',
-      restApiEndpoint: ''
-    },
-    translations: {
-      static: {
-        prefix: '',
-        ext: '.json'
-      }
-    },
-    suitability_maps: {
-      countrLevelLayerSuffix: '',
-      municipalLevelLayerSuffix: '',
-      propertyFilterName: '',
-      cropsApiEndpoint: '',
-      cropsApiEndpointMethod: 'GET',
-      imageRootPath: '',
-      wms: {
-        workspace: '',
-        tiled: true
-      }
-    },
-    crop_production_area_maps: {
-      wms: {
-        workspace: '',
-        tiled: true
-      }
-    },
-    ndvi_maps: {
-      eeApiEndpoint: '',
-      eeApiEndpointMethod: 'GET'
-    },
-    rainfall_maps: {
-      eeApiEndpoint: '',
-      eeApiEndpointMethod: 'GET'
-    },
-    location_api: {
-      region: {
-        endpoint: '',
-        method: 'GET'
+  app: {
+    global: {
+      app_title: 'SARAI Interactive Maps - Project SARAI',
+      default_lang: 'en',
+      lang_cookie_name: 'app_lang',
+      geoserver: {
+        baseUrl: '',
+        restApiEndpoint: ''
       },
+      translations: {
+        static: {
+          prefix: '',
+          ext: '.json'
+        }
+      }
+    },
+    map: {
+      crop_production_area_maps: {
+        wms: {
+          workspace: '',
+          tiled: true
+        }
+      },
+      location_api: {
+        region: {
+          endpoint: '',
+          method: 'GET'
+        },
 
-      province: {
-        endpoint: '',
-        method: 'GET'
+        province: {
+          endpoint: '',
+          method: 'GET'
+        }
+      },
+      ndvi_maps: {
+        eeApiEndpoint: '',
+        eeApiEndpointMethod: 'GET'
+      },
+      rainfall_maps: {
+        eeApiEndpoint: '',
+        eeApiEndpointMethod: 'GET'
+      },
+      suitability_maps: {
+        countrLevelLayerSuffix: '',
+        municipalLevelLayerSuffix: '',
+        propertyFilterName: '',
+        cropsApiEndpoint: '',
+        cropsApiEndpointMethod: 'GET',
+        imageRootPath: '',
+        wms: {
+          workspace: '',
+          tiled: true
+        }
       }
     }
   }

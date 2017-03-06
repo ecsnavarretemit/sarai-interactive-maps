@@ -18,7 +18,7 @@ import { NdviMapService } from '../ndvi-map.service';
 import { LoggerService } from '../../../../shared';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../../../ui';
 import { Layer } from '../../../../store';
-import { MAP_CONFIG } from '../../../map.config';
+import { APP_CONFIG } from '../../../../app.config';
 import assign from 'lodash-es/assign';
 import fill from 'lodash-es/fill';
 import forEach from 'lodash-es/forEach';
@@ -55,7 +55,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   private _currentEndDate: string;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
+    @Inject(APP_CONFIG) private _globalConfig: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _ndviMapService: NdviMapService,
@@ -119,7 +119,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['endDate'])
         ) {
           // set the page title
-          this._title.setTitle(`${this._pageTitle} | ${this._config.app_title}`);
+          this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
 
           // save the new values of start and end date
           this._currentStartDate = routeParams['startDate'];
@@ -658,7 +658,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
     // reset the page title
-    this._title.setTitle(`${this._config.app_title}`);
+    this._title.setTitle(`${this._globalConfig.app_title}`);
 
     // go the old zoom and lat,lng coords.
     this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);

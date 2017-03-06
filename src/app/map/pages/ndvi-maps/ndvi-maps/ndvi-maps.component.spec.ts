@@ -14,6 +14,7 @@ import { HttpModule } from '@angular/http';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { provideStore } from '@ngrx/store';
+import { AppConfig, APP_CONFIG } from '../../../../app.config';
 import { MapConfig, MAP_CONFIG } from '../../../map.config';
 import { LoggerService } from '../../../../shared';
 import { TileLayerService } from '../../../shared';
@@ -49,6 +50,7 @@ describe('Component: NdviMaps', () => {
         NdviMapsComponent,
 
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: APP_CONFIG, useValue: AppConfig },
         { provide: MAP_CONFIG, useValue: MapConfig },
 
         provideStore({

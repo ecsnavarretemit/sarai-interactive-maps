@@ -18,7 +18,7 @@ import { PdfPreviewModalComponent, SpawnModalService } from '../../../../ui';
 import { LoggerService, WindowService } from '../../../../shared';
 import { LeafletButtonComponent } from '../../../../leaflet';
 import { MapTypeComponent } from '../map-type/map-type.component';
-import { MAP_CONFIG } from '../../../map.config';
+import { APP_CONFIG } from '../../../../app.config';
 import filter from 'lodash-es/filter';
 import forEach from 'lodash-es/forEach';
 import * as L from 'leaflet';
@@ -34,8 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public layersOpacity = 0.6;
   public mapZoom = 6;
   public mapCoords: L.LatLngLiteral;
-  private _currentLang = 'en';
-  private _cookieLangKey = 'app_lang';
+  private _currentLang: string;
+  private _cookieLangKey: string;
   private _langChangeSubscription: Subscription;
 
   @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
-    @Inject(MAP_CONFIG) private _config: any,
+    @Inject(APP_CONFIG) private _globalConfig: any,
     public _router: Router,
     private _window: WindowService,
     private _logger: LoggerService,
@@ -54,6 +54,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     private _title: Title,
     private _angulartics: Angulartics2
   ) {
+    // initialize language and cookie values
+    this._currentLang = _globalConfig.default_lang;
+    this._cookieLangKey = _globalConfig.lang_cookie_name;
+
     // retreive language preference from the cookie
     let lang = this._cookieService.get(this._cookieLangKey);
 
@@ -65,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     // this language will be used as a fallback when a translation isn't found in the current language
-    this._translate.setDefaultLang('en');
+    this._translate.setDefaultLang(_globalConfig.default_lang);
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     this._translate.use(lang);
@@ -79,7 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
 
     // set the page title
-    this._title.setTitle(`${this._config.app_title}`);
+    this._title.setTitle(`${this._globalConfig.app_title}`);
 
     // listen to the translation change and skip the first language change
     // since it is the default language being emitted
