@@ -10,10 +10,8 @@
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { provideStore } from '@ngrx/store';
 import { LeafletMapService } from '../../../../leaflet';
 import { SuitabilityMapService } from '../../../shared';
-import { MapLayersReducer, SuitabilityLevelsReducer } from '../../../../store';
 import { MockRouter } from '../../../../mocks/router';
 import { MockSuitabilityMapService } from '../../../../mocks/map';
 import { SuitabilityMapPanelComponent } from './suitability-map-panel.component';
@@ -31,12 +29,7 @@ describe('Component: SuitabilityMapPanel', () => {
         SuitabilityMapPanelComponent,
 
         { provide: SuitabilityMapService, useClass: MockSuitabilityMapService },
-        { provide: Router, useValue: mockRouter },
-
-        provideStore({
-          mapLayers: MapLayersReducer,
-          suitabilityLevels: SuitabilityLevelsReducer
-        })
+        { provide: Router, useValue: mockRouter }
       ]
     });
   });
