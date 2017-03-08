@@ -267,10 +267,6 @@ amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-angular2-cookie@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/angular2-cookie/-/angular2-cookie-1.2.6.tgz#8fa845531e777adb042fe2f339c0040f6ddbf09d"
-
 angulartics2@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/angulartics2/-/angulartics2-1.6.4.tgz#1388e76b37b81bd5649ca218d384d359d9c68782"
@@ -3303,6 +3299,10 @@ ng2-pdf-viewer@^1.0.2:
   dependencies:
     "@types/pdf" "0.0.31"
     pdfjs-dist "^1.6.329"
+
+ngx-cookie@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-cookie/-/ngx-cookie-1.0.0.tgz#004fc653febd849b4dd3ee2c63c4cf171f464da9"
 
 no-case@^2.2.0:
   version "2.3.1"
