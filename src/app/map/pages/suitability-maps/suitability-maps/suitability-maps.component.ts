@@ -47,8 +47,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
     private _title: Title,
-    private _mapLayersStore: Store<any>,
-    private _suitabilityLevelsStore: Store<any>
+    private _store: Store<any>,
   ) {
     const resolvedConfig = this._mapConfig.suitability_maps;
 
@@ -59,10 +58,10 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
 
     // get the map state store from the store
-    this._mapLayers = this._mapLayersStore.select('mapLayers');
+    this._mapLayers = this._store.select('mapLayers');
 
     // get the suitability levels from the store
-    this._suitabilityLevels = this._suitabilityLevelsStore.select('suitabilityLevels');
+    this._suitabilityLevels = this._store.select('suitabilityLevels');
 
     // make sure that the `this` value inside the onMapZoom is this component's instance.
     this._zoomEndListener = this.onMapZoom.bind(this);
@@ -148,7 +147,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     this.removeLayers();
 
     // add the new layer to the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'ADD_LAYERS',
       payload: processedLayers
     });
@@ -176,7 +175,7 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
 
   removeLayers() {
     // remove all layers published on the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
   }
