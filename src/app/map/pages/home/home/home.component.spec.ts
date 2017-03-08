@@ -12,7 +12,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { Http, HttpModule} from '@angular/http';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieModule } from 'ngx-cookie';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Angulartics2 } from 'angulartics2';
 import { SpawnModalService } from '../../../../ui';
@@ -32,6 +32,7 @@ describe('Component: Home', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpModule,
+        CookieModule.forRoot(),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -42,7 +43,6 @@ describe('Component: Home', () => {
       ],
 
       providers: [
-        CookieService,
         TranslateService,
         LoggerService,
         Renderer,

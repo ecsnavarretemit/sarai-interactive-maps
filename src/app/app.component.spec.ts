@@ -14,13 +14,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Http } from '@angular/http';
 import { ModalModule, TooltipModule, AccordionModule } from 'ng2-bootstrap';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { CookieModule } from 'ngx-cookie';
 import { Angulartics2Module, Angulartics2, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { SaraiInteractiveMapsRoutingModule } from './app-routing.module';
 import { StoreModule } from './store';
 import { MapModule } from './map';
 import { UiModule } from './ui';
 
-import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { LoggerService } from './shared';
 import { TranslationFactoryLoader } from './app-translation-factory.service';
 import { MockAngulartics2, MockAngulartics2GoogleAnalytics } from './mocks/angulartics2';
@@ -36,6 +36,7 @@ describe('App: SaraiInteractiveMaps', () => {
         ModalModule.forRoot(),
         TooltipModule.forRoot(),
         AccordionModule.forRoot(),
+        CookieModule.forRoot(),
         StoreModule,
         MapModule,
         UiModule,
@@ -57,7 +58,6 @@ describe('App: SaraiInteractiveMaps', () => {
 
       providers: [
         LoggerService,
-        CookieService,
 
         { provide: Angulartics2, useClass: MockAngulartics2 },
         { provide: Angulartics2GoogleAnalytics, useClass: MockAngulartics2GoogleAnalytics },

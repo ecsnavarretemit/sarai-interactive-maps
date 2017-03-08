@@ -20,11 +20,11 @@
       "../node_modules/@angular2-material",
       "../node_modules/@ngx-translate/core",
       "../node_modules/@ngx-translate/http-loader",
-      "../node_modules/angular2-cookie",
       "../node_modules/moment",
       "../node_modules/ng2-bootstrap",
       "../node_modules/ng2-pdf-viewer",
-      "../node_modules/ng2-validation"
+      "../node_modules/ng2-validation",
+      "../node_modules/ngx-cookie"
     ]
   },
   "exclude": [
