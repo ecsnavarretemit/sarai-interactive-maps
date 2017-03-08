@@ -1,0 +1,17 @@
+<div class="map__control map__control--panel" #controlwrapper>
+    <section class="map__control__section">
+        <h2 class="map__control__title title">{{ 'LEVELS.TITLE' | translate }}</h2>
+
+        <div class="map__control__body">
+            <ul class="list list-unstyled list--suitability-level">
+                <li class="list__item suitability_levels--{{ level.slug }}" *ngFor="let level of (levels | async)">
+                    <md-checkbox [checked]="level.checked" [ngModel]="level.checked" (ngModelChange)="onToggleCheckbox($event, level)">
+                        {{ 'LEVELS.' + level.translationKey | translate }}
+                    </md-checkbox>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+
+
