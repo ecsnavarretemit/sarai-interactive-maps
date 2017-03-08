@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { TooltipDirective } from 'ng2-bootstrap/tooltip';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService } from 'ngx-cookie';
 import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from '@ngx-translate/core';
 import { PdfPreviewModalComponent, SpawnModalService } from '../../../../ui';
