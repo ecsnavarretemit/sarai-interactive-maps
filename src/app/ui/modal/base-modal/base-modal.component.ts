@@ -18,6 +18,7 @@ export class BaseModalComponent implements AfterViewInit {
   @Input('title') title = 'Modal Title';
   @Output() hide: EventEmitter<string> = new EventEmitter<string>();
   @Output() show: EventEmitter<string> = new EventEmitter<string>();
+  @Output() data: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('contentModal') contentModal: ModalDirective;
   @ViewChild('contentModalTitle') contentModalTitle: ElementRef;
   @ViewChild('contentModalBody') contentModalBody: ElementRef;

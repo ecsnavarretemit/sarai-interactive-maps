@@ -13,9 +13,11 @@ import {
   AfterViewInit,
   Component,
   ComponentFactoryResolver,
+  EventEmitter,
   Injector,
   Input,
   OnDestroy,
+  Output,
   ReflectiveInjector,
   ViewChild,
   ViewContainerRef
@@ -31,6 +33,7 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
 
   @Input('title') title = 'Chart Title';
   @Input('chartOptions') chartOptions: ModalComponentData;
+  @Output() data: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('contentModal') contentModal: ModalDirective;
   @ViewChild('chartContainer', { read: ViewContainerRef }) chartContainer: ViewContainerRef;
 
@@ -44,6 +47,28 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
     // retrieve properties from the injector
     this.title = injector.get('title', 'Chart Title');
     this.chartOptions = injector.get('chartOptions', null);
+  }
+
+  processExport(type: string) {
+    const chartDataUrl = this._currentComponent.instance.exportChartCanvasDataUrl();
+
+    switch (type) {
+      case 'pdf':
+      case 'image':
+        this.data.emit({
+          type,
+          action: 'export',
+          data: chartDataUrl
+        });
+        break;
+
+      case 'csv':
+        break;
+
+      default:
+        console.log(`Exporting ${type} not supported`);
+        break;
+    }
   }
 
   onHide() {
