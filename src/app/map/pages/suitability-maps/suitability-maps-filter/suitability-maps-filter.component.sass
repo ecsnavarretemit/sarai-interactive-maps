@@ -10,7 +10,7 @@
   bottom: 30px
   display: block
   width: 100%
-  height: 120px
+  height: 220px
 
 .map__control
   position: relative
@@ -18,7 +18,7 @@
   z-index: 1000
   display: block
   width: 82%
-  height: 120px
+  height: inherit
   max-width: 1000px
   overflow: visible
   opacity: 1
@@ -38,22 +38,40 @@
   .map__control__title
     font-size: 14px
 
-  ul
-    height: 55px
+  .list
+    height: 160px
     padding: 10px
     white-space: nowrap
-    overflow-x: scroll
-    overflow-y: hidden
+    overflow: hidden
     background: #FFF
     color: #000
     font-size: 12px
 
-    li
-      display: inline
-      margin-right: 40px
+    .list__item
+      display: block
+      width: 32.666666667%
+      margin-right: 1%
+      margin-bottom: 5px
+      float: left
 
-      &:last-child
+      &:nth-child(3n)
         margin-right: 0
+
+// --------------------------------------
+// [Browser Height: 768px up] ::start
+// --------------------------------------
+
++min-screen-height(768px)
+  \:host
+    height: 280px
+
+    .map__control .list
+      height: 220px
+
+// --------------------------------------
+// [Browser Height: 768px up] ::end
+// --------------------------------------
+
 
 // --------------------------------------
 // [Browser Width: 800px up] ::start
