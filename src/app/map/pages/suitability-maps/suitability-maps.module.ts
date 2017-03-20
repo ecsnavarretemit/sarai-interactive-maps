@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdCheckboxModule } from '@angular2-material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
+import { TooltipModule } from 'ng2-bootstrap/tooltip';
 
 import { LeafletModule } from '../../../leaflet';
 import { SuitabilityMapsRoutingModule } from './suitability-maps-routing.module';
@@ -24,6 +25,7 @@ import { SuitabilityMapsFilterComponent } from './suitability-maps-filter/suitab
     ReactiveFormsModule,
     MdCheckboxModule,
     TranslateModule,
+    TooltipModule,
     LeafletModule,
     SuitabilityMapsRoutingModule,
   ],

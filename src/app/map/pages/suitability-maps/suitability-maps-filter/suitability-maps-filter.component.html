@@ -1,6 +1,13 @@
-<div class="map__control map__control--panel map__control--suitability-levels-filter-panel" #controlwrapper>
+<div class="map__control map__control--panel map__control--suitability-levels-filter-panel"
+    [@controlWrapper]="controlWrapperAnimationState"
+    #controlwrapper>
     <section class="map__control__section">
-        <h2 class="map__control__title title">{{ 'LEVELS.TITLE' | translate }}</h2>
+        <h2 class="map__control__title title">
+            <span class="title__text">{{ 'LEVELS.TITLE' | translate }}</span>
+            <span class="pull-right title__icon title__icon--actionable" (click)="onHideButtonClick($event)">
+                <i class="glyphicon glyphicon-resize-small" placement="right" tooltip="Minimize"></i>
+            </span>
+        </h2>
 
         <div class="map__control__body">
             <ul class="list list-unstyled list--suitability-level">
@@ -13,5 +20,15 @@
         </div>
     </section>
 </div>
+
+<app-leaflet-button
+    controlClass="map__control--btn map__control--suitability-levels-show-btn"
+    [@button]="buttonState"
+    btnTooltip="Show Suitability Maps Filter"
+    btnTooltipPosition="right"
+    (buttonClick)="onShowControl($event)">
+
+    <i class="glyphicon glyphicon-filter"></i>
+</app-leaflet-button>
 
 

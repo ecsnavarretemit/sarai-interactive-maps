@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { animate, Component, OnInit, OnDestroy, Renderer, state, style, transition, trigger } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Layer } from '../../../../store';
@@ -20,10 +20,35 @@ import values from 'lodash-es/values';
 @Component({
   selector: 'app-suitability-maps-filter',
   templateUrl: './suitability-maps-filter.component.html',
-  styleUrls: ['./suitability-maps-filter.component.sass']
+  styleUrls: ['./suitability-maps-filter.component.sass'],
+  animations: [
+    trigger('controlWrapper', [
+      state('visible', style({
+        'opacity': 1,
+        'display': 'block'
+      })),
+      state('hidden', style({
+        'opacity': 0,
+        'display': 'none'
+      })),
+      transition('* => *', animate(500))
+    ]),
+    trigger('button', [
+      state('visible', style({
+        'opacity': 1,
+        'display': 'block'
+      })),
+      state('hidden', style({
+        'opacity': 0,
+        'display': 'none'
+      }))
+    ])
+  ]
 })
 export class SuitabilityMapsFilterComponent extends BasePanelComponent implements OnInit, OnDestroy {
   public levels: Promise<Array<any>>;
+  public controlWrapperAnimationState = 'visible';
+  public buttonState = 'hidden';
   private _suitabilityLevels: Observable<any>;
 
   constructor(
@@ -63,6 +88,16 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
         });
       })
       ;
+  }
+
+  onHideButtonClick(evt: Event) {
+    this.controlWrapperAnimationState = 'hidden';
+    this.buttonState = 'visible';
+  }
+
+  onShowControl(evt: Event) {
+    this.controlWrapperAnimationState = 'visible';
+    this.buttonState = 'hidden';
   }
 
   onToggleCheckbox(isChecked: boolean, level: any) {
