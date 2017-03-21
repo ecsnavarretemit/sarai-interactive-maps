@@ -5,12 +5,13 @@
  * Licensed under MIT
  */
 
-import { animate, Component, OnInit, OnDestroy, Renderer, state, style, transition, trigger } from '@angular/core';
+import { animate, Component, HostListener, OnInit, OnDestroy, Renderer, state, style, transition, trigger } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Layer } from '../../../../store';
 import { LeafletMapService } from '../../../../leaflet';
 import { SuitabilityMapService } from '../../../shared';
+import { WindowService } from '../../../../shared';
 import { SuitabilityLevel } from '../../../suitability-level.interface';
 import { BasePanelComponent } from '../../../ui';
 import map from 'lodash-es/map';
@@ -49,12 +50,14 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
   public levels: Promise<Array<any>>;
   public controlWrapperAnimationState = 'visible';
   public buttonState = 'hidden';
+  public levelTooltipsDisabled = true;
   private _suitabilityLevels: Observable<any>;
 
   constructor(
     private _childRenderer: Renderer,
     private _childMapService: LeafletMapService,
     private _suitabilityMapService: SuitabilityMapService,
+    private _window: WindowService,
     private _store: Store<any>,
   ) {
     // call the parent component constructor method
@@ -88,6 +91,11 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
         });
       })
       ;
+
+    // invoke resize event since we cannot force the user to resize just to show the tooltip
+    this._childRenderer.invokeElementMethod(this._window.getNativeWindow(), 'dispatchEvent', [
+      new Event('resize')
+    ]);
   }
 
   onHideButtonClick(evt: Event) {
@@ -116,6 +124,15 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
         type: 'REMOVE_SUITABILITY_LEVEL',
         payload: level.gridcode
       });
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(evt: Event) {
+    if ((evt.target as any).innerHeight <= 768) {
+      this.levelTooltipsDisabled = false;
+    } else {
+      this.levelTooltipsDisabled = true;
     }
   }
 

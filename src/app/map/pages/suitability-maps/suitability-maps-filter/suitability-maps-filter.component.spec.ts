@@ -11,6 +11,7 @@ import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { provideStore } from '@ngrx/store';
+import { WindowService } from '../../../../shared';
 import { SuitabilityMapService } from '../../../shared';
 import { LeafletMapService } from '../../../../leaflet';
 import { MapConfig, MAP_CONFIG } from '../../../map.config';
@@ -28,6 +29,7 @@ describe('Component: SuitabilityMapsFilter', () => {
         LeafletMapService,
         Renderer,
         SuitabilityMapService,
+        WindowService,
         SuitabilityMapsFilterComponent,
 
         { provide: MAP_CONFIG, useValue: MapConfig },

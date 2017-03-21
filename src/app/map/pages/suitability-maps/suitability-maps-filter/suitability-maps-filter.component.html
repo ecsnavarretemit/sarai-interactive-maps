@@ -12,7 +12,14 @@
         <div class="map__control__body">
             <ul class="list list-unstyled list--suitability-level">
                 <li class="list__item suitability_levels--{{ level.slug }}" *ngFor="let level of (levels | async)">
-                    <md-checkbox [checked]="level.checked" [ngModel]="level.checked" (ngModelChange)="onToggleCheckbox($event, level)">
+                    <md-checkbox
+                        [checked]="level.checked"
+                        [ngModel]="level.checked"
+                        (ngModelChange)="onToggleCheckbox($event, level)"
+                        [tooltip]="'LEVELS.' + level.translationKey | translate"
+                        [isDisabled]="levelTooltipsDisabled"
+                        placement="top">
+
                         {{ 'LEVELS.' + level.translationKey | translate }}
                     </md-checkbox>
                 </li>
