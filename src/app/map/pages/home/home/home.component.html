@@ -1,5 +1,6 @@
 <app-leaflet-map [lat]="mapCoords.lat" [lng]="mapCoords.lng" [zoom]="mapZoom" #leaflet>
     <router-outlet></router-outlet>
+    <router-outlet name="route-dependent-control" map-control></router-outlet>
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type

@@ -11,7 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { TooltipModule } from 'ng2-bootstrap/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
-import { MdCheckboxModule } from '@angular2-material/checkbox';
 
 import { MapUiFormsModule } from '../forms';
 
@@ -27,7 +26,6 @@ import { SuitabilityMapPanelComponent } from './suitability-map-panel/suitabilit
     TooltipModule,
     AccordionModule,
     TranslateModule,
-    MdCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     MapUiFormsModule,

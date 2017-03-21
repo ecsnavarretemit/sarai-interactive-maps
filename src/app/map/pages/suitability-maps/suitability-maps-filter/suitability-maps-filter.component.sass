@@ -1,0 +1,115 @@
+// *************************************#
+// [suitability-maps-filter.component.sass]
+// *************************************#
+
+@import "node_modules/bourbon/app/assets/stylesheets/bourbon"
+@import "node_modules/sass-mediaqueries/media-queries"
+
+\:host
+  position: absolute
+  bottom: 30px
+  display: block
+  width: 100%
+  height: 220px
+
+.map__control
+  position: relative
+  left: 42%
+  z-index: 1000
+  display: block
+  width: 82%
+  height: inherit
+  max-width: 1000px
+  overflow: visible
+  opacity: 1
+  background-color: rgba(27, 83, 52, 0.9)
+
+  +transform(translateX(-50%))
+
+  .map__control__section
+    +border-top-radius(4px)
+    +border-right-radius(4px)
+    +border-bottom-radius(4px)
+    +border-left-radius(4px)
+
+  .map__control__body
+    padding: 10px 0 0 0
+
+  .map__control__title
+    font-size: 14px
+
+  .list
+    height: 160px
+    padding: 10px
+    white-space: nowrap
+    overflow: hidden
+    background: #FFF
+    color: #000
+    font-size: 12px
+
+    .list__item
+      display: block
+      width: 32.666666667%
+      margin-right: 1%
+      margin-bottom: 5px
+      float: left
+
+      &:nth-child(3n)
+        margin-right: 0
+
+// --------------------------------------
+// [Browser Height: 768px up] ::start
+// --------------------------------------
+
++min-screen-height(768px)
+  \:host
+    height: 280px
+
+    .map__control .list
+      height: 220px
+
+// --------------------------------------
+// [Browser Height: 768px up] ::end
+// --------------------------------------
+
+
+// --------------------------------------
+// [Browser Width: 800px up] ::start
+// --------------------------------------
+
++min-screen(800px)
+  \:host
+    bottom: 30px
+
+// --------------------------------------
+// [Browser Width: 800px up] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Browser Width: 1280px up] ::start
+// --------------------------------------
+
++min-screen(1280px)
+  .map__control
+    left: 50%
+
+// --------------------------------------
+// [Browser Width: 1280px up] ::end
+// --------------------------------------
+
+// --------------------------------------
+// [Browser Dimensions: 1280px and below, 900px and below] ::start
+// --------------------------------------
+
+@media only screen and (max-width: 1280px) and (max-height: 900px)
+  \:host
+    bottom: 30px
+
+  .map__control
+    left: 42%
+
+// --------------------------------------
+// [Browser Dimensions: 1280px and below, 900px and below] ::end
+// --------------------------------------
+
+

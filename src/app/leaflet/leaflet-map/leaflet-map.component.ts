@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild } from '@angular/core';
 import { LeafletMapService } from '../leaflet-map.service';
 import * as L from 'leaflet';
 
@@ -14,7 +14,7 @@ import * as L from 'leaflet';
   templateUrl: './leaflet-map.component.html',
   styleUrls: ['./leaflet-map.component.sass']
 })
-export class LeafletMapComponent implements OnInit {
+export class LeafletMapComponent implements AfterViewInit {
   @Input() lat: number;
   @Input() lng: number;
   @Input() zoom: number;
@@ -22,9 +22,9 @@ export class LeafletMapComponent implements OnInit {
 
   constructor(
     private _mapService: LeafletMapService
-  ) {}
+  ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     // create the map instance
     this._mapService.createMap(this.mapEl.nativeElement, {
       zoomControl: false
