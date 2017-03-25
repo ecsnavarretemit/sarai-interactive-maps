@@ -63,6 +63,10 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
         break;
 
       case 'csv':
+        this.data.emit({
+          type,
+          action: 'export'
+        });
         break;
 
       default:
