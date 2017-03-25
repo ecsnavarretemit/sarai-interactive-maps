@@ -150,11 +150,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           case 'csv':
             const coords = this._marker.getLatLng();
 
-            // assemble endpoint for download link
-            let endpoint = `${this._mapConfig.ndvi_maps.eeApiEndpoint}/time-series/`;
-            endpoint += `${coords.lat}/${coords.lng}/${this._currentStartDate}/${this._currentEndDate}?fmt=csv`;
-
-            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', endpoint);
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.metadata.endpoint);
             this._renderer.invokeElementMethod(this.downloadFile.nativeElement, 'click');
 
             break;
@@ -306,6 +302,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
     let dataObservable: Observable<any>;
 
+    // assemble endpoint for download link
+    const endpoint = `${this._mapConfig.ndvi_maps.eeApiEndpoint}/time-series/${coords.lat}/${coords.lng}/${startDate}/${endDate}?fmt=csv`;
+
     if (changed === false && typeof this._oldTimeSeriesData !== 'undefined') {
       dataObservable = Observable.of(this._oldTimeSeriesData);
     } else {
@@ -374,6 +373,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           inputs: {
             title: `NDVI Time Series Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
             openImmediately: true,
+            metadata: {
+              endpoint
+            },
             chartOptions: {
               type: LineChartComponent,
               inputs: {
@@ -394,6 +396,10 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
     let dataObservable: Observable<any>;
+
+    // assemble endpoint for download link
+    let endpoint = `${this._mapConfig.ndvi_maps.eeApiEndpoint}/day-of-the-year`;
+    endpoint += `/${coords.lat}/${coords.lng}/${startDate}/${endDate}?fmt=csv`;
 
     if (changed === false && typeof this._oldDOYData !== 'undefined') {
       dataObservable = Observable.of(this._oldDOYData);
@@ -538,6 +544,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           inputs: {
             openImmediately: true,
             title: `NDVI Day of the Year Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            metadata: {
+              endpoint
+            },
             chartOptions: {
               type: LineChartComponent,
               inputs: {

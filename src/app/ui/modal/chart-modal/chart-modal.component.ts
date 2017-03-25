@@ -33,6 +33,7 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
 
   @Input('title') title = 'Chart Title';
   @Input('chartOptions') chartOptions: ModalComponentData;
+  @Input('metadata') metadata: any;
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('contentModal') contentModal: ModalDirective;
   @ViewChild('chartContainer', { read: ViewContainerRef }) chartContainer: ViewContainerRef;
@@ -46,6 +47,7 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
 
     // retrieve properties from the injector
     this.title = injector.get('title', 'Chart Title');
+    this.metadata = injector.get('metadata', {});
     this.chartOptions = injector.get('chartOptions', null);
   }
 
@@ -57,6 +59,7 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
         this.data.emit({
           type,
           action: 'export',
+          metadata: this.metadata,
           data: chartDataUrl
         });
         break;
@@ -64,6 +67,7 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
       case 'csv':
         this.data.emit({
           type,
+          metadata: this.metadata,
           action: 'export'
         });
         break;
