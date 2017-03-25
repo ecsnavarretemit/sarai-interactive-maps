@@ -140,9 +140,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       .debounceTime(300)
       .subscribe((output: any) => {
         switch (output.type) {
-          case 'pdf':
-            break;
-
           case 'image':
             // download image
             this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.data);

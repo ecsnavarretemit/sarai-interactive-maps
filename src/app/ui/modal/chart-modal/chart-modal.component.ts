@@ -53,7 +53,6 @@ export class ChartModalComponent extends BaseModalComponent implements AfterView
     const chartDataUrl = this._currentComponent.instance.exportChartCanvasDataUrl();
 
     switch (type) {
-      case 'pdf':
       case 'image':
         this.data.emit({
           type,
