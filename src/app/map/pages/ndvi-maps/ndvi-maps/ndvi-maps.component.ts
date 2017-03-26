@@ -149,8 +149,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
             break;
 
           case 'csv':
-            const coords = this._marker.getLatLng();
-
             this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.metadata.endpoint);
             this._renderer.setElementProperty(this.downloadFile.nativeElement, 'target', '_blank');
             this._renderer.invokeElementMethod(this.downloadFile.nativeElement, 'click');
