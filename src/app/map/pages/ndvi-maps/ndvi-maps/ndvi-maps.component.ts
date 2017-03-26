@@ -19,7 +19,6 @@ import { LoggerService } from '../../../../shared';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../../../ui';
 import { Layer } from '../../../../store';
 import { APP_CONFIG } from '../../../../app.config';
-import { MAP_CONFIG } from '../../../map.config';
 import assign from 'lodash-es/assign';
 import fill from 'lodash-es/fill';
 import forEach from 'lodash-es/forEach';
@@ -60,7 +59,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   constructor(
     @Inject(APP_CONFIG) private _globalConfig: any,
-    @Inject(MAP_CONFIG) private _mapConfig: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _ndviMapService: NdviMapService,
@@ -303,7 +301,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     let dataObservable: Observable<any>;
 
     // assemble endpoint for download link
-    const endpoint = `${this._mapConfig.ndvi_maps.eeApiEndpoint}/time-series/${coords.lat}/${coords.lng}/${startDate}/${endDate}?fmt=csv`;
+    const endpoint = this._ndviMapService.getTimeSeriesByLatLngEndpoint(coords, startDate, endDate, 'csv');
 
     if (changed === false && typeof this._oldTimeSeriesData !== 'undefined') {
       dataObservable = Observable.of(this._oldTimeSeriesData);
@@ -398,8 +396,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     let dataObservable: Observable<any>;
 
     // assemble endpoint for download link
-    let endpoint = `${this._mapConfig.ndvi_maps.eeApiEndpoint}/day-of-the-year`;
-    endpoint += `/${coords.lat}/${coords.lng}/${startDate}/${endDate}?fmt=csv`;
+    const endpoint = this._ndviMapService.getDOYByLatLngEndpoint(coords, startDate, endDate, 'csv');
 
     if (changed === false && typeof this._oldDOYData !== 'undefined') {
       dataObservable = Observable.of(this._oldDOYData);

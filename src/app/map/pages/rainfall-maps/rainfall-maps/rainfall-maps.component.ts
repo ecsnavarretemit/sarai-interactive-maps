@@ -17,7 +17,6 @@ import { LoggerService } from '../../../../shared';
 import { ChartModalComponent, LineChartComponent, SpawnModalService } from '../../../../ui';
 import { Layer } from '../../../../store';
 import { APP_CONFIG } from '../../../../app.config';
-import { MAP_CONFIG } from '../../../map.config';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
@@ -45,7 +44,6 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(APP_CONFIG) private _globalConfig: any,
-    @Inject(MAP_CONFIG) private _mapConfig: any,
     private _mapService: LeafletMapService,
     private _tileLayerService: TileLayerService,
     private _rainfallMapService: RainfallMapService,
@@ -249,8 +247,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     let dataObservable: Observable<any>;
 
     // assemble endpoint for download link
-    let endpoint = `${this._mapConfig.rainfall_maps.eeApiEndpoint}/cumulative-rainfall/`;
-    endpoint += `${coords.lat}/${coords.lng}/${startDate}/${endDate}?fmt=csv`;
+    const endpoint = this._rainfallMapService.getCumulativeRainfallByLatLngEndpoint(coords, startDate, endDate, 'csv');
 
     if (changed === false && typeof this._oldCumulativeRainfallData !== 'undefined') {
       dataObservable = Observable.of(this._oldCumulativeRainfallData);
