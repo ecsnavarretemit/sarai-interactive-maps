@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, Inject, OnDestroy, OnInit, Renderer } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, Renderer, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -29,6 +29,7 @@ import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/of';
@@ -53,6 +54,8 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   private _oldDOYData: any;
   private _currentStartDate: string;
   private _currentEndDate: string;
+
+  @ViewChild('downloadFile') downloadFile: ElementRef;
 
   constructor(
     @Inject(APP_CONFIG) private _globalConfig: any,
@@ -126,6 +129,29 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           this._currentEndDate = routeParams['endDate'];
 
           this.processData(this._currentStartDate, this._currentEndDate, queryParams['province']);
+        }
+      })
+      ;
+
+    // receive outputs from the dynamically create modal
+    this._modalService.outputStream
+      .debounceTime(300)
+      .subscribe((output: any) => {
+        switch (output.type) {
+          case 'image':
+            // download image
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.data);
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'download', 'chart.jpg');
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'target', '_self');
+            this._renderer.invokeElementMethod(this.downloadFile.nativeElement, 'click');
+            break;
+
+          case 'csv':
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.metadata.endpoint);
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'target', '_blank');
+            this._renderer.invokeElementMethod(this.downloadFile.nativeElement, 'click');
+
+            break;
         }
       })
       ;
@@ -274,6 +300,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
     let dataObservable: Observable<any>;
 
+    // assemble endpoint for download link
+    const endpoint = this._ndviMapService.getTimeSeriesByLatLngEndpoint(coords, startDate, endDate, 'csv');
+
     if (changed === false && typeof this._oldTimeSeriesData !== 'undefined') {
       dataObservable = Observable.of(this._oldTimeSeriesData);
     } else {
@@ -342,6 +371,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           inputs: {
             title: `NDVI Time Series Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
             openImmediately: true,
+            metadata: {
+              endpoint
+            },
             chartOptions: {
               type: LineChartComponent,
               inputs: {
@@ -362,6 +394,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
     let dataObservable: Observable<any>;
+
+    // assemble endpoint for download link
+    const endpoint = this._ndviMapService.getDOYByLatLngEndpoint(coords, startDate, endDate, 'csv');
 
     if (changed === false && typeof this._oldDOYData !== 'undefined') {
       dataObservable = Observable.of(this._oldDOYData);
@@ -506,6 +541,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           inputs: {
             openImmediately: true,
             title: `NDVI Day of the Year Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            metadata: {
+              endpoint
+            },
             chartOptions: {
               type: LineChartComponent,
               inputs: {

@@ -17,6 +17,17 @@
             <div class="modal-body" #contentModalBody>
                 <div #chartContainer></div>
             </div>
+
+            <div class="modal-footer" #contentModalFooter>
+                <ul class="list list-unstyled list-inline">
+                    <li class="list__item">
+                        <button class="btn btn-default" type="button" value="csv" #csvBtn (click)="processExport(csvBtn.value)">Download as CSV</button>
+                    </li>
+                    <li class="list__item">
+                        <button class="btn btn-default" type="button" value="image" #imageBtn (click)="processExport(imageBtn.value)">Download as Image</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

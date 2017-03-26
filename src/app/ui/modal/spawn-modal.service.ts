@@ -12,9 +12,11 @@ import { ModalComponentData } from './modal-component-data.interface';
 @Injectable()
 export class SpawnModalService {
   private _stream: Subject<ModalComponentData>;
+  private _outputStream: Subject<any>;
 
   constructor() {
     this._stream = new Subject<ModalComponentData>();
+    this._outputStream = new Subject<any>();
   }
 
   spawn(componentData: ModalComponentData) {
@@ -23,6 +25,14 @@ export class SpawnModalService {
 
   get stream(): Subject<ModalComponentData> {
     return this._stream;
+  }
+
+  emitOutput(output: any) {
+    this._outputStream.next(output);
+  }
+
+  get outputStream(): Subject<any> {
+    return this._outputStream;
   }
 
 }

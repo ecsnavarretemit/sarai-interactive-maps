@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, Inject, OnInit, OnDestroy, Renderer } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, OnDestroy, Renderer, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -39,6 +39,8 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _currentStartDate: string;
   private _currentEndDate: string;
   private _oldCumulativeRainfallData: any;
+
+  @ViewChild('downloadFile') downloadFile: ElementRef;
 
   constructor(
     @Inject(APP_CONFIG) private _globalConfig: any,
@@ -89,6 +91,29 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         // setup map click event listener
         this.setupMapClick(popupPane);
       });
+
+    // receive outputs from the dynamically create modal
+    this._modalService.outputStream
+      .debounceTime(300)
+      .subscribe((output: any) => {
+        switch (output.type) {
+          case 'image':
+            // download image
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.data);
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'download', 'chart.jpg');
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'target', '_self');
+            this._renderer.invokeElementMethod(this.downloadFile.nativeElement, 'click');
+            break;
+
+          case 'csv':
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'href', output.metadata.endpoint);
+            this._renderer.setElementProperty(this.downloadFile.nativeElement, 'target', '_blank');
+            this._renderer.invokeElementMethod(this.downloadFile.nativeElement, 'click');
+
+            break;
+        }
+      })
+      ;
   }
 
   setupMapClick(targetEl: HTMLElement) {
@@ -221,6 +246,9 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
     let dataObservable: Observable<any>;
 
+    // assemble endpoint for download link
+    const endpoint = this._rainfallMapService.getCumulativeRainfallByLatLngEndpoint(coords, startDate, endDate, 'csv');
+
     if (changed === false && typeof this._oldCumulativeRainfallData !== 'undefined') {
       dataObservable = Observable.of(this._oldCumulativeRainfallData);
     } else {
@@ -289,6 +317,9 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           inputs: {
             title: `Cumulative Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
             openImmediately: true,
+            metadata: {
+              endpoint
+            },
             chartOptions: {
               type: LineChartComponent,
               inputs: {

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { MAP_CONFIG } from '../../map.config';
 import * as L from 'leaflet';
 import every from 'lodash-es/every';
+import includes from 'lodash-es/includes';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/of';
@@ -24,8 +25,30 @@ export class NdviMapService {
     private _http: Http
   ) { }
 
+  getTimeSeriesByLatLngEndpoint(coords: L.LatLngLiteral, startDate: string, endDate: string, format?: string): string {
+    let endpoint = `${this._config.ndvi_maps.eeApiEndpoint}/time-series/${coords.lat}/${coords.lng}/${startDate}/${endDate}`;
+
+    // append the format to the endpoint
+    if (typeof format !== 'undefined' && includes(['json', 'csv'], format)) {
+      endpoint += `?fmt=${format}`;
+    }
+
+    return endpoint;
+  }
+
+  getDOYByLatLngEndpoint(coords: L.LatLngLiteral, startDate: string, endDate: string, format?: string): string {
+    let endpoint = `${this._config.ndvi_maps.eeApiEndpoint}/day-of-the-year/${coords.lat}/${coords.lng}/${startDate}/${endDate}`;
+
+    // append the format to the endpoint
+    if (typeof format !== 'undefined' && includes(['json', 'csv'], format)) {
+      endpoint += `?fmt=${format}`;
+    }
+
+    return endpoint;
+  }
+
   getNdviTimeSeriesByLatLng(coords: L.LatLngLiteral, startDate: string, endDate: string): Observable<any> {
-    const endpoint = `${this._config.ndvi_maps.eeApiEndpoint}/time-series/${coords.lat}/${coords.lng}/${startDate}/${endDate}`;
+    const endpoint = this.getTimeSeriesByLatLngEndpoint(coords, startDate, endDate);
 
     // assemble the request headers
     const headers = new Headers();

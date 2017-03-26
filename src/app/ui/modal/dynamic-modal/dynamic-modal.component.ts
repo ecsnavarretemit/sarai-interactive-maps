@@ -38,6 +38,7 @@ import {
 export class DynamicModalComponent implements AfterViewInit {
   private _hideSubscription: Subscription;
   private _showSubscription: Subscription;
+  private _dataSubscription: Subscription;
   private _currentComponent = null;
 
   @HostBinding('class.modal-open') modalOpen = false;
@@ -93,6 +94,8 @@ export class DynamicModalComponent implements AfterViewInit {
 
         // clean up everything when component is destroyed
         component.onDestroy(() => {
+          this._dataSubscription.unsubscribe();
+
           this._showSubscription.unsubscribe();
 
           this._hideSubscription.unsubscribe();
@@ -110,6 +113,10 @@ export class DynamicModalComponent implements AfterViewInit {
 
         // save the current component
         this._currentComponent = component;
+
+        this._dataSubscription = (component.instance as BaseModalComponent).data.subscribe((data: any) => {
+          this._modalService.emitOutput(data);
+        });
 
         this._showSubscription = (component.instance as BaseModalComponent).show.subscribe(() => {
           // add the class when modal is opened.
