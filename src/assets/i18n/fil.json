@@ -87,6 +87,9 @@
 
   "RAINFALL": {
     "TITLE": "Mapa ng ulan",
-    "SCAN_DATE": "Petsa na titingnan:"
+    "STARTING_DATE": "Petsa kung kailan magsisimula:",
+    "SCAN_DATE": "Petsa na titingnan:",
+    "FILTER_BY_PROVINCE": "Salain hingil sa probinsya:",
+    "SELECT_PROVINCE": "Mamili ng probinsya"
   }
 }

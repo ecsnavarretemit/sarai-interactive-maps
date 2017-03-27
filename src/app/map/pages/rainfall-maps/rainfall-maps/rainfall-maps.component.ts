@@ -10,6 +10,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { LeafletMapService } from '../../../../leaflet';
 import { RainfallMapService } from '../rainfall-map.service';
 import { TileLayerService } from '../../../shared';
@@ -23,6 +24,7 @@ import * as L from 'leaflet';
 import assign from 'lodash-es/assign';
 import forEach from 'lodash-es/forEach';
 import map from 'lodash-es/map';
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'app-rainfall-maps',
@@ -39,6 +41,9 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _currentStartDate: string;
   private _currentEndDate: string;
   private _oldCumulativeRainfallData: any;
+  private _oldCenter: L.LatLngLiteral;
+  private _oldZoom: number;
+  private _routerParamSubscription: Subscription;
 
   @ViewChild('downloadFile') downloadFile: ElementRef;
 
@@ -59,28 +64,20 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // listen for changes in crop url parameter since `route.params` is an instance of Observable!
-    this._route.params.forEach((params: Params) => {
-      // check if date is valid
-      if (
-        /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['startDate']) &&
-        /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(params['endDate'])
-      ) {
-        // set the page title
-        this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
-
-        // save the new values of start and end date
-        this._currentStartDate = params['startDate'];
-        this._currentEndDate = params['endDate'];
-
-        this.processData(this._currentStartDate, this._currentEndDate);
-      }
-    });
-
     this._mapService
       .getMap()
       .then((mapInstance: L.Map) => {
+        const { lat, lng } = mapInstance.getCenter();
         const popupPane: HTMLElement = mapInstance.getPane('popupPane');
+
+        // store the lat and lng coordinates before we pan into the new coords.
+        this._oldCenter = {
+          lat,
+          lng
+        };
+
+        // also store the zoom level
+        this._oldZoom = mapInstance.getZoom();
 
         // save the reference to the map
         this._map = mapInstance;
@@ -91,6 +88,38 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         // setup map click event listener
         this.setupMapClick(popupPane);
       });
+
+    // get the the route params and query parameters by
+    // combining the latest values from the two observables
+    this._routerParamSubscription = Observable
+      .combineLatest(this._route.params, this._route.queryParams)
+      .subscribe((params: [Params, Params]) => {
+        const [routeParams, queryParams] = params;
+
+        // set the center of the map to the value of the center query parameter
+        // and zoom to tha location
+        if (typeof queryParams['center'] !== 'undefined') {
+          const [lat, lng] = queryParams['center'].split(',');
+
+          this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
+        }
+
+        // check if startDate and endDate is valid
+        if (
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['endDate'])
+        ) {
+          // set the page title
+          this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
+
+          // save the new values of start and end date
+          this._currentStartDate = routeParams['startDate'];
+          this._currentEndDate = routeParams['endDate'];
+
+          this.processData(this._currentStartDate, this._currentEndDate, queryParams['province']);
+        }
+      })
+      ;
 
     // receive outputs from the dynamically create modal
     this._modalService.outputStream
@@ -345,14 +374,14 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     }
   }
 
-  processData(startDate: string, endDate: string) {
+  processData(startDate: string, endDate: string, place?: string) {
     // remove all layers published on the store
     this._mapLayersStore.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
     this._tileLayerService
-      .getRainfallMapLayerData(startDate, endDate)
+      .getRainfallMapLayerData(startDate, endDate, place)
       .then((response: any) => {
         const tileUrl = this._tileLayerService.getEarthEngineMapUrl(response.mapId, response.mapToken);
 
@@ -448,6 +477,12 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // reset the page title
     this._title.setTitle(`${this._globalConfig.app_title}`);
+
+    // go the old zoom and lat,lng coords.
+    this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
+
+    // remove custom router subscription
+    this._routerParamSubscription.unsubscribe();
 
     // remove the event listener bound to the map
     this._map.off('click', this._mapClickListener);
