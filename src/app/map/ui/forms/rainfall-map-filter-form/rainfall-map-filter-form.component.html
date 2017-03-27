@@ -38,6 +38,16 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label for="ec_province_filter_sel">{{ 'NDVI.FILTER_BY_PROVINCE' | translate }}</label>
+        <select name="ec_province_filter_sel" id="ec_province_filter_sel" class="form-control" [formControl]="province">
+            <option value="">{{ 'NDVI.SELECT_PROVINCE' | translate }}</option>
+            <option *ngFor="let place_data of (provinces | async)?.places" [ngValue]="place_data">
+                {{ place_data.name }}
+            </option>
+        </select>
+    </div>
+
     <div class="form-group form-group--btn-group">
         <button type="submit" class="btn btn-success btn-block" [disabled]="!filterForm.valid">Filter</button>
     </div>
