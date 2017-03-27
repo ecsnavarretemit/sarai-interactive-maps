@@ -12,11 +12,14 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule as SaraiInteractiveMapsFormsModule, FlatpickrComponent } from '../../../../forms';
 import { MockRouter } from '../../../../mocks/router';
+import { MockLocationsService } from '../../../../mocks/map';
+import { AppConfig, APP_CONFIG } from '../../../../app.config';
 import { TranslationFactoryLoader } from '../../../../app-translation-factory.service';
+import { LocationsService } from '../../../shared';
 import { RainfallMapFilterFormComponent } from './rainfall-map-filter-form.component';
 
 describe('Component: RainfallMapFilterForm', () => {
@@ -38,6 +41,7 @@ describe('Component: RainfallMapFilterForm', () => {
         RainfallMapFilterFormComponent
       ],
       imports: [
+        HttpModule,
         FormsModule,
         ReactiveFormsModule,
         SaraiInteractiveMapsFormsModule,
@@ -45,13 +49,15 @@ describe('Component: RainfallMapFilterForm', () => {
           loader: {
             provide: TranslateLoader,
             useFactory: TranslationFactoryLoader,
-            deps: [Http]
+            deps: [Http, APP_CONFIG]
           }
         }),
       ],
       providers: [
         FormBuilder,
-        { provide: Router, useValue: mockRouter }
+        { provide: APP_CONFIG, useValue: AppConfig },
+        { provide: Router, useValue: mockRouter },
+        { provide: LocationsService, useClass: MockLocationsService }
       ]
     })
     .compileComponents();
