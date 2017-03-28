@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { Component, ElementRef, Inject, isDevMode, OnDestroy, OnInit, QueryList, Renderer, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, isDevMode, OnDestroy, OnInit, QueryList, Renderer, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
@@ -14,6 +14,7 @@ import { TooltipDirective } from 'ng2-bootstrap/tooltip';
 import { CookieService } from 'ngx-cookie';
 import { Angulartics2 } from 'angulartics2';
 import { TranslateService } from '@ngx-translate/core';
+import { LeafletMapService } from '../../../../leaflet';
 import { PdfPreviewModalComponent, SpawnModalService } from '../../../../ui';
 import { LoggerService, WindowService } from '../../../../shared';
 import { LeafletButtonComponent } from '../../../../leaflet';
@@ -30,9 +31,10 @@ import 'rxjs/add/operator/skip';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   public layersOpacity = 0.6;
   public mapZoom = 6;
+  public mapLoaderVisible = false;
   public mapCoords: L.LatLngLiteral;
   private _currentLang: string;
   private _cookieLangKey: string;
@@ -40,12 +42,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @ViewChild('controlWrapperUpperRight') controlWrapperUpperRight: ElementRef;
   @ViewChild('translateTooltip') translateTooltip: TooltipDirective;
+  @ViewChildren('mapTileLoader') mapTileLoader: QueryList<ElementRef>;
   @ViewChildren(MapTypeComponent) mapTypes: QueryList<MapTypeComponent>;
 
   constructor(
     @Inject(APP_CONFIG) private _globalConfig: any,
     public _router: Router,
     private _window: WindowService,
+    private _mapService: LeafletMapService,
     private _logger: LoggerService,
     private _modal: SpawnModalService,
     private _translate: TranslateService,
@@ -100,6 +104,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         this._renderer.invokeElementMethod(this._window.getNativeWindow(), 'dispatchEvent', [
           new Event('resize')
         ]);
+      })
+      ;
+
+    this._mapService.mapLoaderStream.subscribe((tileLayerDetails: any) => {
+      this.mapLoaderVisible = !tileLayerDetails.loaded;
+    });
+  }
+
+  ngAfterViewInit() {
+    this.mapTileLoader.changes
+      .filter((queryList: QueryList<ElementRef>) => (queryList.length > 0))
+      .subscribe((queryList: QueryList<ElementRef>) => {
+        this._renderer.setElementClass(queryList.first.nativeElement, 'preloader--visible', true);
       })
       ;
   }

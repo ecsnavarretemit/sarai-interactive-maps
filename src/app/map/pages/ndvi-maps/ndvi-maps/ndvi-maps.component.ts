@@ -575,6 +575,11 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       type: 'REMOVE_ALL_LAYERS'
     });
 
+    this._mapService.mapLoaderStream.next({
+      id: null,
+      loaded: false
+    });
+
     this._tileLayerService
       .getNdviLayerData(startDate, endDate, place)
       .then((response: any) => {
@@ -606,7 +611,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           payload: layer
         });
 
-        return this._mapService.addNewTileLayer(layer.id, layer.url, layer.layerOptions);
+        return this._mapService.addNewTileLayer(layer.id, layer.url, layer.layerOptions, true);
       })
       .catch((error) => {
         let message = error.message;

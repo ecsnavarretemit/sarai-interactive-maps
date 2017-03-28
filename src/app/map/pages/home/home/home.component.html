@@ -2,6 +2,18 @@
     <router-outlet></router-outlet>
     <router-outlet name="route-dependent-control" map-control></router-outlet>
 
+    <div class="preloader preloader--map-tile-loader" map-control *ngIf="mapLoaderVisible" #mapTileLoader>
+        <div class="preloader__content">
+            <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type
             [activateImmediately]="shouldActivateMapType('/suitability-maps')"

@@ -6,6 +6,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 import each from 'lodash-es/each';
 import filter from 'lodash-es/filter';
 import has from 'lodash-es/has';
@@ -18,16 +19,21 @@ interface LayerCollection {
 
 @Injectable()
 export class LeafletMapService {
+  public mapLoaderStream: Subject<any>;
   private _leafletApi: any = L;
   private _map: Promise<L.Map>;
   private _mapResolver: (value?: L.Map) => void;
   private _wmsLayers: LayerCollection = {};
   private _tileLayers: LayerCollection = {};
 
+  // TODO: mapLoaderStream should be cancellable
   constructor() {
     this._map = new Promise<L.Map>((resolve: () => void) => {
       this._mapResolver = resolve;
     });
+
+    // stream for load event handlers for overlay tiles
+    this.mapLoaderStream = new Subject<any>();
   }
 
   createMap(el: HTMLElement, mapOptions: L.MapOptions): Promise<void> {
@@ -52,7 +58,7 @@ export class LeafletMapService {
       ;
   }
 
-  addTileLayer(id: string, layer: L.TileLayer): Promise<L.Map> {
+  addTileLayer(id: string, layer: L.TileLayer, fireLoadEvt = false): Promise<L.Map> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._tileLayers, id)) {
@@ -62,13 +68,23 @@ export class LeafletMapService {
         // add the layer to the map
         mapInstance.addLayer(layer);
 
+        // bind an event listener to the load event
+        if (fireLoadEvt) {
+          layer.once('load', (evt: Event) => {
+            this.mapLoaderStream.next({
+              id,
+              loaded: true
+            });
+          });
+        }
+
         // save the reference of the layer to the layers propery
         this._tileLayers[id] = layer;
       })
       ;
   }
 
-  addNewTileLayer(id: string, url: string, options: L.TileLayerOptions): Promise<L.TileLayer> {
+  addNewTileLayer(id: string, url: string, options: L.TileLayerOptions, fireLoadEvt = false): Promise<L.TileLayer> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._tileLayers, id)) {
@@ -79,6 +95,16 @@ export class LeafletMapService {
 
         // add the layer to the map
         mapInstance.addLayer(layer);
+
+        // bind an event listener to the load event
+        if (fireLoadEvt) {
+          layer.once('load', (evt: Event) => {
+            this.mapLoaderStream.next({
+              id,
+              loaded: true
+            });
+          });
+        }
 
         // save the reference of the layer to the layers propery
         this._tileLayers[id] = layer;
@@ -118,7 +144,7 @@ export class LeafletMapService {
       ;
   }
 
-  addWMSLayer(id: string, layer: L.TileLayer.WMS): Promise<L.Map> {
+  addWMSLayer(id: string, layer: L.TileLayer.WMS, fireLoadEvt = false): Promise<L.Map> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._wmsLayers, id)) {
@@ -128,13 +154,23 @@ export class LeafletMapService {
         // add the layer to the map
         mapInstance.addLayer(layer);
 
+        // bind an event listener to the load event
+        if (fireLoadEvt) {
+          layer.once('load', (evt: Event) => {
+            this.mapLoaderStream.next({
+              id,
+              loaded: true
+            });
+          });
+        }
+
         // save the reference of the layer to the layers propery
         this._wmsLayers[id] = layer;
       })
       ;
   }
 
-  addNewWMSLayer(id: string, url: string, options: L.WMSOptions): Promise<L.TileLayer.WMS | Error> {
+  addNewWMSLayer(id: string, url: string, options: L.WMSOptions, fireLoadEvt = false): Promise<L.TileLayer.WMS | Error> {
     return this.getMap()
       .then((mapInstance: L.Map) => {
         if (has(this._wmsLayers, id)) {
@@ -145,6 +181,16 @@ export class LeafletMapService {
 
         // add the layer to the map
         mapInstance.addLayer(layer);
+
+        // bind an event listener to the load event
+        if (fireLoadEvt) {
+          layer.once('load', (evt: Event) => {
+            this.mapLoaderStream.next({
+              id,
+              loaded: true
+            });
+          });
+        }
 
         // save the reference of the layer to the layers propery
         this._wmsLayers[id] = layer;
