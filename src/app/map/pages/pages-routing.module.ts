@@ -48,6 +48,12 @@ const routes: Routes = [
         path: 'rainfall-maps/:startDate/:endDate',
         loadChildren: './rainfall-maps/rainfall-maps.module#RainfallMapsModule'
       },
+
+      // duplicated for required url parameter `startDate` and `endDate`
+      {
+        path: 'climate-outlook',
+        loadChildren: './climate-outlook/climate-outlook.module#ClimateOutlookModule'
+      },
     ]
   }
 ];
