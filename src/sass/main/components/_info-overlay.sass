@@ -1,0 +1,22 @@
+// *************************************#
+// [_info-overlay.sass]
+// *************************************#
+
+.info-overlay__content
+  position: absolute
+  bottom: 0
+  left: 0
+  z-index: 1
+  width: 100%
+  height: calc(100% - 50px)
+  background-color: #FFF
+
+.info-overlay__btn-trigger
+  position: absolute
+  z-index: 2
+  bottom: 0
+  left: 50%
+  +transform(translateX(-50%))
+  +border-bottom-radius(0px)
+
+
