@@ -36,7 +36,10 @@ export function baseInfoOverlayAnimation(): AnimationEntryMetadata {
   ]
 })
 export class InfoOverlayComponent implements OnInit {
-  public overlayAnimationState = 'visible';
+  public overlayAnimationState = 'hidden';
+  private visibleText = 'More Info on Suitability Maps';
+  private hideText = 'Hide Info';
+  public btnText = this.visibleText;
 
   constructor() { }
 
@@ -45,8 +48,10 @@ export class InfoOverlayComponent implements OnInit {
   toggle() {
     if (this.overlayAnimationState === 'hidden') {
       this.overlayAnimationState = 'visible';
+      this.btnText = this.hideText;
     } else {
       this.overlayAnimationState = 'hidden';
+      this.btnText = this.visibleText;
     }
   }
 
