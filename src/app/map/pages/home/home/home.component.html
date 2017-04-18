@@ -4,7 +4,7 @@
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type
-            [activateImmediately]="shouldActivateMapType('/suitability-maps')"
+            [activateImmediately]="urlIsActive('/suitability-maps')"
             (activate)="togglePanels(suitabilityMapType)"
             #suitabilityMapType>
 
@@ -24,7 +24,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="shouldActivateMapType('/crop-production-area')"
+            [activateImmediately]="urlIsActive('/crop-production-area')"
             (activate)="togglePanels(cropProductionAreaMapType)"
             #cropProductionAreaMapType>
 
@@ -44,7 +44,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="shouldActivateMapType('/ndvi')"
+            [activateImmediately]="urlIsActive('/ndvi')"
             (activate)="togglePanels(ndviMapType)"
             #ndviMapType>
 
@@ -64,7 +64,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="shouldActivateMapType('/rainfall-maps')"
+            [activateImmediately]="urlIsActive('/rainfall-maps')"
             (activate)="togglePanels(rainfallMapType)"
             #rainfallMapType>
 
@@ -132,7 +132,7 @@
                 </a>
             </li>
 
-            <li class="list__item">
+            <li class="list__item" [class.hidden]="!urlIsActive('/suitability-maps')">
                 <a href="#"
                     class="btn btn--dome btn--download-map-image tooltip-wrapper"
                     (click)="$event.preventDefault(); imageDownloadSidebar.toggle()">
@@ -142,7 +142,7 @@
                 </a>
             </li>
 
-            <li class="list__item">
+            <li class="list__item" [class.hidden]="!urlIsActive('/suitability-maps')">
                 <a href="#"
                     class="btn btn--dome btn--watch-videos tooltip-wrapper"
                     (click)="$event.preventDefault(); videoSidebar.toggle()">

@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       ;
   }
 
-  shouldActivateMapType(urlPart: string): boolean {
+  urlIsActive(urlPart: string): boolean {
     return this._router.isActive(urlPart, false);
   }
 
