@@ -2,12 +2,17 @@
     [@controlWrapper]="controlWrapperAnimationState"
     #controlwrapper>
     <section class="map__control__section">
-        <h2 class="map__control__title title">
-            <span class="title__text">{{ 'LEVELS.TITLE' | translate }}</span>
+        <header class="map__control__title title clearfix">
+            <h2 class="title__text pull-left">{{ 'LEVELS.TITLE' | translate }}</h2>
+
+            <span class="title__extra pull-left">
+                Check the box of your desired suitability level. Click Learn More for more tips on navigation.
+            </span>
+
             <span class="pull-right title__icon title__icon--actionable" (click)="onHideButtonClick($event)">
                 <i class="glyphicon glyphicon-resize-small" placement="right" tooltip="Minimize"></i>
             </span>
-        </h2>
+        </header>
 
         <div class="map__control__body">
             <ul class="list list-unstyled list--suitability-level">

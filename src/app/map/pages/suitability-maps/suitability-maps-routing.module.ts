@@ -10,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 import { SuitabilityMapsFilterComponent } from './suitability-maps-filter/suitability-maps-filter.component';
+import { InfoOverlayComponent } from './info-overlay/info-overlay.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,12 @@ const routes: Routes = [
     path: '',
     component: SuitabilityMapsFilterComponent,
     outlet: 'route-dependent-control'
+  },
+
+  {
+    path: '',
+    component: InfoOverlayComponent,
+    outlet: 'info-overlay-control'
   }
 ];
 

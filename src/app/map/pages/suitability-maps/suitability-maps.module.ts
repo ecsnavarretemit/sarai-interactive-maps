@@ -17,6 +17,7 @@ import { SuitabilityMapsRoutingModule } from './suitability-maps-routing.module'
 
 import { SuitabilityMapsComponent } from './suitability-maps/suitability-maps.component';
 import { SuitabilityMapsFilterComponent } from './suitability-maps-filter/suitability-maps-filter.component';
+import { InfoOverlayComponent } from './info-overlay/info-overlay.component';
 
 @NgModule({
   imports: [
@@ -31,11 +32,13 @@ import { SuitabilityMapsFilterComponent } from './suitability-maps-filter/suitab
   ],
   declarations: [
     SuitabilityMapsComponent,
-    SuitabilityMapsFilterComponent
+    SuitabilityMapsFilterComponent,
+    InfoOverlayComponent
   ],
   exports: [
     SuitabilityMapsComponent,
-    SuitabilityMapsFilterComponent
+    SuitabilityMapsFilterComponent,
+    InfoOverlayComponent
   ]
 })
 export class SuitabilityMapsModule { }
