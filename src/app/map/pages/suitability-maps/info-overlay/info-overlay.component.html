@@ -1,4 +1,4 @@
-<div class="info-overlay">
+<div class="info-overlay" [class.hidden]="!visible">
     <button class="btn btn--1 info-overlay__btn-trigger" (click)="toggle()">{{ btnText }}</button>
     <div class="info-overlay__content" [@infoOverlay]="overlayAnimationState">
         <div class="container">

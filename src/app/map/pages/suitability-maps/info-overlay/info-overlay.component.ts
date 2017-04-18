@@ -5,7 +5,10 @@
  * Licensed under MIT
  */
 
-import { animate, AnimationEntryMetadata, Component, OnInit, state, style, transition, trigger } from '@angular/core';
+import { animate, AnimationEntryMetadata, Component, OnDestroy, OnInit, state, style, transition, trigger } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
 
 export function baseInfoOverlayAnimation(): AnimationEntryMetadata {
   return trigger('infoOverlay', [
@@ -35,15 +38,33 @@ export function baseInfoOverlayAnimation(): AnimationEntryMetadata {
     baseInfoOverlayAnimation()
   ]
 })
-export class InfoOverlayComponent implements OnInit {
+export class InfoOverlayComponent implements OnDestroy, OnInit {
   public overlayAnimationState = 'hidden';
   private visibleText = 'Learn More';
   private hideText = 'Back to Suitability Maps';
   public btnText = this.visibleText;
+  public visible = true;
+  private _panelsState: Observable<any>;
+  private _panelSubscription: Subscription;
 
-  constructor() { }
+  constructor(private _store: Store<any>) {
+    // get the panels store
+    this._panelsState = this._store.select('panels');
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // subscribe to the changes to the panels state
+    this._panelSubscription = this._panelsState
+      .debounceTime(100)
+      .subscribe((state: any) => {
+        if (state.active === 'suitability-maps') {
+          this.visible = true;
+        } else {
+          this.visible = false;
+        }
+      })
+      ;
+  }
 
   toggle() {
     if (this.overlayAnimationState === 'hidden') {
@@ -53,6 +74,11 @@ export class InfoOverlayComponent implements OnInit {
       this.overlayAnimationState = 'hidden';
       this.btnText = this.visibleText;
     }
+  }
+
+  ngOnDestroy() {
+    // remove subscription from the changes to the state
+    this._panelSubscription.unsubscribe();
   }
 
 }

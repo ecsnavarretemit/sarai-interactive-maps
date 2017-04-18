@@ -7,6 +7,7 @@
 
 import { animate, Component, HostListener, OnInit, OnDestroy, Renderer, state, style, transition, trigger } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { Layer } from '../../../../store';
 import { LeafletMapService } from '../../../../leaflet';
@@ -17,6 +18,7 @@ import { BasePanelComponent } from '../../../ui';
 import map from 'lodash-es/map';
 import omit from 'lodash-es/omit';
 import values from 'lodash-es/values';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-suitability-maps-filter',
@@ -52,6 +54,8 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
   public buttonState = 'hidden';
   public levelTooltipsDisabled = true;
   private _suitabilityLevels: Observable<any>;
+  private _panelsState: Observable<any>;
+  private _panelSubscription: Subscription;
 
   constructor(
     private _childRenderer: Renderer,
@@ -62,6 +66,9 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
   ) {
     // call the parent component constructor method
     super(_childRenderer, _childMapService);
+
+    // get the panels store
+    this._panelsState = this._store.select('panels');
 
     // get the suitability levels from the store
     this._suitabilityLevels = this._store.select('suitabilityLevels');
@@ -96,6 +103,20 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
     this._childRenderer.invokeElementMethod(this._window.getNativeWindow(), 'dispatchEvent', [
       new Event('resize')
     ]);
+
+    // subscribe to the changes to the panels state
+    this._panelSubscription = this._panelsState
+      .debounceTime(100)
+      .subscribe((state: any) => {
+        if (state.active === 'suitability-maps') {
+          this.controlWrapperAnimationState = 'visible';
+          this.buttonState = 'hidden';
+        } else {
+          this.controlWrapperAnimationState = 'hidden';
+          this.buttonState = 'hidden';
+        }
+      })
+      ;
   }
 
   onHideButtonClick(evt: Event) {
@@ -139,6 +160,9 @@ export class SuitabilityMapsFilterComponent extends BasePanelComponent implement
   ngOnDestroy() {
     // make sure we destroy the component
     super.ngOnDestroy();
+
+    // remove subscription from the changes to the state
+    this._panelSubscription.unsubscribe();
   }
 
 }
