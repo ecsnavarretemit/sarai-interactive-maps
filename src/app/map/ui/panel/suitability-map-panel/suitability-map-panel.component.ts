@@ -9,6 +9,7 @@ import { Component, OnInit, Renderer } from '@angular/core';
 import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../../../../leaflet';
 import { SuitabilityMapService } from '../../../shared';
 import { Crop } from '../../../crop.interface';
@@ -32,7 +33,8 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
     private _router: Router,
     private _childRenderer: Renderer,
     private _childMapService: LeafletMapService,
-    private _suitabilityMapService: SuitabilityMapService
+    private _suitabilityMapService: SuitabilityMapService,
+    private _store: Store<any>,
   ) {
     // call the parent constructor
     super(_childRenderer, _childMapService);
@@ -43,6 +45,30 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
     super.ngOnInit();
 
     this.cropData = this._suitabilityMapService.getCropsOrganizedByType();
+
+    // add the panel to the store
+    this._store.dispatch({
+      type: 'ADD_PANEL',
+      payload: 'suitability-maps'
+    });
+  }
+
+  togglePanelVisibility(immediate = false) {
+    super.togglePanelVisibility(immediate);
+
+    if (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') {
+      // add the panel to the store
+      this._store.dispatch({
+        type: 'ACTIVATE_PANEL',
+        payload: 'suitability-maps'
+      });
+    } else {
+      // add the panel to the store
+      this._store.dispatch({
+        type: 'DEACTIVATE_PANEL',
+        payload: 'suitability-maps'
+      });
+    }
   }
 
   isCropActive(crop: string, ): boolean {
