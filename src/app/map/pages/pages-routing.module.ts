@@ -33,7 +33,7 @@ const routes: Routes = [
 
       // duplicated for required url parameter `startDate` and `endDate`
       {
-        path: 'rainfall-maps/:startDate/:endDate',
+        path: 'rainfall-maps',
         loadChildren: './rainfall-maps/rainfall-maps.module#RainfallMapsModule'
       },
     ]

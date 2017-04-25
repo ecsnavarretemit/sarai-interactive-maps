@@ -14,6 +14,11 @@ const routes: Routes = [
   {
     path: '',
     component: RainfallMapsComponent
+  },
+
+  {
+    path: ':startDate/:endDate',
+    component: RainfallMapsComponent
   }
 ];
 

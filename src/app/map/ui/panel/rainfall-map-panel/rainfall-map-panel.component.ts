@@ -46,19 +46,19 @@ export class RainfallMapPanelComponent extends BasePanelComponent implements OnI
   togglePanelVisibility(immediate = false) {
     super.togglePanelVisibility(immediate);
 
-    if (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'ACTIVATE_PANEL',
-        payload: 'rainfall-maps'
-      });
-    } else {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'DEACTIVATE_PANEL',
-        payload: 'rainfall-maps'
-      });
+    if (
+      (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') &&
+      !this._router.isActive('/rainfall-maps', false)
+    ) {
+      this._router.navigateByUrl('/rainfall-maps');
     }
+
+    // if (
+    //   (this.controlWrapperAnimationState === 'hidden' || this.controlWrapperAnimationState === 'hidden-immediate') &&
+    //   this._router.isActive('/ndvi', false)
+    // ) {
+    //   this._router.navigateByUrl('/');
+    // }
   }
 
   isMapActive(): boolean {
