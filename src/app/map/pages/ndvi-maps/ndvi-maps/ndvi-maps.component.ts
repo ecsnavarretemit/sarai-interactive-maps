@@ -67,7 +67,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     private _route: ActivatedRoute,
     private _title: Title,
     private _renderer: Renderer,
-    private _mapLayersStore: Store<any>
+    private _store: Store<any>
   ) {
     // make sure that the `this` value inside the onMapClick is this component's instance.
     this._mapClickListener = this.onMapClick.bind(this);
@@ -128,7 +128,19 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           this._currentStartDate = routeParams['startDate'];
           this._currentEndDate = routeParams['endDate'];
 
+          // activate the panel
+          this._store.dispatch({
+            type: 'ACTIVATE_PANEL',
+            payload: 'ndvi-maps'
+          });
+
           this.processData(this._currentStartDate, this._currentEndDate, queryParams['province']);
+        } else {
+          // add the panel to the store
+          this._store.dispatch({
+            type: 'DEACTIVATE_PANEL',
+            payload: 'ndvi-maps'
+          });
         }
       })
       ;
@@ -577,7 +589,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
   processData(startDate: string, endDate: string, place?: string) {
     // remove all layers published on the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
@@ -607,7 +619,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
         const layer: Layer = resolvedValue[0];
 
         // add the new layer to the store
-        this._mapLayersStore.dispatch({
+        this._store.dispatch({
           type: 'ADD_LAYER',
           payload: layer
         });
@@ -725,7 +737,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     this._map = null;
 
     // remove all layers published on the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 

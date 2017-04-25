@@ -14,6 +14,11 @@ const routes: Routes = [
   {
     path: '',
     component: NdviMapsComponent
+  },
+
+  {
+    path: ':startDate/:endDate',
+    component: NdviMapsComponent
   }
 ];
 

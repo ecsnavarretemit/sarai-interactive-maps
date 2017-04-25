@@ -27,7 +27,7 @@ const routes: Routes = [
 
       // duplicated for required url parameters `startDate` and `endDate`
       {
-        path: 'ndvi/:startDate/:endDate',
+        path: 'ndvi',
         loadChildren: './ndvi-maps/ndvi-maps.module#NdviMapsModule'
       },
 
