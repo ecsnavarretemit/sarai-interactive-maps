@@ -28,10 +28,13 @@ import reduce from 'lodash-es/reduce';
 import * as Chart from 'chart.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/of';
 
 @Component({
@@ -45,6 +48,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   private _map: L.Map;
   private _layerId: string;
   private _routerParamSubscription: Subscription;
+  private _mapSubscription: Subscription;
   private _oldCenter: L.LatLngLiteral;
   private _oldZoom: number;
   private _marker: L.Marker;
@@ -79,7 +83,6 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
       .getMap()
       .then((mapInstance: L.Map) => {
         const { lat, lng } = mapInstance.getCenter();
-        const popupPane: HTMLElement = mapInstance.getPane('popupPane');
 
         // store the lat and lng coordinates before we pan into the new coords.
         this._oldCenter = {
@@ -92,6 +95,39 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
         // save the reference to the map
         this._map = mapInstance;
+      })
+      ;
+
+    this._mapSubscription = Observable
+      .combineLatest(Observable.fromPromise(this._mapService.getMap()), this._route.params, this._route.queryParams)
+      .do((params: [L.Map, Params, Params]) => {
+        const [mapInstance, , ] = params;
+
+        // remove any existing marker on the map
+        this.removeMarker();
+
+        // remove the event listener bound to the map
+        mapInstance.off('click', this._mapClickListener);
+
+        // remove the event listener bound by the angular renderer
+        forEach(this._popupEventListeners, (listener: Function) => {
+          listener();
+        });
+
+        // empty up the array
+        this._popupEventListeners = [];
+      })
+      .filter((params: [L.Map, Params, Params]) => {
+        const [, routeParams, ] = params;
+
+        return (
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['endDate'])
+        );
+      })
+      .subscribe((params: [L.Map, Params, Params]) => {
+        const [mapInstance, , ] = params;
+        const popupPane: HTMLElement = mapInstance.getPane('popupPane');
 
         // bind the click callback to the click event
         mapInstance.on('click', this._mapClickListener);
@@ -721,6 +757,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
 
     // remove custom router subscription
     this._routerParamSubscription.unsubscribe();
+
+    // remove the combination of map and router subscription
+    this._mapSubscription.unsubscribe();
 
     // remove the event listener bound to the map
     this._map.off('click', this._mapClickListener);
