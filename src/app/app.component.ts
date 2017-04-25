@@ -5,7 +5,7 @@
  * Licensed under MIT
  */
 
-import { AfterViewInit, Component, isDevMode } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, isDevMode, QueryList, Renderer, ViewChildren } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Angulartics2, Angulartics2GoogleAnalytics } from 'angulartics2';
 import { LoggerService, StreamData } from './shared';
@@ -19,8 +19,10 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements AfterViewInit {
+  @ViewChildren('dropdown') dropdowns: QueryList<ElementRef>;
 
   constructor(
+    private _renderer: Renderer,
     private _logger: LoggerService,
     private _modal: SpawnModalService,
     private _angulartics: Angulartics2,
@@ -48,6 +50,26 @@ export class AppComponent implements AfterViewInit {
             message: data.message
           }
         });
+      })
+      ;
+  }
+
+  enableDropdown(el) {
+    // flag to determine if class should be added or not
+    const add = !el.classList.contains('open');
+
+    // add class to the element
+    this._renderer.setElementClass(el, 'open', add);
+  }
+
+  @HostListener('document:click', ['$event'])
+  documentClick(evt: Event) {
+    this.dropdowns
+      .filter((item: ElementRef) => {
+        return !item.nativeElement.contains(evt.target);
+      })
+      .forEach((item: ElementRef) => {
+        this._renderer.setElementClass(item.nativeElement, 'open', false);
       })
       ;
   }

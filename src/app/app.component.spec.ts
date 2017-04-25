@@ -7,6 +7,7 @@
  * Licensed under MIT
  */
 
+import { Renderer } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
@@ -58,6 +59,7 @@ describe('App: SaraiInteractiveMaps', () => {
 
       providers: [
         LoggerService,
+        Renderer,
 
         { provide: Angulartics2, useClass: MockAngulartics2 },
         { provide: Angulartics2GoogleAnalytics, useClass: MockAngulartics2GoogleAnalytics },
