@@ -52,19 +52,19 @@ export class CropProductionAreaPanelComponent extends BasePanelComponent impleme
   togglePanelVisibility(immediate = false) {
     super.togglePanelVisibility(immediate);
 
-    if (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'ACTIVATE_PANEL',
-        payload: 'crop-production-area-maps'
-      });
-    } else {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'DEACTIVATE_PANEL',
-        payload: 'crop-production-area-maps'
-      });
+    if (
+      (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') &&
+      !this._router.isActive('/crop-production-area', false)
+    ) {
+      this._router.navigateByUrl('/crop-production-area');
     }
+
+    // if (
+    //   (this.controlWrapperAnimationState === 'hidden' || this.controlWrapperAnimationState === 'hidden-immediate') &&
+    //   this._router.isActive('/crop-production-area', false)
+    // ) {
+    //   this._router.navigateByUrl('/');
+    // }
   }
 
   redirect(event, crop: string) {

@@ -63,12 +63,12 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
       this._router.navigateByUrl('/suitability-maps');
     }
 
-    if (
-      (this.controlWrapperAnimationState === 'hidden' || this.controlWrapperAnimationState === 'hidden-immediate') &&
-      this._router.isActive('/suitability-maps', false)
-    ) {
-      this._router.navigateByUrl('/');
-    }
+    // if (
+    //   (this.controlWrapperAnimationState === 'hidden' || this.controlWrapperAnimationState === 'hidden-immediate') &&
+    //   this._router.isActive('/suitability-maps', false)
+    // ) {
+    //   this._router.navigateByUrl('/');
+    // }
   }
 
   isCropActive(crop: string, ): boolean {
