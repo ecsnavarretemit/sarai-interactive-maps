@@ -19,6 +19,11 @@ const routes: Routes = [
   },
 
   {
+    path: ':crop',
+    component: SuitabilityMapsComponent
+  },
+
+  {
     path: '',
     component: SuitabilityMapsFilterComponent,
     outlet: 'route-dependent-control'

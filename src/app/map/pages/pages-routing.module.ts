@@ -20,12 +20,6 @@ const routes: Routes = [
         loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
       },
 
-      // duplicated for required url parameter `crop`
-      {
-        path: 'suitability-maps/:crop',
-        loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
-      },
-
       {
         path: 'crop-production-area',
         loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'

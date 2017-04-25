@@ -51,9 +51,6 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
   ) {
     const resolvedConfig = this._mapConfig.suitability_maps;
 
-    // set default crop
-    this.crop = 'rice';
-
     // set default wms tile layer
     this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
 
@@ -91,14 +88,27 @@ export class SuitabilityMapsComponent implements OnInit, OnDestroy {
     // listen for changes in crop url parameter since `route.params` is an instance of Observable!
     this._route.params.forEach((params: Params) => {
       if (typeof params['crop'] !== 'undefined') {
+        // set the crop property
         this.crop = params['crop'];
+
+        // activate the panel
+        this._store.dispatch({
+          type: 'ACTIVATE_PANEL',
+          payload: 'suitability-maps'
+        });
+
+        // process wms layers
+        this.processLayers();
+      } else {
+        // deactivate the panel
+        this._store.dispatch({
+          type: 'DEACTIVATE_PANEL',
+          payload: 'suitability-maps'
+        });
       }
 
       // set the page title
       this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
-
-      // process wms layers
-      this.processLayers();
     });
 
     // retrieve the map instance
