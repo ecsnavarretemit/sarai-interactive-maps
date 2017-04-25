@@ -42,7 +42,7 @@
 
   "SUITABILITY": {
     "TITLE": "Suitability Map",
-    "DESCRIPTION": "Shows what crops are best to plant in a specific area to attain maximum yield.",
+    "DESCRIPTION": "Shows what crops are best to plant in a specific area to attain maximum yield. Click on any crop to start.",
     "Rice": "Rice",
     "Corn": "Corn",
     "Banana": "Banana",
