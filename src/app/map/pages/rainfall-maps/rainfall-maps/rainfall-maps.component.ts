@@ -340,11 +340,14 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           }
         };
 
+        const modalTitle = `Cumulative Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to \
+                            ${parsedEndDate.format('MMMM D, YYYY')}) for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
+
         // show the chart modal
         this._modalService.spawn({
           component: ChartModalComponent,
           inputs: {
-            title: `Cumulative Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            title: modalTitle,
             openImmediately: true,
             metadata: {
               endpoint
@@ -451,10 +454,10 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   generatePopupHtml(coords: L.LatLngLiteral): string {
     return `<dl class="list list--feature-info">
       <dt class="list__item list__item--key">Latitude:</dt>
-      <dd class="list__item list__item--value">${coords.lat}</dd>
+      <dd class="list__item list__item--value">${coords.lat.toFixed(5)}</dd>
 
       <dt class="list__item list__item--key">Longitude:</dt>
-      <dd class="list__item list__item--value">${coords.lng}</dd>
+      <dd class="list__item list__item--value">${coords.lng.toFixed(5)}</dd>
 
       <dt class="list__item list__item--key">Cumulative Rainfall:</dt>
       <dd class="list__item list__item--value">

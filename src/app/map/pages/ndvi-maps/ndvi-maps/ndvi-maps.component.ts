@@ -365,11 +365,14 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           }
         };
 
+        const modalTitle = `NDVI Time Series Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')}) \
+                          for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
+
         // show the chart modal
         this._modalService.spawn({
           component: ChartModalComponent,
           inputs: {
-            title: `NDVI Time Series Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            title: modalTitle,
             openImmediately: true,
             metadata: {
               endpoint
@@ -532,6 +535,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           }
         };
 
+        const modalTitle = `NDVI Day of the Year Data (${parsedStartDate.format('MMMM D, YYYY')} to \
+                            ${parsedEndDate.format('MMMM D, YYYY')}) for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
+
         // charts fail to render properly due to xAxis does not offer stepSize option.
         // Too many ticks rendered on the X Axis of the chart.see this issues:
         // <https://github.com/chartjs/Chart.js/issues/3811>
@@ -540,7 +546,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           component: ChartModalComponent,
           inputs: {
             openImmediately: true,
-            title: `NDVI Day of the Year Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            title: modalTitle,
             metadata: {
               endpoint
             },
@@ -646,10 +652,10 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
   generatePopupHtml(coords: L.LatLngLiteral): string {
     return `<dl class="list list--feature-info">
       <dt class="list__item list__item--key">Latitude:</dt>
-      <dd class="list__item list__item--value">${coords.lat}</dd>
+      <dd class="list__item list__item--value">${coords.lat.toFixed(5)}</dd>
 
       <dt class="list__item list__item--key">Longitude:</dt>
-      <dd class="list__item list__item--value">${coords.lng}</dd>
+      <dd class="list__item list__item--value">${coords.lng.toFixed(5)}</dd>
 
       <dt class="list__item list__item--key">NDVI Time Series Chart:</dt>
       <dd class="list__item list__item--value">
