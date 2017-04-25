@@ -8,6 +8,7 @@
 import { Component, OnInit, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import { basePanelAnimation, BasePanelComponent } from '../base-panel/base-panel.component';
 import { LeafletMapService } from '../../../../leaflet';
 import { CropProductionAreaMapService } from '../../../shared';
@@ -25,6 +26,7 @@ export class CropProductionAreaPanelComponent extends BasePanelComponent impleme
   public cropData: Observable<any>;
 
   constructor(
+    private _store: Store<any>,
     private _router: Router,
     private _childRenderer: Renderer,
     private _childMapService: LeafletMapService,
@@ -39,6 +41,30 @@ export class CropProductionAreaPanelComponent extends BasePanelComponent impleme
     super.ngOnInit();
 
     this.cropData = this._cropProductionAreaMapService.getCrops();
+
+    // add the panel to the store
+    this._store.dispatch({
+      type: 'ADD_PANEL',
+      payload: 'crop-production-area-maps'
+    });
+  }
+
+  togglePanelVisibility(immediate = false) {
+    super.togglePanelVisibility(immediate);
+
+    if (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') {
+      // add the panel to the store
+      this._store.dispatch({
+        type: 'ACTIVATE_PANEL',
+        payload: 'crop-production-area-maps'
+      });
+    } else {
+      // add the panel to the store
+      this._store.dispatch({
+        type: 'DEACTIVATE_PANEL',
+        payload: 'crop-production-area-maps'
+      });
+    }
   }
 
   redirect(event, crop: string) {

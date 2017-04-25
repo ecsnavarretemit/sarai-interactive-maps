@@ -9,7 +9,9 @@
 
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
+import { provideStore } from '@ngrx/store';
 import { LeafletMapService } from '../../../../leaflet';
+import { PanelsReducer } from '../../../../store';
 import { NdviPanelComponent } from './ndvi-panel.component';
 
 describe('Component: NdviPanel', () => {
@@ -19,7 +21,10 @@ describe('Component: NdviPanel', () => {
       providers: [
         Renderer,
         LeafletMapService,
-        NdviPanelComponent
+        NdviPanelComponent,
+        provideStore({
+          panels: PanelsReducer
+        })
       ]
     });
   });

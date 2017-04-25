@@ -6,7 +6,9 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideStore } from '@ngrx/store';
 
+import { PanelsReducer } from '../../../../store';
 import { InfoOverlayComponent } from './info-overlay.component';
 
 describe('InfoOverlayComponent', () => {
@@ -15,7 +17,14 @@ describe('InfoOverlayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoOverlayComponent ]
+      declarations: [
+        InfoOverlayComponent
+      ],
+      providers: [
+        provideStore({
+          panels: PanelsReducer
+        })
+      ]
     })
     .compileComponents();
   }));

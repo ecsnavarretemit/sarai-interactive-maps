@@ -10,8 +10,10 @@
 import { Renderer } from '@angular/core';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { provideStore } from '@ngrx/store';
 import { LeafletMapService } from '../../../../leaflet';
 import { MockRouter } from '../../../../mocks/router';
+import { PanelsReducer } from '../../../../store';
 import { RainfallMapPanelComponent } from './rainfall-map-panel.component';
 
 describe('Component: RainfallMapPanel', () => {
@@ -25,6 +27,9 @@ describe('Component: RainfallMapPanel', () => {
         RainfallMapPanelComponent,
 
         { provide: Router, useValue: mockRouter },
+        provideStore({
+          panels: PanelsReducer
+        })
       ]
     });
   });
