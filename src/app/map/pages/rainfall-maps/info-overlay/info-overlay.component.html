@@ -1,0 +1,114 @@
+<div class="info-overlay" [class.hidden]="!visible">
+    <button class="btn btn--1 info-overlay__btn-trigger" (click)="toggle()">{{ btnText }}</button>
+    <div class="info-overlay__content" [@infoOverlay]="overlayAnimationState">
+        <div class="container">
+            <div class="row content-wrapper">
+                <div class="col-md-4">
+                    <h2>Rainfall Maps</h2>
+
+                    <p>
+                        Data used for the rainfall map came from the Climate Hazards Group Infrared Precipitation with Station data(CHIRPS).
+                        Data from CHIRPS displayed here are five-day increments. In this map, areas are highlighted depending on the
+                        amount of rainfall they are experiencing: red for driest, yellow for average, and green for wettest.
+                    </p>
+
+                    <div>
+                        <h3>Project 2, Environmental Characterization</h3>
+                        <dl class="dl-horizontal">
+                            <dt>Study Leader:</dt>
+                            <dd>Prof. Nelio Altoveros</dd>
+
+                            <dt>URA:</dt>
+                            <dd>Janah Monsanto</dd>
+
+                            <dt>Project Leader</dt>
+                            <dd>Dr. Artemio Salazar</dd>
+                        </dl>
+                    </div>
+
+                    <div>
+                        <h3>Project 3, Knowledge Portal Development</h3>
+                        <dl class="dl-horizontal">
+                            <dt>Systems Developer:</dt>
+                            <dd>Exequiel Ceasar Navarrete</dd>
+
+                            <dt>Systems Documentation:</dt>
+                            <dd>Jeyneth Ann Mariano</dd>
+
+                            <dt>Project Leader</dt>
+                            <dd>Prof. Concepcion Khan</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <figure style="margin-top: 20px">
+                        <img src="/assets/img/ui/how-to-use/rainfall-maps.png" alt="Suitability Maps" class="img-responsive" />
+                    </figure>
+
+                    <h3 class="text-center">How to use</h3>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ol>
+                                <li>
+                                    <p>
+                                        <strong>Select</strong> a starting date.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Select</strong> an end date.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Select</strong> a province.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Click</strong> Filter.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong class="text-uppercase">Map Source</strong> - Select one from the many types
+                                        of maps to have different views of the selected location.
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <ol start="6">
+                                <li>
+                                    <p>
+                                        <strong>Zoom in and out</strong> of the map to have a detailed view.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Measure the area</strong> of a specific location using this tool.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Drag the slider</strong> to make the slider lighter or darker.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <strong>Click on any point</strong> on the map to view the coordinates, NDVI Times
+                                        Series Chart, and NDVI Day of the Year Chart
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -9,5 +9,6 @@ export * from './rainfall-maps.module';
 export * from './rainfall-maps-routing.module';
 export * from './rainfall-map.service';
 export * from './rainfall-maps/rainfall-maps.component';
+export * from './info-overlay/info-overlay.component';
 
 
