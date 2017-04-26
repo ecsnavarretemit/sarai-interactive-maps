@@ -4,7 +4,7 @@
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type
-            [activateImmediately]="urlIsActive('/suitability-maps')"
+            activateOnUrl="/suitability-maps"
             (activate)="togglePanels(suitabilityMapType)"
             #suitabilityMapType>
 
@@ -24,7 +24,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="urlIsActive('/crop-production-area')"
+            activateOnUrl="/crop-production-area"
             (activate)="togglePanels(cropProductionAreaMapType)"
             #cropProductionAreaMapType>
 
@@ -44,7 +44,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="urlIsActive('/ndvi')"
+            activateOnUrl="/ndvi"
             (activate)="togglePanels(ndviMapType)"
             #ndviMapType>
 
@@ -64,7 +64,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="urlIsActive('/rainfall-maps')"
+            activateOnUrl="/rainfall-maps"
             (activate)="togglePanels(rainfallMapType)"
             #rainfallMapType>
 
