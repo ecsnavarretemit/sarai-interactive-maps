@@ -62,6 +62,11 @@ export class AppComponent implements AfterViewInit {
     this._renderer.setElementClass(el, 'open', add);
   }
 
+  // prevent redirection function for dropdown anchors
+  dropdownLinkNoop(evt: Event) {
+    evt.preventDefault();
+  }
+
   @HostListener('document:click', ['$event'])
   documentClick(evt: Event) {
     this.dropdowns

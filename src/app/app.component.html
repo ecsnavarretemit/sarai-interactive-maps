@@ -19,7 +19,7 @@
                         <a href="http://sarai.ph/about-us">SARAi</a>
                     </li>
                     <li class="dropdown" #dropdown #dropdown1 (click)="enableDropdown(dropdown1)">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="dropdownLinkNoop($event)">
                             Crops
                             <span class="caret"></span>
                         </a>
@@ -34,7 +34,7 @@
                         </ul>
                     </li>
                     <li class="dropdown" #dropdown #dropdown2 (click)="enableDropdown(dropdown2)">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="dropdownLinkNoop($event)">
                             Maps
                             <span class="caret"></span>
                         </a>
@@ -47,7 +47,7 @@
                         </ul>
                     </li>
                     <li class="dropdown" #dropdown #dropdown3 (click)="enableDropdown(dropdown3)">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="dropdownLinkNoop($event)">
                             Services
                             <span class="caret"></span>
                         </a>
@@ -66,22 +66,22 @@
                                 <a href="http://opendata.sarai.ph/">Open Data</a>
                             </li>
                             <li>
-                                <a href="http://202.92.144.44/index.php?option=com_content&view=article&id=64&Itemid=321">Planting Guide</a>
+                                <a href="http://202.92.144.44/index.php?option=com_content&amp;view=article&amp;id=64&amp;Itemid=321">Planting Guide</a>
                             </li>
                             <li>
-                                <a href="http://eskwela.sarai.ph/index.php?option=com_content&view=article&id=38&Itemid=319">SARAi Eskwela</a>
+                                <a href="http://eskwela.sarai.ph/index.php?option=com_content&amp;view=article&amp;id=38&amp;Itemid=319">SARAi Eskwela</a>
                             </li>
                         </ul>
                     </li>
                     <li class="dropdown" #dropdown #dropdown4 (click)="enableDropdown(dropdown4)">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="dropdownLinkNoop($event)">
                             Contact Us
                             <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="https://docs.google.com/a/up.edu.ph/forms/d/e/1FAIpQLSdRWCollMXmPGCoKhWZToL249RCc1FAh9KssEuCDH1jDj8ERw/viewform?c=0&w=1">
+                                <a href="https://docs.google.com/a/up.edu.ph/forms/d/e/1FAIpQLSdRWCollMXmPGCoKhWZToL249RCc1FAh9KssEuCDH1jDj8ERw/viewform?c=0&amp;w=1">
                                     Subscribe
                                 </a>
                             </li>
