@@ -150,6 +150,9 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
           const [lat, lng] = queryParams['center'].split(',');
 
           this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
+        } else if (typeof this._oldCenter !== 'undefined' && typeof this._oldZoom !== 'undefined') {
+          // go to the old zoom and lat,lng coords.
+          this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
         }
 
         // check if startDate and endDate is valid
@@ -752,7 +755,7 @@ export class NdviMapsComponent implements OnDestroy, OnInit {
     // reset the page title
     this._title.setTitle(`${this._globalConfig.app_title}`);
 
-    // go the old zoom and lat,lng coords.
+    // go to the old zoom and lat,lng coords.
     this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
 
     // remove custom router subscription

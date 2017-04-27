@@ -33,8 +33,8 @@ describe('Component: NdviFilterForm', () => {
   let startingDateEl: HTMLInputElement;
   let endDate: DebugElement;
   let endDateEl: HTMLInputElement;
-  let provinceSelect: DebugElement;
-  let provinceSelectEl: HTMLElement;
+  let placeSelect: DebugElement;
+  let placeSelectEl: HTMLElement;
 
   beforeEach(async(() => {
     mockRouter = new MockRouter();
@@ -82,8 +82,8 @@ describe('Component: NdviFilterForm', () => {
     endDateEl = endDate.nativeElement;
 
     // get the province selector
-    provinceSelect = fixture.debugElement.query(By.css('#ec_province_filter_sel'));
-    provinceSelectEl = provinceSelect.nativeElement;
+    placeSelect = fixture.debugElement.query(By.css('#ec_place_filter_sel'));
+    placeSelectEl = placeSelect.nativeElement;
   });
 
   it('should create component', () => {
@@ -122,7 +122,7 @@ describe('Component: NdviFilterForm', () => {
     fixture
       .whenStable()
       .then(() => {
-        expect(provinceSelectEl.querySelectorAll('option').length).toBeGreaterThanOrEqual(2);
+        expect(placeSelectEl.querySelectorAll('option').length).toBeGreaterThanOrEqual(2);
       })
       ;
   }));

@@ -23,8 +23,8 @@ export class NdviFilterFormComponent implements OnInit {
   public filterForm: FormGroup;
   public startDate: FormControl;
   public endDate: FormControl;
-  public province: FormControl;
-  public provinces: Observable<any>;
+  public place: FormControl;
+  public places: Observable<any>;
   public startDatepickerOpts: FlatpickrOptions = {};
   public endDatepickerOpts: FlatpickrOptions = {};
 
@@ -47,19 +47,29 @@ export class NdviFilterFormComponent implements OnInit {
       CustomValidators.dateISO
     ]);
 
-    this.province = new FormControl('', [
+    this.place = new FormControl('', [
       Validators.nullValidator
     ]);
 
     this.filterForm = this._formBuilder.group({
       startDate: this.startDate,
       endDate: this.endDate,
-      province: this.province
+      place: this.place
     });
   }
 
   ngOnInit() {
-    this.provinces = this._locationsService.getProvincesFromFT();
+    this.places = this._locationsService
+      .getProvincesFromFT()
+      .map((content: any) => {
+        // add the philippines to the list of places
+        content.places.unshift({
+          name: 'Philippines'
+        });
+
+        return content;
+      })
+      ;
 
     this.startDatepickerOpts = {
       maxDate: moment().subtract(1, 'days').toDate()
@@ -98,11 +108,11 @@ export class NdviFilterFormComponent implements OnInit {
     const urlExtras: NavigationExtras = {};
     let urlTree: UrlTree;
 
-    if (value.province !== '') {
+    if (value.place !== '' && value.place.name !== 'Philippines') {
       // add a province query parameter
       urlExtras.queryParams = {
-        province: value.province.name,
-        center: `${value.province.center.coordinates[1]},${value.province.center.coordinates[0]}`
+        province: value.place.name,
+        center: `${value.place.center.coordinates[1]},${value.place.center.coordinates[0]}`
       };
     }
 
