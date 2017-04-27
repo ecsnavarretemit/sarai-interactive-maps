@@ -11,7 +11,7 @@ import { Router, UrlTree, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { LeafletMapService } from '../../../../leaflet';
 import { LocationsService } from '../../../shared';
-import { CustomValidators, FlatpickrComponent } from '../../../../forms';
+import { CustomValidators, FlatpickrComponent, FlatpickrOptions } from '../../../../forms';
 import * as moment from 'moment';
 
 @Component({
@@ -25,6 +25,8 @@ export class NdviFilterFormComponent implements OnInit {
   public endDate: FormControl;
   public province: FormControl;
   public provinces: Observable<any>;
+  public startDatepickerOpts: FlatpickrOptions = {};
+  public endDatepickerOpts: FlatpickrOptions = {};
 
   @ViewChild('startDatePicker') startDatePicker: FlatpickrComponent;
   @ViewChild('endDatePicker') endDatePicker: FlatpickrComponent;
@@ -58,6 +60,14 @@ export class NdviFilterFormComponent implements OnInit {
 
   ngOnInit() {
     this.provinces = this._locationsService.getProvincesFromFT();
+
+    this.startDatepickerOpts = {
+      maxDate: moment().subtract(1, 'days').toDate()
+    };
+
+    this.endDatepickerOpts = {
+      maxDate: new Date()
+    };
   }
 
   onStartDateChange(date: string) {

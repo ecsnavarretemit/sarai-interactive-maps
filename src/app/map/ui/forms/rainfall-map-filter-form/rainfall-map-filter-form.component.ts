@@ -40,6 +40,7 @@ export class RainfallMapFilterFormComponent implements OnInit {
 
   ngOnInit() {
     this.startDatepickerOpts = {
+      maxDate: moment().subtract(1, 'days').toDate(),
       disable: [
         (date: Date): boolean =>  {
           const allowedDates = [1, 6, 11, 16, 21, 26, 31];
@@ -50,7 +51,9 @@ export class RainfallMapFilterFormComponent implements OnInit {
       ]
     };
 
-    this.endDatepickerOpts = assign({}, this.startDatepickerOpts);
+    this.endDatepickerOpts = assign({}, this.startDatepickerOpts, {
+      maxDate: new Date()
+    });
 
     this.startDate = new FormControl('', [
       Validators.required,
