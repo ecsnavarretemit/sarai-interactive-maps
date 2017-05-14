@@ -327,7 +327,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     let dataObservable: Observable<any>;
 
     // assemble endpoint for download link
-    const endpoint = this._rainfallMapService.getCumulativeRainfallByLatLngEndpoint(coords, startDate, endDate, 'csv');
+    const endpoint = this._rainfallMapService.getDailyRainfallByLatLngEndpoint(coords, startDate, endDate, 'csv');
 
     if (changed === false && typeof this._oldCumulativeRainfallData !== 'undefined') {
       dataObservable = Observable.of(this._oldCumulativeRainfallData);
@@ -336,7 +336,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
 
       dataObservable = this._rainfallMapService
-        .getCumulativeRainfallByLatLng(coords, startDate, endDate)
+        .getDailyRainfallByLatLng(coords, startDate, endDate)
         .map((data: any) => {
           this._oldCumulativeRainfallData = data;
 
@@ -368,7 +368,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       .subscribe((data: Chart.LinearChartData) => {
         const yTicks: Chart.LinearTickOptions = {
           beginAtZero: true,
-          stepSize: 300
+          stepSize: 50
         };
 
         const options: Chart.ChartOptions = {
@@ -391,7 +391,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           }
         };
 
-        const modalTitle = `Cumulative Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to \
+        const modalTitle = `Daily Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to \
                             ${parsedEndDate.format('MMMM D, YYYY')}) for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
 
         // show the chart modal
@@ -510,7 +510,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       <dt class="list__item list__item--key">Longitude:</dt>
       <dd class="list__item list__item--value">${coords.lng.toFixed(5)}</dd>
 
-      <dt class="list__item list__item--key">Cumulative Rainfall:</dt>
+      <dt class="list__item list__item--key">5-day Rainfall:</dt>
       <dd class="list__item list__item--value">
           <a href="#" class="link link--cumulative-rainfall">
             <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
