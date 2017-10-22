@@ -370,7 +370,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
         const dataset: Chart.ChartDataSets = this.genereateChartDataSetOption({
           data: map(data.result, 'rainfall'),
-          label: 'Cumulative Rainfall'
+          label: 'Pentad'
         });
 
         return {
@@ -406,7 +406,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           }
         };
 
-        const modalTitle = `Daily Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to \
+        const modalTitle = `5-day (Pentads) Data (${parsedStartDate.format('MMMM D, YYYY')} to \
                             ${parsedEndDate.format('MMMM D, YYYY')}) for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
 
         // show the chart modal
@@ -631,7 +631,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           </a>
       </dd>
 
-      <dt class="list__item list__item--key">5-day Rainfall:</dt>
+      <dt class="list__item list__item--key">5-day (Pentads):</dt>
       <dd class="list__item list__item--value">
           <a href="#" class="link link--daily-rainfall">
             <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
