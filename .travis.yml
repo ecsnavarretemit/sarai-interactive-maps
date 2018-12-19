@@ -8,7 +8,7 @@ cache:
 dist: trusty
 
 node_js:
-  - '6.10.0'
+  - '8.14.1'
 
 branches:
   only:
@@ -21,7 +21,7 @@ before_install:
   - cp src/environments/environment.ci.ts src/environments/environment.ts
 
   # Install @angular/cli
-  - npm install -g @angular/cli
+  - npm install -g @angular/cli@1.0.0-rc.1
 
   # Install Google Chrome
   - export CHROME_BIN=/usr/bin/google-chrome
