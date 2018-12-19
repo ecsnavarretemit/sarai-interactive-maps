@@ -20,10 +20,10 @@ const routes: Routes = [
         loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
       },
 
-      {
-        path: 'crop-production-area',
-        loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
-      },
+      // {
+      //   path: 'crop-production-area',
+      //   loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
+      // },
 
       // duplicated for required url parameters `startDate` and `endDate`
       {
