@@ -17,9 +17,6 @@ export class LeafletTileProviderService {
       OpenStreetMap: L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a> contributors'
       }),
-      OpenCycle: L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://www.opencyclemap.org/" target="_blank">OpenCycle</a> contributors'
-      }),
       Mapnik: L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://mapnik.org/" target="_blank">Mapnik</a> contributors'
       })
