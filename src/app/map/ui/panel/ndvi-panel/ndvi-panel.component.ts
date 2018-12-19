@@ -6,6 +6,7 @@
  */
 
 import { Component, OnInit, Renderer } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { LeafletMapService } from '../../../../leaflet';
@@ -23,6 +24,7 @@ export class NdviPanelComponent extends BasePanelComponent implements OnInit {
   public controlWrapperAnimationState = 'hidden';
 
   constructor(
+    private _router: Router,
     private _store: Store<any>,
     _renderer: Renderer,
     _mapService: LeafletMapService,
@@ -44,19 +46,19 @@ export class NdviPanelComponent extends BasePanelComponent implements OnInit {
   togglePanelVisibility(immediate = false) {
     super.togglePanelVisibility(immediate);
 
-    if (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'ACTIVATE_PANEL',
-        payload: 'ndvi-maps'
-      });
-    } else {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'DEACTIVATE_PANEL',
-        payload: 'ndvi-maps'
-      });
+    if (
+      (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') &&
+      !this._router.isActive('/ndvi', false)
+    ) {
+      this._router.navigateByUrl('/ndvi');
     }
+
+    // if (
+    //   (this.controlWrapperAnimationState === 'hidden' || this.controlWrapperAnimationState === 'hidden-immediate') &&
+    //   this._router.isActive('/ndvi', false)
+    // ) {
+    //   this._router.navigateByUrl('/');
+    // }
   }
 
   onHideButtonClick(evt: Event) {

@@ -14,7 +14,12 @@ const routes: Routes = [
   {
     path: '',
     component: CropProductionAreaMapsComponent
-  }
+  },
+
+  {
+    path: ':crop',
+    component: CropProductionAreaMapsComponent
+  },
 ];
 
 @NgModule({

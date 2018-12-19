@@ -4,7 +4,7 @@
 
     <div class="control-wrapper control-wrapper--left pull-left" map-control>
         <app-map-type
-            [activateImmediately]="urlIsActive('/suitability-maps')"
+            activateOnUrl="/suitability-maps"
             (activate)="togglePanels(suitabilityMapType)"
             #suitabilityMapType>
 
@@ -23,8 +23,8 @@
             </app-suitability-map-panel>
         </app-map-type>
 
-        <app-map-type
-            [activateImmediately]="urlIsActive('/crop-production-area')"
+        <!-- <app-map-type
+            activateOnUrl="/crop-production-area"
             (activate)="togglePanels(cropProductionAreaMapType)"
             #cropProductionAreaMapType>
 
@@ -41,10 +41,10 @@
 
             <app-crop-production-area-panel map-type-panel (hideButtonClick)="cropProductionAreaMapType.toggleActiveState(false)" #mapTypePanel>
             </app-crop-production-area-panel>
-        </app-map-type>
+        </app-map-type> -->
 
         <app-map-type
-            [activateImmediately]="urlIsActive('/ndvi')"
+            activateOnUrl="/ndvi"
             (activate)="togglePanels(ndviMapType)"
             #ndviMapType>
 
@@ -64,7 +64,7 @@
         </app-map-type>
 
         <app-map-type
-            [activateImmediately]="urlIsActive('/rainfall-maps')"
+            activateOnUrl="/rainfall-maps"
             (activate)="togglePanels(rainfallMapType)"
             #rainfallMapType>
 
@@ -133,13 +133,17 @@
             </li>
 
             <li class="list__item" [class.hidden]="!urlIsActive('/suitability-maps')">
-                <a href="#"
+                <a href="http://sarai.ph/suitability-gallery" class="btn btn--dome btn--download-map-image tooltip-wrapper">
+                    <i class="interface-control-icon interface-control-icon--pdf"></i>
+                    <span class="tooltip-holder" [tooltip]="'DOWNLOAD_MAP_IMAGE.TOOLTIP.MAIN' | translate" placement="left"></span>
+                </a>
+                <!-- <a href="#"
                     class="btn btn--dome btn--download-map-image tooltip-wrapper"
                     (click)="$event.preventDefault(); imageDownloadSidebar.toggle()">
 
                     <i class="interface-control-icon interface-control-icon--pdf"></i>
                     <span class="tooltip-holder" [tooltip]="'DOWNLOAD_MAP_IMAGE.TOOLTIP.MAIN' | translate" placement="left"></span>
-                </a>
+                </a> -->
             </li>
 
             <li class="list__item" [class.hidden]="!urlIsActive('/suitability-maps')">
@@ -217,6 +221,10 @@
 
         <div class="sidebar__content" sidebar-content>
             <app-download-image-form (processComplete)="previewPdf($event)" (download)="onDownload($event)" #dowloadImageForm></app-download-image-form>
+
+            <a href="http://sarai.ph/suitability-gallery" class="btn btn-success btn-block btn--gallery-link">
+                View Image Gallery
+            </a>
         </div>
     </app-leaflet-sidebar>
 

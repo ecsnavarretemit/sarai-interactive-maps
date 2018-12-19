@@ -20,32 +20,20 @@ const routes: Routes = [
         loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
       },
 
-      // duplicated for required url parameter `crop`
-      {
-        path: 'suitability-maps/:crop',
-        loadChildren: './suitability-maps/suitability-maps.module#SuitabilityMapsModule'
-      },
-
-      {
-        path: 'crop-production-area',
-        loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
-      },
-
-      // duplicated for required url parameter `crop`
-      {
-        path: 'crop-production-area/:crop',
-        loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
-      },
+      // {
+      //   path: 'crop-production-area',
+      //   loadChildren: './crop-production-area-maps/crop-production-area-maps.module#CropProductionAreaMapsModule'
+      // },
 
       // duplicated for required url parameters `startDate` and `endDate`
       {
-        path: 'ndvi/:startDate/:endDate',
+        path: 'ndvi',
         loadChildren: './ndvi-maps/ndvi-maps.module#NdviMapsModule'
       },
 
       // duplicated for required url parameter `startDate` and `endDate`
       {
-        path: 'rainfall-maps/:startDate/:endDate',
+        path: 'rainfall-maps',
         loadChildren: './rainfall-maps/rainfall-maps.module#RainfallMapsModule'
       },
     ]

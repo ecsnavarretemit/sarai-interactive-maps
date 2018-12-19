@@ -25,6 +25,45 @@ export class RainfallMapService {
     private _http: Http
   ) { }
 
+  getDailyRainfallByLatLngEndpoint(coords: L.LatLngLiteral, startDate: string, endDate: string, format?: string): string {
+    let endpoint = `${this._config.rainfall_maps.eeApiEndpoint}/daily-rainfall/${coords.lat}/${coords.lng}/${startDate}/${endDate}`;
+
+    // append the format to the endpoint
+    if (typeof format !== 'undefined' && includes(['json', 'csv'], format)) {
+      endpoint += `?fmt=${format}`;
+    }
+
+    return endpoint;
+  }
+
+  getDailyRainfallByLatLng(coords: L.LatLngLiteral, startDate: string, endDate: string): Observable<any> {
+    const endpoint = this.getDailyRainfallByLatLngEndpoint(coords, startDate, endDate);
+
+    // assemble the request headers
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this._http
+      .get(endpoint, {
+        headers
+      })
+      .map((res: Response) => res.json())
+      .mergeMap((data: any) => {
+        const isEmpty: boolean = every(data.result, (item: any) => {
+          return item.rainfall !== null;
+        });
+
+        // throw a new observable containing the error message when all ndvi value are null
+        if (isEmpty === false) {
+          return Observable.throw(new Error('Please click on a land surface.'));
+        }
+
+        // create a new observable out of the data
+        return Observable.of(data);
+      })
+      ;
+  }
+
   getCumulativeRainfallByLatLngEndpoint(coords: L.LatLngLiteral, startDate: string, endDate: string, format?: string): string {
     let endpoint = `${this._config.rainfall_maps.eeApiEndpoint}/cumulative-rainfall/${coords.lat}/${coords.lng}/${startDate}/${endDate}`;
 

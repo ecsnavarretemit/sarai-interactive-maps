@@ -17,8 +17,7 @@ describe('InfoOverlayComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         InfoOverlayComponent
-      ],
-      providers: []
+      ]
     })
     .compileComponents();
   }));
@@ -32,7 +31,6 @@ describe('InfoOverlayComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });
 
 

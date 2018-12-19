@@ -13,6 +13,7 @@ import { NdviMapsRoutingModule } from './ndvi-maps-routing.module';
 import { NdviMapService } from './ndvi-map.service';
 
 import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
+import { InfoOverlayComponent } from './info-overlay/info-overlay.component';
 
 @NgModule({
   imports: [
@@ -20,13 +21,15 @@ import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
     NdviMapsRoutingModule
   ],
   declarations: [
-    NdviMapsComponent
+    NdviMapsComponent,
+    InfoOverlayComponent
   ],
   providers: [
     NdviMapService
   ],
   exports: [
-    NdviMapsComponent
+    NdviMapsComponent,
+    InfoOverlayComponent
   ]
 })
 export class NdviMapsModule { }

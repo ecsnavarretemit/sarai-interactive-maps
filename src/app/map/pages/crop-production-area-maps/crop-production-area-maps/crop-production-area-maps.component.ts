@@ -32,6 +32,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
   private _wmsTileUrl: string;
   private _map: L.Map;
   private _mapLayers: Observable<any>;
+  private
 
   constructor(
     @Inject(MAP_CONFIG) private _mapConfig: any,
@@ -40,18 +41,15 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
     private _tileLayerService: TileLayerService,
     private _route: ActivatedRoute,
     private _title: Title,
-    private _mapLayersStore: Store<any>
+    private _store: Store<any>
   ) {
     const resolvedConfig = this._mapConfig.crop_production_area_maps;
 
     // set default wms tile layer
     this._wmsTileUrl = this._tileLayerService.getGeoServerWMSTileLayerBaseUrl(resolvedConfig.wms.workspace, resolvedConfig.wms.tiled);
 
-    // set default crop
-    this.crop = 'rice';
-
     // get the map state store from the store
-    this._mapLayers = this._mapLayersStore.select('mapLayers');
+    this._mapLayers = this._store.select('mapLayers');
   }
 
   ngOnInit() {
@@ -68,13 +66,25 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
     this._route.params.forEach((params: Params) => {
       if (typeof params['crop'] !== 'undefined') {
         this.crop = params['crop'];
+
+        // activate the panel
+        this._store.dispatch({
+          type: 'ACTIVATE_PANEL',
+          payload: 'crop-production-area-maps'
+        });
+
+        // process wms layers
+        this.processLayers();
+      } else {
+        // deactivate the panel
+        this._store.dispatch({
+          type: 'DEACTIVATE_PANEL',
+          payload: 'crop-production-area-maps'
+        });
       }
 
       // set the page title
       this._title.setTitle(`${this._pageTitle} | ${this._globalConfig.app_title}`);
-
-      // process wms layers
-      this.processLayers();
     });
   }
 
@@ -97,7 +107,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
     this.removeLayers();
 
     // add the new layer to the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'ADD_LAYERS',
       payload: processedLayers
     });
@@ -105,7 +115,7 @@ export class CropProductionAreaMapsComponent implements OnInit, OnDestroy {
 
   removeLayers() {
     // remove all layers published on the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
   }

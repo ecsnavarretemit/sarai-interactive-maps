@@ -28,7 +28,7 @@ export function baseInfoOverlayAnimation(): AnimationEntryMetadata {
 }
 
 @Component({
-  selector: 'app-suitability-map-info-overlay',
+  selector: 'app-ndvi-map-info-overlay',
   templateUrl: './info-overlay.component.html',
   styleUrls: ['./info-overlay.component.sass'],
   animations: [
@@ -38,7 +38,7 @@ export function baseInfoOverlayAnimation(): AnimationEntryMetadata {
 export class InfoOverlayComponent {
   public overlayAnimationState = 'hidden';
   private visibleText = 'Learn More';
-  private hideText = 'Back to Suitability Maps';
+  private hideText = 'Back to NDVI Maps';
   public btnText = this.visibleText;
   public visible = true;
 

@@ -15,10 +15,7 @@ describe('InfoOverlayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        InfoOverlayComponent
-      ],
-      providers: []
+      declarations: [ InfoOverlayComponent ]
     })
     .compileComponents();
   }));

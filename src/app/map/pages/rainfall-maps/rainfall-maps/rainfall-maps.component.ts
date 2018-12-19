@@ -24,7 +24,10 @@ import * as L from 'leaflet';
 import assign from 'lodash-es/assign';
 import forEach from 'lodash-es/forEach';
 import map from 'lodash-es/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/fromPromise';
 
 @Component({
   selector: 'app-rainfall-maps',
@@ -41,9 +44,11 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   private _currentStartDate: string;
   private _currentEndDate: string;
   private _oldCumulativeRainfallData: any;
+  private _oldDailyRainfallData: any;
   private _oldCenter: L.LatLngLiteral;
   private _oldZoom: number;
   private _routerParamSubscription: Subscription;
+  private _mapSubscription: Subscription;
 
   @ViewChild('downloadFile') downloadFile: ElementRef;
 
@@ -57,7 +62,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _title: Title,
     private _renderer: Renderer,
-    private _mapLayersStore: Store<any>
+    private _store: Store<any>
   ) {
     // make sure that the `this` value inside the onMapClick is this component's instance.
     this._mapClickListener = this.onMapClick.bind(this);
@@ -68,7 +73,6 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       .getMap()
       .then((mapInstance: L.Map) => {
         const { lat, lng } = mapInstance.getCenter();
-        const popupPane: HTMLElement = mapInstance.getPane('popupPane');
 
         // store the lat and lng coordinates before we pan into the new coords.
         this._oldCenter = {
@@ -81,13 +85,46 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
         // save the reference to the map
         this._map = mapInstance;
+      });
+
+    this._mapSubscription = Observable
+      .combineLatest(Observable.fromPromise(this._mapService.getMap()), this._route.params, this._route.queryParams)
+      .do((params: [L.Map, Params, Params]) => {
+        const [mapInstance, , ] = params;
+
+        // remove any existing marker on the map
+        this.removeMarker();
+
+        // remove the event listener bound to the map
+        mapInstance.off('click', this._mapClickListener);
+
+        // remove the event listener bound by the angular renderer
+        forEach(this._popupEventListeners, (listener: Function) => {
+          listener();
+        });
+
+        // empty up the array
+        this._popupEventListeners = [];
+      })
+      .filter((params: [L.Map, Params, Params]) => {
+        const [ , routeParams, ] = params;
+
+        return (
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['startDate']) &&
+          /^\d{4}[\/\-](0[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(routeParams['endDate'])
+        );
+      })
+      .subscribe((params: [L.Map, Params, Params]) => {
+        const [mapInstance, , ] = params;
+        const popupPane: HTMLElement = mapInstance.getPane('popupPane');
 
         // bind the click callback to the click event
         mapInstance.on('click', this._mapClickListener);
 
         // setup map click event listener
         this.setupMapClick(popupPane);
-      });
+      })
+      ;
 
     // get the the route params and query parameters by
     // combining the latest values from the two observables
@@ -102,6 +139,9 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           const [lat, lng] = queryParams['center'].split(',');
 
           this._mapService.panTo(parseFloat(lat), parseFloat(lng), 10);
+        } else if (typeof this._oldCenter !== 'undefined' && typeof this._oldZoom !== 'undefined') {
+          // go to the old zoom and lat,lng coords.
+          this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
         }
 
         // check if startDate and endDate is valid
@@ -116,7 +156,19 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           this._currentStartDate = routeParams['startDate'];
           this._currentEndDate = routeParams['endDate'];
 
+          // activate the panel
+          this._store.dispatch({
+            type: 'ACTIVATE_PANEL',
+            payload: 'ndvi-maps'
+          });
+
           this.processData(this._currentStartDate, this._currentEndDate, queryParams['province']);
+        } else {
+          // add the panel to the store
+          this._store.dispatch({
+            type: 'DEACTIVATE_PANEL',
+            payload: 'ndvi-maps'
+          });
         }
       })
       ;
@@ -204,6 +256,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         };
 
         this._oldCumulativeRainfallData = undefined;
+        this._oldDailyRainfallData = undefined;
       }
 
       if (oldQueryData.markerPos === null) {
@@ -230,6 +283,19 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       checkQueryChanged();
 
       this.showCumulativeRainfallChart(markerPos, this._currentStartDate, this._currentEndDate, queryDataChanged);
+    }));
+
+    // listen to click events by delegating click event to the targetEl
+    this._popupEventListeners.push(delegate(targetEl, 'click', '.link--daily-rainfall', (evt: Event) => {
+      const markerPos: L.LatLng = this._marker.getLatLng();
+
+      // prevent default behavior when either of the links are clicked
+      evt.preventDefault();
+
+      // check if there is changes to the query
+      checkQueryChanged();
+
+      this.showDailyRainfallChart(markerPos, this._currentStartDate, this._currentEndDate, queryDataChanged);
     }));
 
     this._popupEventListeners.push(delegate(targetEl, 'click', '.link--delete-marker', (evt: Event) => {
@@ -267,6 +333,104 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         className: 'leaflet-popup--rainfall leaflet-popup--with-footer-controls'
       })
       .openPopup()
+      ;
+  }
+
+  showDailyRainfallChart(coords: L.LatLngLiteral, startDate: string, endDate: string, changed = true) {
+    const parsedStartDate = moment(startDate, 'YYYY-MM-DD');
+    const parsedEndDate = moment(endDate, 'YYYY-MM-DD');
+    let dataObservable: Observable<any>;
+
+    // assemble endpoint for download link
+    const endpoint = this._rainfallMapService.getDailyRainfallByLatLngEndpoint(coords, startDate, endDate, 'csv');
+
+    if (changed === false && typeof this._oldDailyRainfallData !== 'undefined') {
+      dataObservable = Observable.of(this._oldDailyRainfallData);
+    } else {
+      // notify the user about chart generation
+      this._logger.log('Data Loading', 'Please wait while we fetch the data and generate the chart.', true);
+
+      dataObservable = this._rainfallMapService
+        .getDailyRainfallByLatLng(coords, startDate, endDate)
+        .map((data: any) => {
+          this._oldDailyRainfallData = data;
+
+          return data;
+        })
+        ;
+    }
+
+    dataObservable
+      .delay(300)
+      .map((data: any) => {
+        // extract the time and ndvi into separate properties
+        const labels = map(data.result, (item: any) => {
+          return moment(item['time'], 'YYYY-MM-DD').format('MMMM D, YYYY');
+        });
+
+        const dataset: Chart.ChartDataSets = this.genereateChartDataSetOption({
+          data: map(data.result, 'rainfall'),
+          label: 'Pentad'
+        });
+
+        return {
+          labels,
+          datasets: [
+            dataset
+          ]
+        };
+      })
+      .subscribe((data: Chart.LinearChartData) => {
+        const yTicks: Chart.LinearTickOptions = {
+          beginAtZero: true,
+          stepSize: 50
+        };
+
+        const options: Chart.ChartOptions = {
+          maintainAspectRatio: false,
+          responsive: true,
+          scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'mm'
+              },
+              ticks: yTicks
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Date'
+              }
+            }]
+          }
+        };
+
+        const modalTitle = `5-day (Pentads) Data (${parsedStartDate.format('MMMM D, YYYY')} to \
+                            ${parsedEndDate.format('MMMM D, YYYY')}) for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
+
+        // show the chart modal
+        this._modalService.spawn({
+          component: ChartModalComponent,
+          inputs: {
+            title: modalTitle,
+            openImmediately: true,
+            metadata: {
+              endpoint
+            },
+            chartOptions: {
+              type: LineChartComponent,
+              inputs: {
+                data,
+                options
+              }
+            }
+          }
+        });
+      }, (error: Error) => {
+        // send the error to the logger stream
+        this._logger.log('Error loading data', error.message, true);
+      })
       ;
   }
 
@@ -317,7 +481,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       .subscribe((data: Chart.LinearChartData) => {
         const yTicks: Chart.LinearTickOptions = {
           beginAtZero: true,
-          stepSize: 300
+          stepSize: 50
         };
 
         const options: Chart.ChartOptions = {
@@ -340,11 +504,14 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
           }
         };
 
+        const modalTitle = `Cumulative Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to \
+                            ${parsedEndDate.format('MMMM D, YYYY')}) for coordinates ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
+
         // show the chart modal
         this._modalService.spawn({
           component: ChartModalComponent,
           inputs: {
-            title: `Cumulative Rainfall Data (${parsedStartDate.format('MMMM D, YYYY')} to ${parsedEndDate.format('MMMM D, YYYY')})`,
+            title: modalTitle,
             openImmediately: true,
             metadata: {
               endpoint
@@ -376,7 +543,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
 
   processData(startDate: string, endDate: string, place?: string) {
     // remove all layers published on the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 
@@ -406,7 +573,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
         const layer: Layer = resolvedValue[0];
 
         // add the new layer to the store
-        this._mapLayersStore.dispatch({
+        this._store.dispatch({
           type: 'ADD_LAYER',
           payload: layer
         });
@@ -437,12 +604,12 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
       borderJoinStyle: 'miter',
       pointBorderColor: 'rgba(75, 192, 192, 1)',
       pointBackgroundColor: '#fff',
-      pointBorderWidth: 2,
-      pointHoverRadius: 8,
+      pointBorderWidth: 1,
+      pointHoverRadius: 3,
       pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)',
       pointHoverBorderColor: 'rgba(220, 220, 220, 1)',
-      pointHoverBorderWidth: 3,
-      pointRadius: 5,
+      pointHoverBorderWidth: 1,
+      pointRadius: 0,
       pointHitRadius: 10,
       spanGaps: false
     }, dataset);
@@ -451,10 +618,10 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
   generatePopupHtml(coords: L.LatLngLiteral): string {
     return `<dl class="list list--feature-info">
       <dt class="list__item list__item--key">Latitude:</dt>
-      <dd class="list__item list__item--value">${coords.lat}</dd>
+      <dd class="list__item list__item--value">${coords.lat.toFixed(5)}</dd>
 
       <dt class="list__item list__item--key">Longitude:</dt>
-      <dd class="list__item list__item--value">${coords.lng}</dd>
+      <dd class="list__item list__item--value">${coords.lng.toFixed(5)}</dd>
 
       <dt class="list__item list__item--key">Cumulative Rainfall:</dt>
       <dd class="list__item list__item--value">
@@ -463,6 +630,15 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
             <span class="link__text">Show</span>
           </a>
       </dd>
+
+      <dt class="list__item list__item--key">5-day (Pentads):</dt>
+      <dd class="list__item list__item--value">
+          <a href="#" class="link link--daily-rainfall">
+            <i class="fa fa-line-chart link__icon" aria-hidden="true"></i>
+            <span class="link__text">Show</span>
+          </a>
+      </dd>
+    </dl>
 
     <ul class="list list-unstyled clearfix popup-controls">
       <li class="list__item">
@@ -478,11 +654,14 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     // reset the page title
     this._title.setTitle(`${this._globalConfig.app_title}`);
 
-    // go the old zoom and lat,lng coords.
+    // go to the old zoom and lat,lng coords.
     this._mapService.panTo(this._oldCenter.lat, this._oldCenter.lng, this._oldZoom);
 
     // remove custom router subscription
     this._routerParamSubscription.unsubscribe();
+
+    // remove the combination of map and router subscription
+    this._mapSubscription.unsubscribe();
 
     // remove the event listener bound to the map
     this._map.off('click', this._mapClickListener);
@@ -499,7 +678,7 @@ export class RainfallMapsComponent implements OnInit, OnDestroy {
     this._map = null;
 
     // remove all layers published on the store
-    this._mapLayersStore.dispatch({
+    this._store.dispatch({
       type: 'REMOVE_ALL_LAYERS'
     });
 

@@ -26,6 +26,10 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./suitability-maps-filter.component.sass'],
   animations: [
     trigger('controlWrapper', [
+      state('void', style({
+        'opacity': 0,
+        'display': 'none'
+      })),
       state('visible', style({
         'opacity': 1,
         'display': 'block'
@@ -37,6 +41,10 @@ import 'rxjs/add/operator/debounceTime';
       transition('* => *', animate(500))
     ]),
     trigger('button', [
+      state('void', style({
+        'opacity': 0,
+        'display': 'none'
+      })),
       state('visible', style({
         'opacity': 1,
         'display': 'block'
@@ -50,7 +58,7 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class SuitabilityMapsFilterComponent extends BasePanelComponent implements OnInit, OnDestroy {
   public levels: Promise<Array<any>>;
-  public controlWrapperAnimationState = 'visible';
+  public controlWrapperAnimationState = 'hidden';
   public buttonState = 'hidden';
   public levelTooltipsDisabled = true;
   private _suitabilityLevels: Observable<any>;

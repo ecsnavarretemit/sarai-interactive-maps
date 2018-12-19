@@ -13,6 +13,7 @@ import { RainfallMapsRoutingModule } from './rainfall-maps-routing.module';
 import { RainfallMapService } from './rainfall-map.service';
 
 import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
+import { InfoOverlayComponent } from './info-overlay/info-overlay.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { RainfallMapsComponent } from './rainfall-maps/rainfall-maps.component';
     RainfallMapsRoutingModule
   ],
   declarations: [
-    RainfallMapsComponent
+    RainfallMapsComponent,
+    InfoOverlayComponent
   ],
   providers: [
     RainfallMapService

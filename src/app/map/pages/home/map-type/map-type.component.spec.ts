@@ -8,18 +8,28 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
+import { MockRouter } from '../../../../mocks/router';
 import { MapTypeComponent } from './map-type.component';
 
 describe('Component: MapType', () => {
   let component: MapTypeComponent;
   let fixture: ComponentFixture<MapTypeComponent>;
+  let mockRouter: MockRouter;
 
   beforeEach(async(() => {
+    mockRouter = new MockRouter();
+
     TestBed.configureTestingModule({
-      declarations: [ MapTypeComponent ]
+      declarations: [
+        MapTypeComponent
+      ],
+      providers: [
+        { provide: Router, useValue: mockRouter },
+      ]
     })
     .compileComponents();
   }));

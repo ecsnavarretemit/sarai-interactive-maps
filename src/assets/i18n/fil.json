@@ -81,15 +81,15 @@
     "TITLE": "Normalized Difference Vegetation Index (NDVI)",
     "STARTING_DATE": "Petsa kung kailan magsisimula:",
     "SCAN_RANGE": "Saklaw na mga araw:",
-    "FILTER_BY_PROVINCE": "Salain hingil sa probinsya:",
-    "SELECT_PROVINCE": "Mamili ng probinsya"
+    "FILTER_BY_PLACE": "Salain hingil sa lugar:",
+    "SELECT_PLACE": "Mamili ng lugar"
   },
 
   "RAINFALL": {
     "TITLE": "Mapa ng ulan",
     "STARTING_DATE": "Petsa kung kailan magsisimula:",
     "SCAN_DATE": "Petsa na titingnan:",
-    "FILTER_BY_PROVINCE": "Salain hingil sa probinsya:",
-    "SELECT_PROVINCE": "Mamili ng probinsya"
+    "FILTER_BY_PLACE": "Salain hingil sa lugar:",
+    "SELECT_PLACE": "Mamili ng lugar"
   }
 }

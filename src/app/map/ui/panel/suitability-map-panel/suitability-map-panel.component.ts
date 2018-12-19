@@ -56,19 +56,19 @@ export class SuitabilityMapPanelComponent extends BasePanelComponent implements 
   togglePanelVisibility(immediate = false) {
     super.togglePanelVisibility(immediate);
 
-    if (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'ACTIVATE_PANEL',
-        payload: 'suitability-maps'
-      });
-    } else {
-      // add the panel to the store
-      this._store.dispatch({
-        type: 'DEACTIVATE_PANEL',
-        payload: 'suitability-maps'
-      });
+    if (
+      (this.controlWrapperAnimationState === 'visible' || this.controlWrapperAnimationState === 'visible-immediate') &&
+      !this._router.isActive('/suitability-maps', false)
+    ) {
+      this._router.navigateByUrl('/suitability-maps');
     }
+
+    // if (
+    //   (this.controlWrapperAnimationState === 'hidden' || this.controlWrapperAnimationState === 'hidden-immediate') &&
+    //   this._router.isActive('/suitability-maps', false)
+    // ) {
+    //   this._router.navigateByUrl('/');
+    // }
   }
 
   isCropActive(crop: string, ): boolean {

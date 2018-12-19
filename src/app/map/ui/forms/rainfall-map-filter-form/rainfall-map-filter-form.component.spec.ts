@@ -105,7 +105,7 @@ describe('Component: RainfallMapFilterForm', () => {
       const helpBlockEl = endDateEl.parentElement.querySelector('.help-block-wrapper');
 
       expect(helpBlockEl.children.length).toBe(1);
-      expect(helpBlockEl.children[0].textContent.trim()).toBe('Until Date is required.');
+      expect(helpBlockEl.children[0].textContent.trim()).toBe('End Date is required.');
     }, 0);
   }));
 

@@ -8,12 +8,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { InfoOverlayComponent } from './info-overlay/info-overlay.component';
 import { NdviMapsComponent } from './ndvi-maps/ndvi-maps.component';
 
 const routes: Routes = [
   {
     path: '',
     component: NdviMapsComponent
+  },
+
+  {
+    path: ':startDate/:endDate',
+    component: NdviMapsComponent
+  },
+
+  {
+    path: '',
+    component: InfoOverlayComponent,
+    outlet: 'info-overlay-control'
   }
 ];
 
